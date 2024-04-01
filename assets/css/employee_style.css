@@ -1,4 +1,36 @@
 .nav-tabs {
-    margin-top: 50px;
-    margin-left: -200px;
-  }
+  margin-top: 50px;
+  margin-left: -200px;
+}
+
+.highlight {
+  border: 1px solid red;
+}
+
+.number-error {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: red;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+}
+
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px; /* Adjust the width as needed */
+  max-width: 90%;
+  z-index: 1050; /* Adjust the z-index if needed */
+}
+
