@@ -210,7 +210,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         
-        <!-- Add currency -->
+        //Add currency 
         const currencyInput = document.getElementById('createMonthlySalary_id');
         const errorDiv = document.getElementById('error');
 
@@ -233,14 +233,13 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             currencyInput.value = formattedValue;
         });
 
-        <!-- Contact Number Error Message -->
+        //Contact Number Error Message
         document.getElementById('contactNumber_id').addEventListener('input', function() {
             var contactNumInput = this;
             var error = document.getElementById('NumError');
 
             // Check if the contact number input field value has exactly 11 digits
             if (contactNumInput.value.trim().length === 11) {
-                // If it does, remove the highlight and hide the error message
                 contactNumInput.classList.remove('highlight');
                 error.style.display = 'none';
             } else {
@@ -261,6 +260,12 @@ $query = $conn->query("SELECT * FROM tbl_employee");
          document.getElementById('showEmploymentForm').addEventListener('click', function(event) {
             event.preventDefault();
 
+             document.querySelectorAll('.nav-link').forEach(function(link) {
+                link.classList.remove('active');
+            });
+
+            // Add active class to the Employment Details nav-link
+            document.querySelector('.employment-details').classList.add('active');
             var inputFields = document.querySelectorAll('#insertEmployee input[type="text"], #insertEmployee input[type="date"], #insertEmployee select');
 
             inputFields.forEach(function(inputField) {
@@ -322,6 +327,13 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
          document.getElementById('showBenefitsForm').addEventListener('click', function(event) {
             event.preventDefault();
+
+            document.querySelectorAll('.nav-link').forEach(function(link) {
+                link.classList.remove('active');
+            });
+
+            // Add active class to the Employment Details nav-link
+            document.querySelector('.benefit-details').classList.add('active');
 
             var inputFields = document.querySelectorAll('#employmentDetailsContent input[type="number"], #employmentDetailsContent input[type="date"], #employmentDetailsContent select');
 
@@ -498,13 +510,13 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
         <!-- Toast Notification -->
         <div class="toast position-fixed top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
-        <div class="toast-header">
-            <strong class="me-auto">Notification</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            <!-- Notification message will be inserted dynamically here -->
-        </div>
+            <div class="toast-header">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <!-- Notification message will be inserted dynamically here -->
+            </div>
         </div>
 
 
@@ -512,9 +524,9 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 <div class="modal-footer">
                     
                 </div>
-                </div>
-            </div>
-            </div>
+            
+               
+           
             
 
                         <div class="card mb-4 mt-4">
@@ -555,7 +567,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
@@ -565,7 +577,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                     </div>
                 </footer>
             </div>
-        </div>
+            
 
 <script>
     // VIEW EMPLOYEE SCRIPT
