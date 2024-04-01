@@ -17,12 +17,12 @@
 		session_start();
 
         if( isset( $_SESSION['loginStatus'] ) ) {
-			if( $_SESSION['loginStatus'] == "ok" ) {
-				header("Location: route/index.php");
-			} else {
-				// diri lang sa//
-			}
-		}
+            if( $_SESSION['loginStatus'] == "ok" ) {
+                header("Location: route/index.php");
+            }
+        }
+
+		
 
 	?>
     <!-- <script>
@@ -70,13 +70,13 @@
                 $(".status").html(response.message);
 
                 if(response.status == 'success') {
-                    if( response.role == 'Admin' ) {
+                    if( response.role == 'admin' ) {
 								
 								setTimeout( function() {
 									window.location.href = 'route/index.php';
 								},1000);
 								
-							} else if(response.role == 'Accountant' ) {
+							} else if(response.role == 'accountant' ) {
 								
 								setTimeout( function() {
 									window.location.href = 'route/index.php';
