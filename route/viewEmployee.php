@@ -557,7 +557,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                             <button class="btn btn-danger del" id="<?php echo $data['employee_id']; ?>">
                                               <i class="bi bi-trash"></i>
                                             </button>
-                                            <button class="btn btn-warning edit" id="<?php echo $data['employee_id']; ?>">
+                                            <button class="btn btn-warning edit" onclick="openEditModal('<?php echo $data['employee_id'];?>')">
                                               <i class="bi bi-pencil"></i>
                                             </button>
                                             </td>
@@ -578,6 +578,141 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 </footer>
             </div>
             
+
+<!-- VIEW EMPLOYEE MODAL -->
+<div class="modal fade" id="viewEmployee" tabindex="-1" aria-labelledby="viewEmployeeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mb-5" id="viewEmployeeLabel">Employee Information</h5>
+
+                <!-- Tab links -->
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                     <a class="nav-link active" aria-current="page" href="#personal">Personal Information</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#employment">Employment Details</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#benefit">Benefit Details</a>
+                   </li>
+                </ul> 
+                <button type="button" class="btn close" data-bs-dismiss="modal">Close</button>
+            </div>
+
+            <!-- Tab content -->
+            <div class="modal-body">
+                <!-- Personal Information tab -->
+                <div id="personal" class="tab">
+                    <!-- Your personal information fields here -->
+                    <!-- Placeholder for data -->
+
+                    <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+                    <input type="" name="firstname" class="form-control" id="firstname">
+
+                    <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
+                        <input type="" name="middlename" class="form-control" id="middlename">
+
+                        <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+                        <input type="" name="lastname" class="form-control" id="lastname">
+
+                        <label for="completeAddress" class="col-sm-2 col-form-label">Complete Address</label>
+                        <input type="" name="address" class="form-control" id="address">
+
+                        <label for="birthdate" class="col-sm-2 col-form-label">Birthdate</label>
+                        <input type="date" name="birthdate" class="form-control" id="birthdate">
+
+                        <label for="contactNum" class="col-sm-2 col-form-label">Contact Number </label>
+                        <input type="" name="contactNum" class="form-control" id="contactNum">
+
+                        <label for="civilStatus" class="col-sm-2 col-form-label">Civil Status</label>
+                        <input type="" name="civilStatus" class="form-control" id="civilStatus">
+
+                        <!-- <select class="form-select" name="createCivilStatus" aria-label="Civil Status Select">
+                            <option selected>Select Civil Status</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Widowed">Widowed</option>
+                        </select> -->
+
+                        <label for="personalEmail" class="col-sm-2 col-form-label">Personal Email</label>
+                        <input type="" name="personalEmail" class="form-control" id="personalEmail">
+
+                        <label for="workEmail" class="col-sm-2 col-form-label">Work Email</label>
+                        <input type="" name="workEmail" class="form-control" id="workEmail" >
+
+                        <label for="employeeType" class="col-sm-2 col-form-label"> Employee Type </label>
+                        <input type="" name="employeeType" class="form-control" id="employeeType" >
+                        <!-- <select class="form-select" name="createEmployeeType" aria-label="Employee Type Select">
+                            <option selected>Select Employee Type</option>
+                            <option value="Onsite">Work From Home</option>
+                            <option value="Home">Work Onsite</option>
+                            <option value="3">3</option>
+                        </select> -->
+                </div>
+
+
+                <!-- Employment Details tab -->
+                <div id="employment" class="tab">
+                    <!-- Your employment details fields here -->
+                    <!-- Placeholder for data -->
+                    <label for="startDate" class="col-sm-2 col-form-label">Start Date</label>
+                    <input type="" name="startDate" class="form-control" id="startDate">
+
+                    <label for="monthly" class="col-sm-2 col-form-label">Monthly Salary</label>
+                    <input type="" name="monthly" class="form-control" id="monthly">
+
+                    <label for="accBonus" class="col-sm-2 col-form-label">Account Bonus</label>
+                    <input type="" name="accBonus" class="form-control" id="accBonus">
+
+                    <label for="client" class="col-sm-2 col-form-label">Client</label>
+                    <input type="" name="client" class="form-control" id="client">
+
+                    <label for="position" class="col-sm-2 col-form-label">Position</label>
+                    <input type="" name="position" class="form-control" id="position">
+
+                    <label for="employmentStatus" class="col-sm-2 col-form-label">Employment Status</label>
+                    <input type="" name="employmentStatus" class="form-control" id="employmentStatus">
+
+                </div>
+
+                <!-- Benefit Details tab -->
+                <div id="benefit" class="tab">
+                    <!-- Your benefit details fields here -->
+                    <!-- Placeholder for data -->
+                    <label for="sss" class="col-sm-2 col-form-label">SSS Number:</label>
+                    <input type="" name="sss" class="form-control" id="sss">
+
+                    <label for="pagibig" class="col-sm-2 col-form-label">Pag-ibig Number:</label>
+                    <input type="" name="pagibig" class="form-control" id="pagibig">
+
+                    <label for="philhealth" class="col-sm-2 col-form-label">Philhealth Number:</label>
+                    <input type="" name="philhealth" class="form-control" id="philhealth">
+
+                    <label for="tin" class="col-sm-2 col-form-label">Tin Number:</label>
+                    <input type="" name="tin" class="form-control" id="tin">
+
+                    <label for="sssCon" class="col-sm-2 col-form-label">SSS Contribution:</label>
+                    <input type="" name="sssCon" class="form-control" id="sssCon">
+
+                    <label for="pagibigCon" class="col-sm-2 col-form-label">Pag-ibig Contribution:</label>
+                    <input type="" name="pagibigCon" class="form-control" id="pagibigCon">
+
+                    <label for="philhealthCon" class="col-sm-2 col-form-label">Philhealth Contribution:</label>
+                    <input type="" name="philhealthCon" class="form-control" id="philhealthCon">
+
+                    <label for="tax" class="col-sm-2 col-form-label">Tax Percentage:</label>
+                    <input type="" name="tax" class="form-control" id="tax">
+
+                </div>
+                 <div class="modal-footer">
+                  <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="nextButton">Next</button>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     // VIEW EMPLOYEE SCRIPT
@@ -627,23 +762,22 @@ $query = $conn->query("SELECT * FROM tbl_employee");
     function closeModal() {
         $('#viewEmployee').modal('hide');
     }
+    function openTab(personal) {
+    // Hide all tabs
+    $('.tab').hide();
+    // Show the selected tab
+    $('#' + personal).show();
 
-    // Function to switch tabs
-    function openTab(tabName) {
-        // Hide all tabs
-        $('.tab').hide();
-        // Show the selected tab
-        $('#' + tabName).show();
+    // Remove active class from all tab links
+    $('.nav-tabs .nav-link').removeClass('active');
 
-        // Remove active class from all tab links
-        $('.nav-tabs .nav-link').removeClass('active');
+    // Add active class to the clicked tab link
+    $('.nav-tabs a[href="#' + personal + '"]').addClass('active');
+}
 
-        // Add active class to the clicked tab link
-        $('.nav-tabs a[href="#' + tabName + '"]').addClass('active');
-    }
 
-    // Event listener to open modal for each employee
-    $(document).ready(function () {
+ // Event listener to open modal for each employee
+ $(document).ready(function () {
         // Attach click event listeners to tab links
         $('.nav-tabs a').click(function () {
             var tabName = $(this).attr('href').substr(1);
@@ -673,23 +807,102 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
 </script>
 
-<!-- VIEW EMPLOYEE MODAL -->
-<div class="modal fade" id="viewEmployee" tabindex="-1" aria-labelledby="viewEmployeeLabel" aria-hidden="true">
+<script>
+    // EDIT EMPLOYEE SCRIPT
+    function openEditModal(employeeId) {
+        // Show the modal
+        $('#editEmployee').modal('show');
+        // Switch to the default tab (personal) when opening the modal
+        openEditTab('personalEdit');
+        // Fetch employee details using AJAX
+        $.ajax({
+            url: '../functions/get_employeeId.php',
+            type: 'POST',
+            data: { id: employeeId },
+            dataType: 'json', // Specify JSON as the expected data type
+            success: function(response) {
+                // Update the modal content with the fetched employee details
+                // Assuming the response is an object containing the employee details
+                $('#edit_firstname').val(response.firstname);
+                $('#edit_middlename').val(response.middlename);
+                $('#edit_lastname').val(response.lastname);
+                $('#edit_address').val(response.address);
+                $('#edit_birthdate').val(response.birthdate);
+                $('#edit_contactNum').val(response.contact_num);
+                //$('#edit_civilStatus').val(response.civilstatus);
+                $('#edit_personalEmail').val(response.personal_email);
+                $('#edit_workEmail').val(response.work_email);
+                //$('#edit_employeeType').val(response.employee_type);
+                $('#edit_startDate').val(response.start_date);
+                $('#edit_monthly').val(response.monthly_salary);
+                $('#edit_accBonus').val(response.account_bonus);
+                //$('#edit_client').val(response.client);
+                //$('#edit_position').val(response.position);
+                //$('#edit_employmentStatus').val(response.employment_status);
+                $('#edit_sss').val(response.sss_num);
+                $('#edit_pagibig').val(response.pagibig_num);
+                $('#edit_philhealth').val(response.philhealth_num);
+                $('#edit_tin').val(response.tin_num);
+                $('#edit_sssCon').val(response.sss_con);
+                $('#edit_pagibigCon').val(response.pagibig_con);
+                $('#edit_philhealthCon').val(response.philhealth_con);
+                $('#edit_tax').val(response.tax_percentage);
+
+    // Set the selected option in the select element
+    $('#edit_civilStatus').val(response.civilstatus);
+    $('#edit_employeeType').val(response.employee_type);
+    $('#edit_client').val(response.client);
+    $('#edit_position').val(response.position);
+    $('#edit_employmentStatus').val(response.employment_status);
+            }
+        });
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        $('#editEmployee').modal('hide');
+    }
+
+    // Function to switch tabs
+    function openEditTab(tabName) {
+        // Hide all tabs
+        $('.tab').hide();
+        // Show the selected tab
+        $('#' + tabName).show();
+
+        // Remove active class from all tab links
+        $('.nav-tabs .nav-link').removeClass('active');
+
+        // Add active class to the clicked tab link
+        $('.nav-tabs a[href="#' + tabName + '"]').addClass('active');
+    }
+    $(document).ready(function() {
+        // Attach click event listeners to tab links
+        $('.nav-tabs a').click(function() {
+            var tabName = $(this).attr('href').substr(1);
+            openEditTab(tabName);
+        });
+    });
+
+</script>
+
+<!-- EDIT EMPLOYEE MODAL -->
+<div class="modal fade" id="editEmployee" tabindex="-1" aria-labelledby="editEmployeeLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mb-5" id="viewEmployeeLabel">Employee Information</h5>
+                <h5 class="modal-title mb-5" id="editEmployeeLabel">Employee Information</h5>
 
                 <!-- Tab links -->
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#personal">Personal Information</a>
+                        <a class="nav-link active" aria-current="page" href="#personalEdit">Personal Information</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#employment">Employment Details</a>
+                        <a class="nav-link" href="#employmentEdit">Employment Details</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#benefit">Benefit Details</a>
+                        <a class="nav-link" href="#benefitEdit">Benefit Details</a>
                     </li>
                 </ul>
                 <button type="button" class="btn close" data-bs-dismiss="modal">Close</button>
@@ -698,111 +911,125 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             <!-- Tab content -->
             <div class="modal-body">
                 <!-- Personal Information tab -->
-                <div id="personal" class="tab">
+                <div id="personalEdit" class="tab">
                     <!-- Your personal information fields here -->
                     <!-- Placeholder for data -->
 
                     <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
-                    <input type="" name="firstname" class="form-control" id="firstname" value="<?php echo $data['firstname'];?>">
-
-                    <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
-                        <input type="" name="middlename" class="form-control" id="middlename" value="<?php echo $data['middlename'];?>">
+                        <input type="" name="edit_firstname" class="form-control" id="edit_firstname">
+                        
+                        <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
+                        <input type="" name="edit_middlename" class="form-control" id="edit_middlename">
 
                         <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
-                        <input type="" name="lastname" class="form-control" id="lastname" value="<?php echo $data['lastname'];?>">
+                        <input type="" name="edit_lastname" class="form-control" id="edit_lastname">
 
                         <label for="completeAddress" class="col-sm-2 col-form-label">Complete Address</label>
-                        <input type="" name="address" class="form-control" id="address" value="<?php echo $data['address'];?>">
+                        <input type="" name="edit_address" class="form-control" id="edit_address">
 
-                        <label for="birthdate" class="col-sm-2 col-form-label">Birthdate</label>
-                        <input type="date" name="birthdate" class="form-control" id="birthdate" value="<?php echo $data['birthdate'];?>">
+                        <label for="birthDate" class="col-sm-2 col-form-label">Birthdate</label>
+                        <input type="date" name="edit_birthdate" class="form-control" id="edit_birthdate">
 
                         <label for="contactNum" class="col-sm-2 col-form-label">Contact Number </label>
-                        <input type="" name="contactNum" class="form-control" id="contactNum" value="<?php echo $data['contact_num'];?>">
+                        <input type="" name="edit_contactNum" class="form-control" id="edit_contactNum">
 
                         <label for="civilStatus" class="col-sm-2 col-form-label">Civil Status</label>
-                        <input type="" name="civilStatus" class="form-control" id="civilStatus" value="<?php echo $data['civilstatus'];?>">
-
-                        <!-- <select class="form-select" name="createCivilStatus" aria-label="Civil Status Select">
+                        <select class="form-select" name="edit_civilStatus" aria-label="Civil Status Select" id="edit_civilStatus">
                             <option selected>Select Civil Status</option>
                             <option value="Single">Single</option>
                             <option value="Married">Married</option>
                             <option value="Widowed">Widowed</option>
-                        </select> -->
-
+                        </select>
+                        
                         <label for="personalEmail" class="col-sm-2 col-form-label">Personal Email</label>
-                        <input type="" name="personalEmail" class="form-control" id="personalEmail" value="<?php echo $data['personal_email'];?>">
+                        <input type="" name="edit_personalEmail" class="form-control" id="edit_personalEmail">
 
                         <label for="workEmail" class="col-sm-2 col-form-label">Work Email</label>
-                        <input type="" name="workEmail" class="form-control" id="workEmail" value="<?php echo $data['work_email'];?>">
+                        <input type="" name="edit_workEmail" class="form-control" id="edit_workEmail">
 
                         <label for="employeeType" class="col-sm-2 col-form-label"> Employee Type </label>
-                        <input type="" name="employeeType" class="form-control" id="employeeType" value="<?php echo $data['employee_type'];?>">
-                        <!-- <select class="form-select" name="createEmployeeType" aria-label="Employee Type Select">
+                        <select class="form-select" name="edit_employeeType" aria-label="Employee Type Select" id="edit_employeeType">
                             <option selected>Select Employee Type</option>
-                            <option value="Onsite">Work From Home</option>
-                            <option value="Home">Work Onsite</option>
-                            <option value="3">3</option>
-                        </select> -->
-                </div>
-
+                            <option value="Home">Work From Home</option>
+                            <option value="Onsite">Work Onsite</option>
+                        </select>
+                    
+                    </div>
 
                 <!-- Employment Details tab -->
-                <div id="employment" class="tab">
+                <div id="employmentEdit" class="tab">
                     <!-- Your employment details fields here -->
                     <!-- Placeholder for data -->
-                    <label for="startDate" class="col-sm-2 col-form-label">Start Date</label>
-                    <input type="" name="startDate" class="form-control" id="startDate" value="<?php echo $data['start_date'];?>">
 
-                    <label for="monthly" class="col-sm-2 col-form-label">Monthly Salary</label>
-                    <input type="" name="monthly" class="form-control" id="monthly" value="<?php echo $data['monthly_salary'];?>">
+                               <label for="startDate" class="col-sm-3 col-form-label">Start Date</label>
+                               <input type="date" name="edit_startDate" class="form-control createStartDate" id="edit_startDate">
 
-                    <label for="accBonus" class="col-sm-2 col-form-label">Account Bonus</label>
-                    <input type="" name="accBonus" class="form-control" id="accBonus" value="<?php echo $data['account_bonus'];?>">
+                                <label for="monthSalary" class="col-sm-3 col-form-label">Monthly Salary</label>
+                                <input type="number" name="edit_monthly" class="form-control" id="edit_monthly">
 
-                    <label for="client" class="col-sm-2 col-form-label">Client</label>
-                    <input type="" name="client" class="form-control" id="client" value="<?php echo $data['client'];?>">
+                                <label for="accountBonus" class="col-sm-3 col-form-label">Account Bonus</label>
+                                <input type="number" name="edit_accBonus" class="form-control" id="edit_accBonus">
 
-                    <label for="position" class="col-sm-2 col-form-label">Position</label>
-                    <input type="" name="position" class="form-control" id="position" value="<?php echo $data['position'];?>">
+                                <label for="client" class="col-sm-2 col-form-label">Client</label>
+                                <select class="form-select" name="edit_client" aria-label="Client Select" id="edit_client">
+                                    <option selected>Select Client</option>
+                                    <option value="VOXRUSH">VOXRUSH</option>
+                                    <option value="Telepath">Telepath</option>
+                                    <option value="Netsapiens">Netsapiens</option>
+                                </select>
+                                
+                                <label for="position" class="col-sm-2 col-form-label">Position</label>
+                                <select class="form-select" name="edit_position" aria-label="Position Select" id="edit_position">
+                                    <option selected>Select Position</option>
+                                    <option value="QA">QA</option>
+                                    <option value="NOC">NOC</option>
+                                    <option value="Accountant">Accountant</option>
+                                </select>
 
-                    <label for="employmentStatus" class="col-sm-2 col-form-label">Employment Status</label>
-                    <input type="" name="employmentStatus" class="form-control" id="employmentStatus" value="<?php echo $data['employment_status'];?>">
+                                <label for="employmentStatus" class="col-sm-2 col-form-label">Employment Status</label>
+                                <select class="form-select" name="edit_employmentStatus" aria-label="Employment Status Select" id="edit_employmentStatus">
+                                    <option selected>Select Employment Status</option>
+                                    <option value="Part Time">Part-Time</option>
+                                    <option value="Full Time">Full-Time</option>
+                                </select>
+            
 
                 </div>
 
                 <!-- Benefit Details tab -->
-                <div id="benefit" class="tab">
+                <div id="benefitEdit" class="tab">
                     <!-- Your benefit details fields here -->
                     <!-- Placeholder for data -->
-                    <label for="sss" class="col-sm-2 col-form-label">SSS Number:</label>
-                    <input type="" name="sss" class="form-control" id="sss" value="<?php echo $data['sss_num'];?>">
 
-                    <label for="pagibig" class="col-sm-2 col-form-label">Pag-ibig Number:</label>
-                    <input type="" name="pagibig" class="form-control" id="pagibig" value="<?php echo $data['pagibig_num'];?>">
+                               <label for="sss" class="col-sm-3 col-form-label">SSS Number</label>
+                               <input type="text" name="edit_sss" class="form-control" id="edit_sss">
 
-                    <label for="philhealth" class="col-sm-2 col-form-label">Philhealth Number:</label>
-                    <input type="" name="philhealth" class="form-control" id="philhealth" value="<?php echo $data['philhealth_num'];?>">
+                                <label for="pagibig" class="col-sm-3 col-form-label">Pag-ibig Number</label>
+                                <input type="text" name="edit_pagibig" class="form-control" id="edit_pagibig">
 
-                    <label for="tin" class="col-sm-2 col-form-label">Tin Number:</label>
-                    <input type="" name="tin" class="form-control" id="tin" value="<?php echo $data['tin_num'];?>">
+                                <label for="philhealth" class="col-sm-3 col-form-label">Philhealth Number</label>
+                                <input type="text" name="edit_philhealth" class="form-control" id="edit_philhealth">
 
-                    <label for="sssCon" class="col-sm-2 col-form-label">SSS Contribution:</label>
-                    <input type="" name="sssCon" class="form-control" id="sssCon" value="<?php echo $data['sss_con'];?>">
+                                <label for="tin" class="col-sm-3 col-form-label">TIN Number</label>
+                                <input type="text" name="edit_tin" class="form-control" id="edit_tin">
 
-                    <label for="pagibigCon" class="col-sm-2 col-form-label">Pag-ibig Contribution:</label>
-                    <input type="" name="pagibigCon" class="form-control" id="pagibigCon" value="<?php echo $data['pagibig_con'];?>">
+                                <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution</label>
+                                <input type="text" name="edit_sssCon" class="form-control" id="edit_sssCon">
 
-                    <label for="philhealthCon" class="col-sm-2 col-form-label">Philhealth Contribution:</label>
-                    <input type="" name="philhealthCon" class="form-control" id="philhealthCon" value="<?php echo $data['philhealth_con'];?>">
+                                <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution </label>
+                                <input type="number" name="edit_pagibigCon" class="form-control" id="edit_pagibigCon">
 
-                    <label for="tax" class="col-sm-2 col-form-label">Tax Percentage:</label>
-                    <input type="" name="tax" class="form-control" id="tax" value="<?php echo $data['tax_percentage'];?>">
+                                <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution</label>
+                                <input type="number" name="edit_philhealthCon" class="form-control" id="edit_philhealthCon">
+
+                                <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
+                                <input type="number" name="edit_tax" class="form-control" id="edit_tax">
+            
 
                 </div>
-                 <div class="modal-footer">
-                  <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="nextButton">Next</button>
-                 </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="nextButton">Next</button>
+                </div>
             </div>
         </div>
     </div>
