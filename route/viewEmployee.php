@@ -574,9 +574,10 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 </footer>
             </div>
             
-<script>
-// VIEW EMPLOYEE SCRIPT
-function openModal(employeeId) {
+<script> 
+ // VIEW EMPLOYEE SCRIPT
+
+ function openModal(employeeId) {
         // Show the modal
         $('#viewEmployee').modal('show');
         // Switch to the default tab (personal) when opening the modal
@@ -590,30 +591,30 @@ function openModal(employeeId) {
             success: function(response) {
                 // Update the modal content with the fetched employee details
                 // Assuming the response is an object containing the employee details
-                $('#firstname').val(response.firstname);
-                $('#middlename').val(response.middlename);
-                $('#lastname').val(response.lastname);
-                $('#address').val(response.address);
-                $('#birthdate').val(response.birthdate);
-                $('#contactNum').val(response.contact_num);
-                $('#civilStatus').val(response.civilstatus);
-                $('#personalEmail').val(response.personal_email);
-                $('#workEmail').val(response.work_email);
-                $('#employeeType').val(response.employee_type);
-                $('#startDate').val(response.start_date);
-                $('#monthly').val(response.monthly_salary);
-                $('#accBonus').val(response.account_bonus);
-                $('#client').val(response.client);
-                $('#position').val(response.position);
-                $('#employmentStatus').val(response.employment_status);
-                $('#sss').val(response.sss_num);
-                $('#pagibig').val(response.pagibig_num);
-                $('#philhealth').val(response.philhealth_num);
-                $('#tin').val(response.tin_num);
-                $('#sssCon').val(response.sss_con);
-                $('#pagibigCon').val(response.pagibig_con);
-                $('#philhealthCon').val(response.philhealth_con);
-                $('#tax').val(response.tax_percentage);
+                $('#firstname').text(response.firstname);
+                $('#middlename').text(response.middlename);
+                $('#lastname').text(response.lastname);
+                $('#address').text(response.address);
+                $('#birthdate').text(response.birthdate);
+                $('#contactNum').text(response.contact_num);
+                $('#civilStatus').text(response.civilstatus);
+                $('#personalEmail').text(response.personal_email);
+                $('#workEmail').text(response.work_email);
+                $('#employeeType').text(response.employee_type);
+                $('#startDate').text(response.start_date);
+                $('#monthly').text(response.monthly_salary);
+                $('#accBonus').text(response.account_bonus);
+                $('#client').text(response.client);
+                $('#position').text(response.position);
+                $('#employmentStatus').text(response.employment_status);
+                $('#sss').text(response.sss_num);
+                $('#pagibig').text(response.pagibig_num);
+                $('#philhealth').text(response.philhealth_num);
+                $('#tin').text(response.tin_num);
+                $('#sssCon').text(response.sss_con);
+                $('#pagibigCon').text(response.pagibig_con);
+                $('#philhealthCon').text(response.philhealth_con);
+                $('#tax').text(response.tax_percentage);
             }
         });
     }
@@ -623,22 +624,22 @@ function openModal(employeeId) {
         $('#viewEmployee').modal('hide');
     }
 
+    // Function to switch tabs
     function openTab(personal) {
-    // Hide all tabs
-    $('.tab').hide();
-    // Show the selected tab
-    $('#' + personal).show();
+        // Hide all tabs
+        $('.tab').hide();
+        // Show the selected tab
+        $('#' + personal).show();
 
-    // Remove active class from all tab links
-    $('.nav-tabs .nav-link').removeClass('active');
+        // Remove active class from all tab links
+        $('.nav-tabs .nav-link').removeClass('active');
 
-    // Add active class to the clicked tab link
-    $('.nav-tabs a[href="#' + personal + '"]').addClass('active');
-}
+        // Add active class to the clicked tab link
+        $('.nav-tabs a[href="#' + personal + '"]').addClass('active');
+    }
 
-
- // Event listener to open modal for each employee
- $(document).ready(function () {
+    // Event listener to open modal for each employee
+    $(document).ready(function () {
         // Attach click event listeners to tab links
         $('.nav-tabs a').click(function () {
             var tabName = $(this).attr('href').substr(1);
@@ -666,8 +667,7 @@ function openModal(employeeId) {
         $('#nextButton').click(goToNextTab);
     });
 
- </script>
-
+</script>
 
 <!-- VIEW EMPLOYEE MODAL -->
 <div class="modal fade" id="viewEmployee" tabindex="-1" aria-labelledby="viewEmployeeLabel" aria-hidden="true">
@@ -678,16 +678,16 @@ function openModal(employeeId) {
 
                 <!-- Tab links -->
                 <ul class="nav nav-tabs">
-                  <li class="nav-item">
-                     <a class="nav-link active" aria-current="page" href="#personal">Personal Information</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="#employment">Employment Details</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="#benefit">Benefit Details</a>
-                   </li>
-                </ul> 
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#personal">Personal Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#employment">Employment Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#benefit">Benefit Details</a>
+                    </li>
+                </ul>
                 <button type="button" class="btn close" data-bs-dismiss="modal">Close</button>
             </div>
 
@@ -699,47 +699,34 @@ function openModal(employeeId) {
                     <!-- Placeholder for data -->
 
                     <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
-                    <input type="" name="firstname" class="form-control" id="firstname">
+                    <span class="form-control" id="firstname"> </span>
 
                     <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
-                        <input type="" name="middlename" class="form-control" id="middlename">
+                    <span class="form-control" id="middlename"> </span>
 
-                        <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
-                        <input type="" name="lastname" class="form-control" id="lastname">
+                    <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+                    <span class="form-control" id="lastname"> </span>
 
-                        <label for="completeAddress" class="col-sm-2 col-form-label">Complete Address</label>
-                        <input type="" name="address" class="form-control" id="address">
+                    <label for="completeAddress" class="col-sm-2 col-form-label">Complete Address</label>
+                    <span class="form-control" id="address"> </span>
+                        
+                    <label for="birthdate" class="col-sm-2 col-form-label">Birthdate</label>
+                    <span class="form-control" id="birthdate"> </span>
 
-                        <label for="birthdate" class="col-sm-2 col-form-label">Birthdate</label>
-                        <input type="date" name="birthdate" class="form-control" id="birthdate">
+                    <label for="contactNum" class="col-sm-2 col-form-label">Contact Number </label>
+                    <span class="form-control" id="contactNum"> </span>
 
-                        <label for="contactNum" class="col-sm-2 col-form-label">Contact Number </label>
-                        <input type="" name="contactNum" class="form-control" id="contactNum">
+                    <label for="civilStatus" class="col-sm-2 col-form-label">Civil Status</label>
+                    <span class="form-control" id="civilStatus">  </span>
 
-                        <label for="civilStatus" class="col-sm-2 col-form-label">Civil Status</label>
-                        <input type="" name="civilStatus" class="form-control" id="civilStatus">
+                    <label for="personalEmail" class="col-sm-2 col-form-label">Personal Email</label>
+                    <span class="form-control" id="personalEmail">  </span>
 
-                        <!-- <select class="form-select" name="createCivilStatus" aria-label="Civil Status Select">
-                            <option selected>Select Civil Status</option>
-                            <option value="Single">Single</option>
-                            <option value="Married">Married</option>
-                            <option value="Widowed">Widowed</option>
-                        </select> -->
+                    <label for="workEmail" class="col-sm-2 col-form-label">Work Email</label>
+                    <span class="form-control" id="workEmail"> </span>
 
-                        <label for="personalEmail" class="col-sm-2 col-form-label">Personal Email</label>
-                        <input type="" name="personalEmail" class="form-control" id="personalEmail">
-
-                        <label for="workEmail" class="col-sm-2 col-form-label">Work Email</label>
-                        <input type="" name="workEmail" class="form-control" id="workEmail" >
-
-                        <label for="employeeType" class="col-sm-2 col-form-label"> Employee Type </label>
-                        <input type="" name="employeeType" class="form-control" id="employeeType" >
-                        <!-- <select class="form-select" name="createEmployeeType" aria-label="Employee Type Select">
-                            <option selected>Select Employee Type</option>
-                            <option value="Onsite">Work From Home</option>
-                            <option value="Home">Work Onsite</option>
-                            <option value="3">3</option>
-                        </select> -->
+                    <label for="employeeType" class="col-sm-2 col-form-label"> Employee Type </label>
+                    <span class="form-control" id="employeeType"> </span>
                 </div>
 
 
@@ -748,22 +735,22 @@ function openModal(employeeId) {
                     <!-- Your employment details fields here -->
                     <!-- Placeholder for data -->
                     <label for="startDate" class="col-sm-2 col-form-label">Start Date</label>
-                    <input type="" name="startDate" class="form-control" id="startDate">
+                    <span class="form-control" id="startDate"> </span>
 
                     <label for="monthly" class="col-sm-2 col-form-label">Monthly Salary</label>
-                    <input type="" name="monthly" class="form-control" id="monthly">
+                    <span class="form-control" id="monthly"> </span>
 
                     <label for="accBonus" class="col-sm-2 col-form-label">Account Bonus</label>
-                    <input type="" name="accBonus" class="form-control" id="accBonus">
+                    <span class="form-control" id="accBonus">  </span>
 
                     <label for="client" class="col-sm-2 col-form-label">Client</label>
-                    <input type="" name="client" class="form-control" id="client">
+                    <span class="form-control" id="client"> </span>
 
                     <label for="position" class="col-sm-2 col-form-label">Position</label>
-                    <input type="" name="position" class="form-control" id="position">
+                    <span class="form-control" id="position"> </span>
 
                     <label for="employmentStatus" class="col-sm-2 col-form-label">Employment Status</label>
-                    <input type="" name="employmentStatus" class="form-control" id="employmentStatus">
+                    <span class="form-control" id="employmentStatus"> </span>
 
                 </div>
 
@@ -772,28 +759,28 @@ function openModal(employeeId) {
                     <!-- Your benefit details fields here -->
                     <!-- Placeholder for data -->
                     <label for="sss" class="col-sm-2 col-form-label">SSS Number:</label>
-                    <input type="" name="sss" class="form-control" id="sss">
+                    <span class="form-control" id="sss"> </span>
 
                     <label for="pagibig" class="col-sm-2 col-form-label">Pag-ibig Number:</label>
-                    <input type="" name="pagibig" class="form-control" id="pagibig">
+                    <span class="form-control" id="pagibig"> </span>
 
                     <label for="philhealth" class="col-sm-2 col-form-label">Philhealth Number:</label>
-                    <input type="" name="philhealth" class="form-control" id="philhealth">
+                    <span class="form-control" id="philhealth">  </span>
 
                     <label for="tin" class="col-sm-2 col-form-label">Tin Number:</label>
-                    <input type="" name="tin" class="form-control" id="tin">
+                    <span class="form-control" id="tin"> </span>
 
                     <label for="sssCon" class="col-sm-2 col-form-label">SSS Contribution:</label>
-                    <input type="" name="sssCon" class="form-control" id="sssCon">
+                    <span class="form-control" id="sssCon">  </span>
 
                     <label for="pagibigCon" class="col-sm-2 col-form-label">Pag-ibig Contribution:</label>
-                    <input type="" name="pagibigCon" class="form-control" id="pagibigCon">
+                    <span class="form-control" id="pagibigCon">  </span>
 
                     <label for="philhealthCon" class="col-sm-2 col-form-label">Philhealth Contribution:</label>
-                    <input type="" name="philhealthCon" class="form-control" id="philhealthCon">
+                    <span class="form-control" id="philhealthCon"> </span>
 
                     <label for="tax" class="col-sm-2 col-form-label">Tax Percentage:</label>
-                    <input type="" name="tax" class="form-control" id="tax">
+                    <span class="form-control" id="tax"> </span>
 
                 </div>
                  <div class="modal-footer">
@@ -807,8 +794,8 @@ function openModal(employeeId) {
 
 
 <script>
-// EDIT EMPLOYEE SCRIPT
-function openEditModal(employeeId) {
+    // EDIT EMPLOYEE SCRIPT
+    function openEditModal(employeeId) {
         // Show the modal
         $('#editEmployee').modal('show');
         // Switch to the default tab (personal) when opening the modal
@@ -861,31 +848,60 @@ function openEditModal(employeeId) {
     function closeModal() {
         $('#editEmployee').modal('hide');
     }
-    
+
     // Function to switch tabs
-    function openEditTab(tabName) {
+    function openEditTab(personalEdit) {
         // Hide all tabs
         $('.tab').hide();
         // Show the selected tab
-        $('#' + tabName).show();
+        $('#' + personalEdit).show();
 
         // Remove active class from all tab links
         $('.nav-tabs .nav-link').removeClass('active');
 
         // Add active class to the clicked tab link
-        $('.nav-tabs a[href="#' + tabName + '"]').addClass('active');
+        $('.nav-tabs a[href="#' + personalEdit + '"]').addClass('active');
     }
-    $(document).ready(function() {
+
+    // Event listener to open modal for each employee
+    $(document).ready(function () {
         // Attach click event listeners to tab links
-        $('.nav-tabs a').click(function() {
+        $('.nav-tabs a').click(function () {
             var tabName = $(this).attr('href').substr(1);
             openEditTab(tabName);
         });
     });
 
-     </script>
+    // Event listener to open modal for each employee
+    $(document).ready(function () {
+        // Attach click event listeners to tab links
+        $('.nav-tabs a').click(function () {
+            var tabName = $(this).attr('href').substr(1);
+            openEditTab(tabName);
+        });
+    });
 
+    $(document).ready(function () {
+        var currentTab = 0;
+        var totalTabs = $('.nav-tabs a').length;
 
+        // Function to switch to the next tab
+        function goToNextTab() {
+            currentTab++;
+            if (currentTab < totalTabs) {
+                var nextTabName = $('.nav-tabs a').eq(currentTab).attr('href').substr(1);
+                openEditTab(nextTabName);
+            } else {
+                // If all tabs have been visited, close the modal or perform any other action
+                closeModal();
+            }
+        }
+
+        // Attach click event listener to the Next button
+        $('#nextEditButton').click(goToNextTab);
+    });
+
+</script>
 
 <!-- EDIT EMPLOYEE MODAL -->
 <div class="modal fade" id="editEmployee" tabindex="-1" aria-labelledby="editEmployeeLabel" aria-hidden="true">
@@ -1025,10 +1041,11 @@ function openEditModal(employeeId) {
 
                                 <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
                                 <input type="number" name="edit_tax" class="form-control" id="edit_tax">
+            
 
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="nextButton">Next</button>
+                    <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="nextEditButton">Next</button>
                 </div>
             </div>
         </div>
