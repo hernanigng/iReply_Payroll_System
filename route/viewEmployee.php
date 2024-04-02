@@ -524,11 +524,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 <div class="modal-footer">
                     
                 </div>
-            
-               
-           
-            
-
+                    <?php include "../connection/database.php" ?>
                         <div class="card mb-4 mt-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -578,6 +574,100 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 </footer>
             </div>
             
+<script>
+// VIEW EMPLOYEE SCRIPT
+function openModal(employeeId) {
+        // Show the modal
+        $('#viewEmployee').modal('show');
+        // Switch to the default tab (personal) when opening the modal
+        openTab('personal');
+        // Fetch employee details using AJAX
+        $.ajax({
+            url: '../functions/get_employeeId.php',
+            type: 'POST',
+            data: { id: employeeId },
+            dataType: 'json', // Specify JSON as the expected data type
+            success: function(response) {
+                // Update the modal content with the fetched employee details
+                // Assuming the response is an object containing the employee details
+                $('#firstname').val(response.firstname);
+                $('#middlename').val(response.middlename);
+                $('#lastname').val(response.lastname);
+                $('#address').val(response.address);
+                $('#birthdate').val(response.birthdate);
+                $('#contactNum').val(response.contact_num);
+                $('#civilStatus').val(response.civilstatus);
+                $('#personalEmail').val(response.personal_email);
+                $('#workEmail').val(response.work_email);
+                $('#employeeType').val(response.employee_type);
+                $('#startDate').val(response.start_date);
+                $('#monthly').val(response.monthly_salary);
+                $('#accBonus').val(response.account_bonus);
+                $('#client').val(response.client);
+                $('#position').val(response.position);
+                $('#employmentStatus').val(response.employment_status);
+                $('#sss').val(response.sss_num);
+                $('#pagibig').val(response.pagibig_num);
+                $('#philhealth').val(response.philhealth_num);
+                $('#tin').val(response.tin_num);
+                $('#sssCon').val(response.sss_con);
+                $('#pagibigCon').val(response.pagibig_con);
+                $('#philhealthCon').val(response.philhealth_con);
+                $('#tax').val(response.tax_percentage);
+            }
+        });
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        $('#viewEmployee').modal('hide');
+    }
+
+    function openTab(personal) {
+    // Hide all tabs
+    $('.tab').hide();
+    // Show the selected tab
+    $('#' + personal).show();
+
+    // Remove active class from all tab links
+    $('.nav-tabs .nav-link').removeClass('active');
+
+    // Add active class to the clicked tab link
+    $('.nav-tabs a[href="#' + personal + '"]').addClass('active');
+}
+
+
+ // Event listener to open modal for each employee
+ $(document).ready(function () {
+        // Attach click event listeners to tab links
+        $('.nav-tabs a').click(function () {
+            var tabName = $(this).attr('href').substr(1);
+            openTab(tabName);
+        });
+    });
+
+    $(document).ready(function () {
+        var currentTab = 0;
+        var totalTabs = $('.nav-tabs a').length;
+
+        // Function to switch to the next tab
+        function goToNextTab() {
+            currentTab++;
+            if (currentTab < totalTabs) {
+                var nextTabName = $('.nav-tabs a').eq(currentTab).attr('href').substr(1);
+                openTab(nextTabName);
+            } else {
+                // If all tabs have been visited, close the modal or perform any other action
+                closeModal();
+            }
+        }
+
+        // Attach click event listener to the Next button
+        $('#nextButton').click(goToNextTab);
+    });
+
+ </script>
+
 
 <!-- VIEW EMPLOYEE MODAL -->
 <div class="modal fade" id="viewEmployee" tabindex="-1" aria-labelledby="viewEmployeeLabel" aria-hidden="true">
@@ -714,102 +804,11 @@ $query = $conn->query("SELECT * FROM tbl_employee");
     </div>
 </div>
 
-<script>
-    // VIEW EMPLOYEE SCRIPT
-     function openModal(employeeId) {
-        // Show the modal
-        $('#viewEmployee').modal('show');
-        // Switch to the default tab (personal) when opening the modal
-        openTab('personal');
-        // Fetch employee details using AJAX
-        $.ajax({
-            url: '../functions/get_employeeId.php',
-            type: 'POST',
-            data: { id: employeeId },
-            dataType: 'json', // Specify JSON as the expected data type
-            success: function(response) {
-                // Update the modal content with the fetched employee details
-                // Assuming the response is an object containing the employee details
-                $('#firstname').val(response.firstname);
-                $('#middlename').val(response.middlename);
-                $('#lastname').val(response.lastname);
-                $('#address').val(response.address);
-                $('#birthdate').val(response.birthdate);
-                $('#contactNum').val(response.contact_num);
-                $('#civilStatus').val(response.civilstatus);
-                $('#personalEmail').val(response.personal_email);
-                $('#workEmail').val(response.work_email);
-                $('#employeeType').val(response.employee_type);
-                $('#startDate').val(response.start_date);
-                $('#monthly').val(response.monthly_salary);
-                $('#accBonus').val(response.account_bonus);
-                $('#client').val(response.client);
-                $('#position').val(response.position);
-                $('#employmentStatus').val(response.employment_status);
-                $('#sss').val(response.sss_num);
-                $('#pagibig').val(response.pagibig_num);
-                $('#philhealth').val(response.philhealth_num);
-                $('#tin').val(response.tin_num);
-                $('#sssCon').val(response.sss_con);
-                $('#pagibigCon').val(response.pagibig_con);
-                $('#philhealthCon').val(response.philhealth_con);
-                $('#tax').val(response.tax_percentage);
-            }
-        });
-    }
 
-    // Function to close the modal
-    function closeModal() {
-        $('#viewEmployee').modal('hide');
-    }
-    function openTab(personal) {
-    // Hide all tabs
-    $('.tab').hide();
-    // Show the selected tab
-    $('#' + personal).show();
-
-    // Remove active class from all tab links
-    $('.nav-tabs .nav-link').removeClass('active');
-
-    // Add active class to the clicked tab link
-    $('.nav-tabs a[href="#' + personal + '"]').addClass('active');
-}
-
-
- // Event listener to open modal for each employee
- $(document).ready(function () {
-        // Attach click event listeners to tab links
-        $('.nav-tabs a').click(function () {
-            var tabName = $(this).attr('href').substr(1);
-            openTab(tabName);
-        });
-    });
-
-    $(document).ready(function () {
-        var currentTab = 0;
-        var totalTabs = $('.nav-tabs a').length;
-
-        // Function to switch to the next tab
-        function goToNextTab() {
-            currentTab++;
-            if (currentTab < totalTabs) {
-                var nextTabName = $('.nav-tabs a').eq(currentTab).attr('href').substr(1);
-                openTab(nextTabName);
-            } else {
-                // If all tabs have been visited, close the modal or perform any other action
-                closeModal();
-            }
-        }
-
-        // Attach click event listener to the Next button
-        $('#nextButton').click(goToNextTab);
-    });
-
-</script>
 
 <script>
-    // EDIT EMPLOYEE SCRIPT
-    function openEditModal(employeeId) {
+// EDIT EMPLOYEE SCRIPT
+function openEditModal(employeeId) {
         // Show the modal
         $('#editEmployee').modal('show');
         // Switch to the default tab (personal) when opening the modal
@@ -862,7 +861,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
     function closeModal() {
         $('#editEmployee').modal('hide');
     }
-
+    
     // Function to switch tabs
     function openEditTab(tabName) {
         // Hide all tabs
@@ -884,7 +883,9 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         });
     });
 
-</script>
+     </script>
+
+
 
 <!-- EDIT EMPLOYEE MODAL -->
 <div class="modal fade" id="editEmployee" tabindex="-1" aria-labelledby="editEmployeeLabel" aria-hidden="true">
@@ -1024,7 +1025,6 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
                                 <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
                                 <input type="number" name="edit_tax" class="form-control" id="edit_tax">
-            
 
                 </div>
                 <div class="modal-footer">
