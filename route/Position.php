@@ -14,31 +14,24 @@
 
 <script>
 // Function to show the modal for adding/editing clients
-function showModal(id = 0, companyName = '', contactName = '', website = '', contactNumber = '', contractDate = '', contactEmail = '') {
-    $('#clientId').val(id);
-    $('#companyName').val(companyName);
-    $('#contactName').val(contactName);
-    $('#website').val(website);
-    $('#contactNumber').val(contactNumber);
-    $('#contractDate').val(contractDate);
-    $('#contactEmail').val(contactEmail);
+function showModal(id = 0, title = '', description = '') {
+    $('#positionId').val(id);
+    $('#title').val(title);
+    $('#description').val(description);
     $('#itemModal').modal('show');
 }
 
 // Function to submit the form via AJAX
 function saveItem() {
-    var id = $('#clientId').val();
-    var companyName = $('#companyName').val();
-    var contactName = $('#contactName').val();
-    var website = $('#website').val();
-    var contactNumber = $('#contactNumber').val();
-    var contractDate = $('#contractDate').val();
-    var contactEmail = $('#contactEmail').val();
+    var id = $('#positionId').val();
+    var title = $('#title').val();
+    var description = $('#description').val();
+
 
     $.ajax({
         type: "POST",
-        url: "functions/add_Client.php",
-        data: { id: id, companyName: companyName, contactName: contactName, website: website, contactNumber: contactNumber, contractDate: contractDate, contactEmail: contactEmail },
+        url: "functions/add_Position.php",
+        data: { id: id, title: title, description: description },
         success: function(data){
             $('#itemModal').modal('hide');
             location.reload();
@@ -48,10 +41,10 @@ function saveItem() {
 
 // Function to delete a client via AJAX
 function deleteItem(id) {
-    if (confirm('Are you sure you want to delete this client?')) {
+    if (confirm('Are you sure you want to delete this position?')) {
         $.ajax({
             type: "POST",
-            url: "functions/delete_Client.php",
+            url: "functions/delete_Position.php",
             data: { id: id },
             success: function(data){
                 location.reload();
@@ -69,7 +62,7 @@ function deleteItem(id) {
 
                 <main>
                     <div class="container-fluid px-4">
-                        <h3 class="mt-4">Clients</h3>
+                        <h3 class="mt-4">Positions</h3>
   
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button class="btn btn-primary" type="button" onclick="showModal()">Add New</button>
@@ -78,18 +71,14 @@ function deleteItem(id) {
                         <div class="card mb-4 mt-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                List of Clients
+                                List of Positions
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>Company Name</th>
-                                            <th>Contact Name</th>
-                                            <th>Website</th>
-                                            <th>Contact Number</th>
-                                            <th>Contract Date</th>
-                                            <th>Contact Email</th>
+                                            <th>Title</th>
+                                            <th>Description</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -99,20 +88,16 @@ function deleteItem(id) {
                     include_once '../connection/database.php';
 
                     // Fetch clients from database
-                    $result = mysqli_query($conn, "SELECT * FROM tbl_client");
+                    $result = mysqli_query($conn, "SELECT * FROM tbl_position");
 
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
-                        echo "<input type='hidden' class='clientId' value='{$row['Client_ID']}'>";
-                        echo "<td>{$row['Company_Name']}</td>";
-                        echo "<td>{$row['Contact_Name']}</td>";
-                        echo "<td>{$row['Website']}</td>";
-                        echo "<td>{$row['Contact_Number']}</td>";
-                        echo "<td>{$row['Contract_Date']}</td>";
-                        echo "<td>{$row['Contact_Email']}</td>";
+                        echo "<input type='hidden' class='positionId' value='{$row['position_ID']}'>";
+                        echo "<td>{$row['Title']}</td>";
+                        echo "<td>{$row['Description']}</td>";
                         echo "<td>";
-                        echo "<button class='btn btn-sm btn-primary' onclick='showModal({$row['Client_ID']},\"{$row['Company_Name']}\", \"{$row['Contact_Name']}\", \"{$row['Website']}\", \"{$row['Contact_Number']}\", \"{$row['Contract_Date']}\", \"{$row['Contact_Email']}\")'>Edit</button>";
-                        echo "<button class='btn btn-sm btn-danger' onclick='deleteItem({$row['Client_ID']})'>Delete</button>";
+                        echo "<button class='btn btn-sm btn-primary' onclick='showModal({$row['position_ID']},\"{$row['Title']}\", \"{$row['Description']}\")'>Edit</button>";
+                        echo "<button class='btn btn-sm btn-danger' onclick='deleteItem({$row['position_ID']})'>Delete</button>";
                         echo "</td>";
                         echo "</tr>";
                     }
@@ -130,44 +115,25 @@ function deleteItem(id) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add | Edit Client</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add | Edit Position</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
 
-                <input type="hidden" id="clientId">
+                <input type="hidden" id="positionId">
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="companyName" placeholder="">
-                    <label for="companyName">Company Name:</label>
+                    <input type="text" class="form-control" id="title" placeholder="">
+                    <label for="title">Title</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="contactName" placeholder="">
-                    <label for="contactName">Contact Name:</label>
+                    <textarea class="form-control" placeholder="Leave a comment here" id="description"></textarea>
+                    <label for="description">Description</label>
                 </div>
 
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="website" placeholder="">
-                    <label for="website">Website:</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="contactNumber" placeholder="">
-                    <label for="contactNumber">Contact Number:</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="contractDate" placeholder="">
-                    <label for="contractDate">Contract Date:</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="contactEmail" placeholder="">
-                    <label for="contactEmail">Contact Email:</label>
-                </div>
 
                 
             </div>
@@ -178,9 +144,6 @@ function deleteItem(id) {
         </div>
     </div>
 </div>
-
-
-
 
 
                 <footer class="py-4 bg-light mt-auto">
