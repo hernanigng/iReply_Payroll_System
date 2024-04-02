@@ -872,15 +872,6 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         });
     });
 
-    // Event listener to open modal for each employee
-    $(document).ready(function () {
-        // Attach click event listeners to tab links
-        $('.nav-tabs a').click(function () {
-            var tabName = $(this).attr('href').substr(1);
-            openEditTab(tabName);
-        });
-    });
-
     $(document).ready(function () {
         var currentTab = 0;
         var totalTabs = $('.nav-tabs a').length;
@@ -901,6 +892,49 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         $('#nextEditButton').click(goToNextTab);
     });
 
+    // Attach click event listener to the Update button
+    $('#updateButton').click(updateEmployee);
+
+    function updateEmployee() {
+    // Retrieve the updated data from the form fields
+    var employeeId = $('#employee_id').val();
+    var firstname = $('#edit_firstname').val();
+    var middlename = $('#edit_middlename').val();
+    var lastname = $('#edit_lastname').val();
+    // Add other fields as needed
+
+    // Create a JSON object with the updated data
+    var updatedData = {
+        employee_id: employeeId,
+        firstname: firstname,
+        middlename: middlename,
+        lastname: lastname
+        // Add other fields as needed
+    };
+
+    // Perform AJAX request to update the employee data
+    $.ajax({
+        url: 'update_employee.php',
+        type: 'POST',
+        data: updatedData,
+        dataType: 'json',
+        success: function(response) {
+            // Handle success response
+            if (response.success) {
+                // If update was successful, display success message
+                console.log(response.message);
+                closeModal();
+            } else {
+                // If update failed, display error message
+                console.error(response.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            // Handle error response
+            console.error('Error updating employee:', error);
+        }
+    });
+}
 </script>
 
 <!-- EDIT EMPLOYEE MODAL -->
@@ -1041,7 +1075,10 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
                                 <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
                                 <input type="number" name="edit_tax" class="form-control" id="edit_tax">
-            
+                                
+                    <div class="modal-footer">
+                      <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="updateButton">Update</button>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -1051,6 +1088,5 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         </div>
     </div>
 </div>
-
 
 <?php include '../template/footer.php' ?>
