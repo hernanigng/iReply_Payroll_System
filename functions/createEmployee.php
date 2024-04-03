@@ -1,5 +1,5 @@
 <?php
-print_r($_POST); 
+//print_r($_POST); 
 
 $conn = mysqli_connect("localhost", "root", "", "ireply_payroll_db");
 
@@ -30,49 +30,70 @@ $pagibigContrib = $_POST['createPagibigContrib'];
 $philhealthContrib = $_POST['createPhilhealthContrib'];
 $taxPercent = $_POST['createTaxPercent'];
 
-$query1 = $conn->query("SELECT employee_id FROM tbl_employee ORDER BY employee_id DESC LIMIT 1;");
-if (!$query1) {
-    echo "Query 1 failed: " . $conn->error;
-    exit;
-}
+// Query to get the maximum employee ID currently in the database
+$query = $conn->query("SELECT MAX(CAST(SUBSTRING(employee_id, 2) AS UNSIGNED)) AS max_id FROM tbl_employee");
 
-$data = mysqli_fetch_array($query1);
-$last_id = $data['employee_id'];
-
-//if ($last_id == "") {
-  //  $nextId = 'BS00001';
-
-if ($last_id) {
-    $lastNumericId = intval(substr($last_id, 2)); // Extract numeric part and convert to integer
-    $nextNumericId = $lastNumericId + 1;
-} else {
-    $nextNumericId = 1;
-}
+    if (!$query) {
+        echo "Query failed: " . $conn->error;
+        exit;
+    }
 
 
-//$nextId = ($last_id !== null) ? $last_id + 1 : 1;
-$numberOfDigits = 6; 
-$emp_id =str_pad($nextNumericId, $numberOfDigits, '0', STR_PAD_LEFT);
+    $data = mysqli_fetch_array($query);
 
-$conn->query("INSERT INTO tbl_employee (firstname, middlename, lastname, address, birthdate, contact_num, civilstatus, personal_email, work_email, employee_type,
+    if ($data['max_id'] !== null) {
+        // If records exist, increment the maximum ID
+        $nextNumericId = $data['max_id'] + 1;
+    } else {
+        // If no records exist, start with ID '000101'
+        $nextNumericId = 101;
+    }
+
+    $nextEmployeeId = 'E' . sprintf('%06d', $nextNumericId);
+    //echo $nextEmployeeId;
+
+
+$result = $conn->query("INSERT INTO tbl_employee (employee_id, firstname, middlename, lastname, address, birthdate, contact_num, civilstatus, personal_email, work_email, employee_type,
 start_date, monthly_salary, account_bonus, client, position, employment_status, sss_num, pagibig_num, philhealth_num, tin_num, sss_con, pagibig_con, philhealth_con, tax_percentage)
-VALUES ('$firstName', '$midName', '$lastName', '$address', '$birthdate', '$contactNum', '$civilStat', '$persEmail', '$workEmail', '$employeeType', '$startDate',
+VALUES ('$nextEmployeeId','$firstName', '$midName', '$lastName', '$address', '$birthdate', '$contactNum', '$civilStat', '$persEmail', '$workEmail', '$employeeType', '$startDate',
 '$monthlySalary', '$accntBonus', '$client', '$position', '$employmentStatus', '$sss', '$pagibig', '$philhealth', '$tin', '$sssContrib', '$pagibigContrib', '$philhealthContrib', '$taxPercent')");
 
-if (!$conn) {
-  $error = mysqli_error($conn);
-  echo json_encode(array('error' => $error));
+
+if ($result === false) {
+    echo "Error: " . $conn->error;
 } else {
-  $last_id = $conn->insert_id;
-
-  $response = array(
-      'last_id' => $last_id,
-      'firstname' => $firstName,
-      'lastname' => $lastName,
-      'message' => '<span class="alert alert-info">Test Message</span>'
-  );
-
-  echo json_encode($response);
+    // Query executed successfully
+   // echo "New record inserted successfully!";
 }
+
+if ($result) {
+    // Construct the response array
+    $response = array(
+        'status' => 'success',
+        'message' => 'New record inserted successfully!',
+        'employee_id' => $nextEmployeeId,
+        'firstname' => $firstName,
+        'lastname' => $lastName,
+        'employee_type' => $employeeType
+    );
+} else {
+    // If insertion failed, construct an error response
+    $response = array(
+        'status' => 'error',
+        'message' => 'Failed to insert record into the database'
+    );
+}
+
+// Encode the response array into JSON format
+$jsonResponse = json_encode($response);
+
+// Set the proper Content-Type header to indicate JSON data
+header('Content-Type: application/json');
+
+// Output the JSON response
+echo $jsonResponse;
+
+
+
 $conn->close();
 ?>

@@ -489,33 +489,51 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 return;
             }
 
-            var data = $('#employmentListForm').serialize();
-            var url = "../functions/createEmployee.php";
-            $.post(url, data, function(response) {
-                //console.log(response);
-                $(".toast-body").html(response.last_id ? "Employee successfully inserted!" : "Failed to insert employee.");
-                $('#exampleModal').modal('hide');
+           var data = $('#employmentListForm').serialize();
+                var url = "../functions/createEmployee.php";
 
-
-                    // Show the toast
-                    $('.toast').toast('show');
-
+                $.post(url, data, function(response) {
+                    // Log the response to the console for inspection
                     console.log("Server Response:", response);
-                    $(".modal-body .notif").html(response.message);
-                    //console.log("Data:", data);
-            });
+                        $('#exampleModal').modal('hide');
+                        $('.toast').toast('show');  
+
+                    // Check the status of the response
+                    if (response.status === 'success') {
+                        // Construct the new row for the table
+                        var newRow = '<tr id="' + response.employee_id + '">' +
+                            '<td>' + response.employee_id + '</td>' +
+                            '<td>' + response.firstname + ' ' + response.lastname + '</td>' +
+                            '<td>' + response.employee_type + '</td>' +
+                            '<td>' +
+                            '<button class="btn btn-primary view" onclick="openModal(\'' + response.employee_id + '\')"> <i class="bi bi-eye"></i> </button>' +
+                            '<button class="btn btn-danger del" id="' + response.employee_id + '"> <i class="bi bi-trash"></i> </button>' +
+                            '<button class="btn btn-warning edit" id="' + response.employee_id + '"> <i class="bi bi-pencil"></i> </button>' +
+                            '</td>' +
+                            '</tr>';
+
+                        // Append the new row to the table body
+                        $('#datatablesSimple tbody').prepend(newRow);
+                    } else {
+                        // Handle error if insertion was not successful
+                        console.log("Error:", response.message);
+                    }
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.log("AJAX Error:", textStatus, errorThrown);
+                });
         });
     });
 </script>
 
-        <!-- Toast Notification -->
-        <div class="toast position-fixed top-50 start-50 translate-middle" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+       <!-- Toast Notification -->
+        <div class="toast position-fixed top-50 start-50 translate-middle"  role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
             <div class="toast-header">
+                <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
                 <strong class="me-auto">Notification</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-                <!-- Notification message will be inserted dynamically here -->
+               Employee Successfully Inserted
             </div>
         </div>
 
