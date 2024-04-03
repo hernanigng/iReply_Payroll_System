@@ -72,8 +72,7 @@
                             </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="medium">Sign-Out <i class="fa-solid fa-gear"></i></div>
-                        Administrator
+                    <a href="../connection/logout.php" class="option">Sign out</a>
                     </div>
                 </nav>
             </div>
