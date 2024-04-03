@@ -536,12 +536,9 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                Employee Successfully Inserted
             </div>
         </div>
+        <div class="modal-footer"> </div>
 
-
-                </div>
-                <div class="modal-footer">
-                    
-                </div>
+<div class="status"> </div>
                     <?php include "../connection/database.php" ?>
                         <div class="card mb-4 mt-4">
                             <div class="card-header">
@@ -827,6 +824,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             success: function(response) {
                 // Update the modal content with the fetched employee details
                 // Assuming the response is an object containing the employee details
+                $('#employeeId').val(response.employee_id);
                 $('#edit_firstname').val(response.firstname);
                 $('#edit_middlename').val(response.middlename);
                 $('#edit_lastname').val(response.lastname);
@@ -910,51 +908,9 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         $('#nextEditButton').click(goToNextTab);
     });
 
-    // Attach click event listener to the Update button
-    $('#updateButton').click(updateEmployee);
 
-    function updateEmployee() {
-    // Retrieve the updated data from the form fields
-    var employeeId = $('#employee_id').val();
-    var firstname = $('#edit_firstname').val();
-    var middlename = $('#edit_middlename').val();
-    var lastname = $('#edit_lastname').val();
-    // Add other fields as needed
-
-    // Create a JSON object with the updated data
-    var updatedData = {
-        employee_id: employeeId,
-        firstname: firstname,
-        middlename: middlename,
-        lastname: lastname
-        // Add other fields as needed
-    };
-
-    // Perform AJAX request to update the employee data
-    $.ajax({
-        url: 'update_employee.php',
-        type: 'POST',
-        data: updatedData,
-        dataType: 'json',
-        success: function(response) {
-            // Handle success response
-            if (response.success) {
-                // If update was successful, display success message
-                console.log(response.message);
-                closeModal();
-            } else {
-                // If update failed, display error message
-                console.error(response.message);
-            }
-        },
-        error: function(xhr, status, error) {
-            // Handle error response
-            console.error('Error updating employee:', error);
-        }
-    });
-}
+   
 </script>
-
 <!-- EDIT EMPLOYEE MODAL -->
 <div class="modal fade" id="editEmployee" tabindex="-1" aria-labelledby="editEmployeeLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog modal-lg">
@@ -984,7 +940,9 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                     <!-- Your personal information fields here -->
                     <!-- Placeholder for data -->
 
-                    <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+                        <input type="hidden" name="employeeId" class="form-control" id="employeeId">
+
+                        <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
                         <input type="" name="edit_firstname" class="form-control" id="edit_firstname">
                         
                         <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
@@ -1094,17 +1052,127 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                 <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
                                 <input type="number" name="edit_tax" class="form-control" id="edit_tax">
                                 
-                    <div class="modal-footer">
-                      <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="updateButton">Update</button>
-                    </div>
 
                 </div>
-                <div class="modal-footer">
+                <!-- <div class="modal-footer">
                     <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="nextEditButton">Next</button>
-                </div>
+                </div> -->
+                <div class="modal-footer">
+                      <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="updateButton">Update</button>
+                    </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+<script>
+    // UPDATE SCRIPT
+$(document).ready(function() {
+    // Attach click event listener to the Update button
+    $('#updateButton').click(function() {
+        // Retrieve the employee ID from the hidden input field
+        var employeeId = $('#employeeId').val();
+
+        // Check if employee ID is empty or not
+        if (employeeId === '') {
+            console.error('Employee ID is missing.');
+            return; // Stop execution if employee ID is missing
+        }
+
+        // Call the updateEmployee function with the employee ID
+        updateEmployee(employeeId);
+    });
+
+    // Define the updateEmployee function here
+    function updateEmployee(employeeId) {
+        // Your existing updateEmployee function code goes here
+        // Retrieve the updated data from the form fields
+        var employeeId = $('#employeeId').val();
+        var firstname = $('#edit_firstname').val();
+        var middlename = $('#edit_middlename').val();
+        var lastname = $('#edit_lastname').val();
+        var address = $('#edit_address').val();
+        var birthdate = $('#edit_birthdate').val();
+        var contactNum = $('#edit_contactNum').val();
+        var civilStatus = $('#edit_civilStatus').val();
+        var personalEmail = $('#edit_personalEmail').val();
+        var workEmail = $('#edit_workEmail').val();
+        var employeeType = $('#edit_employeeType').val();
+        var startDate = $('#edit_startDate').val();
+        var monthly = $('#edit_monthly').val();
+        var accBonus = $('#edit_accBonus').val();
+        var client = $('#edit_client').val();
+        var position = $('#edit_position').val();
+        var employmentStatus = $('#edit_employmentStatus').val();
+        var sss = $('#edit_sss').val();
+        var pagibig = $('#edit_pagibig').val();
+        var philhealth = $('#edit_philhealth').val();
+        var tin = $('#edit_tin').val();
+        var sssCon = $('#edit_sssCon').val();
+        var pagibigCon = $('#edit_pagibigCon').val();
+        var philhealthCon = $('#edit_philhealthCon').val();
+        var tax = $('#edit_tax').val();
+        // Add other fields as needed
+
+        // Create a JSON object with the updated data
+        var updatedData = {
+            employee_id: employeeId,
+            firstname: firstname,
+            middlename: middlename,
+            lastname: lastname,
+            address: address,
+            birthdate: birthdate,
+            contact_num: contactNum,
+            civilstatus: civilStatus,
+            personal_email: personalEmail,
+            work_email: workEmail,
+            employee_type: employeeType,
+            start_date: startDate,
+            monthly_salary: monthly,
+            account_bonus: accBonus,
+            client: client,
+            position: position,
+            employment_status: employmentStatus,
+            sss_num: sss,
+            pagibig_num: pagibig,
+            philhealth_num: philhealth,
+            tin_num: tin,
+            sss_con: sssCon,
+            pagibig_con: pagibigCon,
+            philhealth_con: philhealthCon,
+            tax_percentage: tax
+            // Add other fields as needed
+        };
+
+        // Perform AJAX request to update employee data
+        $.ajax({
+            url: '../functions/update_employee.php',
+            type: 'POST',
+            data: updatedData,
+            dataType: 'json',
+            success: function(response) {
+    // Handle success response
+    if (response.success) {
+        $(".status").html(response.message);
+        // If update was successful, display success message
+        console.log(response.message);
+        closeModal();
+        
+        // Remove the success message after 3 seconds
+        setTimeout(function() {
+            $(".status").html(""); // Remove the message from the DOM
+        }, 2000); // 3000 milliseconds = 3 seconds
+    } else {
+        // If update failed, display error message
+        console.error(response.message);
+    }
+},
+        });
+    }
+});
+</script>
+
 
 <?php include '../template/footer.php' ?>
