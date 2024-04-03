@@ -1,3 +1,4 @@
+<?php include '../connection/session.php' ?>
 
 <?php include '../template/header.php' ?>
 
