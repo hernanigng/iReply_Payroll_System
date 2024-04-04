@@ -533,7 +533,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             }
 
            var data = $('#employmentListForm').serialize();
-                var url = "../functions/createEmployee.php";
+                var url = "functions/createEmployee.php";
 
               $.post(url, data, function(response) {
                     console.log("Server Response:", response);
@@ -664,7 +664,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         openTab('personal');
         // Fetch employee details using AJAX
         $.ajax({
-            url: '../functions/get_employeeId.php',
+            url: 'functions/get_employeeId.php',
             type: 'POST',
             data: { id: id },
             dataType: 'json', // Specify JSON as the expected data type
@@ -882,7 +882,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         openEditTab('personalEdit');
         // Fetch employee details using AJAX
         $.ajax({
-            url: '../functions/get_employeeId.php',
+            url: 'functions/get_employeeId.php',
             type: 'POST',
             data: { id: employeeId },
             dataType: 'json', // Specify JSON as the expected data type
@@ -1213,7 +1213,7 @@ $(document).ready(function() {
 
         // Perform AJAX request to update employee data
         $.ajax({
-            url: '../functions/update_employee.php',
+            url: 'functions/update_employee.php',
             type: 'POST',
             data: updatedData,
             dataType: 'json',
