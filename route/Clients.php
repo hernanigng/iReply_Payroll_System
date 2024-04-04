@@ -26,8 +26,25 @@ function showModal(id = 0, companyName = '', contactName = '', website = '', con
     $('#itemModal').modal('show');
 }
 
-function closeModal(){
-    $('#itemModal').modal('hide');
+// Function to submit the form via AJAX
+function saveItem() {
+    var id = $('#clientId').val();
+    var companyName = $('#companyName').val();
+    var contactName = $('#contactName').val();
+    var website = $('#website').val();
+    var contactNumber = $('#contactNumber').val();
+    var contractDate = $('#contractDate').val();
+    var contactEmail = $('#contactEmail').val();
+
+    $.ajax({
+        type: "POST",
+        url: "functions/add_Client.php",
+        data: { id: id, companyName: companyName, contactName: contactName, website: website, contactNumber: contactNumber, contractDate: contractDate, contactEmail: contactEmail },
+        success: function(data){
+            $('#itemModal').modal('hide');
+            location.reload();
+        }
+    });
 }
 
 // Function to delete a client via AJAX
@@ -43,42 +60,6 @@ function deleteItem(id) {
         });
     }
 }
-
-// Function to submit the form via AJAX
-function saveItem() {
-    var id = $('#clientId').val();
-    var companyName = $('#companyName').val();
-    var contactName = $('#contactName').val();
-    var website = $('#website').val();
-    var contactNumber = $('#contactNumber').val();
-    var contractDate = $('#contractDate').val();
-    var contactEmail = $('#contactEmail').val();
-
-if (companyName === ""){
-    $('#companyName').addClass("is-invalid");
-    return false;
-}
-
-
-    $.ajax({
-        type: "POST",
-        url: "functions/add_Client.php",
-        data: { id: id, companyName: companyName, contactName: contactName, website: website, contactNumber: contactNumber, contractDate: contractDate, contactEmail: contactEmail },
-        success: function(data){
-            $('#itemModal').modal('hide');
-            location.reload();
-        }
-    });
-}
-
-$(document).ready(function(){
-    $('#itemForm').submit(function(event){
-        event.preventDefault();
-        saveItem();
-    });
-});
-
-
 
 // No need to initialize DataTable since you're using Simple DataTables
 </script>
@@ -130,10 +111,9 @@ $(document).ready(function(){
                         echo "<td>{$row['Contact_Number']}</td>";
                         echo "<td>{$row['Contract_Date']}</td>";
                         echo "<td>{$row['Contact_Email']}</td>";
-                        echo "<td class="">";
-                        echo "<button class='btn btn-sm btn-primary' onclick='showModal({$row['Client_ID']},\"{$row['Company_Name']}\", \"{$row['Contact_Name']}\", \"{$row['Website']}\", \"{$row['Contact_Number']}\", \"{$row['Contract_Date']}\", \"{$row['Contact_Email']}\")'><i class='fas fa-edit'></i></button>";
-                        echo "<button class='btn btn-sm btn-danger' onclick='deleteItem({$row['Client_ID']})'><i class='fas fa-trash-alt'></i></button>";
-                        
+                        echo "<td>";
+                        echo "<button class='btn btn-sm btn-primary' onclick='showModal({$row['Client_ID']},\"{$row['Company_Name']}\", \"{$row['Contact_Name']}\", \"{$row['Website']}\", \"{$row['Contact_Number']}\", \"{$row['Contract_Date']}\", \"{$row['Contact_Email']}\")'>Edit</button>";
+                        echo "<button class='btn btn-sm btn-danger' onclick='deleteItem({$row['Client_ID']})'>Delete</button>";
                         echo "</td>";
                         echo "</tr>";
                     }
@@ -144,7 +124,7 @@ $(document).ready(function(){
                         </div>
                     </div>
                 </main>
-    
+
 
             <!-- Modal -->
 <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -152,54 +132,50 @@ $(document).ready(function(){
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add | Edit Client</h5>
-                <button type="button" class="close" aria-label="Close" onclick="closeModal()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="itemForm" novalidate>
             <div class="modal-body">
 
                 <input type="hidden" id="clientId">
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="companyName" placeholder="" required>
-                    <label for="companyName">Company Name</label>
-                    <div class="invalid-feedback"> Required field. </div>
+                    <input type="text" class="form-control" id="companyName" placeholder="">
+                    <label for="companyName">Company Name:</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="contactName" placeholder="">
-                    <label for="contactName">Contact Name</label>
+                    <label for="contactName">Contact Name:</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="website" placeholder="">
-                    <label for="website">Website</label>
+                    <label for="website">Website:</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="contactNumber" placeholder="">
-                    <label for="contactNumber">Contact Number</label>
+                    <label for="contactNumber">Contact Number:</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input type="date" class="form-control" id="contractDate" placeholder="">
-                    <label for="contractDate">Contract Date</label>
+                    <label for="contractDate">Contract Date:</label>
                 </div>
 
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="contactEmail" placeholder="">
-                    <label for="contactEmail">Contact Email</label>
+                    <label for="contactEmail">Contact Email:</label>
                 </div>
 
                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="saveItem()">Save changes</button>
             </div>
-
-            </form>
         </div>
     </div>
 </div>
