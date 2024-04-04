@@ -31,8 +31,8 @@
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="../route/viewEmployee.php">Employee Masterlist</a>
-                                <a class="nav-link" href="Clients.php">Client</a>
-                                <a class="nav-link" href="#">Position</a>
+                                <a class="nav-link" href="../route/Clients.php">Client</a>
+                                <a class="nav-link" href="../route/Position.php">Position</a>
                             </nav>
                         </div>
 
