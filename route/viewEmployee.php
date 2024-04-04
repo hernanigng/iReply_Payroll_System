@@ -533,7 +533,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             }
 
            var data = $('#employmentListForm').serialize();
-                var url = "functions/createEmployee.php";
+                var url = "../functions/createEmployee.php";
 
               $.post(url, data, function(response) {
                     console.log("Server Response:", response);
@@ -629,8 +629,8 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                             <button class="btn btn-primary view" onclick="openModal('<?php echo $data['employee_id'];?>')"> 
                                               <i class="bi bi-eye"></i>
                                             </button>
-                                            <button class="btn btn-danger del" id="<?php echo $data['employee_id']; ?>">
-                                              <i class="bi bi-trash"></i>
+                                             <button class="btn btn-danger del" data-employee_id="<?php echo $data['employee_id']; ?>">
+                                                <i class="bi bi-trash"></i>
                                             </button>
                                             <button class="btn btn-warning edit" onclick="openEditModal('<?php echo $data['employee_id'];?>')">
                                               <i class="bi bi-pencil"></i>
@@ -652,6 +652,69 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                     </div>
                 </footer>
             </div>
+
+            
+            
+    <!-- Delete Employee Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete?
+            </div>
+            <div class="modal-footer">   
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  $(document).on('click', '.del', function() {
+        $('#confirmDeleteModal').modal('show');
+        var employeeId = $(this).data('employee_id'); // Retrieve employee_id using data() method
+        
+        $('#confirmDeleteButton').data('employeeId', employeeId);
+    });
+
+    $('#confirmDeleteButton').click(function() {
+        var employeeId = $(this).data('employeeId'); // Retrieve employeeId from data attribute
+        
+        $.ajax({
+            type: 'POST',
+            url: '../functions/deleteEmployee.php',
+            data: { id: employeeId },
+            success: function(response) {
+                //alert(response);
+                console.log('Employee deleted successfully');
+                 window.location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error deleting employee:', error);
+            }
+        });
+        
+          $.ajax({
+        type: 'POST',
+        url: '../functions/insertIntoArchive.php', // Path to PHP script handling insertion into tbl_archive
+        data: { id: employeeId },
+        success: function(response) {
+            console.log('Values inserted into tbl_archive');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error inserting values into tbl_archive:', error);
+        }
+    });
+    
+        $('#confirmDeleteModal').modal('hide');
+});
+
+</script>
             
 <script> 
  // VIEW EMPLOYEE SCRIPT
@@ -664,7 +727,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         openTab('personal');
         // Fetch employee details using AJAX
         $.ajax({
-            url: 'functions/get_employeeId.php',
+            url: '../functions/get_employeeId.php',
             type: 'POST',
             data: { id: id },
             dataType: 'json', // Specify JSON as the expected data type
@@ -882,7 +945,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         openEditTab('personalEdit');
         // Fetch employee details using AJAX
         $.ajax({
-            url: 'functions/get_employeeId.php',
+            url: '../functions/get_employeeId.php',
             type: 'POST',
             data: { id: employeeId },
             dataType: 'json', // Specify JSON as the expected data type
@@ -1213,7 +1276,7 @@ $(document).ready(function() {
 
         // Perform AJAX request to update employee data
         $.ajax({
-            url: 'functions/update_employee.php',
+            url: '../functions/update_employee.php',
             type: 'POST',
             data: updatedData,
             dataType: 'json',
