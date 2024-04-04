@@ -49,7 +49,7 @@ if ($data && password_verify($password, $data['password'])) {
     echo json_encode(
         array(
             'status' => 'fail',
-            'message' => '<span class="alert alert-danger col-md-12"> Username or password incorrect.</span>'
+            'message' => '<span class="alert alert-danger col-md-12"> incorrect username or password.</span>'
         )
     );
 }
