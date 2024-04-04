@@ -1,11 +1,7 @@
 <?php
 session_start();
 
-$conn = mysqli_connect("localhost", "root", "", "ireply_payroll_db");
-
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+include "database.php";
 
 $username = $_POST['username'];
 $password = $_POST['password'];
@@ -30,11 +26,11 @@ if (!$result) {
 
 $data = mysqli_fetch_array($result);
 
-if ($data && password_verify($password, $data['password'])) {
+if ($data && $password === $data['password']) {
     // Authentication successful, proceed with session management
     $_SESSION['loginStatus'] = "ok";
-    $_SESSION['firstname'] = $data['firstname'];
-    $_SESSION['lastname'] = $data['lastname'];
+    $_SESSION['username'] = $data['username'];
+    $_SESSION['password'] = $data['password'];
     $_SESSION['role'] = $data['user_role'];
 
     echo json_encode(
