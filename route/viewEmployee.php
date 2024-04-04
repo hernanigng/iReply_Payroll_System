@@ -125,21 +125,63 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                 <input type="number" name="createAccountBonus" class="form-control" id="createBonus_id" placeholder="PHP 0.00">
                                 <div id="error" style="color: red;"></div>
 
-                                <label for="client" class="col-sm-2 col-form-label">Client</label>
+                                 <label for="client" class="col-sm-2 col-form-label">Client</label>
                                 <select class="form-select" name="createClient" aria-label="Client Select">
-                                    <option selected>Select Client</option>
-                                    <option value="VOXRUSH">VOXRUSH</option>
-                                    <option value="Telepath">Telepath</option>
-                                    <option value="Netsapiens">Netsapiens</option>
+                                    <option selected disabled>Choose a client</option>
+                                    <?php
+                                        include "../connection/database.php";
+                                        if ($conn->connect_error) {
+                                            die("Connection failed: " . $conn->connect_error);
+                                        }
+
+                                        $sql = "SELECT Client_ID, Company_Name FROM tbl_client";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo '<option value="' . $row["Client_ID"] . '">' . $row["Company_Name"] . '</option>';
+                                            }
+                                        }
+
+                                        $conn->close();
+                                        ?>
                                 </select>
+
+                                <?php
+                                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                        $selectedClientId = $_POST['createClient'];
+                                        //echo "Selected Client ID: " . $selectedClientId;
+                                    }
+                                ?>
                                 
                                 <label for="position" class="col-sm-2 col-form-label">Position</label>
                                 <select class="form-select" name="createPosition" aria-label="Position Select">
-                                    <option selected>Select Position</option>
-                                    <option value="QA">QA</option>
-                                    <option value="NOC">NOC</option>
-                                    <option value="Accountant">Accountant</option>
+                                <option selected disabled>Choose a position</option>
+                                    <?php
+                                        include "../connection/database.php";
+                                        if ($conn->connect_error) {
+                                            die("Connection failed: " . $conn->connect_error);
+                                        }
+
+                                        $sql = "SELECT position_ID, Title FROM tbl_position";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo '<option value="' . $row["position_ID"] . '">' . $row["Title"] . '</option>';
+                                            }
+                                        }
+
+                                        $conn->close();
+                                        ?>
                                 </select>
+
+                                <?php
+                                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                        $selectedPositionID = $_POST['createPosition'];
+                                        //echo "Selected Position: " . $selectedPositionID;
+                                    }
+                                ?>
 
                                 <label for="employmentStatus" class="col-sm-2 col-form-label">Employment Status</label>
                                 <select class="form-select" name="createEmploymentStatus" aria-label="Employment Status Select">
@@ -493,13 +535,18 @@ $query = $conn->query("SELECT * FROM tbl_employee");
            var data = $('#employmentListForm').serialize();
                 var url = "../functions/createEmployee.php";
 
-                $.post(url, data, function(response) {
-                    // Log the response to the console for inspection
+              $.post(url, data, function(response) {
                     console.log("Server Response:", response);
                         $('#exampleModal').modal('hide');
                         $('.toast').toast('show');  
 
-                    // Check the status of the response
+                        $('.toast').on('hidden.bs.toast', function () {
+                            // Remove the dark overlay
+                            $('.modal-backdrop').remove();
+                            // Enable navigation
+                            $('body').css('overflow', 'auto');
+                        });
+
                     if (response.status === 'success') {
                         // Construct the new row for the table
                         var newRow = '<tr id="' + response.employee_id + '">' +
@@ -513,7 +560,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                             '</td>' +
                             '</tr>';
 
-                        // Append the new row to the table body
+
                         $('#datatablesSimple tbody').prepend(newRow);
                     } else {
                         // Handle error if insertion was not successful
@@ -522,6 +569,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 }).fail(function(jqXHR, textStatus, errorThrown) {
                     console.log("AJAX Error:", textStatus, errorThrown);
                 });
+
         });
     });
 </script>
