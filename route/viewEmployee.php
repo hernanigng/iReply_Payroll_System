@@ -540,7 +540,22 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         <div class="modal-footer"> </div>
 
 <div class="status"> </div>
-                    <?php include "../connection/database.php" ?>
+                    <?php include "../connection/database.php";
+                    
+                    $query = "SELECT * FROM tbl_employee";
+
+                     $result = mysqli_query($conn, $query);
+
+            // Check if the query executed successfully
+                     if (!$result) {
+            // Query execution failed, handle the error
+                     echo "Error: " . mysqli_error($conn);
+                    exit; // Stop further execution
+             }
+
+                    ?>
+
+                    
                         <div class="card mb-4 mt-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -557,7 +572,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php while ($data = mysqli_fetch_array($query)) { ?>
+                                    <?php while ($data = mysqli_fetch_array($result)) { ?>
                                         <tr id="<?php echo $data['employee_id']; ?>">
                                           <td><?php echo $data['employee_id']; ?></td>
                                           <td><?php echo $data['firstname'] . " " . $data['lastname']; ?></td>
@@ -594,6 +609,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
  // VIEW EMPLOYEE SCRIPT
 
  function openModal(employeeId) {
+    //console.log();
         // Show the modal
         $('#viewEmployee').modal('show');
         // Switch to the default tab (personal) when opening the modal
