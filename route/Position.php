@@ -1,3 +1,4 @@
+
 <?php include '../connection/session.php' ?>
 
 <?php include '../template/header.php' ?>
@@ -9,53 +10,74 @@
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<!-- Popper.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<!-- Bootstrap bundle (includes Popper.js) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 
 
 <script>
-// Function to show the modal for adding/editing clients
-function showModal(id = 0, title = '', description = '') {
-    $('#positionId').val(id);
-    $('#title').val(title);
-    $('#description').val(description);
-    $('#itemModal').modal('show');
-}
+    // Function to show the modal for adding/editing positions
+    function showModal(id = 0, title = '', description = '') {
+        $('#positionId').val(id);
+        $('#title').val(title);
+        $('#description').val(description);
+        $('#itemModal').modal('show');
+    }
 
-// Function to submit the form via AJAX
-function saveItem() {
-    var id = $('#positionId').val();
-    var title = $('#title').val();
-    var description = $('#description').val();
+    // Function to dismiss the modal
+    function closeModal() {
+        $('#itemModal').modal('hide');
+    }
 
-
-    $.ajax({
-        type: "POST",
-        url: "functions/add_Position.php",
-        data: { id: id, title: title, description: description },
-        success: function(data){
-            $('#itemModal').modal('hide');
-            location.reload();
+    // Function to delete a position via AJAX
+    function deleteItem(id) {
+        if (confirm('Are you sure you want to delete this position?')) {
+            $.ajax({
+                type: "POST",
+                url: "functions/delete_Position.php",
+                data: { id: id },
+                success: function(data){
+                    location.reload();
+                }
+            });
         }
-    });
-}
+    }
 
-// Function to delete a client via AJAX
-function deleteItem(id) {
-    if (confirm('Are you sure you want to delete this position?')) {
+    // Function to submit the form via AJAX
+    function saveItem() {
+        var title = $('#title').val().trim();
+        var description = $('#description').val().trim();
+
+        // Custom validation
+        if (title === "") {
+            $('#title').addClass("is-invalid");
+            return false; // Return false to indicate validation failure
+        }
+
+        // Perform AJAX request if validation passes
+        var id = $('#positionId').val();
         $.ajax({
             type: "POST",
-            url: "functions/delete_Position.php",
-            data: { id: id },
+            url: "functions/add_Position.php",
+            data: { id: id, title: title, description: description },
             success: function(data){
+                closeModal(); // Close the modal after successful submission
                 location.reload();
             }
         });
     }
-}
 
-// No need to initialize DataTable since you're using Simple DataTables
+    $(document).ready(function() {
+        // Event listener for form submission
+        $('#itemForm').submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+            saveItem(); // Call saveItem function
+        });
+    });
 </script>
+
+
+
 
 
 
@@ -111,40 +133,44 @@ function deleteItem(id) {
                 </main>
 
 
-            <!-- Modal -->
+<!-- Modal -->
 <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add | Edit Position</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" aria-label="Close" onclick="closeModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <form id="itemForm" novalidate>
+                <div class="modal-body">
+                    <input type="hidden" id="positionId">
 
-                <input type="hidden" id="positionId">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="title" placeholder="" required>
+                        <label for="title">Title</label>
+                        <div class="invalid-feedback">
+                            Please provide a title for this entry.
+                        </div>
+                    </div>
 
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="title" placeholder="">
-                    <label for="title">Title</label>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="description"></textarea>
+                        <label for="description">Description</label>
+                    </div>
                 </div>
 
-                <div class="form-floating mb-3">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="description"></textarea>
-                    <label for="description">Description</label>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close" data-dismiss="modal" onclick="closeModal()">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
-
-
                 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveItem()">Save changes</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
+
 
 
                 <footer class="py-4 bg-light mt-auto">
