@@ -10,7 +10,7 @@ if(isset($_POST["id"])) {
     // Check if connection is successful
     if($conn) {
         // Prepare SQL query
-        $query = "SELECT * FROM tbl_employee WHERE employee_id = $id";
+        $query = "SELECT * FROM tbl_employee WHERE employee_id = '$id' ";
 
         // Execute query
         $result = mysqli_query($conn, $query);

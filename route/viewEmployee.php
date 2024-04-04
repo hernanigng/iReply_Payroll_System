@@ -608,7 +608,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 <script> 
  // VIEW EMPLOYEE SCRIPT
 
- function openModal(employeeId) {
+ function openModal(id) {
     //console.log();
         // Show the modal
         $('#viewEmployee').modal('show');
@@ -618,7 +618,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         $.ajax({
             url: '../functions/get_employeeId.php',
             type: 'POST',
-            data: { id: employeeId },
+            data: { id: id },
             dataType: 'json', // Specify JSON as the expected data type
             success: function(response) {
                 // Update the modal content with the fetched employee details
