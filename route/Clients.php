@@ -130,7 +130,6 @@ $(document).ready(function(){
                         echo "<td>{$row['Contact_Number']}</td>";
                         echo "<td>{$row['Contract_Date']}</td>";
                         echo "<td>{$row['Contact_Email']}</td>";
-                        echo "<td class="">";
                         echo "<button class='btn btn-sm btn-primary' onclick='showModal({$row['Client_ID']},\"{$row['Company_Name']}\", \"{$row['Contact_Name']}\", \"{$row['Website']}\", \"{$row['Contact_Number']}\", \"{$row['Contract_Date']}\", \"{$row['Contact_Email']}\")'><i class='fas fa-edit'></i></button>";
                         echo "<button class='btn btn-sm btn-danger' onclick='deleteItem({$row['Client_ID']})'><i class='fas fa-trash-alt'></i></button>";
                         
