@@ -555,7 +555,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                             '<td>' + response.employee_type + '</td>' +
                             '<td>' +
                             '<button class="btn btn-primary view" onclick="openModal(\'' + response.employee_id + '\')"> <i class="bi bi-eye"></i> </button>' +
-                            '<button class="btn btn-danger del" id="' + response.employee_id + '"> <i class="bi bi-trash"></i> </button>' +
+                           '<button class="btn btn-danger del" data-employee_id="' + response.employee_id + '"> <i class="bi bi-trash"></i> </button>' +
                             '<button class="btn btn-warning edit" id="' + response.employee_id + '"> <i class="bi bi-pencil"></i> </button>' +
                             '</td>' +
                             '</tr>';
@@ -629,7 +629,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                             <button class="btn btn-primary view" onclick="openModal('<?php echo $data['employee_id'];?>')"> 
                                               <i class="bi bi-eye"></i>
                                             </button>
-                                             <button class="btn btn-danger del" data-employee_id="<?php echo $data['employee_id']; ?>">
+                                              <button class="btn btn-danger del" data-employee_id="<?php echo $data['employee_id']; ?>">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                             <button class="btn btn-warning edit" onclick="openEditModal('<?php echo $data['employee_id'];?>')">
@@ -684,10 +684,28 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
     $('#confirmDeleteButton').click(function() {
         var employeeId = $(this).data('employeeId'); // Retrieve employeeId from data attribute
+        console.log*('employeeId');
         
+    var formData = $('#employmentListForm').serialize();
+    
+    formData += '&id=' + employeeId;
+    
+    $.ajax({
+        type: 'POST',
+        url: 'functions/getEmployeeData.php',
+        data: { id: employeeId },
+        success: function(response) {
+            console.log('Data inserted into tbl_archive');
+            alert(response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error inserting data into tbl_archive:', error);
+        }
+    });
+
         $.ajax({
             type: 'POST',
-            url: 'functions/deleteEmployee.php',
+            url: '../functions/deleteEmployee.php',
             data: { id: employeeId },
             success: function(response) {
                 //alert(response);
@@ -697,19 +715,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             error: function(xhr, status, error) {
                 console.error('Error deleting employee:', error);
             }
-        });
-        
-          $.ajax({
-        type: 'POST',
-        url: '../functions/insertIntoArchive.php', // Path to PHP script handling insertion into tbl_archive
-        data: { id: employeeId },
-        success: function(response) {
-            console.log('Values inserted into tbl_archive');
-        },
-        error: function(xhr, status, error) {
-            console.error('Error inserting values into tbl_archive:', error);
-        }
-    });
+        });  
     
         $('#confirmDeleteModal').modal('hide');
 });
