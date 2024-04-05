@@ -119,9 +119,10 @@
                         echo "<td>{$row['Title']}</td>";
                         echo "<td>{$row['Description']}</td>";
                         echo "<td>";
-                        echo "<button class='btn btn-sm btn-primary' onclick='showModal({$row['position_ID']},\"{$row['Title']}\", \"{$row['Description']}\")'>Edit</button>";
-                        echo "<button class='btn btn-sm btn-danger' onclick='deleteItem({$row['position_ID']})'>Delete</button>";
+                        echo "<center><button class='btn btn-sm btn-primary' onclick='showModal({$row['position_ID']},\"{$row['Title']}\", \"{$row['Description']}\")'><i class='fas fa-edit'></i></button>";
+                        echo "<button class='btn btn-sm btn-danger' onclick='deleteItem({$row['position_ID']})'><i class='fas fa-trash-alt'></i></button></center>";
                         echo "</td>";
+                        
                         echo "</tr>";
                     }
                     ?>

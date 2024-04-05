@@ -10,7 +10,8 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
     </script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="assets/css/login_style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/login_style.css?=<?=time()?>" media="all">
+
     <link rel="icon" type="image/x-icon" href="assets/img/ireplyicon.png" sizes="16x16">
 
     <?php
@@ -105,9 +106,10 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center form_container">
-                	
+
+
 			<form id="login">
-                <div class="status"> </div>
+            <div class="status" style="margin-bottom:20px;"> </div>
                 <h5 class="mb-4 d-flex justify-content-center">iReply Payroll System</h5>
 			    <div class="input-group mb-3">
 			        <div class="input-group-append">
