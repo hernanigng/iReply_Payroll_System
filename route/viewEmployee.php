@@ -1289,24 +1289,33 @@ $(document).ready(function() {
             success: function(response) {
     // Handle success response
     if (response.success) {
-        $(".status").html(response.message);
-        // If update was successful, display success message
-        console.log(response.message);
-        closeModal();
-        
-        // Remove the success message after 3 seconds
-        setTimeout(function() {
-            $(".status").html(""); // Remove the message from the DOM
-        }, 2000); // 3000 milliseconds = 3 seconds
-    } else {
-        // If update failed, display error message
-        console.error(response.message);
-    }
+                    // Display toast notification
+                    var updateToast = new bootstrap.Toast($('#updateToast'));
+                    updateToast.show();
+                    
+                    // Optionally hide the modal
+                    closeModal();
+                } else {
+                    // If update failed, display error message
+                    console.error(response.message);
+                }
 },
         });
     }
 });
 </script>
 
+<!-- User Update Toast Notification -->
+<div class="toast position-fixed top-50 start-50 translate-middle" id="updateToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+            <div class="toast-header">
+                <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+               Employee Successfully Updated
+            </div>
+        </div>
+        <div class="modal-footer"> </div>
 
 <?php include '../template/footer.php' ?>
