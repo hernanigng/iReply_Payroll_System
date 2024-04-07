@@ -1,3 +1,21 @@
+<?php
+session_start(); // Start the session (should be at the top of your PHP file)
+
+// Check if both first name, last name, and user role are set in the session
+if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESSION['role'])) {
+    $firstname = $_SESSION['firstname'];
+    $lastname = $_SESSION['lastname'];
+    $userRole = $_SESSION['role'];
+} else {
+    // If any of the session variables are not set, set them to empty strings or default values
+    $firstname = '';
+    $lastname = '';
+    $userRole = ''; // You can set a default value here if needed
+}
+?>
+
+
+
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
 
@@ -7,7 +25,7 @@
             <div class="sb-sidenav-header">
                 <div class="profile">
                     <img src="../assets/img/icon.png" alt="Image" class="img-fluid">
-                    <h3 class="name">Hernani Ginog II</h3>
+                    <h3 class="name"><?php echo $firstname . ' ' . $lastname; ?></h3>
                     <a href="../route/profile.php" class="option">Set Profile</a>
                 </div>
             </div>
@@ -40,7 +58,7 @@
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-calculator"></i></div>
                         Employee Payroll
                         </a>
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="../route/user_management.php">
                         <div class="sb-nav-link-icon"><i class="fa-regular fa-user"></i></div>
                         User Management
                         </a>
@@ -70,9 +88,20 @@
 
                                 </nav>
                             </div>
-                    </div>
-                    <div class="sb-sidenav-footer">
-                    <a href="../connection/logout.php" class="option">Sign out</a>
-                    </div>
+<div class="sb-sidenav-footer">
+    <a href="../connection/logout.php" class="option">
+        Sign out
+        <i class="fas fa-cog" style="float: right; margin-top:5px;"></i>
+ <!-- Settings icon -->
+    </a>
+    <?php if ($userRole == 'admin'): ?>
+        <p class="role">Administrator</p>
+    <?php elseif ($userRole == 'accountant'): ?>
+        <p class="role">Accountant</p>
+    <?php endif; ?>
+</div>
+
+
+                    
                 </nav>
             </div>

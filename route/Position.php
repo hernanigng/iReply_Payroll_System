@@ -53,6 +53,10 @@
             $('#title').addClass("is-invalid");
             return false; // Return false to indicate validation failure
         }
+        if (description === "") {
+            $('#description').addClass("is-invalid");
+            return false; // Return false to indicate validation failure
+        }
 
         // Perform AJAX request if validation passes
         var id = $('#positionId').val();
@@ -144,6 +148,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
             <form id="itemForm" novalidate>
                 <div class="modal-body">
                     <input type="hidden" id="positionId">
@@ -159,6 +164,9 @@
                     <div class="form-floating mb-3">
                         <textarea class="form-control" placeholder="Leave a comment here" id="description"></textarea>
                         <label for="description">Description</label>
+                        <div class="invalid-feedback">
+                            Please provide a description for this entry.
+                        </div>
                     </div>
                 </div>
 

@@ -58,7 +58,26 @@ if (companyName === ""){
     $('#companyName').addClass("is-invalid");
     return false;
 }
-
+if (contactName === ""){
+    $('#contactName').addClass("is-invalid");
+    return false;
+}
+if (website === ""){
+    $('#website').addClass("is-invalid");
+    return false;
+}
+if (contactNumber === ""){
+    $('#contactNumber').addClass("is-invalid");
+    return false;
+}
+if (contractDate === ""){
+    $('#contractDate').addClass("is-invalid");
+    return false;
+}
+if (contactEmail === ""){
+    $('#contactEmail').addClass("is-invalid");
+    return false;
+}
 
     $.ajax({
         type: "POST",
@@ -171,28 +190,33 @@ $(document).ready(function(){
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="contactName" placeholder="">
+                    <input type="text" class="form-control" id="contactName" placeholder="" required>
                     <label for="contactName">Contact Name</label>
+                    <div class="invalid-feedback"> Required field. </div>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="website" placeholder="">
+                    <input type="text" class="form-control" id="website" placeholder="" required>
                     <label for="website">Website</label>
+                    <div class="invalid-feedback"> Required field. </div>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="contactNumber" placeholder="">
+                    <input type="text" class="form-control" id="contactNumber" placeholder="" required>
                     <label for="contactNumber">Contact Number</label>
+                    <div class="invalid-feedback"> Required field. </div>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="contractDate" placeholder="">
+                    <input type="date" class="form-control" id="contractDate" placeholder="" required>
                     <label for="contractDate">Contract Date</label>
+                    <div class="invalid-feedback"> Required field. </div>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="contactEmail" placeholder="">
+                    <input type="email" class="form-control" id="contactEmail" placeholder="" required>
                     <label for="contactEmail">Contact Email</label>
+                    <div class="invalid-feedback"> Required field. </div>
                 </div>
 
                 

@@ -74,7 +74,11 @@
   font-weight: 700;
   font-size: 90%;
 }
-
+.role {
+  font-size: 15px;
+  margin-bottom: 0;
+  color: #cfcfcf; 
+}
 
 
 /*!

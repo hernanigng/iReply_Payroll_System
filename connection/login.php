@@ -32,6 +32,11 @@ if ($data && $password === $data['password']) {
     $_SESSION['username'] = $data['username'];
     $_SESSION['password'] = $data['password'];
     $_SESSION['role'] = $data['user_role'];
+    
+    // Set first name and last name
+    $_SESSION['firstname'] = $data['firstname'];
+    $_SESSION['lastname'] = $data['lastname'];
+
 
     echo json_encode(
         array(
@@ -54,3 +59,4 @@ if ($data && $password === $data['password']) {
 mysqli_close($conn);
 
 ?>
+
