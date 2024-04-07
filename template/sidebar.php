@@ -6,7 +6,7 @@
 
             <div class="sb-sidenav-header">
                 <div class="profile">
-                    <img src="../assets/img/Bubbles.jpg" alt="Image" class="img-fluid">
+                    <img src="../assets/img/icon.png" alt="Image" class="img-fluid">
                     <h3 class="name">Hernani Ginog II</h3>
                     <a href="../route/profile.php" class="option">Set Profile</a>
                 </div>

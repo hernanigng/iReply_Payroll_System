@@ -66,6 +66,15 @@
 .th-bg{
   background-color: pink;
 }
+.iconsize{
+  font-size: 220%;
+}
+.icontitle{
+  margin-left: 5%;
+  font-weight: 700;
+  font-size: 90%;
+}
+
 
 
 /*!
