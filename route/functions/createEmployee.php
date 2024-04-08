@@ -1,7 +1,7 @@
 <?php
 //print_r($_POST); 
 
-$conn = mysqli_connect("localhost", "root", "", "ireply_payroll_db");
+include_once '../../connection/database.php';
 
 $firstName = $_POST['createFirstName'];
 $midName = $_POST['createMiddleName'];
