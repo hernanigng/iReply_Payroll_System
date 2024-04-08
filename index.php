@@ -71,13 +71,13 @@
                 $(".status").html(response.message);
 
                 if(response.status == 'success') {
-                    if( response.role == 'admin' ) {
+                    if( response.role == '1' ) {
 								
 								setTimeout( function() {
 									window.location.href = 'route/index.php';
 								},1000);
 								
-							} else if(response.role == 'accountant' ) {
+							} else if(response.role == '2' ) {
 								
 								setTimeout( function() {
 									window.location.href = 'route/index.php';

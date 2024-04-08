@@ -7,7 +7,7 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 
 // Use prepared statement to prevent SQL injection
-$query = "SELECT * FROM tbl_user WHERE username = ? LIMIT 1";
+$query = "SELECT * FROM tbl_user_management WHERE username = ? LIMIT 1";
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, "s", $username);
 mysqli_stmt_execute($stmt);
