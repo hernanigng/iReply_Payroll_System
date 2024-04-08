@@ -5,12 +5,12 @@ if(isset($_POST["id"])) {
     $id = $_POST["id"];
 
     // Establish database connection
-    $conn = mysqli_connect("localhost", "root", "", "ireply_payroll_db");
+    include_once '../../connection/database.php';
 
     // Check if connection is successful
     if($conn) {
         // Prepare SQL query
-        $query = "SELECT * FROM tbl_user WHERE user_id = '$id' ";
+        $query = "SELECT * FROM tbl_user_management WHERE user_management_id = '$id' ";
 
         // Execute query
         $result = mysqli_query($conn, $query);

@@ -2,7 +2,7 @@
 // Assuming you have already connected to your database
 //include "../connection/database.php";
 
-$conn = mysqli_connect("localhost", "root", "", "ireply_payroll_db");
+include_once '../../connection/database.php';
 
 // Validate if the 'employee_id' key exists and is not empty
 if (!isset($_POST['user_id']) || empty($_POST['user_id'])) {
@@ -23,7 +23,7 @@ $position = $_POST['position'];
 
 
 // Update the employee record in the database
-$query = "UPDATE tbl_user SET firstname=?, middlename=?, lastname=?, username=?,
+$query = "UPDATE tbl_user_management SET firstname=?, middlename=?, lastname=?, username=?,
 password=?, user_role=?, position=? WHERE user_id=?";
 
 $stmt = $conn->prepare($query);

@@ -14,10 +14,11 @@ function openModal(id) {
            data: { id: id },
            dataType: 'json', // Specify JSON as the expected data type
            success: function(response) {
+            console.log(response);
                // Update the modal content with the fetched employee details
                // Assuming the response is an object containing the employee details
                $('#firstname').text(response.firstname);
-               $('#middlename').text(response.middlename);
+               $("#middleinitial").text(response.middleinitial);
                $('#lastname').text(response.lastname);
                $('#username').text(response.username);
                $('#password').text(response.password);

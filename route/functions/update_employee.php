@@ -39,9 +39,32 @@ $tax = $_POST['tax_percentage'];
 // Validate other fields as needed...
 
 // Update the employee record in the database
-$query = "UPDATE tbl_employee SET firstname=?, middlename=?, lastname=?, address=?, birthdate=?, contact_num=?, civilstatus=?, personal_email=?,
-work_email=?, employee_type=?, start_date=?, monthly_salary=?, account_bonus=?, client=?, position=?, employment_status=?, sss_num=?, pagibig_num=?,
-philhealth_num=?, tin_num=?, sss_con=?, pagibig_con=?, philhealth_con=?, tax_percentage=? WHERE employee_id=?";
+$query = "UPDATE tbl_employee SET 
+firstname=?, 
+middlename=?, 
+lastname=?, 
+address=?, 
+birthdate=?, 
+contact_num=?, 
+civilstatus=?, 
+personal_email=?, 
+work_email=?, 
+employee_type=?, 
+start_date=?, 
+monthly_salary=?, 
+account_bonus=?,
+client=?, 
+position=?, 
+employment_status=?, 
+sss_num=?, 
+pagibig_num=?, 
+philhealth_num=?, 
+tin_num=?, 
+sss_con=?, 
+pagibig_con=?, 
+philhealth_con=?, 
+tax_percentage=? 
+WHERE employee_id=?";
 
 $stmt = $conn->prepare($query);
 if (!$stmt) {
@@ -55,11 +78,32 @@ if (!$stmt) {
 
 // Bind parameters and execute
 $stmt->bind_param('sssssssssssssssssssssssss', 
-$firstname, $middlename, $lastname, $address, 
-$birthdate, $contactNum, $civilStatus, $personalEmail, $workEmail, 
-$employeeType, $startDate, $monthly, $accBonus, $client, 
-$position, $employmentStatus, $sss, $pagibig, $philhealth, 
-$tin, $sssCon, $pagibigCon, $philhealthCon, $tax, $employeeId);
+$firstname, 
+$middlename,
+$lastname, 
+$address, 
+$birthdate, 
+$contactNum, 
+$civilStatus, 
+$personalEmail, 
+$workEmail, 
+$employeeType, 
+$startDate, 
+$monthly, 
+$accBonus, 
+$client, 
+$position, 
+$employmentStatus, 
+$sss, 
+$pagibig, 
+$philhealth, 
+$tin, 
+$sssCon, 
+$pagibigCon, 
+$philhealthCon, 
+$tax, 
+$employeeId);
+
 
 $result = $stmt->execute();
 

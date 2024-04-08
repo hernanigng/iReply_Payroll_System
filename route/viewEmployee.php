@@ -55,71 +55,55 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cancel"></button>
             </div>
 
-            <div class="modal-body" id="personalInformationContent">
-
+        <div class="modal-body" id="personalInformationContent">
+            
             <form id="employmentListForm" method="POST">
-                <span class="notif"></span>
-                <div id="insertEmployee" class="container">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label for="firstName" class="col-form-label">First Name</label>
-                            <input type="text" name="createFirstName" class="form-control" id="createFirstName_id">
-                        </div>
-                        <div class="col">
-                            <label for="middleName" class="col-form-label">Middle Name</label>
-                            <input type="text" name="createMiddleName" class="form-control" id="createMiddleName_id">
-                        </div>
-                        <div class="col">
-                            <label for="lastName" class="col-form-label">Last Name</label>
-                            <input type="text" name="createLastName" class="form-control" id="createLastName_id">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label for="completeAddress" class="col-form-label">Complete Address</label>
-                            <input type="text" name="createAddress" class="form-control" id="createAddress_id">
-                        </div>
-                        <div class="col">
-                            <label for="birthDate" class="col-form-label">Birthdate</label>
-                            <input type="date" name="createBirthdate" class="form-control" id="createBirthdate_id">
-                        </div>
-                        <div class="col">
-                            <label for="contactNum" class="col-form-label">Contact Number</label>
+                 <span class="notif"></span>
+            
+                <div id="insertEmployee">
+                    
+                    <div class="mb-3 row">
+                        <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+                        <input type="text" name="createFirstName" class="form-control" id="createFirstName_id">
+                        
+                        <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
+                        <input type="text" name="createMiddleName" class="form-control" id="createMiddleName_id">
+
+                        <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+                        <input type="text" name="createLastName" class="form-control" id="createLastName_id">
+
+                        <label for="completeAddress" class="col-sm-2 col-form-label">Complete Address</label>
+                        <input type="text" name="createAddress" class="form-control" id="createAddress_id">
+
+                        <label for="birthDate" class="col-sm-2 col-form-label">Birthdate</label>
+                        <input type="date" name="createBirthdate" class="form-control" id="createBirthdate_id">
+
+                        <label for="contactNum" class="col-sm-2 col-form-label">Contact Number </label>
                             <input type="text" name="createContactNum" class="form-control number-error" id="contactNumber_id">
                             <i class="fas fa-times input-icon" style="display: none;"></i>
                             <p id="NumError" class="error-message" style="display: none;"> Contact number should be 11 digits.</p>
-                        </div>
+
+                        <label for="civilStatus" class="col-sm-2 col-form-label">Civil Status</label>
+                        <select class="form-select" name="createCivilStatus" aria-label="Civil Status Select">
+                            <option selected>Select Civil Status</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Widowed">Widowed</option>
+                        </select>
+                        
+                        <label for="personalEmail" class="col-sm-2 col-form-label">Personal Email</label>
+                        <input type="text" name="createPersEmail" class="form-control" id="createPersEmail_id">
+
+                        <label for="workEmail" class="col-sm-2 col-form-label">Work Email</label>
+                        <input type="text" name="createWorkEmail" class="form-control" id="createWorkEmail_id">
+
+                        <label for="employeeType" class="col-sm-2 col-form-label"> Employee Type </label>
+                        <select class="form-select" name="createEmployeeType" aria-label="Employee Type Select">
+                            <option selected>Select Employee Type</option>
+                            <option value="Onsite">Work From Home</option>
+                            <option value="Home">Work Onsite</option>
+                        </select>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label for="civilStatus" class="col-form-label">Civil Status</label>
-                            <select class="form-select" name="createCivilStatus" aria-label="Civil Status Select">
-                                <option selected>Select Civil Status</option>
-                                <option value="Single">Single</option>
-                                <option value="Married">Married</option>
-                                <option value="Widowed">Widowed</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <label for="personalEmail" class="col-form-label">Personal Email</label>
-                            <input type="text" name="createPersEmail" class="form-control" id="createPersEmail_id">
-                        </div>
-                        <div class="col">
-                            <label for="workEmail" class="col-form-label">Work Email</label>
-                            <input type="text" name="createWorkEmail" class="form-control" id="createWorkEmail_id">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="employeeType" class="col-form-label">Employee Type</label>
-                            <select class="form-select" name="createEmployeeType" aria-label="Employee Type Select">
-                                <option selected>Select Employee Type</option>
-                                <option value="Onsite">Work From Home</option>
-                                <option value="Home">Work Onsite</option>
-                            </select>
-                        </div>
-                    </div>
-            
 
                     <div class="modal-footer">
                  <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button> -->
@@ -128,98 +112,85 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 </div>
            
                 <div id="employmentDetailsContent" style="display: none;">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="mb-3">
-                                        <label for="startDate" class="form-label">Start Date</label>
-                                        <input type="date" name="createStartDate" class="form-control createStartDate" id="createStartDate_id">
-                                    </div>
-                                </div>
+    
+                            <div class="mb-3 row">
+                                <label for="startDate" class="col-sm-3 col-form-label">Start Date</label>
+                                <input type="date" name="createStartDate" class="form-control createStartDate" id="createStartDate_id">
 
-                                <div class="col-sm-4">
-                                    <div class="mb-3">
-                                        <label for="monthSalary" class="form-label">Monthly Salary</label>
-                                        <input type="number" name="createMonthlySalary" class="form-control" id="createMonthlySalary_id" placeholder="PHP 0.00">
-                                        <div id="error" style="color: red;"></div>
-                                    </div>
-                                </div>
+                                <label for="monthSalary" class="col-sm-3 col-form-label">Monthly Salary</label>
+                                <input type="number" name="createMonthlySalary" class="form-control" id="createMonthlySalary_id" placeholder="PHP 0.00">
+                                <div id="error" style="color: red;"></div>
 
-                                <div class="col-sm-4">
-                                    <div class="mb-3">
-                                        <label for="accountBonus" class="form-label">Account Bonus</label>
-                                        <input type="number" name="createAccountBonus" class="form-control" id="createBonus_id" placeholder="PHP 0.00">
-                                        <div id="error" style="color: red;"></div>
-                                    </div>
-                                </div>
+                                <label for="accountBonus" class="col-sm-3 col-form-label">Account Bonus</label>
+                                <input type="number" name="createAccountBonus" class="form-control" id="createBonus_id" placeholder="PHP 0.00">
+                                <div id="error" style="color: red;"></div>
+
+                                 <label for="client" class="col-sm-2 col-form-label">Client</label>
+                                <select class="form-select" name="createClient" aria-label="Client Select">
+                                    <option selected disabled>Choose a client</option>
+                                    <?php
+                                        include "../connection/database.php";
+                                        if ($conn->connect_error) {
+                                            die("Connection failed: " . $conn->connect_error);
+                                        }
+
+                                        $sql = "SELECT Client_ID, Company_Name FROM tbl_client";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo '<option value="' . $row["Client_ID"] . '">' . $row["Company_Name"] . '</option>';
+                                            }
+                                        }
+
+                                        $conn->close();
+                                        ?>
+                                </select>
+
+                                <?php
+                                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                        $selectedClientId = $_POST['createClient'];
+                                        //echo "Selected Client ID: " . $selectedClientId;
+                                    }
+                                ?>
+                                
+                                <label for="position" class="col-sm-2 col-form-label">Position</label>
+                                <select class="form-select" name="createPosition" aria-label="Position Select">
+                                <option selected disabled>Choose a position</option>
+                                    <?php
+                                        include "../connection/database.php";
+                                        if ($conn->connect_error) {
+                                            die("Connection failed: " . $conn->connect_error);
+                                        }
+
+                                        $sql = "SELECT position_ID, Title FROM tbl_position";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo '<option value="' . $row["position_ID"] . '">' . $row["Title"] . '</option>';
+                                            }
+                                        }
+
+                                        $conn->close();
+                                        ?>
+                                </select>
+
+                                <?php
+                                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                        $selectedPositionID = $_POST['createPosition'];
+                                        //echo "Selected Position: " . $selectedPositionID;
+                                    }
+                                ?>
+
+                                <label for="employmentStatus" class="col-sm-2 col-form-label">Employment Status</label>
+                                <select class="form-select" name="createEmploymentStatus" aria-label="Employment Status Select">
+                                    <option selected>Select Employment Status</option>
+                                    <option value="Part Time">Part-Time</option>
+                                    <option value="Full Time">Full-Time</option>
+                                </select>
+            
                             </div>
-
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="mb-3">
-                                        <label for="client" class="form-label">Client</label>
-                                        <select class="form-select" name="createClient" aria-label="Client Select">
-                                            <option selected disabled>Choose a client</option>
-                                            <?php
-                                            include "../connection/database.php";
-                                            if ($conn->connect_error) {
-                                                die("Connection failed: " . $conn->connect_error);
-                                            }
-
-                                            $sql = "SELECT Client_ID, Company_Name FROM tbl_client";
-                                            $result = $conn->query($sql);
-
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-                                                    echo '<option value="' . $row["Client_ID"] . '">' . $row["Company_Name"] . '</option>';
-                                                }
-                                            }
-
-                                            $conn->close();
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="mb-3">
-                                        <label for="position" class="form-label">Position</label>
-                                        <select class="form-select" name="createPosition" aria-label="Position Select">
-                                            <option selected disabled>Choose a position</option>
-                                            <?php
-                                            include "../connection/database.php";
-                                            if ($conn->connect_error) {
-                                                die("Connection failed: " . $conn->connect_error);
-                                            }
-
-                                            $sql = "SELECT position_ID, Title FROM tbl_position";
-                                            $result = $conn->query($sql);
-
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-                                                    echo '<option value="' . $row["position_ID"] . '">' . $row["Title"] . '</option>';
-                                                }
-                                            }
-
-                                            $conn->close();
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <div class="mb-3">
-                                        <label for="employmentStatus" class="form-label">Employment Status</label>
-                                        <select class="form-select" name="createEmploymentStatus" aria-label="Employment Status Select">
-                                            <option selected>Select Employment Status</option>
-                                            <option value="Part Time">Part-Time</option>
-                                            <option value="Full Time">Full-Time</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-             
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" id="returnPersonalForm">Back</button>
@@ -229,76 +200,41 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 </div>
         
                 <div id="benefitDetailsContent" style="display: none;">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="mb-3">
-                    <label for="sss" class="form-label">SSS Number</label>
-                    <input type="number" name="createSSS" class="form-control number-error" id="createSSS_id">
-                    <i class="fas fa-times input-icon" style="display: none;"></i>
-                    <p id="sssNumberError" class="error-message" style="display: none;"> SSS number should be 10 digits.</p>
-                </div>
-            </div>
 
-            <div class="col-sm-3">
-                <div class="mb-3">
-                    <label for="pagibig" class="form-label">Pag-ibig Number</label>
-                    <input type="number" name="createPagibig" class="form-control number-error" id="createPagibig_id">
-                    <i class="fas fa-times input-icon" style="display: none;"></i>
-                    <p id="pagibigNumberError" class="error-message" style="display: none;"> Pagibig number should be 12 digits.</p>
-                </div>
-            </div>
+                            <div class="mb-3 row">
+                                <label for="sss" class="col-sm-3 col-form-label">SSS Number</label>
+                                <input type="number" name="createSSS" class="form-control number-error" id="createSSS_id">
+                                <i class="fas fa-times input-icon" style="display: none;"></i>
+                                <p id="sssNumberError" class="error-message" style="display: none;"> SSS number should be 10 digits.</p>
 
-            <div class="col-sm-3">
-                <div class="mb-3">
-                    <label for="philhealth" class="form-label">Philhealth Number</label>
-                    <input type="number" name="createPhilhealth" class="form-control number-error" id="createPhilhealth_id">
-                    <i class="fas fa-times input-icon" style="display: none;"></i>
-                    <p id="philhealthNumberError" class="error-message" style="display: none;"> Philhealth number should be 12 digits.</p>
-                </div>
-            </div>
+                                <label for="pagibig" class="col-sm-3 col-form-label">Pag-ibig Number</label>
+                                <input type="number" name="createPagibig" class="form-control number-error" id="createPagibig_id">
+                                <i class="fas fa-times input-icon" style="display: none;"></i>
+                                <p id="pagibigNumberError" class="error-message" style="display: none;"> Pagibig number should be 12 digits.</p>
 
-            <div class="col-sm-3">
-                <div class="mb-3">
-                    <label for="tin" class="form-label">TIN Number</label>
-                    <input type="number" name="createTin" class="form-control number-error" id="createTin_id">
-                    <i class="fas fa-times input-icon" style="display: none;"></i>
-                    <p id="tinNumberError" class="error-message" style="display: none;"> Tin number should be 9-12 digits.</p>
-                </div>
-            </div>
-        </div>
+                                <label for="philhealth" class="col-sm-3 col-form-label">Philhealth Number</label>
+                                <input type="number" name="createPhilhealth" class="form-control number-error" id="createPhilhealth_id">
+                                <i class="fas fa-times input-icon" style="display: none;"></i>
+                                <p id="philhealthNumberError" class="error-message" style="display: none;"> Philhealth number should be 12 digits.</p>
 
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="mb-3">
-                    <label for="sssContrib" class="form-label">SSS Contribution</label>
-                    <input type="number" name="createSSSContrib" class="form-control" id="createSSSContrib_id">
-                </div>
-            </div>
+                                <label for="tin" class="col-sm-3 col-form-label">TIN Number</label>
+                                <input type="number" name="createTin" class="form-control number-error" id="createTin_id">
+                                <i class="fas fa-times input-icon" style="display: none;"></i>
+                                <p id="tinNumberError" class="error-message" style="display: none;"> Tin number should be 9-12 digits.</p>
 
-            <div class="col-sm-3">
-                <div class="mb-3">
-                    <label for="pagibigContrib" class="form-label">Pagibig Contribution</label>
-                    <input type="number" name="createPagibigContrib" class="form-control" id="createPagibigContrib_id">
-                </div>
-            </div>
+                                <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution</label>
+                                <input type="number" name="createSSSContrib" class="form-control" id="createSSSContrib_id">
 
-            <div class="col-sm-3">
-                <div class="mb-3">
-                    <label for="philhealthContrib" class="form-label">Philhealth Contribution</label>
-                    <input type="number" name="createPhilhealthContrib" class="form-control" id="createPhilhealthContrib_id">
-                </div>
-            </div>
+                                <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution </label>
+                                <input type="number" name="createPagibigContrib" class="form-control" id="createPagibigContrib_id">
 
-            <div class="col-sm-3">
-                <div class="mb-3">
-                    <label for="taxPercent" class="form-label">Tax Percentage</label>
-                    <input type="number" name="createTaxPercent" class="form-control" id="createTaxPercent_id">
-                </div>
-            </div>
-        </div>
-    </div>
+                                <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution</label>
+                                <input type="number" name="createPhilhealthContrib" class="form-control" id="createPhilhealthContrib_id">
 
+                                <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
+                                <input type="number" name="createTaxPercent" class="form-control" id="createTaxPercent_id">
+            
+                            </div>
 
                     <div class="modal-footer"> 
                         <button type="button" class="btn btn-danger" id="returnDetailsForm">Back</button>
@@ -638,7 +574,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
     });
 </script>
 
-       <!-- Toast Notification Insert -->
+       <!-- Toast Notification -->
         <div class="toast position-fixed top-50 start-50 translate-middle"  role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
             <div class="toast-header">
                 <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
@@ -738,7 +674,6 @@ $query = $conn->query("SELECT * FROM tbl_employee");
     </div>
 </div>
 
-
 <script>
   $(document).on('click', '.del', function() {
         $('#confirmDeleteModal').modal('show');
@@ -761,7 +696,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         data: { id: employeeId },
         success: function(response) {
             console.log('Data inserted into tbl_archive');
-            //alert(response);
+            alert(response);
         },
         error: function(xhr, status, error) {
             console.error('Error inserting data into tbl_archive:', error);
@@ -770,12 +705,10 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
         $.ajax({
             type: 'POST',
-            url: 'functions/deleteEmployee.php',
+            url: '../functions/deleteEmployee.php',
             data: { id: employeeId },
             success: function(response) {
                 //alert(response);
-                
-                $('#deleteToast').toast('show');  
                 console.log('Employee deleted successfully');
                  window.location.reload();
             },
@@ -787,20 +720,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         $('#confirmDeleteModal').modal('hide');
 });
 
-
 </script>
-
-<!-- Toast Notification Delete -->
-<div class="toast position-fixed top-50 start-50 translate-middle" id="deleteToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
-            <div class="toast-header">
-                <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
-                <strong class="me-auto">Notification</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-               Employee Successfully Deleted
-            </div>
-        </div>
             
 <script> 
  // VIEW EMPLOYEE SCRIPT
@@ -812,40 +732,63 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         // Switch to the default tab (personal) when opening the modal
         openTab('personal');
         // Fetch employee details using AJAX
+        // Fetch employee details using AJAX
+$.ajax({
+    url: 'functions/get_employeeId.php',
+    type: 'POST',
+    data: { id: id },
+    dataType: 'json', // Specify JSON as the expected data type
+    success: function(response) {
+        // Update the modal content with the fetched employee details
+        // Assuming the response is an object containing the employee details
+        $('#firstname').text(response.firstname);
+        $('#middlename').text(response.middlename);
+        $('#lastname').text(response.lastname);
+        $('#address').text(response.address);
+        $('#birthdate').text(response.birthdate);
+        $('#contactNum').text(response.contact_num);
+        $('#civilStatus').text(response.civilstatus);
+        $('#personalEmail').text(response.personal_email);
+        $('#workEmail').text(response.work_email);
+        $('#employeeType').text(response.employee_type);
+        $('#startDate').text(response.start_date);
+        $('#monthly').text(response.monthly_salary);
+        $('#accBonus').text(response.account_bonus);
+
+        // Fetch client name using client ID
         $.ajax({
-            url: 'functions/get_employeeId.php',
+            url: 'functions/get_client.php',
             type: 'POST',
-            data: { id: id },
-            dataType: 'json', // Specify JSON as the expected data type
-            success: function(response) {
-                // Update the modal content with the fetched employee details
-                // Assuming the response is an object containing the employee details
-                $('#firstname').text(response.firstname);
-                $('#middlename').text(response.middlename);
-                $('#lastname').text(response.lastname);
-                $('#address').text(response.address);
-                $('#birthdate').text(response.birthdate);
-                $('#contactNum').text(response.contact_num);
-                $('#civilStatus').text(response.civilstatus);
-                $('#personalEmail').text(response.personal_email);
-                $('#workEmail').text(response.work_email);
-                $('#employeeType').text(response.employee_type);
-                $('#startDate').text(response.start_date);
-                $('#monthly').text(response.monthly_salary);
-                $('#accBonus').text(response.account_bonus);
-                $('#client').text(response.client);
-                $('#position').text(response.position);
-                $('#employmentStatus').text(response.employment_status);
-                $('#sss').text(response.sss_num);
-                $('#pagibig').text(response.pagibig_num);
-                $('#philhealth').text(response.philhealth_num);
-                $('#tin').text(response.tin_num);
-                $('#sssCon').text(response.sss_con);
-                $('#pagibigCon').text(response.pagibig_con);
-                $('#philhealthCon').text(response.philhealth_con);
-                $('#tax').text(response.tax_percentage);
+            data: { client_id: response.client },
+            dataType: 'json',
+            success: function(clientResponse) {
+                $('#client').text(clientResponse.client_name);
             }
         });
+
+        // Fetch position name using position ID
+        $.ajax({
+            url: 'functions/get_position.php',
+            type: 'POST',
+            data: { position_id: response.position },
+            dataType: 'json',
+            success: function(positionResponse) {
+                $('#position').text(positionResponse.position_name);
+            }
+        });
+
+        $('#employmentStatus').text(response.employment_status);
+        $('#sss').text(response.sss_num);
+        $('#pagibig').text(response.pagibig_num);
+        $('#philhealth').text(response.philhealth_num);
+        $('#tin').text(response.tin_num);
+        $('#sssCon').text(response.sss_con);
+        $('#pagibigCon').text(response.pagibig_con);
+        $('#philhealthCon').text(response.philhealth_con);
+        $('#tax').text(response.tax_percentage);
+    }
+});
+
     }
 
     // Function to close the modal
@@ -1025,54 +968,71 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 <script>
     // EDIT EMPLOYEE SCRIPT
     function openEditModal(employeeId) {
-        // Show the modal
-        $('#editEmployee').modal('show');
-        // Switch to the default tab (personal) when opening the modal
-        openEditTab('personalEdit');
-        // Fetch employee details using AJAX
-        $.ajax({
-            url: 'functions/get_employeeId.php',
-            type: 'POST',
-            data: { id: employeeId },
-            dataType: 'json', // Specify JSON as the expected data type
-            success: function(response) {
-                // Update the modal content with the fetched employee details
-                // Assuming the response is an object containing the employee details
-                $('#employeeId').val(response.employee_id);
-                $('#edit_firstname').val(response.firstname);
-                $('#edit_middlename').val(response.middlename);
-                $('#edit_lastname').val(response.lastname);
-                $('#edit_address').val(response.address);
-                $('#edit_birthdate').val(response.birthdate);
-                $('#edit_contactNum').val(response.contact_num);
-                //$('#edit_civilStatus').val(response.civilstatus);
-                $('#edit_personalEmail').val(response.personal_email);
-                $('#edit_workEmail').val(response.work_email);
-                //$('#edit_employeeType').val(response.employee_type);
-                $('#edit_startDate').val(response.start_date);
-                $('#edit_monthly').val(response.monthly_salary);
-                $('#edit_accBonus').val(response.account_bonus);
-                //$('#edit_client').val(response.client);
-                //$('#edit_position').val(response.position);
-                //$('#edit_employmentStatus').val(response.employment_status);
-                $('#edit_sss').val(response.sss_num);
-                $('#edit_pagibig').val(response.pagibig_num);
-                $('#edit_philhealth').val(response.philhealth_num);
-                $('#edit_tin').val(response.tin_num);
-                $('#edit_sssCon').val(response.sss_con);
-                $('#edit_pagibigCon').val(response.pagibig_con);
-                $('#edit_philhealthCon').val(response.philhealth_con);
-                $('#edit_tax').val(response.tax_percentage);
+    // Show the modal
+    $('#editEmployee').modal('show');
+    // Switch to the default tab (personal) when opening the modal
+    openEditTab('personalEdit');
+    // Fetch employee details using AJAX
+    $.ajax({
+        url: 'functions/get_employeeId.php',
+        type: 'POST',
+        data: { id: employeeId },
+        dataType: 'json',
+        success: function(response) {
+            // Update the modal content with the fetched employee details
+            $('#employeeId').val(response.employee_id);
+            $('#edit_firstname').val(response.firstname);
+            $('#edit_middlename').val(response.middlename);
+            $('#edit_lastname').val(response.lastname);
+            $('#edit_address').val(response.address);
+            $('#edit_birthdate').val(response.birthdate);
+            $('#edit_contactNum').val(response.contact_num);
+            $('#edit_personalEmail').val(response.personal_email);
+            $('#edit_workEmail').val(response.work_email);
+            $('#edit_startDate').val(response.start_date);
+            $('#edit_monthly').val(response.monthly_salary);
+            $('#edit_accBonus').val(response.account_bonus);
+            $('#edit_sss').val(response.sss_num);
+            $('#edit_pagibig').val(response.pagibig_num);
+            $('#edit_philhealth').val(response.philhealth_num);
+            $('#edit_tin').val(response.tin_num);
+            $('#edit_sssCon').val(response.sss_con);
+            $('#edit_pagibigCon').val(response.pagibig_con);
+            $('#edit_philhealthCon').val(response.philhealth_con);
+            $('#edit_tax').val(response.tax_percentage);
 
-    // Set the selected option in the select element
-    $('#edit_civilStatus').val(response.civilstatus);
-    $('#edit_employeeType').val(response.employee_type);
-    $('#edit_client').val(response.client);
-    $('#edit_position').val(response.position);
-    $('#edit_employmentStatus').val(response.employment_status);
-            }
-        });
-    }
+            // Set the selected option in the select elements
+            $('#edit_civilStatus').val(response.civilstatus);
+            $('#edit_employeeType').val(response.employee_type);
+            $('#edit_employmentStatus').val(response.employment_status);
+            
+            // Fetch client name using client ID
+            $.ajax({
+                url: 'functions/get_client.php',
+                type: 'POST',
+                data: { client_id: response.client },
+                dataType: 'json',
+                success: function(clientResponse) {
+                    console.log(clientResponse);
+                    $('#edit_client').val(response.client);
+                }
+                
+            });
+
+            // Fetch position name using position ID
+            $.ajax({
+                url: 'functions/get_position.php',
+                type: 'POST',
+                data: { position_id: response.position },
+                dataType: 'json',
+                success: function(positionResponse) {
+                    console.log(positionResponse);
+                    $('#edit_position').val(response.position);
+                }
+            });
+        }
+    });
+}
 
     // Function to close the modal
     function closeModal() {
@@ -1213,18 +1173,47 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
                                 <label for="client" class="col-sm-2 col-form-label">Client</label>
                                 <select class="form-select" name="edit_client" aria-label="Client Select" id="edit_client">
-                                    <option selected>Select Client</option>
-                                    <option value="VOXRUSH">VOXRUSH</option>
-                                    <option value="Telepath">Telepath</option>
-                                    <option value="Netsapiens">Netsapiens</option>
+                                
+                                    <option selected disabled>Choose a client</option>
+                                    <?php
+                                        include "../connection/database.php";
+                                        if ($conn->connect_error) {
+                                            die("Connection failed: " . $conn->connect_error);
+                                        }
+
+                                        $sql = "SELECT Client_ID, Company_Name FROM tbl_client";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo '<option value="' . $row["Client_ID"] . '">' . $row["Company_Name"] . '</option>';
+                                            }
+                                        }
+
+                                        $conn->close();
+                                        ?>
                                 </select>
+
                                 
                                 <label for="position" class="col-sm-2 col-form-label">Position</label>
                                 <select class="form-select" name="edit_position" aria-label="Position Select" id="edit_position">
-                                    <option selected>Select Position</option>
-                                    <option value="QA">QA</option>
-                                    <option value="NOC">NOC</option>
-                                    <option value="Accountant">Accountant</option>
+v                               <?php
+                                        include "../connection/database.php";
+                                        if ($conn->connect_error) {
+                                            die("Connection failed: " . $conn->connect_error);
+                                        }
+
+                                        $sql = "SELECT position_ID, Title FROM tbl_position";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo '<option value="' . $row["position_ID"] . '">' . $row["Title"] . '</option>';
+                                            }
+                                        }
+
+                                        $conn->close();
+                                        ?>
                                 </select>
 
                                 <label for="employmentStatus" class="col-sm-2 col-form-label">Employment Status</label>
