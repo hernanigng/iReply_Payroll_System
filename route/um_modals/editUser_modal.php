@@ -13,8 +13,8 @@
                         <label for="firstname" class="col-sm-2 col-form-label">First Name</label>
                         <input type="" class="form-control" id="edit_firstname">
                         
-                        <label for="middlename" class="col-sm-2 col-form-label">Middle Name</label>
-                        <input type="" class="form-control" id="edit_middlename">
+                        <label for="middleinitial" class="col-sm-2 col-form-label">Middle Initial</label>
+                        <input type="" class="form-control" id="edit_middleinitial">
 
                         <label for="lastname" class="col-sm-2 col-form-label">Last Name</label>
                         <input type="" class="form-control" id="edit_lastname">

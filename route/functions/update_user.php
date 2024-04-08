@@ -14,7 +14,7 @@ if (!isset($_POST['user_id']) || empty($_POST['user_id'])) {
 // Retrieve the updated user data from the POST request
 $userId = $_POST['user_id'];
 $firstname = $_POST['firstname'];
-$middlename = $_POST['middlename'];
+$middleinitial = $_POST['middleinitial'];
 $lastname = $_POST['lastname'];
 $username = $_POST['username'];
 $password = $_POST['password'];
@@ -23,8 +23,8 @@ $position = $_POST['position'];
 
 
 // Update the employee record in the database
-$query = "UPDATE tbl_user_management SET firstname=?, middlename=?, lastname=?, username=?,
-password=?, user_role=?, position=? WHERE user_id=?";
+$query = "UPDATE tbl_user_management SET firstname=?, middleinitial=?, lastname=?, username=?,
+password=?, user_role=?, position=? WHERE user_management_id=?";
 
 $stmt = $conn->prepare($query);
 if (!$stmt) {

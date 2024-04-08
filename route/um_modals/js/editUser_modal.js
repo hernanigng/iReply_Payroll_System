@@ -16,7 +16,7 @@
                 // Assuming the response is an object containing the employee details
                 $('#userId').val(response.user_id);
                 $('#edit_firstname').val(response.firstname);
-                $('#edit_middlename').val(response.middlename);
+                $("#edit_middleinitial").val(response.middleinitial);
                 $('#edit_lastname').val(response.lastname);
                 $('#edit_username').val(response.username);
                 $('#edit_password').val(response.password);
