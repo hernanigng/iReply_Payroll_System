@@ -117,6 +117,7 @@
     </div>
 </div>
 
+
 <!-- VIEW USER MODAL -->
 <?php include 'um_modals/viewUser_modal.php'; ?>
 
@@ -125,5 +126,71 @@
 
 <!-- User Update Toast Notification -->
 <?php include 'um_modals/userUpdate_toast.php'; ?>
+
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h3 class="mt-4">Users</h3>
+            <div>
+                <button id="addUser" class="btn btn-primary offset-10">Add User</button>
+            </div>
+            <div class="card mb-4 mt-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    List of Users
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple" class="table table-bordered" width="100">
+                        <thead>
+                            <tr>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>User Role</th>
+                                <th>Position</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populate table rows with PHP -->
+                            <?php
+                            $query = "SELECT * FROM tbl_user";
+                            $result = mysqli_query($conn, $query);
+                            if (!$result) {
+                                echo "Error: " . mysqli_error($conn);
+                                exit;
+                            }
+                            while ($data = mysqli_fetch_array($result)) {
+                                echo "<tr>";
+                                echo "<td>" . $data['firstname'] . "</td>";
+                                echo "<td>" . $data['lastname'] . "</td>";
+                                echo "<td>" . $data['username'] . "</td>";
+                                echo "<td>" . $data['password'] . "</td>";
+                                echo "<td>" . $data['user_role'] . "</td>";
+                                echo "<td>" . $data['position'] . "</td>";
+                                echo "<td>";
+                                echo '<button class="btn btn-primary view" onclick="openModal(\'' . $data['user_id'] . '\')"> <i class="bi bi-eye"></i></button>';
+                                echo '<button class="btn btn-danger del"><i class="bi bi-trash"></i></button>';
+                                echo '<button class="btn btn-warning edit" onclick="openEditModal(\'' . $data['user_id'] . '\')"><i class="bi bi-pencil"></i></button>';
+                                echo "</td>";
+                                echo "</tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="py-4 bg-light mt-auto">
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="text-muted">Copyright &copy; iReply Payroll System</div>
+            </div>
+        </div>
+    </footer>
+</div>
 
 <?php include '../template/footer.php'; ?>

@@ -37,4 +37,4 @@
         </div>
     </div>
 
-    <script src="js/viewUser_modal.js"></script>
+    <script src="um_modals/js/viewUser_modal.js"></script>

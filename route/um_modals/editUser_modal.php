@@ -40,4 +40,4 @@
         </div>
     </div>
 
-    <script src="js/editUser_modal.js"></script>
+    <script src="um_modals/js/editUser_modal.js"></script>

@@ -11,4 +11,4 @@
         </div>
         <div class="modal-footer"> </div>
 
-        <script src="js/userUpdate.js"></script>
+        <script src="um_modals/js/userUpdate.js"></script>
