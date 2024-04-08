@@ -1,6 +1,6 @@
 <?php
 // Assuming you have already connected to your database
-include "../connection/database.php";
+include "../../connection/database.php";
 
 // Validate if the 'employee_id' key exists and is not empty
 if (!isset($_POST['employee_id']) || empty($_POST['employee_id'])) {

@@ -1,5 +1,5 @@
 <?php
-include "../connection/database.php";
+include "../../connection/database.php";
 
 if(isset($_POST['id'])) {
     $employeeId = $_POST['id'];
