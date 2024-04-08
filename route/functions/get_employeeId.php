@@ -5,7 +5,7 @@ if(isset($_POST["id"])) {
     $id = $_POST["id"];
 
     // Establish database connection
-    include_once '../../connection/database.php';
+    $conn = mysqli_connect("localhost", "root", "", "ireply_payroll_db");
 
     // Check if connection is successful
     if($conn) {

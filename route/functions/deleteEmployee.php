@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
+include "../../connection/database.php";
+=======
 include_once '../../connection/database.php';
+>>>>>>> d917d4e507afbee26b6a05f42fe358cde618c8ed
 
 if(isset($_POST['id'])) {
     $employeeId = $_POST['id'];
