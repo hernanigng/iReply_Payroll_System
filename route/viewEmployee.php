@@ -745,13 +745,40 @@ $.ajax({
         $('#middlename').text(response.middlename);
         $('#lastname').text(response.lastname);
         $('#address').text(response.address);
-        $('#birthdate').text(response.birthdate);
+        //$('#birthdate').text(response.birthdate);
+
+// Assuming you have retrieved the birthdate from the database in yyyy-mm-dd format
+var birthdateString = response.birthdate; // Example: '2024-04-09'
+
+// Parse the birthdate string to a Date object
+var birthdate = new Date(birthdateString);
+
+// Format the birthdate into month, day, and year
+var formattedBirthdate = (birthdate.getMonth() + 1) + '/' + birthdate.getDate() + '/' + birthdate.getFullYear();
+
+// Display the formatted birthdate in the modal
+$('#birthdate').text(formattedBirthdate);
+
+
         $('#contactNum').text(response.contact_num);
         $('#civilStatus').text(response.civilstatus);
         $('#personalEmail').text(response.personal_email);
         $('#workEmail').text(response.work_email);
         $('#employeeType').text(response.employee_type);
-        $('#startDate').text(response.start_date);
+        //$('#startDate').text(response.start_date);
+
+// Assuming you have retrieved the birthdate from the database in yyyy-mm-dd format
+var startdateString = response.start_date; // Example: '2024-04-09'
+
+// Parse the birthdate string to a Date object
+var startDate = new Date(startdateString);
+
+// Format the birthdate into month, day, and year
+var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() + '/' + startDate.getFullYear();
+
+// Display the formatted birthdate in the modal
+$('#startDate').text(formattedStartdate);
+
         $('#monthly').text(response.monthly_salary);
         $('#accBonus').text(response.account_bonus);
 
