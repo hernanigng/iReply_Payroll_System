@@ -141,6 +141,19 @@
     </div>
 </div>
 
+ <!-- Toast Notification Delete -->
+        <div class="toast position-fixed top-50 start-50 translate-middle"  role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+            <div class="toast-header">
+                <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+               User Successfully Deleted
+            </div>
+        </div>
+
+
 
 <script>
   $(document).on('click', '.del', function() {
@@ -176,9 +189,14 @@
             url: 'functions/deleteUser.php',
             data: { id: userId },
             success: function(response) {
-                alert(response);
+              $('.toast').toast('show');
+
+                // Reload the page after a delay to allow the user to see the toast notification
+            setTimeout(function() {
+            window.location.reload();
+            }, 3000); // A
                 console.log('User deleted successfully');
-                 window.location.reload();
+                
             },
             error: function(xhr, status, error) {
                 console.error('Error deleting user:', error);
@@ -364,7 +382,7 @@ $(document).ready(function() {
 
         $.post(url, data, function(response) {
             console.log("Server Response:", response);
-            alert(response);
+            //alert(response);
             $('#addUserModal').modal('hide');
             $('.toast').toast('show');
 

@@ -118,11 +118,11 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                 <input type="date" name="createStartDate" class="form-control createStartDate" id="createStartDate_id">
 
                                 <label for="monthSalary" class="col-sm-3 col-form-label">Monthly Salary</label>
-                                <input type="number" name="createMonthlySalary" class="form-control" id="createMonthlySalary_id" placeholder="PHP 0.00">
+                                <input type="text" name="createMonthlySalary" class="form-control" id="createMonthlySalary_id" placeholder="PHP 0.00">
                                 <div id="error" style="color: red;"></div>
 
                                 <label for="accountBonus" class="col-sm-3 col-form-label">Account Bonus</label>
-                                <input type="number" name="createAccountBonus" class="form-control" id="createBonus_id" placeholder="PHP 0.00">
+                                <input type="text" name="createAccountBonus" class="form-control" id="createBonus_id" placeholder="PHP 0.00">
                                 <div id="error" style="color: red;"></div>
 
                                  <label for="client" class="col-sm-2 col-form-label">Client</label>
@@ -223,16 +223,16 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                 <p id="tinNumberError" class="error-message" style="display: none;"> Tin number should be 9-12 digits.</p>
 
                                 <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution</label>
-                                <input type="number" name="createSSSContrib" class="form-control" id="createSSSContrib_id">
+                                <input type="text" name="createSSSContrib" class="form-control" id="createSSSContrib_id">
 
                                 <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution </label>
-                                <input type="number" name="createPagibigContrib" class="form-control" id="createPagibigContrib_id">
+                                <input type="text" name="createPagibigContrib" class="form-control" id="createPagibigContrib_id">
 
                                 <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution</label>
-                                <input type="number" name="createPhilhealthContrib" class="form-control" id="createPhilhealthContrib_id">
+                                <input type="text" name="createPhilhealthContrib" class="form-control" id="createPhilhealthContrib_id">
 
                                 <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
-                                <input type="number" name="createTaxPercent" class="form-control" id="createTaxPercent_id">
+                                <input type="text" name="createTaxPercent" class="form-control" id="createTaxPercent_id">
             
                             </div>
 
@@ -249,32 +249,105 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         </div>
         </div>
         </div>
+        
+
+           <!--CURRENCY --> 
+<script>
+        document.getElementById('createMonthlySalary_id').addEventListener('input', function(event) {
+            let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+
+            inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+            if (inputValue.includes('.')) {
+                let decimalPart = inputValue.split('.')[1];
+                if (!decimalPart || decimalPart.length < 2) {
+                    inputValue += '0';
+                }
+            }
+
+            event.target.value = 'PHP ' + inputValue;
+        });
+
+        document.getElementById('createBonus_id').addEventListener('input', function(event) {
+            let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+
+            inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+            if (inputValue.includes('.')) {
+                let decimalPart = inputValue.split('.')[1];
+                if (!decimalPart || decimalPart.length < 2) {
+                    inputValue += '0';
+                }
+            }
+
+            event.target.value = 'PHP ' + inputValue;
+        });
+
+         document.getElementById('createSSSContrib_id').addEventListener('input', function(event) {
+            let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+
+            inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+            if (inputValue.includes('.')) {
+                let decimalPart = inputValue.split('.')[1];
+                if (!decimalPart || decimalPart.length < 2) {
+                    inputValue += '0';
+                }
+            }
+
+            event.target.value = 'PHP ' + inputValue;
+        });
+
+        document.getElementById('createPagibigContrib_id').addEventListener('input', function(event) {
+            let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+
+            inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+            if (inputValue.includes('.')) {
+                let decimalPart = inputValue.split('.')[1];
+                if (!decimalPart || decimalPart.length < 2) {
+                    inputValue += '0';
+                }
+            }
+
+            event.target.value = 'PHP ' + inputValue;
+        });
+
+         document.getElementById('createPhilhealthContrib_id').addEventListener('input', function(event) {
+            let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+
+            inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+            if (inputValue.includes('.')) {
+                let decimalPart = inputValue.split('.')[1];
+                if (!decimalPart || decimalPart.length < 2) {
+                    inputValue += '0';
+                }
+            }
+
+            event.target.value = 'PHP ' + inputValue;
+        });
+
+        document.getElementById('taxPercentage').addEventListener('input', function(event) {
+           let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+
+    // Format the input value as a percentage
+    inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ','); // Add comma for thousands separator
+
+    // Add '%' at the end if not already present
+    if (!inputValue.endsWith('%')) {
+        inputValue += '%';
+    }
+
+    // Update the input value
+    event.target.value = inputValue;
+        });
+
+</script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        
-        //Add currency 
-        const currencyInput = document.getElementById('createMonthlySalary_id');
-        const errorDiv = document.getElementById('error');
-
-        currencyInput.addEventListener('input', function(event) {
-            const value = event.target.value;
-            
-            // Clear previous error message
-            errorDiv.textContent = '';
-
-            // Remove non-numeric characters and format as currency
-            const formattedValue = parseFloat(value.replace(/[^0-9.]/g, '')).toFixed(2);
-            
-            // Check if value is valids
-            if (isNaN(formattedValue)) {
-                errorDiv.textContent = 'Invalid currency format';
-                return;
-            }
-
-            // Update input field with formatted value
-            currencyInput.value = formattedValue;
-        });
 
         //Contact Number Error Message
         document.getElementById('contactNumber_id').addEventListener('input', function() {
@@ -554,9 +627,9 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                             '<td>' + response.firstname + ' ' + response.lastname + '</td>' +
                             '<td>' + response.employee_type + '</td>' +
                             '<td>' +
-                            '<button class="btn btn-primary view" onclick="openModal(\'' + response.employee_id + '\')"> <i class="bi bi-eye"></i> </button>' +
-                           '<button class="btn btn-danger del" data-employee_id="' + response.employee_id + '"> <i class="bi bi-trash"></i> </button>' +
-                            '<button class="btn btn-warning edit" id="' + response.employee_id + '"> <i class="bi bi-pencil"></i> </button>' +
+                                '<button class="btn btn-primary view" onclick="openModal(\'' + response.employee_id + '\')"> <i class="bi bi-eye"></i> </button> ' +
+                                '<button class="btn btn-danger del" data-employee_id="' + response.employee_id + '"> <i class="bi bi-trash"></i> </button> ' +
+                                '<button class="btn btn-warning edit" id="' + response.employee_id + '"> <i class="bi bi-pencil"></i> </button> ' +
                             '</td>' +
                             '</tr>';
 
@@ -674,6 +747,21 @@ $query = $conn->query("SELECT * FROM tbl_employee");
     </div>
 </div>
 
+
+  <!-- Toast Notification Delete -->
+        <div class="toast position-fixed top-50 start-50 translate-middle"  role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+            <div class="toast-header">
+                <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+               Employee Successfully Deleted
+            </div>
+        </div>
+
+
+
 <script>
   $(document).on('click', '.del', function() {
         $('#confirmDeleteModal').modal('show');
@@ -708,9 +796,15 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             url: '../functions/deleteEmployee.php',
             data: { id: employeeId },
             success: function(response) {
-                //alert(response);
+                 $('body').append($('.toast'));
+        
+                $('.toast').toast('show');
+
+                    setTimeout(function() {
+                    window.location.reload();
+                    }, 3000); // Adjust the delay as needed
                 console.log('Employee deleted successfully');
-                 window.location.reload();
+                
             },
             error: function(xhr, status, error) {
                 console.error('Error deleting employee:', error);
