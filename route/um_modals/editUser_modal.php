@@ -1,3 +1,4 @@
+<script src="um_modals/js/editUser_modal.js"></script>
 
 <!-- EDIT USER MODAL -->
 <div class="modal fade" id="editUser" tabindex="-1" aria-labelledby="editUserLabel" aria-hidden="true">
@@ -39,5 +40,3 @@
             </div>
         </div>
     </div>
-
-    <script src="um_modals/js/editUser_modal.js"></script>

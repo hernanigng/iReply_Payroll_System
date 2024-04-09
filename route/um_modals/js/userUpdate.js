@@ -23,7 +23,7 @@ $(document).ready(function() {
         // Retrieve the updated data from the form fields
         var userId = $('#userId').val();
         var firstname = $('#edit_firstname').val();
-        var middlename = $('#edit_middlename').val();
+        var middleinitial = $('#edit_middleinitial').val();
         var lastname = $('#edit_lastname').val();
         var username = $('#edit_username').val();
         var password = $('#edit_password').val();
@@ -33,9 +33,9 @@ $(document).ready(function() {
 
         // Create a JSON object with the updated data
         var updatedData = {
-            user_id: userId,
+            user_management_id: userId,
             firstname: firstname,
-            middlename: middlename,
+            middleinitial: middleinitial,
             lastname: lastname,
             username: username,
             password: password,
@@ -53,9 +53,11 @@ $(document).ready(function() {
             success: function(response) {
                 // Handle success response
                 if (response.success) {
+                    console.log("Success function executed");
                     // Display toast notification
-                    var updateToast = new bootstrap.Toast($('#updateToast'));
-                    updateToast.show();
+                    var userUpdate_toast = new bootstrap.Toast($('#user_updateToast'));
+                    userUpdate_toast.show();
+
                     
                     // Optionally hide the modal
                     closeModal();

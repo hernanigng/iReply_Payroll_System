@@ -1,3 +1,4 @@
+
 <?php
 // Assuming you have already connected to your database
 //include "../connection/database.php";
@@ -5,14 +6,14 @@
 include_once '../../connection/database.php';
 
 // Validate if the 'employee_id' key exists and is not empty
-if (!isset($_POST['user_id']) || empty($_POST['user_id'])) {
+if (!isset($_POST['user_management_id']) || empty($_POST['user_management_id'])) {
     $response = array('success' => false, 'message' => 'User ID is required');
     echo json_encode($response);
     exit; // Stop execution
 }
 
 // Retrieve the updated user data from the POST request
-$userId = $_POST['user_id'];
+$userId = $_POST['user_management_id'];
 $firstname = $_POST['firstname'];
 $middleinitial = $_POST['middleinitial'];
 $lastname = $_POST['lastname'];
@@ -38,7 +39,7 @@ if (!$stmt) {
 
 // Bind parameters and execute
 $stmt->bind_param('ssssssss', 
-$firstname, $middlename, $lastname, $username, $password, $userRole, $position, $userId);
+$firstname, $middleinitial, $lastname, $username, $password, $userRole, $position, $userId);
 
 $result = $stmt->execute();
 
