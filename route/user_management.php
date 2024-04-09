@@ -45,31 +45,48 @@
                                 List of Users
                             </div>
                     
-                            <div class="card-body">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                            <th>Password</th>
-                                            <th>User Role</th>
-                                            <th>Position</th>
-                                            <th> </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php while ($data = mysqli_fetch_array($result)) { ?>
-                                       <?php while ($data = mysqli_fetch_array($result)) { ?>
+                          <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                        <th>Password</th>
+                                        <th>User Role</th>
+                                        <th>Position</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    include "../connection/database.php";
+
+                                    $sql = "SELECT tbl_user_management.user_management_id, 
+                                                tbl_user_management.firstname, 
+                                                tbl_user_management.lastname, 
+                                                tbl_user_management.username, 
+                                                tbl_user_management.password, 
+                                                tbl_user_role.user_role, 
+                                                tbl_position.Title
+                                            FROM tbl_user_management 
+                                            INNER JOIN tbl_user_role ON tbl_user_management.user_role = tbl_user_role.user_role_id
+                                            INNER JOIN tbl_position ON tbl_user_management.position = tbl_position.position_ID";
+
+                                    $result = mysqli_query($conn, $sql);
+
+                                    if ($result && mysqli_num_rows($result) > 0) {
+                                        while ($data = mysqli_fetch_array($result)) { 
+                                    ?>
                                         <tr id="<?php echo $data['user_management_id']; ?>">
                                             <td><?php echo $data['firstname']; ?></td>
                                             <td><?php echo $data['lastname']; ?></td>
                                             <td><?php echo $data['username']; ?></td>
                                             <td><?php echo $data['password']; ?></td>
                                             <td><?php echo $data['user_role']; ?></td>
-                                            <td><?php echo $data['position']; ?></td>
+                                            <td><?php echo $data['Title']; ?></td>
                                             <td>
-                                           <button class="btn btn-primary view" onclick="openModal('<?php echo $data['user_management_id'];?>')"> 
+                                                <button class="btn btn-primary view" onclick="openModal('<?php echo $data['user_management_id'];?>')"> 
                                                     <i class="bi bi-eye"></i>
                                                 </button>
                                                 <button class="btn btn-danger del" data-user_management_id="<?php echo $data['user_management_id']; ?>">
@@ -80,7 +97,12 @@
                                                 </button>
                                             </td>
                                         </tr>
-                                        <?php } ?>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='7'>No data found</td></tr>";
+                                    }
+                                    ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -151,7 +173,7 @@
             url: 'functions/deleteUser.php',
             data: { id: userId },
             success: function(response) {
-                //alert(response);
+                alert(response);
                 console.log('User deleted successfully');
                  window.location.reload();
             },
@@ -578,6 +600,13 @@ $(document).ready(function() {
             alert(response);
             $('#addUserModal').modal('hide');
             $('.toast').toast('show');
+
+               $('.toast').on('hidden.bs.toast', function () {
+            
+                 $('.modal-backdrop').remove();
+                          
+                $('body').css('overflow', 'auto');
+                        });
 
             if (response.status === 'success') {
                 // Construct the new row for the table
