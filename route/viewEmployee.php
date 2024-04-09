@@ -956,7 +956,6 @@ $.ajax({
 
                 </div>
                  <div class="modal-footer">
-                  <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="nextButton">Next</button>
                  </div>
             </div>
         </div>
