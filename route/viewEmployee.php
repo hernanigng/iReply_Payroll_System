@@ -991,91 +991,141 @@ $('#startDate').text(formattedStartdate);
                     <!-- Your personal information fields here -->
                     <!-- Placeholder for data -->
 
-                    <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
-                    <span class="form-control" id="firstname"> </span>
+                    <div class="row">
+    <div class="col">
+        <label for="firstName" class="col-form-label"> First Name: </label>
+        <span class="form-control" id="firstname"> </span>
+    </div>
+    <div class="col">
+        <label for="middleName" class="col-form-label">Middle Name:</label>
+        <span class="form-control" id="middlename"> </span>
+    </div>
+    <div class="col">
+        <label for="lastName" class="col-form-label">Last Name:</label>
+        <span class="form-control" id="lastname"> </span>
+    </div>
+</div>
 
-                    <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
-                    <span class="form-control" id="middlename"> </span>
+<div class="row">
+    <div class="col">
+        <label for="completeAddress" class="col-form-label">Complete Address:</label>
+        <span class="form-control" id="address"> </span>
+    </div>
+</div>
 
-                    <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
-                    <span class="form-control" id="lastname"> </span>
+<div class="row">
+    <div class="col">
+        <label for="birthdate" class="col-form-label">Birthdate:</label>
+        <span class="form-control" id="birthdate"> </span>
+    </div>
+    <div class="col">
+        <label for="contactNum" class="col-form-label">Contact Number:</label>
+        <span class="form-control" id="contactNum"> </span>
+    </div>
+    <div>
+        <label for="civilStatus" class="col-form-label">Civil Status:</label>
+        <span class="form-control" id="civilStatus">  </span>
+    </div>
+</div>
 
-                    <label for="completeAddress" class="col-sm-2 col-form-label">Complete Address</label>
-                    <span class="form-control" id="address"> </span>
-                        
-                    <label for="birthdate" class="col-sm-2 col-form-label">Birthdate</label>
-                    <span class="form-control" id="birthdate"> </span>
-
-                    <label for="contactNum" class="col-sm-2 col-form-label">Contact Number </label>
-                    <span class="form-control" id="contactNum"> </span>
-
-                    <label for="civilStatus" class="col-sm-2 col-form-label">Civil Status</label>
-                    <span class="form-control" id="civilStatus">  </span>
-
-                    <label for="personalEmail" class="col-sm-2 col-form-label">Personal Email</label>
-                    <span class="form-control" id="personalEmail">  </span>
-
-                    <label for="workEmail" class="col-sm-2 col-form-label">Work Email</label>
-                    <span class="form-control" id="workEmail"> </span>
-
-                    <label for="employeeType" class="col-sm-2 col-form-label"> Employee Type </label>
-                    <span class="form-control" id="employeeType"> </span>
-                </div>
+<div class="row">
+    <div class="col">
+        <label for="personalEmail" class="col-form-label">Personal Email:</label>
+        <span class="form-control" id="personalEmail">  </span>
+    </div>
+    <div class="col">
+        <label for="workEmail" class="col-form-label">Work Email:</label>
+        <span class="form-control" id="workEmail"> </span>
+    </div>
+    <div class="col">
+        <label for="employeeType" class="col-form-label"> Employee Type: </label>
+        <span class="form-control" id="employeeType"> </span>
+    </div>
+</div>
+     </div>
 
 
                 <!-- Employment Details tab -->
                 <div id="employment" class="tab">
                     <!-- Your employment details fields here -->
                     <!-- Placeholder for data -->
-                    <label for="startDate" class="col-sm-2 col-form-label">Start Date</label>
-                    <span class="form-control" id="startDate"> </span>
 
-                    <label for="monthly" class="col-sm-2 col-form-label">Monthly Salary</label>
-                    <span class="form-control" id="monthly"> </span>
+<div class="row">
+    <div class="col">
+        <label for="startDate" class="col-form-label">Start Date:</label>
+        <span class="form-control" id="startDate"> </span>
+    </div>
+    <div class="col">
+        <label for="monthly" class="col-form-label">Monthly Salary:</label>
+        <span class="form-control" id="monthly"> </span>
+    </div>
+    <div class="col">
+        <label for="accBonus" class="col-form-label">Account Bonus:</label>
+        <span class="form-control" id="accBonus">  </span>
+    </div>
+</div>
 
-                    <label for="accBonus" class="col-sm-2 col-form-label">Account Bonus</label>
-                    <span class="form-control" id="accBonus">  </span>
-
-                    <label for="client" class="col-sm-2 col-form-label">Client</label>
-                    <span class="form-control" id="client"> </span>
-
-                    <label for="position" class="col-sm-2 col-form-label">Position</label>
-                    <span class="form-control" id="position"> </span>
-
-                    <label for="employmentStatus" class="col-sm-2 col-form-label">Employment Status</label>
-                    <span class="form-control" id="employmentStatus"> </span>
-
-                </div>
+<div class="row">
+    <div class="col">
+        <label for="client" class="col-form-label">Client:</label>
+        <span class="form-control" id="client"> </span>
+    </div>
+    <div class="col">
+        <label for="position" class="col-form-label">Position:</label>
+        <span class="form-control" id="position"> </span>
+    </div>
+    <div class="col">
+        <label for="employmentStatus" class="col-form-label">Employment Status:</label>
+        <span class="form-control" id="employmentStatus"> </span>
+    </div>
+</div>
+     </div>
 
                 <!-- Benefit Details tab -->
                 <div id="benefit" class="tab">
                     <!-- Your benefit details fields here -->
                     <!-- Placeholder for data -->
-                    <label for="sss" class="col-sm-2 col-form-label">SSS Number:</label>
-                    <span class="form-control" id="sss"> </span>
 
-                    <label for="pagibig" class="col-sm-2 col-form-label">Pag-ibig Number:</label>
-                    <span class="form-control" id="pagibig"> </span>
+<div class="row">
+    <div class="col">
+        <label for="sss" class="col-form-label">SSS Number:</label>
+        <span class="form-control" id="sss"> </span>
+    </div>
+    <div class="col">
+        <label for="pagibig" class="col-form-label">Pag-ibig Number:</label>
+        <span class="form-control" id="pagibig"> </span>
+    </div>
+    <div class="col">
+        <label for="philhealth" class="col-form-label">Philhealth Number:</label>
+        <span class="form-control" id="philhealth">  </span>
+    </div>
+    <div class="col">
+        <label for="tin" class="col-form-label">Tin Number:</label>
+        <span class="form-control" id="tin"> </span>
+    </div>
+</div>
 
-                    <label for="philhealth" class="col-sm-2 col-form-label">Philhealth Number:</label>
-                    <span class="form-control" id="philhealth">  </span>
+<div class="row">
+    <div class="col">
+        <label for="sssCon" class="col-form-label">SSS Contribution:</label>
+        <span class="form-control" id="sssCon">  </span>
+    </div>
+    <div class="col">
+        <label for="pagibigCon" class="col-form-label">Pag-ibig Contribution:</label>
+        <span class="form-control" id="pagibigCon">  </span>
+    </div>
+    <div class="col">
+        <label for="philhealthCon" class="col-form-label">Philhealth Contribution:</label>
+        <span class="form-control" id="philhealthCon"> </span>
+    </div>
+    <div class="col">
+        <label for="tax" class="col-form-label">Tax Percentage:</label>
+        <span class="form-control" id="tax"> </span>
+    </div>
+</div>
+</div>
+     </div>
 
-                    <label for="tin" class="col-sm-2 col-form-label">Tin Number:</label>
-                    <span class="form-control" id="tin"> </span>
-
-                    <label for="sssCon" class="col-sm-2 col-form-label">SSS Contribution:</label>
-                    <span class="form-control" id="sssCon">  </span>
-
-                    <label for="pagibigCon" class="col-sm-2 col-form-label">Pag-ibig Contribution:</label>
-                    <span class="form-control" id="pagibigCon">  </span>
-
-                    <label for="philhealthCon" class="col-sm-2 col-form-label">Philhealth Contribution:</label>
-                    <span class="form-control" id="philhealthCon"> </span>
-
-                    <label for="tax" class="col-sm-2 col-form-label">Tax Percentage:</label>
-                    <span class="form-control" id="tax"> </span>
-
-                </div>
                  <div class="modal-footer">
                  </div>
             </div>
@@ -1233,91 +1283,122 @@ $('#startDate').text(formattedStartdate);
                 <div id="personalEdit" class="tab">
                     <!-- Your personal information fields here -->
                     <!-- Placeholder for data -->
+<input type="hidden" name="employeeId" class="form-control" id="employeeId">
 
-                        <input type="hidden" name="employeeId" class="form-control" id="employeeId">
+<div class="row">
+    <div class="col">
+        <label for="firstName" class="col-form-label">First Name</label>
+        <input type="" name="edit_firstname" class="form-control" id="edit_firstname">
+    </div>
+    <div class="col">
+        <label for="middleName" class="col-form-label">Middle Name</label>
+        <input type="" name="edit_middlename" class="form-control" id="edit_middlename">
+    </div>
+    <div class="col">
+        <label for="lastName" class="col-form-label">Last Name</label>
+        <input type="" name="edit_lastname" class="form-control" id="edit_lastname">
+    </div>
+</div>
 
-                        <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
-                        <input type="" name="edit_firstname" class="form-control" id="edit_firstname">
-                        
-                        <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
-                        <input type="" name="edit_middlename" class="form-control" id="edit_middlename">
+     
+<div class="row">
+    <div class="col">                    
+         <label for="completeAddress" class="col-form-label">Complete Address</label>
+         <input type="" name="edit_address" class="form-control" id="edit_address">
+    </div>
+</div>
 
-                        <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
-                        <input type="" name="edit_lastname" class="form-control" id="edit_lastname">
+<div class="row">
+    <div class="col">
+         <label for="birthDate" class="col-form-label">Birthdate</label>
+         <input type="date" name="edit_birthdate" class="form-control" id="edit_birthdate">
+    </div>
+    <div class="col">
+        <label for="contactNum" class="col-form-label">Contact Number </label>
+        <input type="" name="edit_contactNum" class="form-control" id="edit_contactNum">
+    </div>
+    <div class="col">
+         <label for="civilStatus" class="col-form-label">Civil Status</label>
+            <select class="form-select" name="edit_civilStatus" aria-label="Civil Status Select" id="edit_civilStatus">
+                <option selected>Select Civil Status</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Widowed">Widowed</option>
+            </select>
+    </div>
+</div>
+      
 
-                        <label for="completeAddress" class="col-sm-2 col-form-label">Complete Address</label>
-                        <input type="" name="edit_address" class="form-control" id="edit_address">
 
-                        <label for="birthDate" class="col-sm-2 col-form-label">Birthdate</label>
-                        <input type="date" name="edit_birthdate" class="form-control" id="edit_birthdate">
-
-                        <label for="contactNum" class="col-sm-2 col-form-label">Contact Number </label>
-                        <input type="" name="edit_contactNum" class="form-control" id="edit_contactNum">
-
-                        <label for="civilStatus" class="col-sm-2 col-form-label">Civil Status</label>
-                        <select class="form-select" name="edit_civilStatus" aria-label="Civil Status Select" id="edit_civilStatus">
-                            <option selected>Select Civil Status</option>
-                            <option value="Single">Single</option>
-                            <option value="Married">Married</option>
-                            <option value="Widowed">Widowed</option>
-                        </select>
-                        
-                        <label for="personalEmail" class="col-sm-2 col-form-label">Personal Email</label>
-                        <input type="" name="edit_personalEmail" class="form-control" id="edit_personalEmail">
-
-                        <label for="workEmail" class="col-sm-2 col-form-label">Work Email</label>
-                        <input type="" name="edit_workEmail" class="form-control" id="edit_workEmail">
-
-                        <label for="employeeType" class="col-sm-2 col-form-label"> Employee Type </label>
-                        <select class="form-select" name="edit_employeeType" aria-label="Employee Type Select" id="edit_employeeType">
-                            <option selected>Select Employee Type</option>
-                            <option value="Home">Work From Home</option>
-                            <option value="Onsite">Work Onsite</option>
-                        </select>
-                    
-                    </div>
+<div class="row">
+    <div class="col">
+        <label for="personalEmail" class="col-form-label">Personal Email</label>
+        <input type="" name="edit_personalEmail" class="form-control" id="edit_personalEmail">
+    </div>
+    <div class="col">
+        <label for="workEmail" class="col-form-label">Work Email</label>
+        <input type="" name="edit_workEmail" class="form-control" id="edit_workEmail">
+    </div>
+    <div class="col">
+        <label for="employeeType" class="col-form-label"> Employee Type </label>
+            <select class="form-select" name="edit_employeeType" aria-label="Employee Type Select" id="edit_employeeType">
+                <option selected>Select Employee Type</option>
+                <option value="Home">Work From Home</option>
+                <option value="Onsite">Work Onsite</option>
+            </select>        
+    </div>
+</div>
+    </div>
 
                 <!-- Employment Details tab -->
                 <div id="employmentEdit" class="tab">
                     <!-- Your employment details fields here -->
                     <!-- Placeholder for data -->
 
-                               <label for="startDate" class="col-sm-3 col-form-label">Start Date</label>
-                               <input type="date" name="edit_startDate" class="form-control createStartDate" id="edit_startDate">
+<div class="row">
+    <div class="col">
+        <label for="startDate" class="col-form-label">Start Date</label>
+        <input type="date" name="edit_startDate" class="form-control createStartDate" id="edit_startDate">
+    </div>
+    <div class="col">
+        <label for="monthSalary" class="col-form-label">Monthly Salary</label>
+        <input type="number" name="edit_monthly" class="form-control" id="edit_monthly">
+    </div>
+    <div class="col">
+        <label for="accountBonus" class="col-form-label">Account Bonus</label>
+        <input type="number" name="edit_accBonus" class="form-control" id="edit_accBonus">
+    </div>
+</div>
 
-                                <label for="monthSalary" class="col-sm-3 col-form-label">Monthly Salary</label>
-                                <input type="number" name="edit_monthly" class="form-control" id="edit_monthly">
 
-                                <label for="accountBonus" class="col-sm-3 col-form-label">Account Bonus</label>
-                                <input type="number" name="edit_accBonus" class="form-control" id="edit_accBonus">
+<div class="row">
+    <div class="col">
+        <label for="client" class="col-form-label">Client</label>
+        <select class="form-select" name="edit_client" aria-label="Client Select" id="edit_client">
+        <option selected disabled>Choose a client</option>
+    <?php
+        include "../connection/database.php";
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+        }
 
-                                <label for="client" class="col-sm-2 col-form-label">Client</label>
-                                <select class="form-select" name="edit_client" aria-label="Client Select" id="edit_client">
-                                
-                                    <option selected disabled>Choose a client</option>
-                                    <?php
-                                        include "../connection/database.php";
-                                        if ($conn->connect_error) {
-                                            die("Connection failed: " . $conn->connect_error);
-                                        }
+            $sql = "SELECT Client_ID, Company_Name FROM tbl_client";
+            $result = $conn->query($sql);
 
-                                        $sql = "SELECT Client_ID, Company_Name FROM tbl_client";
-                                        $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                echo '<option value="' . $row["Client_ID"] . '">' . $row["Company_Name"] . '</option>';
+            }
+        }
 
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo '<option value="' . $row["Client_ID"] . '">' . $row["Company_Name"] . '</option>';
-                                            }
-                                        }
-
-                                        $conn->close();
-                                        ?>
-                                </select>
-
-                                
-                                <label for="position" class="col-sm-2 col-form-label">Position</label>
-                                <select class="form-select" name="edit_position" aria-label="Position Select" id="edit_position">
-v                               <?php
+        $conn->close();
+    ?>
+        </select>
+    </div>
+<div class="col">
+        <label for="position" class="col-form-label">Position</label>
+        <select class="form-select" name="edit_position" aria-label="Position Select" id="edit_position">
+                       <?php
                                         include "../connection/database.php";
                                         if ($conn->connect_error) {
                                             die("Connection failed: " . $conn->connect_error);
@@ -1335,48 +1416,61 @@ v                               <?php
                                         $conn->close();
                                         ?>
                                 </select>
-
-                                <label for="employmentStatus" class="col-sm-2 col-form-label">Employment Status</label>
-                                <select class="form-select" name="edit_employmentStatus" aria-label="Employment Status Select" id="edit_employmentStatus">
-                                    <option selected>Select Employment Status</option>
-                                    <option value="Part Time">Part-Time</option>
-                                    <option value="Full Time">Full-Time</option>
-                                </select>
-            
-
-                </div>
+    </div>
+<div class="col">
+    <label for="employmentStatus" class="col-form-label">Employment Status</label>
+        <select class="form-select" name="edit_employmentStatus" aria-label="Employment Status Select" id="edit_employmentStatus">
+            <option selected>Select Employment Status</option>
+            <option value="Part Time">Part-Time</option>
+            <option value="Full Time">Full-Time</option>
+        </select>    
+    </div>
+</div>
+     </div>
 
                 <!-- Benefit Details tab -->
                 <div id="benefitEdit" class="tab">
                     <!-- Your benefit details fields here -->
                     <!-- Placeholder for data -->
 
-                               <label for="sss" class="col-sm-3 col-form-label">SSS Number</label>
-                               <input type="text" name="edit_sss" class="form-control" id="edit_sss">
+<div class="row">
+    <div class="col">
+        <label for="sss" class="col-form-label">SSS Number</label>
+        <input type="text" name="edit_sss" class="form-control" id="edit_sss">
+    </div>
+    <div class="col">
+        <label for="pagibig" class="col-form-label">Pag-ibig Number</label>
+        <input type="text" name="edit_pagibig" class="form-control" id="edit_pagibig">
+    </div>
+    <div class="col">
+        <label for="philhealth" class="col-form-label">Philhealth Number</label>
+        <input type="text" name="edit_philhealth" class="form-control" id="edit_philhealth">
+    </div>
+    <div class="col">
+        <label for="tin" class="col-form-label">TIN Number</label>
+        <input type="text" name="edit_tin" class="form-control" id="edit_tin">
+    </div>
+</div>
 
-                                <label for="pagibig" class="col-sm-3 col-form-label">Pag-ibig Number</label>
-                                <input type="text" name="edit_pagibig" class="form-control" id="edit_pagibig">
-
-                                <label for="philhealth" class="col-sm-3 col-form-label">Philhealth Number</label>
-                                <input type="text" name="edit_philhealth" class="form-control" id="edit_philhealth">
-
-                                <label for="tin" class="col-sm-3 col-form-label">TIN Number</label>
-                                <input type="text" name="edit_tin" class="form-control" id="edit_tin">
-
-                                <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution</label>
-                                <input type="text" name="edit_sssCon" class="form-control" id="edit_sssCon">
-
-                                <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution </label>
-                                <input type="number" name="edit_pagibigCon" class="form-control" id="edit_pagibigCon">
-
-                                <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution</label>
-                                <input type="number" name="edit_philhealthCon" class="form-control" id="edit_philhealthCon">
-
-                                <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
-                                <input type="number" name="edit_tax" class="form-control" id="edit_tax">
-                                
-
-                </div>
+<div class="row">
+    <div class="col">
+        <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution</label>
+        <input type="text" name="edit_sssCon" class="form-control" id="edit_sssCon">    
+    </div>
+    <div class="col">
+        <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution </label>
+        <input type="number" name="edit_pagibigCon" class="form-control" id="edit_pagibigCon">
+    </div>
+    <div class="col">
+        <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution</label>
+        <input type="number" name="edit_philhealthCon" class="form-control" id="edit_philhealthCon">
+    </div>
+    <div class="col">
+        <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
+        <input type="number" name="edit_tax" class="form-control" id="edit_tax">
+    </div>
+</div>
+    </div>
                 <!-- <div class="modal-footer">
                     <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="nextEditButton">Next</button>
                 </div> -->
