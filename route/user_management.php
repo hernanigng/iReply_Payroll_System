@@ -161,9 +161,9 @@
                                 echo "<td>" . $data['position'] . "</td>";
                                 echo "<td>";
                                 echo '<button class="btn btn-primary view" onclick="openModal(\'' . $data['user_management_id'] . '\')"> <i class="bi bi-eye"></i></button>';
-                                echo '<button class="btn btn-danger del" data-user_management_id="<?php echo $data['user_management_id']; ?>">
-                                                <i class="bi bi-trash"></i>
-                                            </button>';
+                                echo '<button class="btn btn-danger del" data-user_management_id="' . $data['user_management_id'] . '">
+                                <i class="bi bi-trash"></i>
+                                </button>';
                                 echo '<button class="btn btn-warning edit" onclick="openEditModal(\'' . $data['user_management_id'] . '\')"><i class="bi bi-pencil"></i></button>';
                                 echo "</td>";
                                 echo "</tr>";
