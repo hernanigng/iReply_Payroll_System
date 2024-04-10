@@ -15,7 +15,7 @@ $workEmail = $_POST['createWorkEmail'];
 $employeeType = $_POST['createEmployeeType'];
 
 $startDate = $_POST['createStartDate'];
-$monthlySalaryRaw = $_POST['createMonthlySalary'];
+$monthlySalary = $_POST['createMonthlySalary'];
 $accntBonus = $_POST['createAccountBonus'];
 $client = $_POST['createClient'];
 $position = $_POST['createPosition']; 
@@ -60,7 +60,7 @@ VALUES ('$nextEmployeeId','$firstName', '$midName', '$lastName', '$address', '$b
 
 
 if ($result === false) {
-    echo "Error: " . $conn->error;
+   // echo "Error: " . $conn->error;
 } else {
     // Query executed successfully
    // echo "New record inserted successfully!";

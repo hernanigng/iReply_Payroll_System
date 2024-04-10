@@ -612,9 +612,9 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                     console.log("Server Response:", response);
                         alert(response);
                         $('#exampleModal').modal('hide');
-                        $('.toast').toast('show');  
+                        $('#insertToast').toast('show');  
 
-                        $('.toast').on('hidden.bs.toast', function () {
+                        $('#insertToast').on('hidden.bs.toast', function () {
                             // Remove the dark overlay
                             $('.modal-backdrop').remove();
                             // Enable navigation
@@ -649,7 +649,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 </script>
 
        <!-- Toast Notification -->
-        <div class="toast position-fixed top-50 start-50 translate-middle"  role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+        <div class="toast position-fixed top-50 start-50 translate-middle" id="insertToast"   role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
             <div class="toast-header">
                 <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
                 <strong class="me-auto">Notification</strong>
