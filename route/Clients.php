@@ -4,7 +4,12 @@
 
 <?php include '../template/sidebar.php' ?>
 
-
+<style>
+        #datatablesSimple th {
+            text-align: center;
+            background-color: #BED7DC;
+        }
+    </style>
 <!-- Custom Script -->
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -122,6 +127,7 @@ $(document).ready(function(){
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
+                                        
                                         <tr>
                                             <th>Company Name</th>
                                             <th>Contact Name</th>
@@ -138,7 +144,7 @@ $(document).ready(function(){
                     include_once '../connection/database.php';
 
                     // Fetch clients from database
-                    $result = mysqli_query($conn, "SELECT * FROM tbl_client");
+                    $result = mysqli_query($conn, "SELECT * FROM tbl_client ORDER BY client_ID DESC");
 
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
@@ -223,7 +229,7 @@ $(document).ready(function(){
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveItem()">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="saveItem()">Save</button>
             </div>
 
             </form>

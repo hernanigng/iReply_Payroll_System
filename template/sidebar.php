@@ -1,6 +1,4 @@
 <?php
-session_start(); // Start the session (should be at the top of your PHP file)
-
 // Check if both first name, last name, and user role are set in the session
 if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESSION['role'])) {
     $firstname = $_SESSION['firstname'];
@@ -94,9 +92,9 @@ if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESS
         <i class="fas fa-cog" style="float: right; margin-top:5px;"></i>
  <!-- Settings icon -->
     </a>
-    <?php if ($userRole == 'admin'): ?>
+    <?php if ($userRole == '1'): ?>
         <p class="role">Administrator</p>
-    <?php elseif ($userRole == 'accountant'): ?>
+    <?php elseif ($userRole == '2'): ?>
         <p class="role">Accountant</p>
     <?php endif; ?>
 </div>

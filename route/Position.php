@@ -4,7 +4,12 @@
 <?php include '../template/header.php' ?>
 
 <?php include '../template/sidebar.php' ?>
+<style>
+        #datatablesSimple th {
 
+            background-color: #BED7DC;
+        }
+    </style>
 
 <!-- Custom Script -->
 <!-- jQuery -->
@@ -89,7 +94,7 @@
 
                 <main>
                     <div class="container-fluid px-4">
-                        <h3 class="mt-4">Positions</h3>
+                        <h3 class="mt-4">Position</h3>
   
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button class="btn btn-primary" type="button" onclick="showModal()">Add New</button>
@@ -115,7 +120,7 @@
                     include_once '../connection/database.php';
 
                     // Fetch clients from database
-                    $result = mysqli_query($conn, "SELECT * FROM tbl_position");
+                    $result = mysqli_query($conn, "SELECT * FROM tbl_position ORDER BY position_ID DESC");
 
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
@@ -172,7 +177,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary close" data-dismiss="modal" onclick="closeModal()">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </div>
                 
             </form>
