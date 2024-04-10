@@ -11,6 +11,9 @@
         <link rel="stylesheet" href="../assets/css/style.css?<?=time()?>" media="all">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <link rel="icon" type="image/x-icon" href="../assets/img/ireplyicon.png" sizes="16x16">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
     
     </head>
 
