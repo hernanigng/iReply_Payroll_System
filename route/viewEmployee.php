@@ -610,6 +610,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
               $.post(url, data, function(response) {
                     console.log("Server Response:", response);
+                        alert(response);
                         $('#exampleModal').modal('hide');
                         $('.toast').toast('show');  
 
@@ -749,7 +750,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
 
   <!-- Toast Notification Delete -->
-        <div class="toast position-fixed top-50 start-50 translate-middle"  role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+        <div class="toast position-fixed top-50 start-50 translate-middle" id="deleteToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
             <div class="toast-header">
                 <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
                 <strong class="me-auto">Notification</strong>
@@ -784,7 +785,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         data: { id: employeeId },
         success: function(response) {
             console.log('Data inserted into tbl_archive');
-            alert(response);
+            //alert(response);
         },
         error: function(xhr, status, error) {
             console.error('Error inserting data into tbl_archive:', error);
@@ -793,12 +794,12 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
         $.ajax({
             type: 'POST',
-            url: '../functions/deleteEmployee.php',
+            url: 'functions/deleteEmployee.php',
             data: { id: employeeId },
             success: function(response) {
-                 $('body').append($('.toast'));
+                 $('body').append($('#deleteToast'));
         
-                $('.toast').toast('show');
+                $('#deleteToast').toast('show');
 
                     setTimeout(function() {
                     window.location.reload();

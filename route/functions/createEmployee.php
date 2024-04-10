@@ -15,7 +15,7 @@ $workEmail = $_POST['createWorkEmail'];
 $employeeType = $_POST['createEmployeeType'];
 
 $startDate = $_POST['createStartDate'];
-$monthlySalary = $_POST['createMonthlySalary'];
+$monthlySalaryRaw = $_POST['createMonthlySalary'];
 $accntBonus = $_POST['createAccountBonus'];
 $client = $_POST['createClient'];
 $position = $_POST['createPosition']; 
