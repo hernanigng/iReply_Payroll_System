@@ -706,7 +706,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                               <button class="btn btn-danger del" data-employee_id="<?php echo $data['employee_id']; ?>">
                                                 <i class="bi bi-trash"></i>
                                             </button>
-                                            <button class="btn btn-warning edit" onclick="openEditModal('<?php echo $data['employee_id'];?>')">
+                                            <button class="btn btn-warning edit" onclick="openPasswordModal('<?php echo $data['employee_id'];?>')">
                                               <i class="bi bi-pencil"></i>
                                             </button>
                                             </td>
@@ -1138,6 +1138,41 @@ $('#startDate').text(formattedStartdate);
 
 <script>
     // EDIT EMPLOYEE SCRIPT
+
+    function openPasswordModal(employeeId) {
+    $('#passwordModal').modal('show');
+
+    $('#submitPassword').off('click').on('click', function() {
+        var enteredPassword = $('#password').val(); // Get the password entered by the user
+        var username = "<?php echo $_SESSION['username']; ?>"; // Get the username stored in the session
+        
+        // Send an AJAX request to verify the password
+        $.ajax({
+            url: 'functions/verify_password.php',
+            type: 'POST',
+            data: {
+                username: username,
+                password: enteredPassword
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Password is correct, proceed with opening the edit modal
+                    $('#passwordModal').modal('hide');
+                    openEditModal(employeeId);
+                } else {
+                    // Incorrect password, display error message
+                    $('#passwordError').text(response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                // Handle AJAX errors here
+                console.error(xhr.responseText);
+            }
+        });
+    });
+}
+
     function openEditModal(employeeId) {
     // Show the modal
     $('#editEmployee').modal('show');
@@ -1483,6 +1518,27 @@ $('#startDate').text(formattedStartdate);
     </div>
 </div>
 
+ <!-- PASSWORD MODAL -->
+ <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passwordModalLabel">Enter Password</h5>
+                <button type="button" class="btn close" data-bs-dismiss="modal">Close</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password">
+                </div>
+                <div id="passwordError" class="text-danger"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="submitPassword">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
