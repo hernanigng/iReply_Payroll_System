@@ -226,7 +226,7 @@
                     <div id="error" style="color: red;"></div>
                     
                     <label for="middleName" class="col-sm-2 col-form-label">Middle Initial</label>
-                    <input type="text" name="userMiddleInitial" class="form-control" id="userMiddleInitial_id">
+                    <input type="text" name="userMiddleInitial" class="form-control" id="userMiddleInitial_id" maxlength="1">
                     <div id="error" style="color: red;"></div>
 
                     <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>

@@ -610,7 +610,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
               $.post(url, data, function(response) {
                     console.log("Server Response:", response);
-                        alert(response);
+                        //alert(response);
                         $('#exampleModal').modal('hide');
                         $('#insertToast').toast('show');  
 
