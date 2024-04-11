@@ -53,7 +53,6 @@
                                         <th>Middle Initial</th>
                                         <th>Last Name</th>
                                         <th>Username</th>
-                                        <th>Password</th>
                                         <th>User Role</th>
                                         <th>Position</th>
                                         <th> </th>
@@ -68,7 +67,6 @@
                                                 tbl_user_management.middleinitial, 
                                                 tbl_user_management.lastname, 
                                                 tbl_user_management.username, 
-                                                tbl_user_management.password, 
                                                 tbl_user_role.user_role, 
                                                 tbl_position.Title
                                             FROM tbl_user_management 
@@ -85,7 +83,6 @@
                                             <td><?php echo $data['middleinitial']; ?></td>
                                             <td><?php echo $data['lastname']; ?></td>
                                             <td><?php echo $data['username']; ?></td>
-                                            <td><?php echo $data['password']; ?></td>
                                             <td><?php echo $data['user_role']; ?></td>
                                             <td><?php echo $data['Title']; ?></td>
                                             <td>
