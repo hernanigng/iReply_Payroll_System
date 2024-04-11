@@ -15,6 +15,14 @@
 
       <link rel="stylesheet" href="../assets/css/user_management_style.css">
 
+      <style>
+        #datatablesSimple th {
+
+            background-color: #BED7DC;
+        }
+    </style>
+
+
 <div id="layoutSidenav_content">
 
             <main>
@@ -36,7 +44,7 @@
                         <h3 class="mt-4">Users</h3>
 
                         <div>                                   
-                            <button type="button" class="btn btn-primary offset-10 mt-5" data-bs-toggle="modal" data-bs-target="#addUserModal">Add New <i class="bi bi-plus"></i> </button>
+                            <button type="button" class="btn btn-primary offset-10 mt-3" data-bs-toggle="modal" data-bs-target="#addUserModal">Add New <i class="bi bi-plus"></i> </button>
                         </div>
 
                         <div class="card mb-4 mt-4">
@@ -86,6 +94,7 @@
                                             <td><?php echo $data['user_role']; ?></td>
                                             <td><?php echo $data['Title']; ?></td>
                                             <td>
+                                                <center>
                                                 <button class="btn btn-primary view" onclick="openModal('<?php echo $data['user_management_id'];?>')"> 
                                                     <i class="bi bi-eye"></i>
                                                 </button>
@@ -95,6 +104,7 @@
                                                 <button class="btn btn-warning edit" onclick="openPasswordModal('<?php echo $data['user_management_id'];?>')">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
+                                                </center>
                                             </td>
                                         </tr>
                                     <?php
@@ -209,43 +219,52 @@
  
 
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-  <div class="modal-header">
-    <h5 class="modal-title">Add User</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  </div>
-  <div class="modal-body">
-    <form id="insertUser" method="POST">
-    <div class="mb-3 row">
-                    <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
-                    <input type="text" name="userFirstName" class="form-control" id="userFirstName_id">
-                    <div id="error" style="color: red;"></div>
-                    
-                    <label for="middleName" class="col-sm-2 col-form-label">Middle Initial</label>
-                    <input type="text" name="userMiddleInitial" class="form-control" id="userMiddleInitial_id" maxlength="1">
-                    <div id="error" style="color: red;"></div>
-
-                    <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
-                    <input type="text" name="userLastName" class="form-control" id="userLastName_id">
-                    <div id="error" style="color: red;"></div>
-
-                    <label for="username" class="col-sm-2 col-form-label">Username</label>
-                    <input type="text" name="createUsername" class="form-control" id="createUsername_id">
-                    <div id="error" style="color: red;"></div>
-
-                    <label for="password" class="col-sm-2 col-form-label">Password</label>
-                    <div class="input-group">
-                        <input type="password" name="createPassword" class="form-control" id="createPassword_id">
-                        <button type="button" class="btn btn-outline-secondary" id="togglePasswordVisibility">
-                            <i class="bi bi-eye"></i> <!-- Icon for show/hide password -->
-                        </button>
-                    </div>                   
-                    <div id="error" style="color: red;"></div>
-                    
-                    <label for="userRole" class="col-sm-2 col-form-label">User Role</label>
-                    <div id="error" style="color: red;"></div>
-                     <select class="form-select" name="createUserRole" aria-label="User Role Select">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="insertUser" method="POST">
+                    <div class="mb-3 row">
+                        <div class="col-sm-6">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" name="userFirstName" class="form-control" id="userFirstName_id">
+                            <div id="error" style="color: red;"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="middleName" class="form-label">Middle Initial</label>
+                            <input type="text" name="userMiddleInitial" class="form-control" id="userMiddleInitial_id" maxlength="1">
+                            <div id="error" style="color: red;"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-sm-6">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" name="userLastName" class="form-control" id="userLastName_id">
+                            <div id="error" style="color: red;"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="createUsername" class="form-control" id="createUsername_id">
+                            <div id="error" style="color: red;"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-sm-6">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <input type="password" name="createPassword" class="form-control" id="createPassword_id">
+                                <button type="button" class="btn btn-outline-secondary" id="togglePasswordVisibility">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            <div id="error" style="color: red;"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="userRole" class="form-label">User Role</label>
+                            <select class="form-select" name="createUserRole" aria-label="User Role Select">
                                 <option selected disabled>Choose a Role</option>
                                 <?php
                                     include "../connection/database.php";
@@ -263,20 +282,20 @@
                                     }
 
                                     $conn->close();
-                                    ?>
+                                ?>
                             </select>
-
                             <?php
                                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     $selectedRole = $_POST['createUserRole'];
-                                    //echo "Selected Client ID: " . $selectedClientId;
                                 }
                             ?>
-
-                    <label for="position" class="col-sm-2 col-form-label">Position</label>
-                    <div id="error" style="color: red;"></div> 
-                    <select class="form-select" name="createPosition" aria-label="Position Select">
-                            <option selected disabled>Choose a position</option>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-sm-6">
+                            <label for="position" class="form-label">Position</label>
+                            <select class="form-select" name="createPosition" aria-label="Position Select">
+                                <option selected disabled>Choose a position</option>
                                 <?php
                                     include "../connection/database.php";
                                     if ($conn->connect_error) {
@@ -293,28 +312,25 @@
                                     }
 
                                     $conn->close();
-                                    ?>
+                                ?>
                             </select>
-
                             <?php
                                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     $selectedPositionID = $_POST['createPosition'];
-                                    //echo "Selected Position: " . $selectedPositionID;
                                 }
                             ?>
-
-
-                </div>
-
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-    <button type="save" id="submitUser" class="btn btn-primary">Save</button>
-  </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="save" id="submitUser" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
+
 
 
 <script>
