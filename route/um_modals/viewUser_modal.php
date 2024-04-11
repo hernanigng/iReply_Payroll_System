@@ -6,29 +6,45 @@
                 <h5 class="modal-title mb-5" id="viewUserLabel">User Information</h5>
     </div>
             <div class="modal-body" style="margin-top: -10px;">
-        
-                  <label for="firstname" class="col-sm-2 col-form-label">First Name</label>
-                    <span class="form-control" id="firstname"> </span>
 
-                  <label for="middleinitial" class="col-sm-2 col-form-label">Middle Initial</label>
-                    <span class="form-control" id="middleinitial"> </span>
+  <div class="row">
+    <div class="col">
+       <label for="firstname" class="col-form-label">First Name</label>
+         <span class="form-control" id="firstname"> </span>
+    </div>
+    <div class="col">
+       <label for="middleinitial" class="col-form-label">Middle Initial</label>
+         <span class="form-control" id="middleinitial"> </span>
+    </div>
+    <div class="col">
+       <label for="lastname" class="col-form-label">Last Name</label>
+          <span class="form-control" id="lastname"> </span>
+    </div>
+</div>
 
-                  <label for="lastname" class="col-sm-2 col-form-label">Last Name</label>
-                    <span class="form-control" id="lastname"> </span>
+<div class="row">
+    <div class="col">
+       <label for="username" class="col-form-label">Username</label>
+         <span class="form-control" id="username"> </span>
+    </div>
+    <div class="col">
+        <label for="password" class="col-form-label">Password</label>
+          <span class="form-control" id="password"> </span>
+    </div>
+</div>
 
-                  <label for="username" class="col-sm-2 col-form-label">Username</label>
-                    <span class="form-control" id="username"> </span>
-
-                  <label for="password" class="col-sm-2 col-form-label">Password</label>
-                    <span class="form-control" id="password"> </span>
-
-                  <label for="userrole" class="col-sm-2 col-form-label">User Role</label>
-                    <span class="form-control" id="userrole"> </span>
-
-                  <label for="position" class="col-sm-2 col-form-label">Position</label>
-                    <span class="form-control" id="position"> </span>
-
+<div class="row">
+    <div class="col">
+       <label for="userrole" class="col-form-label">User Role</label>
+          <span class="form-control" id="userrole"> </span>
+    </div>
+    <div class="col">
+       <label for="position" class="col-form-label">Position</label>
+          <span class="form-control" id="position"> </span>
+    </div>
+</div>
                 </div>
+
                 <div class="modal-footer">
                   <button class="btn btn-danger close" style="float: right; margin-top: 10px;" data-bs-dismiss="modal">Close</button>
                   <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="addButton">Create</button>
