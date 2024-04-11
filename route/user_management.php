@@ -450,7 +450,7 @@ $(document).ready(function() {
     $('#passwordModal').modal('show');
 
     $('#submitPassword').off('click').on('click', function() {
-        var enteredPassword = $('#password').val(); // Get the password entered by the user
+        var enteredPassword = $('#enteredPassword').val(); // Get the password entered by the user
         var username = "<?php echo $_SESSION['username']; ?>"; // Get the username stored in the session
         
         // Send an AJAX request to verify the password
@@ -493,7 +493,7 @@ $(document).ready(function() {
             <div class="modal-body">
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password">
+                    <input type="password" class="form-control" id="enteredPassword">
                 </div>
                 <div id="passwordError" class="text-danger"></div>
             </div>
@@ -505,7 +505,7 @@ $(document).ready(function() {
 </div>
 
 <!-- EDIT USER MODAL -->
-<?php //include 'um_modals/editUser_modal.php'; ?>
+<?php include 'um_modals/editUser_modal.php'; ?>
 
 <!-- User Update Toast Notification -->
 <?php include 'um_modals/userUpdate_toast.php'; ?>
