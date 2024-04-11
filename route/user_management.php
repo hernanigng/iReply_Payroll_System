@@ -397,6 +397,7 @@ $(document).ready(function() {
                 // Construct the new row for the table
                 var newRow = '<tr id="' + response.user_management_id + '">' +
                     '<td>' + response.firstname + '</td>' +
+                     '<td>' + response.middleinitial + '</td>' +
                     '<td>' + response.lastname + '</td>' +
                     '<td>' + response.username + '</td>' +
                     '<td>' + response.password + '</td>' +
