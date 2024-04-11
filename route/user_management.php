@@ -1,4 +1,4 @@
-<?php //include '../connection/session.php' ?>
+<?php include '../connection/session.php' ?>
 
 <?php include '../template/header.php' ?>
 
@@ -95,7 +95,7 @@
                                                 <button class="btn btn-danger del" data-user_management_id="<?php echo $data['user_management_id']; ?>">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
-                                                <button class="btn btn-warning edit" onclick="openEditModal('<?php echo $data['user_management_id'];?>')">
+                                                <button class="btn btn-warning edit" onclick="openPasswordModal('<?php echo $data['user_management_id'];?>')">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
                                             </td>
@@ -443,9 +443,69 @@ $(document).ready(function() {
 <!-- VIEW USER MODAL -->
 <?php include 'um_modals/viewUser_modal.php'; ?>
 
+<script>
+    // EDIT EMPLOYEE SCRIPT
+
+    function openPasswordModal(id) {
+    $('#passwordModal').modal('show');
+
+    $('#submitPassword').off('click').on('click', function() {
+        var enteredPassword = $('#password').val(); // Get the password entered by the user
+        var username = "<?php echo $_SESSION['username']; ?>"; // Get the username stored in the session
+        
+        // Send an AJAX request to verify the password
+        $.ajax({
+            url: 'functions/verify_password.php',
+            type: 'POST',
+            data: {
+                username: username,
+                password: enteredPassword
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Password is correct, proceed with opening the edit modal
+                    $('#passwordModal').modal('hide');
+                    openEditModal(id);
+                } else {
+                    // Incorrect password, display error message
+                    $('#passwordError').text(response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                // Handle AJAX errors here
+                console.error(xhr.responseText);
+            }
+        });
+    });
+}
+
+</script>
+
+<!-- PASSWORD MODAL -->
+<div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passwordModalLabel">Enter Password</h5>
+                <button type="button" class="btn close" data-bs-dismiss="modal">Close</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password">
+                </div>
+                <div id="passwordError" class="text-danger"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="submitPassword">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- EDIT USER MODAL -->
-<?php include 'um_modals/editUser_modal.php'; ?>
+<?php //include 'um_modals/editUser_modal.php'; ?>
 
 <!-- User Update Toast Notification -->
 <?php include 'um_modals/userUpdate_toast.php'; ?>
