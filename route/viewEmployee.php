@@ -64,22 +64,25 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                     
                     <div class="mb-3 row">
                         <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
-                        <input type="text" name="createFirstName" class="form-control" id="createFirstName_id">
+                        <input type="text" name="createFirstName" class="form-control input-error" id="createFirstName_id" placeholder="Enter First Name">
+                        <p id="inputError" class="error-message" style="display: none;"> Please fill out this required field.</p>
                         
+
                         <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
-                        <input type="text" name="createMiddleName" class="form-control" id="createMiddleName_id">
+                        <input type="text" name="createMiddleName" class="form-control" id="createMiddleName_id" placeholder="Enter Middle Name">
+                        <p id="inputError" class="error-message" style="display: none;"> Please fill out this required field.</p>
 
                         <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
-                        <input type="text" name="createLastName" class="form-control" id="createLastName_id">
+                        <input type="text" name="createLastName" class="form-control" id="createLastName_id" placeholder="Enter Last Name">
 
                         <label for="completeAddress" class="col-sm-2 col-form-label">Complete Address</label>
-                        <input type="text" name="createAddress" class="form-control" id="createAddress_id">
+                        <input type="text" name="createAddress" class="form-control" id="createAddress_id" placeholder="Enter Complete Address">
 
                         <label for="birthDate" class="col-sm-2 col-form-label">Birthdate</label>
                         <input type="date" name="createBirthdate" class="form-control" id="createBirthdate_id">
 
                         <label for="contactNum" class="col-sm-2 col-form-label">Contact Number </label>
-                            <input type="text" name="createContactNum" class="form-control number-error" id="contactNumber_id">
+                            <input type="text" name="createContactNum" class="form-control number-error" id="contactNumber_id" maxlength="11" placeholder="Enter Contact Number">
                             <i class="fas fa-times input-icon" style="display: none;"></i>
                             <p id="NumError" class="error-message" style="display: none;"> Contact number should be 11 digits.</p>
 
@@ -92,10 +95,12 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                         </select>
                         
                         <label for="personalEmail" class="col-sm-2 col-form-label">Personal Email</label>
-                        <input type="text" name="createPersEmail" class="form-control" id="createPersEmail_id">
+                        <input type="text" name="createPersEmail" class="form-control email-error" id="createPersEmail_id" placeholder="Enter Personal Email">
+                        <p id="emailError" class="error-message" style="display: none;"> Input a Valid Email.</p>
 
                         <label for="workEmail" class="col-sm-2 col-form-label">Work Email</label>
-                        <input type="text" name="createWorkEmail" class="form-control" id="createWorkEmail_id">
+                        <input type="text" name="createWorkEmail" class="form-control email-error" id="createWorkEmail_id" placeholder="Enter Work Email">
+                        <p id="emailError" class="error-message" style="display: none;"> Input a Valid Email.</p>
 
                         <label for="employeeType" class="col-sm-2 col-form-label"> Employee Type </label>
                         <select class="form-select" name="createEmployeeType" aria-label="Employee Type Select">
@@ -203,36 +208,36 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
                             <div class="mb-3 row">
                                 <label for="sss" class="col-sm-3 col-form-label">SSS Number</label>
-                                <input type="number" name="createSSS" class="form-control number-error" id="createSSS_id">
+                                <input type="text" name="createSSS" class="form-control number-error" id="createSSS_id" maxlength="10"  placeholder="Enter SSS Number">
                                 <i class="fas fa-times input-icon" style="display: none;"></i>
                                 <p id="sssNumberError" class="error-message" style="display: none;"> SSS number should be 10 digits.</p>
 
                                 <label for="pagibig" class="col-sm-3 col-form-label">Pag-ibig Number</label>
-                                <input type="number" name="createPagibig" class="form-control number-error" id="createPagibig_id">
+                                <input type="text" name="createPagibig" class="form-control number-error" id="createPagibig_id" maxlength="12" placeholder="Enter Pag-ibig Number">
                                 <i class="fas fa-times input-icon" style="display: none;"></i>
                                 <p id="pagibigNumberError" class="error-message" style="display: none;"> Pagibig number should be 12 digits.</p>
 
                                 <label for="philhealth" class="col-sm-3 col-form-label">Philhealth Number</label>
-                                <input type="number" name="createPhilhealth" class="form-control number-error" id="createPhilhealth_id">
+                                <input type="text" name="createPhilhealth" class="form-control number-error" id="createPhilhealth_id" maxlength="12" placeholder="Enter Philhealth Number">
                                 <i class="fas fa-times input-icon" style="display: none;"></i>
                                 <p id="philhealthNumberError" class="error-message" style="display: none;"> Philhealth number should be 12 digits.</p>
 
                                 <label for="tin" class="col-sm-3 col-form-label">TIN Number</label>
-                                <input type="number" name="createTin" class="form-control number-error" id="createTin_id">
+                                <input type="text" name="createTin" class="form-control number-error" id="createTin_id" maxlength="12" placeholder="Enter Tin Number">
                                 <i class="fas fa-times input-icon" style="display: none;"></i>
                                 <p id="tinNumberError" class="error-message" style="display: none;"> Tin number should be 9-12 digits.</p>
 
                                 <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution</label>
-                                <input type="text" name="createSSSContrib" class="form-control" id="createSSSContrib_id">
+                                <input type="text" name="createSSSContrib" class="form-control" id="createSSSContrib_id" placeholder="Enter SSS Contribution">
 
                                 <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution </label>
-                                <input type="text" name="createPagibigContrib" class="form-control" id="createPagibigContrib_id">
+                                <input type="text" name="createPagibigContrib" class="form-control" id="createPagibigContrib_id" placeholder="Enter Pagibig Contribution">
 
                                 <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution</label>
-                                <input type="text" name="createPhilhealthContrib" class="form-control" id="createPhilhealthContrib_id">
+                                <input type="text" name="createPhilhealthContrib" class="form-control" id="createPhilhealthContrib_id" placeholder="Enter Philhealth Contribution">
 
                                 <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
-                                <input type="text" name="createTaxPercent" class="form-control" id="createTaxPercent_id">
+                                <input type="text" name="createTaxPercent" class="form-control" id="createTaxPercent_id" placeholder="Enter Tax Percentage">
             
                             </div>
 
@@ -372,7 +377,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         var personalInfoForm = document.getElementById('insertEmployee');
         var modalBody2 = document.querySelector('#employmentDetailsContent');
 
-        <!-- Employment Details -->
+         //Employment Details 
          document.getElementById('showEmploymentForm').addEventListener('click', function(event) {
             event.preventDefault();
 
@@ -380,36 +385,40 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 link.classList.remove('active');
             });
 
-            // Add active class to the Employment Details nav-link
+
             document.querySelector('.employment-details').classList.add('active');
+
             var inputFields = document.querySelectorAll('#insertEmployee input[type="text"], #insertEmployee input[type="date"], #insertEmployee select');
+
+            var anyBlank = false;
 
             inputFields.forEach(function(inputField) {
                 inputField.classList.remove('highlight');
-            });
 
-            // Check if any input field is blank
-            var anyBlank = false;
-            inputFields.forEach(function(inputField) {
+                // Skip validation for createMiddleName_id
+                if (inputField.id === "createMiddleName_id") {
+                    return;
+                }
+
                 if (inputField.tagName.toLowerCase() === 'select') {
-                // For select elements, check if the selected option is the default one
+                    // For select elements, check if the selected option is the default one
                     if (inputField.selectedIndex === 0) {
                         inputField.classList.add('highlight');
                         anyBlank = true;
                     }
                 } else {
                     // For other input elements, check if the value is blank
-                    if (inputField.value.trim() === "") {
+                    if (inputField.value.trim() === "" && inputField.id !== "createMiddleName_id") {
+                        // Skip validation for createMiddleName_id
                         inputField.classList.add('highlight');
                         anyBlank = true;
-                }  
-                     else if (inputField.id === "contactNumber_id" && inputField.value.length !== 11) {
-                    // For the contact number input, check if it exceeds 11 digits
-                    inputField.classList.add('highlight');
-                    anyBlank = true;
-                    document.getElementById('NumError').style.display = 'block'; // Display error message
-        }
-            }
+                    } else if (inputField.id === "contactNumber_id" && inputField.value.length !== 11) {
+                        // For the contact number input, check if it exceeds 11 digits
+                        inputField.classList.add('highlight');
+                        anyBlank = true;
+                        document.getElementById('NumError').style.display = 'block'; // Display error message
+                    }
+                }
             });
 
             // If any input field is blank, prevent further action
@@ -421,7 +430,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             modalBody2.style.display = 'block';
         });
 
-        <!-- Back to Personal Information Form -->
+        //Back to Personal Information Form 
         employmentPersonal.addEventListener('click', function(event) {
             event.preventDefault();
 
@@ -483,7 +492,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             modalBody3.style.display = 'block';
         });
 
-        <!-- Back to Employment Details Form -->
+        //Back to Employment Details Form 
 
         employmentTab.addEventListener('click', function(event) {
             event.preventDefault();
@@ -499,7 +508,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             modalBody2.style.display = 'block';
         });
 
-        <!-- Benefits Tab to Personal Information-->
+        //Benefits Tab to Personal Information
 
         employmentPersonal.addEventListener('click', function(event) {
             event.preventDefault();
@@ -508,7 +517,38 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             modalBody.style.display = 'block';
         });
 
-    <!-- Benefits Form error message -->
+        //Email Validation
+
+        var personalEmailInput = document.getElementById('createPersEmail_id');
+        var workEmailInput = document.getElementById('createWorkEmail_id');
+        var emailError = document.getElementById('emailError');
+
+        function validateEmail(email) {
+            // Regular expression for validating email addresses
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        personalEmailInput.addEventListener('input', function() {
+            var email = personalEmailInput.value.trim();
+            if (email !== "" && !validateEmail(email)) {
+                emailError.textContent = 'Please enter a valid email address.';
+            } else {
+                emailError.textContent = '';
+            }
+        });
+
+        workEmailInput.addEventListener('input', function() {
+            var email = workEmailInput.value.trim();
+            if (email !== "" && !validateEmail(email)) {
+                emailError.textContent = 'Please enter a valid email address.';
+            } else {
+                emailError.textContent = '';
+            }
+        });
+
+
+    //Benefits Form error message 
 
         document.getElementById('createSSS_id').addEventListener('input', function() {
             var sssInput = this;
@@ -610,7 +650,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
               $.post(url, data, function(response) {
                     console.log("Server Response:", response);
-                        alert(response);
+                        //alert(response);
                         $('#exampleModal').modal('hide');
                         $('#insertToast').toast('show');  
 
@@ -630,11 +670,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                             '<td>' +
                                 '<button class="btn btn-primary view" onclick="openModal(\'' + response.employee_id + '\')"> <i class="bi bi-eye"></i> </button> ' +
                                 '<button class="btn btn-danger del" data-employee_id="' + response.employee_id + '"> <i class="bi bi-trash"></i> </button> ' +
-<<<<<<< Updated upstream
-                                '<button class="btn btn-warning edit" id="' + response.employee_id + '"> <i class="bi bi-pencil"></i> </button> ' +
-=======
                                  '<button class="btn btn-warning edit" id="' + response.employee_id + '" onclick="openPasswordModal(\'' + response.employee_id + '\')"> <i class="bi bi-pencil"></i> </button>'
->>>>>>> Stashed changes
                             '</td>' +
                             '</tr>';
 

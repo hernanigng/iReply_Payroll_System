@@ -233,7 +233,7 @@
                     <div id="error" style="color: red;"></div>
                     
                     <label for="middleName" class="col-sm-2 col-form-label">Middle Initial</label>
-                    <input type="text" name="userMiddleInitial" class="form-control" id="userMiddleInitial_id">
+                    <input type="text" name="userMiddleInitial" class="form-control" id="userMiddleInitial_id" maxlength="1">
                     <div id="error" style="color: red;"></div>
 
                     <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
@@ -399,7 +399,7 @@ $(document).ready(function() {
                           
                 $('body').css('overflow', 'auto');
                         });
-
+                 //window.location.reload();
             if (response.status === 'success') {
                 // Construct the new row for the table
                 var newRow = '<tr id="' + response.user_management_id + '">' +
@@ -413,12 +413,13 @@ $(document).ready(function() {
                     '<td>' +
                     '<button class="btn btn-primary view" onclick="openModal(\'' + response.user_management_id + '\')"><i class="bi bi-eye"></i></button> ' +
                     '<button class="btn btn-danger del" data-user_management_id="' + response.user_management_id + '"><i class="bi bi-trash"></i></button> ' +
-                    '<button class="btn btn-warning edit" onclick="openEditModal(\'' + response.user_management_id + '\')"><i class="bi bi-pencil"></i></button> ' +
+                     '<button class="btn btn-warning edit" onclick="openPasswordModal(\'' + response.user_management_id + '\')"><i class="bi bi-pencil"></i></button>' +
 
                     '</td>' +
                     '</tr>';
 
                 $('#datatablesSimple tbody').prepend(newRow);
+                console.log("New row HTML:", newRow);
             } else {
                 // Handle error if insertion was not successful
                 console.log("Error:", response.message);

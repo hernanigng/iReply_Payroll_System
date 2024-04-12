@@ -51,6 +51,7 @@ if ($result === false) {
                         'status' => 'success',
                         'message' => 'New record inserted successfully!',
                         'firstname' => $firstName,
+                        'middleinitial' => $midInitial,
                         'lastname' => $lastName,
                         'username' => $userName,
                         'password' => $password,

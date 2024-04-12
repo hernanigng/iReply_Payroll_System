@@ -11,6 +11,14 @@
   position: relative;
 }
 
+.email-error {
+  position: relative;
+}
+
+.input-error{
+  position: relative;
+}
+
 .input-icon {
   position: absolute;
   top: 50%;
