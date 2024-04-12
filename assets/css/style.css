@@ -11104,8 +11104,8 @@ body {
 .sb-sidenav .sb-sidenav-header {
   padding: 0.75rem;
   flex-shrink: 0;
-  height: 32%;
 }
+
 .sb-sidenav-dark {
   background-color: #212529;
   color: rgba(255, 255, 255, 0.5);
