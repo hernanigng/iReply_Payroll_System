@@ -15,6 +15,13 @@
 
       <link rel="stylesheet" href="../assets/css/user_management_style.css">
 
+      <style>
+        #datatablesSimple th {
+
+            background-color: #BED7DC;
+        }
+    </style>
+    
 <div id="layoutSidenav_content">
 
             <main>
