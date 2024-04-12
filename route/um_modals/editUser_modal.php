@@ -21,7 +21,7 @@
           <input type="" class="form-control" id="edit_middleinitial">
     </div>
     <div class="col">
-        <label for="lastname" class="col-sm-2 col-form-label">Last Name</label>
+        <label for="lastname" class="col-form-label">Last Name</label>
           <input type="" class="form-control" id="edit_lastname">
     </div>
 </div>
