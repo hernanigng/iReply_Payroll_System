@@ -184,7 +184,7 @@
          data: { id: userId },
          success: function(response) {
              console.log('Data inserted into tbl_archive');
-             alert(response);
+             //alert(response);
          },
          error: function(xhr, status, error) {
              console.error('Error inserting data into tbl_archive_user:', error);
@@ -404,6 +404,7 @@ $(document).ready(function() {
                 // Construct the new row for the table
                 var newRow = '<tr id="' + response.user_management_id + '">' +
                     '<td>' + response.firstname + '</td>' +
+                     '<td>' + response.middleinitial + '</td>' +
                     '<td>' + response.lastname + '</td>' +
                     '<td>' + response.username + '</td>' +
                     '<td>' + response.password + '</td>' +

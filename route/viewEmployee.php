@@ -630,7 +630,11 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                             '<td>' +
                                 '<button class="btn btn-primary view" onclick="openModal(\'' + response.employee_id + '\')"> <i class="bi bi-eye"></i> </button> ' +
                                 '<button class="btn btn-danger del" data-employee_id="' + response.employee_id + '"> <i class="bi bi-trash"></i> </button> ' +
+<<<<<<< Updated upstream
                                 '<button class="btn btn-warning edit" id="' + response.employee_id + '"> <i class="bi bi-pencil"></i> </button> ' +
+=======
+                                 '<button class="btn btn-warning edit" id="' + response.employee_id + '" onclick="openPasswordModal(\'' + response.employee_id + '\')"> <i class="bi bi-pencil"></i> </button>'
+>>>>>>> Stashed changes
                             '</td>' +
                             '</tr>';
 
