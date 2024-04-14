@@ -32,7 +32,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
                 <main>
                     <div class="container-fluid px-4">
-                        <h3 class="mt-4">Clients</h3>
+                        <h3 class="mt-4">Employee</h3>
   
                         <button type="button" class="btn btn-primary offset-10" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Employee</button>
 
@@ -60,77 +60,106 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             <form id="employmentListForm" method="POST">
                  <span class="notif"></span>
             
-                <div id="insertEmployee">
-                    
-                    <div class="mb-3 row">
-                        <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
-                        <input type="text" name="createFirstName" class="form-control input-error" id="createFirstName_id" placeholder="Enter First Name">
-                        <p id="inputError" class="error-message" style="display: none;"> Please fill out this required field.</p>
-                        
+                 <div id="insertEmployee" class="container mt-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" name="createFirstName" class="form-control input-error" id="createFirstName_id" placeholder="Enter First Name">
+                            <p id="inputError" class="error-message" style="display: none;">Please fill out this required field.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="middleName" class="form-label">Middle Name</label>
+                            <input type="text" name="createMiddleName" class="form-control" id="createMiddleName_id" placeholder="Enter Middle Name">
+                            <p id="inputError" class="error-message" style="display: none;">Please fill out this required field.</p>
+                        </div>
+                    </div>
 
-                        <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
-                        <input type="text" name="createMiddleName" class="form-control" id="createMiddleName_id" placeholder="Enter Middle Name">
-                        <p id="inputError" class="error-message" style="display: none;"> Please fill out this required field.</p>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" name="createLastName" class="form-control" id="createLastName_id" placeholder="Enter Last Name">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="completeAddress" class="form-label">Complete Address</label>
+                            <input type="text" name="createAddress" class="form-control" id="createAddress_id" placeholder="Enter Complete Address">
+                        </div>
+                    </div>
 
-                        <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
-                        <input type="text" name="createLastName" class="form-control" id="createLastName_id" placeholder="Enter Last Name">
-
-                        <label for="completeAddress" class="col-sm-2 col-form-label">Complete Address</label>
-                        <input type="text" name="createAddress" class="form-control" id="createAddress_id" placeholder="Enter Complete Address">
-
-                        <label for="birthDate" class="col-sm-2 col-form-label">Birthdate</label>
-                        <input type="date" name="createBirthdate" class="form-control" id="createBirthdate_id">
-
-                        <label for="contactNum" class="col-sm-2 col-form-label">Contact Number </label>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="birthDate" class="form-label">Birthdate</label>
+                            <input type="date" name="createBirthdate" class="form-control" id="createBirthdate_id">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="contactNum" class="form-label">Contact Number</label>
                             <input type="text" name="createContactNum" class="form-control number-error" id="contactNumber_id" maxlength="11" placeholder="Enter Contact Number">
                             <i class="fas fa-times input-icon" style="display: none;"></i>
-                            <p id="NumError" class="error-message" style="display: none;"> Contact number should be 11 digits.</p>
-
-                        <label for="civilStatus" class="col-sm-2 col-form-label">Civil Status</label>
-                        <select class="form-select" name="createCivilStatus" aria-label="Civil Status Select">
-                            <option selected>Select Civil Status</option>
-                            <option value="Single">Single</option>
-                            <option value="Married">Married</option>
-                            <option value="Widowed">Widowed</option>
-                        </select>
-                        
-                        <label for="personalEmail" class="col-sm-2 col-form-label">Personal Email</label>
-                        <input type="text" name="createPersEmail" class="form-control email-error" id="createPersEmail_id" placeholder="Enter Personal Email">
-                        <p id="emailError" class="error-message" style="display: none;"> Input a Valid Email.</p>
-
-                        <label for="workEmail" class="col-sm-2 col-form-label">Work Email</label>
-                        <input type="text" name="createWorkEmail" class="form-control email-error" id="createWorkEmail_id" placeholder="Enter Work Email">
-                        <p id="emailError" class="error-message" style="display: none;"> Input a Valid Email.</p>
-
-                        <label for="employeeType" class="col-sm-2 col-form-label"> Employee Type </label>
-                        <select class="form-select" name="createEmployeeType" aria-label="Employee Type Select">
-                            <option selected>Select Employee Type</option>
-                            <option value="Onsite">Work From Home</option>
-                            <option value="Home">Work Onsite</option>
-                        </select>
+                            <p id="NumError" class="error-message" style="display: none;">Contact number should be 11 digits.</p>
+                        </div>
                     </div>
 
-                    <div class="modal-footer">
-                 <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button> -->
-                 <a href="#employmentDetailsContent.php" class="btn btn-primary" id="showEmploymentForm">Next</a>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="civilStatus" class="form-label">Civil Status</label>
+                            <select class="form-select" name="createCivilStatus" aria-label="Civil Status Select">
+                                <option selected>Select Civil Status</option>
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Widowed">Widowed</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="personalEmail" class="form-label">Personal Email</label>
+                            <input type="text" name="createPersEmail" class="form-control email-error" id="createPersEmail_id" placeholder="Enter Personal Email">
+                            <p id="emailError" class="error-message" style="display: none;">Input a Valid Email.</p>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="workEmail" class="form-label">Work Email</label>
+                            <input type="text" name="createWorkEmail" class="form-control email-error" id="createWorkEmail_id" placeholder="Enter Work Email">
+                            <p id="emailError" class="error-message" style="display: none;">Input a Valid Email.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="employeeType" class="form-label">Employee Type</label>
+                            <select class="form-select" name="createEmployeeType" aria-label="Employee Type Select">
+                                <option selected>Select Employee Type</option>
+                                <option value="Onsite">Work From Home</option>
+                                <option value="Home">Work Onsite</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer mt-3">
+                        <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button> -->
+                        <a href="#employmentDetailsContent.php" class="btn btn-primary" id="showEmploymentForm">Next</a>
                     </div>
                 </div>
+
            
                 <div id="employmentDetailsContent" style="display: none;">
-    
-                            <div class="mb-3 row">
-                                <label for="startDate" class="col-sm-3 col-form-label">Start Date</label>
+                    <div class="container mt-4">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="startDate" class="form-label">Start Date</label>
                                 <input type="date" name="createStartDate" class="form-control createStartDate" id="createStartDate_id">
-
-                                <label for="monthSalary" class="col-sm-3 col-form-label">Monthly Salary</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="monthSalary" class="form-label">Monthly Salary</label>
                                 <input type="text" name="createMonthlySalary" class="form-control" id="createMonthlySalary_id" placeholder="PHP 0.00">
                                 <div id="error" style="color: red;"></div>
-
-                                <label for="accountBonus" class="col-sm-3 col-form-label">Account Bonus</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="accountBonus" class="form-label">Account Bonus</label>
                                 <input type="text" name="createAccountBonus" class="form-control" id="createBonus_id" placeholder="PHP 0.00">
                                 <div id="error" style="color: red;"></div>
+                            </div>
+                        </div>
 
-                                 <label for="client" class="col-sm-2 col-form-label">Client</label>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label for="client" class="form-label">Client</label>
                                 <select class="form-select" name="createClient" aria-label="Client Select">
                                     <option selected disabled>Choose a client</option>
                                     <?php
@@ -149,19 +178,18 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                         }
 
                                         $conn->close();
-                                        ?>
+                                    ?>
                                 </select>
-
                                 <?php
                                     if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         $selectedClientId = $_POST['createClient'];
-                                        //echo "Selected Client ID: " . $selectedClientId;
                                     }
                                 ?>
-                                
-                                <label for="position" class="col-sm-2 col-form-label">Position</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="position" class="form-label">Position</label>
                                 <select class="form-select" name="createPosition" aria-label="Position Select">
-                                <option selected disabled>Choose a position</option>
+                                    <option selected disabled>Choose a position</option>
                                     <?php
                                         include "../connection/database.php";
                                         if ($conn->connect_error) {
@@ -178,75 +206,90 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                         }
 
                                         $conn->close();
-                                        ?>
+                                    ?>
                                 </select>
-
                                 <?php
                                     if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         $selectedPositionID = $_POST['createPosition'];
-                                        //echo "Selected Position: " . $selectedPositionID;
                                     }
                                 ?>
-
-                                <label for="employmentStatus" class="col-sm-2 col-form-label">Employment Status</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="employmentStatus" class="form-label">Employment Status</label>
                                 <select class="form-select" name="createEmploymentStatus" aria-label="Employment Status Select">
                                     <option selected>Select Employment Status</option>
                                     <option value="Part Time">Part-Time</option>
                                     <option value="Full Time">Full-Time</option>
                                 </select>
-            
                             </div>
+                        </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" id="returnPersonalForm">Back</button>
-                                <a href="#" class="btn btn-primary" id="showBenefitsForm">Next</a>
-                            </div>
-                            
+                        <div class="modal-footer mt-3">
+                            <button type="button" class="btn btn-danger" id="returnPersonalForm">Back</button>
+                            <a href="#" class="btn btn-primary" id="showBenefitsForm">Next</a>
+                        </div>
+                    </div>
                 </div>
+
         
                 <div id="benefitDetailsContent" style="display: none;">
-
-                            <div class="mb-3 row">
-                                <label for="sss" class="col-sm-3 col-form-label">SSS Number</label>
-                                <input type="text" name="createSSS" class="form-control number-error" id="createSSS_id" maxlength="10"  placeholder="Enter SSS Number">
+                    <div class="container mt-4">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="sss" class="form-label">SSS Number</label>
+                                <input type="text" name="createSSS" class="form-control number-error" id="createSSS_id" maxlength="10" placeholder="Enter SSS Number">
                                 <i class="fas fa-times input-icon" style="display: none;"></i>
-                                <p id="sssNumberError" class="error-message" style="display: none;"> SSS number should be 10 digits.</p>
-
-                                <label for="pagibig" class="col-sm-3 col-form-label">Pag-ibig Number</label>
+                                <p id="sssNumberError" class="error-message" style="display: none;">SSS number should be 10 digits.</p>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="pagibig" class="form-label">Pag-ibig Number</label>
                                 <input type="text" name="createPagibig" class="form-control number-error" id="createPagibig_id" maxlength="12" placeholder="Enter Pag-ibig Number">
                                 <i class="fas fa-times input-icon" style="display: none;"></i>
-                                <p id="pagibigNumberError" class="error-message" style="display: none;"> Pagibig number should be 12 digits.</p>
-
-                                <label for="philhealth" class="col-sm-3 col-form-label">Philhealth Number</label>
+                                <p id="pagibigNumberError" class="error-message" style="display: none;">Pagibig number should be 12 digits.</p>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="philhealth" class="form-label">Philhealth Number</label>
                                 <input type="text" name="createPhilhealth" class="form-control number-error" id="createPhilhealth_id" maxlength="12" placeholder="Enter Philhealth Number">
                                 <i class="fas fa-times input-icon" style="display: none;"></i>
-                                <p id="philhealthNumberError" class="error-message" style="display: none;"> Philhealth number should be 12 digits.</p>
+                                <p id="philhealthNumberError" class="error-message" style="display: none;">Philhealth number should be 12 digits.</p>
+                            </div>
+                        </div>
 
-                                <label for="tin" class="col-sm-3 col-form-label">TIN Number</label>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label for="tin" class="form-label">TIN Number</label>
                                 <input type="text" name="createTin" class="form-control number-error" id="createTin_id" maxlength="12" placeholder="Enter Tin Number">
                                 <i class="fas fa-times input-icon" style="display: none;"></i>
-                                <p id="tinNumberError" class="error-message" style="display: none;"> Tin number should be 9-12 digits.</p>
-
-                                <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution</label>
-                                <input type="text" name="createSSSContrib" class="form-control" id="createSSSContrib_id" placeholder="Enter SSS Contribution">
-
-                                <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution </label>
-                                <input type="text" name="createPagibigContrib" class="form-control" id="createPagibigContrib_id" placeholder="Enter Pagibig Contribution">
-
-                                <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution</label>
-                                <input type="text" name="createPhilhealthContrib" class="form-control" id="createPhilhealthContrib_id" placeholder="Enter Philhealth Contribution">
-
-                                <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
-                                <input type="text" name="createTaxPercent" class="form-control" id="createTaxPercent_id" placeholder="Enter Tax Percentage">
-            
+                                <p id="tinNumberError" class="error-message" style="display: none;">Tin number should be 9-12 digits.</p>
                             </div>
+                            <div class="col-md-4">
+                                <label for="sssContrib" class="form-label">SSS Contribution</label>
+                                <input type="text" name="createSSSContrib" class="form-control" id="createSSSContrib_id" placeholder="Enter SSS Contribution">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="pagibigContrib" class="form-label">Pagibig Contribution</label>
+                                <input type="text" name="createPagibigContrib" class="form-control" id="createPagibigContrib_id" placeholder="Enter Pagibig Contribution">
+                            </div>
+                        </div>
 
-                    <div class="modal-footer"> 
-                        <button type="button" class="btn btn-danger" id="returnDetailsForm">Back</button>
-                        <button type="submit" class="btn btn-success" id="checkBenefits">Save</button>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label for="philhealthContrib" class="form-label">Philhealth Contribution</label>
+                                <input type="text" name="createPhilhealthContrib" class="form-control" id="createPhilhealthContrib_id" placeholder="Enter Philhealth Contribution">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="taxPercent" class="form-label">Tax Percentage</label>
+                                <input type="text" name="createTaxPercent" class="form-control" id="createTaxPercent_id" placeholder="Enter Tax Percentage">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer mt-3">
+                            <button type="button" class="btn btn-danger" id="returnDetailsForm">Back</button>
+                            <button type="submit" class="btn btn-success" id="checkBenefits">Save</button>
+                        </div>
                     </div>
-
                 </div>
+
 
             </form>
         </div>
@@ -699,7 +742,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                Employee Successfully Inserted
             </div>
         </div>
-        <div class="modal-footer"> </div>
+       
 
 <div class="status"> </div>
                     <?php include "../connection/database.php";
@@ -740,6 +783,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                           <td><?php echo $data['firstname'] . " " . $data['lastname']; ?></td>
                                           <td><?php echo $data['employee_type']; ?></td>
                                           <td>
+                                            <center>
                                             <button class="btn btn-primary view" onclick="openModal('<?php echo $data['employee_id'];?>')"> 
                                               <i class="bi bi-eye"></i>
                                             </button>
@@ -749,7 +793,8 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                             <button class="btn btn-warning edit" onclick="openPasswordModal('<?php echo $data['employee_id'];?>')">
                                               <i class="bi bi-pencil"></i>
                                             </button>
-                                            </td>
+                                            </center>    
+                                        </td>
                                         </tr>
                                      <?php } ?>
                                    </tbody>

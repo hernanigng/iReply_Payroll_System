@@ -21,7 +21,7 @@ if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESS
 
             <div class="sb-sidenav-header">
                 <div class="profile">
-                    <img src="../assets/img/sm.jpg" alt="Image" class="img-fluid">
+                    <img src="../assets/img/profile.jpg" alt="Image" class="img-fluid">
                     <h3 class="name"><?php echo $firstname . ' ' . $lastname; ?></h3>
                     <a href="../route/profile.php" class="option">Set Profile</a>
                 </div>
@@ -111,8 +111,6 @@ if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESS
                     <div class="sb-sidenav-footer">
                         <a href="../connection/logout.php" class="option">
                             Sign out
-                            <i class="fas fa-cog" style="float: right; margin-top:5px;"></i>
-                    <!-- Settings icon -->
                         </a>
                         <?php if ($userRole == '1'): ?>
                             <p class="role">Administrator</p>

@@ -226,97 +226,105 @@
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
   </div>
   <div class="modal-body">
-    <form id="insertUser" method="POST">
-    <div class="mb-3 row">
-                    <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
-                    <input type="text" name="userFirstName" class="form-control" id="userFirstName_id">
-                    <div id="error" style="color: red;"></div>
-                    
-                    <label for="middleName" class="col-sm-2 col-form-label">Middle Initial</label>
-                    <input type="text" name="userMiddleInitial" class="form-control" id="userMiddleInitial_id" maxlength="1">
-                    <div id="error" style="color: red;"></div>
-
-                    <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
-                    <input type="text" name="userLastName" class="form-control" id="userLastName_id">
-                    <div id="error" style="color: red;"></div>
-
-                    <label for="username" class="col-sm-2 col-form-label">Username</label>
-                    <input type="text" name="createUsername" class="form-control" id="createUsername_id">
-                    <div id="error" style="color: red;"></div>
-
-                    <label for="password" class="col-sm-2 col-form-label">Password</label>
-                    <div class="input-group">
-                        <input type="password" name="createPassword" class="form-control" id="createPassword_id">
-                        <button type="button" class="btn btn-outline-secondary" id="togglePasswordVisibility">
-                            <i class="bi bi-eye"></i> <!-- Icon for show/hide password -->
-                        </button>
-                    </div>                   
-                    <div id="error" style="color: red;"></div>
-                    
-                    <label for="userRole" class="col-sm-2 col-form-label">User Role</label>
-                    <div id="error" style="color: red;"></div>
-                     <select class="form-select" name="createUserRole" aria-label="User Role Select">
-                                <option selected disabled>Choose a Role</option>
-                                <?php
-                                    include "../connection/database.php";
-                                    if ($conn->connect_error) {
-                                        die("Connection failed: " . $conn->connect_error);
-                                    }
-
-                                    $sql = "SELECT user_role_id, user_role FROM tbl_user_role";
-                                    $result = $conn->query($sql);
-
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo '<option value="' . $row["user_role_id"] . '">' . $row["user_role"] . '</option>';
-                                        }
-                                    }
-
-                                    $conn->close();
-                                    ?>
-                            </select>
-
-                            <?php
-                                if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                    $selectedRole = $_POST['createUserRole'];
-                                    //echo "Selected Client ID: " . $selectedClientId;
-                                }
-                            ?>
-
-                    <label for="position" class="col-sm-2 col-form-label">Position</label>
-                    <div id="error" style="color: red;"></div> 
-                    <select class="form-select" name="createPosition" aria-label="Position Select">
-                            <option selected disabled>Choose a position</option>
-                                <?php
-                                    include "../connection/database.php";
-                                    if ($conn->connect_error) {
-                                        die("Connection failed: " . $conn->connect_error);
-                                    }
-
-                                    $sql = "SELECT position_ID, Title FROM tbl_position";
-                                    $result = $conn->query($sql);
-
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo '<option value="' . $row["position_ID"] . '">' . $row["Title"] . '</option>';
-                                        }
-                                    }
-
-                                    $conn->close();
-                                    ?>
-                            </select>
-
-                            <?php
-                                if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                    $selectedPositionID = $_POST['createPosition'];
-                                    //echo "Selected Position: " . $selectedPositionID;
-                                }
-                            ?>
-
-
+  <form id="insertUser" method="POST">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" name="userFirstName" class="form-control" id="userFirstName_id">
+                <div class="error" style="color: red;"></div>
+            </div>
+            <div class="col-md-4">
+                <label for="middleName" class="form-label">Middle Initial</label>
+                <input type="text" name="userMiddleInitial" class="form-control" id="userMiddleInitial_id" maxlength="1">
+                <div class="error" style="color: red;"></div>
+            </div>
+            <div class="col-md-4">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" name="userLastName" class="form-control" id="userLastName_id">
+                <div class="error" style="color: red;"></div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="createUsername" class="form-control" id="createUsername_id">
+                <div class="error" style="color: red;"></div>
+            </div>
+            <div class="col-md-4">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                    <input type="password" name="createPassword" class="form-control" id="createPassword_id">
+                    <button type="button" class="btn btn-outline-secondary" id="togglePasswordVisibility">
+                        <i class="bi bi-eye"></i>
+                    </button>
                 </div>
+                <div class="error" style="color: red;"></div>
+            </div>
+            <div class="col-md-4">
+                <label for="userRole" class="form-label">User Role</label>
+                <select class="form-select" name="createUserRole" aria-label="User Role Select">
+                    <option selected disabled>Choose a Role</option>
+                    <?php
+                        include "../connection/database.php";
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
 
-    </form>
+                        $sql = "SELECT user_role_id, user_role FROM tbl_user_role";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row["user_role_id"] . '">' . $row["user_role"] . '</option>';
+                            }
+                        }
+
+                        $conn->close();
+                    ?>
+                </select>
+                <?php
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $selectedRole = $_POST['createUserRole'];
+                    }
+                ?>
+                <div class="error" style="color: red;"></div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label for="position" class="form-label">Position</label>
+                <select class="form-select" name="createPosition" aria-label="Position Select">
+                    <option selected disabled>Choose a position</option>
+                    <?php
+                        include "../connection/database.php";
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
+
+                        $sql = "SELECT position_ID, Title FROM tbl_position";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row["position_ID"] . '">' . $row["Title"] . '</option>';
+                            }
+                        }
+
+                        $conn->close();
+                    ?>
+                </select>
+                <?php
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $selectedPositionID = $_POST['createPosition'];
+                    }
+                ?>
+                <div class="error" style="color: red;"></div>
+            </div>
+        </div>
+    </div>
+</form>
+
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
