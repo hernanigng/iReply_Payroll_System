@@ -47,3 +47,7 @@
   pointer-events: none; /* Disable pointer events to prevent clicking */
 }
 
+.nav-link{
+  color: gray;
+  pointer-events: none;
+}
