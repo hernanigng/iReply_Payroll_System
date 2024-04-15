@@ -53,30 +53,40 @@ function saveItem() {
     var contractDate = $('#contractDate').val();
     var contactEmail = $('#contactEmail').val();
 
-if (companyName === ""){
-    $('#companyName').addClass("is-invalid");
-    return false;
-}
-if (contactName === ""){
-    $('#contactName').addClass("is-invalid");
-    return false;
-}
-if (website === ""){
-    $('#website').addClass("is-invalid");
-    return false;
-}
-if (contactNumber === ""){
-    $('#contactNumber').addClass("is-invalid");
-    return false;
-}
-if (contractDate === ""){
-    $('#contractDate').addClass("is-invalid");
-    return false;
-}
-if (contactEmail === ""){
-    $('#contactEmail').addClass("is-invalid");
-    return false;
-}
+    // Remove existing invalid classes
+    $('#companyName, #contactName, #website, #contactNumber, #contractDate, #contactEmail').removeClass("is-invalid");
+
+    if (companyName === ""){
+        $('#companyName').addClass("is-invalid");
+        return false;
+    }
+    if (contactName === ""){
+        $('#contactName').addClass("is-invalid");
+        return false;
+    }
+    if (website === ""){
+        $('#website').addClass("is-invalid");
+        return false;
+    }
+    if (contactNumber === ""){
+        $('#contactNumber').addClass("is-invalid");
+        return false;
+    }
+    if (contractDate === ""){
+        $('#contractDate').addClass("is-invalid");
+        return false;
+    }
+    if (contactEmail === ""){
+        $('#contactEmail').addClass("is-invalid");
+        return false;
+    }
+
+    // Email format validation using jQuery
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(contactEmail)) {
+        $('#contactEmail').addClass("is-invalid");
+        return false;
+    }
 
     $.ajax({
         type: "POST",
@@ -94,11 +104,14 @@ $(document).ready(function(){
         event.preventDefault();
         saveItem();
     });
+
+    // Remove invalid class on input change
+    $('#contactEmail').on('input', function() {
+        if ($(this).val().trim() !== "") {
+            $(this).removeClass("is-invalid");
+        }
+    });
 });
-
-
-
-// No need to initialize DataTable since you're using Simple DataTables
 </script>
 
 
@@ -169,67 +182,68 @@ $(document).ready(function(){
             
 
             <!-- Modal -->
-<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add | Edit Client</h5>
-                <button type="button" class="close" aria-label="Close" onclick="closeModal()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="itemForm" novalidate>
-            <div class="modal-body">
+                <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add | Edit Client</h5>
+                                <button type="button" class="close" aria-label="Close" onclick="closeModal()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
 
-                <input type="hidden" id="clientId">
+                            <form id="itemForm" novalidate>
+                            <div class="modal-body">
 
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="companyName" placeholder="" required>
-                    <label for="companyName">Company Name</label>
-                    <div class="invalid-feedback"> Required field. </div>
+                                <input type="hidden" id="clientId">
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="companyName" placeholder="" required>
+                                    <label for="companyName">Company Name</label>
+                                    <div class="invalid-feedback"> Required field. </div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="contactName" placeholder="" required>
+                                    <label for="contactName">Contact Name</label>
+                                    <div class="invalid-feedback"> Required field. </div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="website" placeholder="" required>
+                                    <label for="website">Website</label>
+                                    <div class="invalid-feedback"> Required field. </div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="contactNumber" placeholder="" required>
+                                    <label for="contactNumber">Contact Number</label>
+                                    <div class="invalid-feedback"> Required field. </div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="contractDate" placeholder="" required>
+                                    <label for="contractDate">Contract Date</label>
+                                    <div class="invalid-feedback"> Required field. </div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="contactEmail" placeholder="" required>
+                                    <label for="contactEmail">Contact Email</label>
+                                    <div class="invalid-feedback">Please enter a valid Email Address.</div>
+                                </div>
+
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="saveItem()">Save</button>
+                            </div>
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="contactName" placeholder="" required>
-                    <label for="contactName">Contact Name</label>
-                    <div class="invalid-feedback"> Required field. </div>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="website" placeholder="" required>
-                    <label for="website">Website</label>
-                    <div class="invalid-feedback"> Required field. </div>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="contactNumber" placeholder="" required>
-                    <label for="contactNumber">Contact Number</label>
-                    <div class="invalid-feedback"> Required field. </div>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="contractDate" placeholder="" required>
-                    <label for="contractDate">Contract Date</label>
-                    <div class="invalid-feedback"> Required field. </div>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="contactEmail" placeholder="" required>
-                    <label for="contactEmail">Contact Email</label>
-                    <div class="invalid-feedback"> Required field. </div>
-                </div>
-
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveItem()">Save</button>
-            </div>
-
-            </form>
-        </div>
-    </div>
-</div>
 
 
 
