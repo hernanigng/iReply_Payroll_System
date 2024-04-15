@@ -21,8 +21,29 @@
                 $('#edit_lastname').val(response.lastname);
                 $('#edit_username').val(response.username);
                 $('#edit_password').val(response.password);
-                $('#edit_userRole').val(response.user_role);
-                $('#edit_position').val(response.position);
+                //$('#edit_userRole').val(response.user_role);
+                //$('#edit_position').val(response.position);
+                $.ajax({
+                    url: 'functions/get_userRole.php',
+                    type: 'POST',
+                    data: { user_role_id: response.user_role },
+                    dataType: 'json',
+                    success: function(user_roleResponse) {
+                        console.log(user_roleResponse);
+                        $('#edit_userRole').val(response.user_role);
+                    }
+                });
+
+                $.ajax({
+                    url: 'functions/get_position.php',
+                    type: 'POST',
+                    data: { position_id: response.position },
+                    dataType: 'json',
+                    success: function(positionResponse) {
+                        console.log(positionResponse);
+                        $('#edit_position').val(response.position);
+                    }
+                });
                 console.log(response);
             },
             error: function(xhr, status, error) {
