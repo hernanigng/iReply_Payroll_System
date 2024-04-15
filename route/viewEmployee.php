@@ -4,6 +4,11 @@
 
 <?php include '../template/sidebar.php' ?>
 
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+
 
 <!-- Custom Script -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -43,13 +48,13 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 <h5 class="modal-title mb-5" id="exampleModalLabel">Create New Employee</h5>    
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active employee-personal" aria-current="page" href="#">Personal Information</a>
+                        <a class="nav-link employee-personal" >Personal Information</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link employment-details" href="#">Employment Details</a>
+                        <a class="nav-link employment-details" >Employment Details</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link benefit-details" href="#">Benefit Details</a>
+                        <a class="nav-link benefit-details" >Benefit Details</a>
                     </li>
                 </ul>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cancel"></button>
@@ -65,12 +70,12 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                         <div class="col-md-6">
                             <label for="firstName" class="form-label">First Name</label>
                             <input type="text" name="createFirstName" class="form-control input-error" id="createFirstName_id" placeholder="Enter First Name">
-                            <p id="inputError" class="error-message" style="display: none;">Please fill out this required field.</p>
+                            <p id="inputErrorFirstName" class="error-message" style="display: none;">Please fill out this required field.</p>
                         </div>
                         <div class="col-md-6">
                             <label for="middleName" class="form-label">Middle Name</label>
                             <input type="text" name="createMiddleName" class="form-control" id="createMiddleName_id" placeholder="Enter Middle Name">
-                            <p id="inputError" class="error-message" style="display: none;">Please fill out this required field.</p>
+                          
                         </div>
                     </div>
 
@@ -78,10 +83,12 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                         <div class="col-md-6">
                             <label for="lastName" class="form-label">Last Name</label>
                             <input type="text" name="createLastName" class="form-control" id="createLastName_id" placeholder="Enter Last Name">
+                            <p id="inputErrorLastName" class="error-message" style="display: none;">Please fill out this required field.</p>
                         </div>
                         <div class="col-md-6">
                             <label for="completeAddress" class="form-label">Complete Address</label>
                             <input type="text" name="createAddress" class="form-control" id="createAddress_id" placeholder="Enter Complete Address">
+                            <p id="inputErrorAddress" class="error-message" style="display: none;">Please fill out this required field.</p>
                         </div>
                     </div>
 
@@ -89,12 +96,14 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                         <div class="col-md-6">
                             <label for="birthDate" class="form-label">Birthdate</label>
                             <input type="date" name="createBirthdate" class="form-control" id="createBirthdate_id">
+                             <p id="birthError" class="error-message" style="display: none;">Please fill out this required field.</p>
                         </div>
                         <div class="col-md-6">
                             <label for="contactNum" class="form-label">Contact Number</label>
                             <input type="text" name="createContactNum" class="form-control number-error" id="contactNumber_id" maxlength="11" placeholder="Enter Contact Number">
                             <i class="fas fa-times input-icon" style="display: none;"></i>
                             <p id="NumError" class="error-message" style="display: none;">Contact number should be 11 digits.</p>
+                            <p id="contactError" class="error-message" style="display: none;">Please fill out this required field.</p>
                         </div>
                     </div>
 
@@ -107,11 +116,13 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                 <option value="Married">Married</option>
                                 <option value="Widowed">Widowed</option>
                             </select>
+                              <p id="civilError" class="error-message" style="display: none;">Please fill out this required field.</p>
                         </div>
                         <div class="col-md-6">
                             <label for="personalEmail" class="form-label">Personal Email</label>
                             <input type="text" name="createPersEmail" class="form-control email-error" id="createPersEmail_id" placeholder="Enter Personal Email">
-                            <p id="emailError" class="error-message" style="display: none;">Input a Valid Email.</p>
+                            <p id="emailError1" class="error-message" style="display: none;">Input a Valid Email.</p>
+                              <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                         </div>
                     </div>
 
@@ -119,7 +130,8 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                         <div class="col-md-6">
                             <label for="workEmail" class="form-label">Work Email</label>
                             <input type="text" name="createWorkEmail" class="form-control email-error" id="createWorkEmail_id" placeholder="Enter Work Email">
-                            <p id="emailError" class="error-message" style="display: none;">Input a Valid Email.</p>
+                            <p id="emailError2" class="error-message" style="display: none;">Input a Valid Email.</p>
+                              <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                         </div>
                         <div class="col-md-6">
                             <label for="employeeType" class="form-label">Employee Type</label>
@@ -128,6 +140,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                 <option value="Onsite">Work From Home</option>
                                 <option value="Home">Work Onsite</option>
                             </select>
+                              <p id="typeError" class="error-message" style="display: none;">Please fill out this required field.</p>
                         </div>
                     </div>
 
@@ -144,16 +157,19 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                             <div class="col-md-4">
                                 <label for="startDate" class="form-label">Start Date</label>
                                 <input type="date" name="createStartDate" class="form-control createStartDate" id="createStartDate_id">
+                                <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                             <div class="col-md-4">
                                 <label for="monthSalary" class="form-label">Monthly Salary</label>
                                 <input type="text" name="createMonthlySalary" class="form-control" id="createMonthlySalary_id" placeholder="PHP 0.00">
                                 <div id="error" style="color: red;"></div>
+                                   <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                             <div class="col-md-4">
                                 <label for="accountBonus" class="form-label">Account Bonus</label>
                                 <input type="text" name="createAccountBonus" class="form-control" id="createBonus_id" placeholder="PHP 0.00">
                                 <div id="error" style="color: red;"></div>
+                                   <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                         </div>
 
@@ -180,6 +196,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                         $conn->close();
                                     ?>
                                 </select>
+                                   <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                                 <?php
                                     if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         $selectedClientId = $_POST['createClient'];
@@ -208,6 +225,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                         $conn->close();
                                     ?>
                                 </select>
+                                   <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                                 <?php
                                     if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         $selectedPositionID = $_POST['createPosition'];
@@ -221,6 +239,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                     <option value="Part Time">Part-Time</option>
                                     <option value="Full Time">Full-Time</option>
                                 </select>
+                                   <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                         </div>
 
@@ -240,18 +259,23 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                 <input type="text" name="createSSS" class="form-control number-error" id="createSSS_id" maxlength="10" placeholder="Enter SSS Number">
                                 <i class="fas fa-times input-icon" style="display: none;"></i>
                                 <p id="sssNumberError" class="error-message" style="display: none;">SSS number should be 10 digits.</p>
+                                    <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                             <div class="col-md-4">
                                 <label for="pagibig" class="form-label">Pag-ibig Number</label>
                                 <input type="text" name="createPagibig" class="form-control number-error" id="createPagibig_id" maxlength="12" placeholder="Enter Pag-ibig Number">
                                 <i class="fas fa-times input-icon" style="display: none;"></i>
                                 <p id="pagibigNumberError" class="error-message" style="display: none;">Pagibig number should be 12 digits.</p>
+                                    <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                             <div class="col-md-4">
                                 <label for="philhealth" class="form-label">Philhealth Number</label>
                                 <input type="text" name="createPhilhealth" class="form-control number-error" id="createPhilhealth_id" maxlength="12" placeholder="Enter Philhealth Number">
                                 <i class="fas fa-times input-icon" style="display: none;"></i>
                                 <p id="philhealthNumberError" class="error-message" style="display: none;">Philhealth number should be 12 digits.</p>
+                                    <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
+
+                
                             </div>
                         </div>
 
@@ -261,14 +285,17 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                 <input type="text" name="createTin" class="form-control number-error" id="createTin_id" maxlength="12" placeholder="Enter Tin Number">
                                 <i class="fas fa-times input-icon" style="display: none;"></i>
                                 <p id="tinNumberError" class="error-message" style="display: none;">Tin number should be 9-12 digits.</p>
+                                    <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                             <div class="col-md-4">
                                 <label for="sssContrib" class="form-label">SSS Contribution</label>
                                 <input type="text" name="createSSSContrib" class="form-control" id="createSSSContrib_id" placeholder="Enter SSS Contribution">
+                                    <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                             <div class="col-md-4">
                                 <label for="pagibigContrib" class="form-label">Pagibig Contribution</label>
                                 <input type="text" name="createPagibigContrib" class="form-control" id="createPagibigContrib_id" placeholder="Enter Pagibig Contribution">
+                                    <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                         </div>
 
@@ -276,10 +303,12 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                             <div class="col-md-4">
                                 <label for="philhealthContrib" class="form-label">Philhealth Contribution</label>
                                 <input type="text" name="createPhilhealthContrib" class="form-control" id="createPhilhealthContrib_id" placeholder="Enter Philhealth Contribution">
+                                    <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                             <div class="col-md-4">
                                 <label for="taxPercent" class="form-label">Tax Percentage</label>
                                 <input type="text" name="createTaxPercent" class="form-control" id="createTaxPercent_id" placeholder="Enter Tax Percentage">
+                                    <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                         </div>
 
@@ -299,8 +328,41 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         </div>
         
 
-           <!--CURRENCY --> 
+          
 <script>
+    //EMAIL VERIFICATION
+
+        var workEmailInput = document.getElementById('createPersEmail_id');
+        var emailError1 = document.getElementById('emailError1');
+
+        // Add event listener for the 'input' event
+        workEmailInput.addEventListener('input', function() {
+            if (workEmailInput.value.trim() === "" || !isValidEmail(workEmailInput.value)) {
+                emailError1.style.display = 'block'; 
+            } else {
+                emailError1.style.display = 'none'; 
+            }
+        });
+
+        var workEmailInput2 = document.getElementById('createWorkEmail_id');
+        var emailError2 = document.getElementById('emailError2');
+
+        workEmailInput2.addEventListener('input', function() {
+            if (workEmailInput2.value.trim() === "" || !isValidEmail(workEmailInput2.value)) {
+                emailError2.style.display = 'block'; 
+            } else {
+                emailError2.style.display = 'none'; 
+            }
+        });
+
+        // Function to validate email format
+        function isValidEmail(email) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+
+    //CURRENCY
         document.getElementById('createMonthlySalary_id').addEventListener('input', function(event) {
             let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
 
@@ -397,6 +459,16 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 <script>
     document.addEventListener('DOMContentLoaded', function() {
 
+    // Disable links
+document.querySelectorAll('.nav-link').forEach(function(link) {
+    link.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default link behavior
+    });
+});
+
+// Example: To disable a specific link by adding a class
+document.querySelector('.employment-details').classList.add('disabled');
+
         //Contact Number Error Message
         document.getElementById('contactNumber_id').addEventListener('input', function() {
             var contactNumInput = this;
@@ -429,7 +501,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             });
 
 
-            document.querySelector('.employment-details').classList.add('active');
+         //document.querySelector('.employment-details').classList.add('active');
 
             var inputFields = document.querySelectorAll('#insertEmployee input[type="text"], #insertEmployee input[type="date"], #insertEmployee select');
 
@@ -450,13 +522,10 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                         anyBlank = true;
                     }
                 } else {
-                    // For other input elements, check if the value is blank
                     if (inputField.value.trim() === "" && inputField.id !== "createMiddleName_id") {
-                        // Skip validation for createMiddleName_id
                         inputField.classList.add('highlight');
                         anyBlank = true;
                     } else if (inputField.id === "contactNumber_id" && inputField.value.length !== 11) {
-                        // For the contact number input, check if it exceeds 11 digits
                         inputField.classList.add('highlight');
                         anyBlank = true;
                         document.getElementById('NumError').style.display = 'block'; // Display error message
@@ -464,30 +533,38 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 }
             });
 
-            // If any input field is blank, prevent further action
-            if (anyBlank) {
-                return;
-            }
 
-            personalInfoForm.style.display = 'none';
-            modalBody2.style.display = 'block';
+        if (anyBlank) {
+            document.querySelectorAll('.error-message').forEach(function(errorMessage) {
+                errorMessage.style.display = 'block';
+            });
+            return;
+        } else {
+            document.querySelectorAll('.error-message').forEach(function(errorMessage) {
+                errorMessage.style.display = 'none';
+            });
+        }
+
+
+             personalInfoForm.style.display = 'none';
+             modalBody2.style.display = 'block';
         });
 
         //Back to Personal Information Form 
-        employmentPersonal.addEventListener('click', function(event) {
-            event.preventDefault();
+        // employmentPersonal.addEventListener('click', function(event) {
+        //     event.preventDefault();
 
-            modalBody2.style.display = 'none';
-            personalInfoForm.style.display = 'block';
+        //     modalBody2.style.display = 'none';
+        //     personalInfoForm.style.display = 'block';
             
-        });
+        // });
 
-         document.getElementById('returnPersonalForm').addEventListener('click', function(event) {
-            event.preventDefault();
+        //  document.getElementById('returnPersonalForm').addEventListener('click', function(event) {
+        //     event.preventDefault();
 
             modalBody2.style.display = 'none';
             personalInfoForm.style.display = 'block';
-        });
+        // });
 
         <!-- Benefits Form -->
         var benefitTab = document.querySelector('.benefit-details');
@@ -503,7 +580,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
             // Add active class to the Employment Details nav-link
             document.querySelector('.benefit-details').classList.add('active');
 
-            var inputFields = document.querySelectorAll('#employmentDetailsContent input[type="number"], #employmentDetailsContent input[type="date"], #employmentDetailsContent select');
+            var inputFields = document.querySelectorAll('#employmentDetailsContent input[type="text"], #employmentDetailsContent input[type="date"], #employmentDetailsContent select');
 
             inputFields.forEach(function(inputField) {
                 inputField.classList.remove('highlight');
@@ -526,39 +603,47 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                     }
             }
             });
-            // If any input field is blank, prevent further action
-            if (anyBlank) {
-                return;
-            }
 
-            modalBody2.style.display = 'none';
-            modalBody3.style.display = 'block';
+                if (anyBlank) {
+            document.querySelectorAll('.error-message').forEach(function(errorMessage) {
+                errorMessage.style.display = 'block';
+            });
+            return;
+        } else {
+            document.querySelectorAll('.error-message').forEach(function(errorMessage) {
+                errorMessage.style.display = 'none';
+            });
+        }
+
+
+             modalBody2.style.display = 'none';
+             modalBody3.style.display = 'block';
         });
 
         //Back to Employment Details Form 
 
-        employmentTab.addEventListener('click', function(event) {
-            event.preventDefault();
+        // employmentTab.addEventListener('click', function(event) {
+        //     event.preventDefault();
 
-            modalBody3.style.display = 'none';
-            modalBody2.style.display = 'block';
-        });
+        //     modalBody3.style.display = 'none';
+        //     modalBody2.style.display = 'block';
+        // });
 
-         document.getElementById('returnDetailsForm').addEventListener('click', function(event) {
-            event.preventDefault();
+        //  document.getElementById('returnDetailsForm').addEventListener('click', function(event) {
+        //     event.preventDefault();
 
-            modalBody3.style.display = 'none';
-            modalBody2.style.display = 'block';
-        });
+        //     modalBody3.style.display = 'none';
+        //     modalBody2.style.display = 'block';
+        // });
 
-        //Benefits Tab to Personal Information
+        // //Benefits Tab to Personal Information
 
-        employmentPersonal.addEventListener('click', function(event) {
-            event.preventDefault();
+        // employmentPersonal.addEventListener('click', function(event) {
+        //     event.preventDefault();
 
-            modalBody3.style.display = 'none';
-            modalBody.style.display = 'block';
-        });
+        //     modalBody3.style.display = 'none';
+        //     modalBody.style.display = 'block';
+        // });
 
         //Email Validation
 
@@ -651,7 +736,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
         document.getElementById('checkBenefits').addEventListener('click', function(event) {
             event.preventDefault();
 
-            var inputFields = document.querySelectorAll('#benefitDetailsContent input[type="number"]');
+            var inputFields = document.querySelectorAll('#benefitDetailsContent input[type="text"]');
 
             inputFields.forEach(function(inputField) {
                 inputField.classList.remove('highlight');
@@ -683,10 +768,17 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 }
             });
 
-            // If any input field is blank, prevent further action
-            if (anyBlank) {
-                return;
-            }
+             if (anyBlank) {
+            document.querySelectorAll('.error-message').forEach(function(errorMessage) {
+                errorMessage.style.display = 'block';
+            });
+            return;
+        } else {
+            document.querySelectorAll('.error-message').forEach(function(errorMessage) {
+                errorMessage.style.display = 'none';
+            });
+        }
+         
 
            var data = $('#employmentListForm').serialize();
                 var url = "functions/createEmployee.php";
@@ -707,16 +799,20 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                     if (response.status === 'success') {
                         // Construct the new row for the table
                         var newRow = '<tr id="' + response.employee_id + '">' +
+                            
                             '<td>' + response.employee_id + '</td>' +
                             '<td>' + response.firstname + ' ' + response.lastname + '</td>' +
                             '<td>' + response.employee_type + '</td>' +
-                            '<td>' +
+                             '<td style="text-align: center;">' + // Centering the buttons
+                             '<div style="display: inline-block;">' + 
+                           
                                 '<button class="btn btn-primary view" onclick="openModal(\'' + response.employee_id + '\')"> <i class="bi bi-eye"></i> </button> ' +
                                 '<button class="btn btn-danger del" data-employee_id="' + response.employee_id + '"> <i class="bi bi-trash"></i> </button> ' +
                                  '<button class="btn btn-warning edit" id="' + response.employee_id + '" onclick="openPasswordModal(\'' + response.employee_id + '\')"> <i class="bi bi-pencil"></i> </button>'
+                            '</div>' +
                             '</td>' +
                             '</tr>';
-
+                            
 
                         $('#datatablesSimple tbody').prepend(newRow);
                     } else {

@@ -42,3 +42,8 @@
   z-index: 1050; /* Adjust the z-index if needed */
 }
 
+.nav-link.disabled {
+  color: gray; /* Change color to visually indicate disabled state */
+  pointer-events: none; /* Disable pointer events to prevent clicking */
+}
+
