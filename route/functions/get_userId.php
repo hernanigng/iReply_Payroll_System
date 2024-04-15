@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 // Check if 'id' parameter is set
 if(isset($_POST["id"])) {
@@ -10,12 +13,7 @@ if(isset($_POST["id"])) {
     // Check if connection is successful
     if($conn) {
         // Prepare SQL query
-        $query = "SELECT firstname, middleinitial, lastname, username, password, 
-            tbl_user_role.user_role AS user_role, tbl_position.Title AS position 
-          FROM tbl_user_management
-          INNER JOIN tbl_position ON tbl_user_management.position = tbl_position.position_ID
-          INNER JOIN tbl_user_role ON tbl_user_management.user_role = tbl_user_role.user_role_id
-          WHERE user_management_id = '$id'";
+        $query = "SELECT * FROM tbl_user_management WHERE user_management_id = '$id' ";
         // Execute query
         $result = mysqli_query($conn, $query);
 
