@@ -23,9 +23,8 @@ function openModal(id) {
                $('#username').text(response.username);
                $('#password').text(response.password);
                //$('#userrole').text(response.user_role);
-               //$('#position').text(response.position);
-
-               $.ajax({
+           
+            $.ajax({
                 url: 'functions/get_userRole.php',
                 type: 'POST',
                 data: { user_role_id: response.user_role },
