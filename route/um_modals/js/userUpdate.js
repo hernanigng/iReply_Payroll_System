@@ -51,19 +51,20 @@ $(document).ready(function() {
 
                     // Construct the new row for the table
                 var newRow = '<tr id="' + response.user_management_id + '">' +
-                '<td>' + response.user_management_id + '</td>' +
                 '<td>' + response.firstname + '</td>' +
                 '<td>' + response.middleinitial + '</td>' +
                 '<td>' + response.lastname + '</td>' +
                 '<td>' + response.username + '</td>' +
                 '<td>' + response.password + '</td>' +
                 '<td>' + response.user_role + '</td>' +
-                '<td>' + response.Title + '</td>' +
-                '<td>' +
+                '<td>' + response.position + '</td>' +
+                '<td style="text-align: center;">' +
+                '<div style="display: inline-block;">' + 
                     '<button class="btn btn-primary view" onclick="openModal(\'' + response.user_management_id + '\')"> <i class="bi bi-eye"></i> </button> ' +
                     '<button class="btn btn-danger del" data-employee_id="' + response.user_management_id + '"> <i class="bi bi-trash"></i> </button> ' +
                      '<button class="btn btn-warning edit" id="' + response.user_management_id + '" onclick="openPasswordModal(\'' + response.user_management_id + '\')"> <i class="bi bi-pencil"></i> </button>'
-                '</td>' +
+                     '</div>' +
+                     '</td>' +
                 '</tr>';
 
 
