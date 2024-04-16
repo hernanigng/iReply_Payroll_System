@@ -1,21 +1,33 @@
 <?php
-// Start the session to access session variables
-session_start();
+// Include your database connection file
+include '../../connection/database.php';
 
-// Check if the user role is stored in the session
-if(isset($_SESSION['user_role'])) {
-    // Retrieve the user role from the session
-    $userRole = $_SESSION['user_role'];
+// Check if user_role_id is set in the POST request
+if(isset($_POST['user_role_id'])) {
+    // Sanitize the input to prevent SQL injection
+    $id = mysqli_real_escape_string($conn, $_POST['user_role_id']);
 
-    // You can optionally perform any additional processing here
+    // Query to fetch position name from tbl_position based on position_id
+    $sql = "SELECT user_role FROM tbl_user_role WHERE user_role_id = '$id'";
 
-    // Prepare the response as an array
-    $response = array('user_role' => $userRole);
+    // Execute the query
+    $result = mysqli_query($conn, $sql);
 
-    // Send the JSON response
-    echo json_encode($response);
+    // Check if query executed successfully
+    if($result) {
+        // Fetch the position name from the result
+        $row = mysqli_fetch_assoc($result);
+        $user_role = $row['user_role'];
+
+        // Prepare response as JSON
+        $response = array('user_role' => $user_role);
+        echo json_encode($response);
+    } else {
+        // Error handling if query fails
+        echo json_encode(array('error' => 'Unable to fetch position name'));
+    }
 } else {
-    // If the user role is not set in the session, return an error message
-    echo json_encode(array('error' => 'User role not found in session'));
+    // Error handling if position_id is not set
+    echo json_encode(array('error' => 'Position ID not provided'));
 }
 ?>

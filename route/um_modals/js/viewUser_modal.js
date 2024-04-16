@@ -22,8 +22,30 @@ function openModal(id) {
                $('#lastname').text(response.lastname);
                $('#username').text(response.username);
                $('#password').text(response.password);
-               $('#userrole').text(response.user_role);
-               $('#position').text(response.position);
+               //$('#userrole').text(response.user_role);
+               //$('#position').text(response.position);
+
+               $.ajax({
+                url: 'functions/get_userRole.php',
+                type: 'POST',
+                data: { user_role_id: response.user_role },
+                dataType: 'json',
+                success: function(user_roleResponse) {
+                    $('#userrole').text(user_roleResponse.user_role);
+                }
+            });
+
+               //$('#position').text(response.position);
+               $.ajax({
+                url: 'functions/get_position.php',
+                type: 'POST',
+                data: { position_id: response.position },
+                dataType: 'json',
+                success: function(positionResponse) {
+                    $('#position').text(positionResponse.position_name);
+                }
+            });
+
            }
        });
    }
