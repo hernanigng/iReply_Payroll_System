@@ -17,7 +17,7 @@ ini_set('display_errors', 1);
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="../assets/css/employee_style.css">
+    <link rel="stylesheet" href="../assets/css/employee_style.css?<?=time()?>" media="all">
 
 <script>
   // JavaScript code to show alert when button is clicked
@@ -459,15 +459,15 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 <script>
     document.addEventListener('DOMContentLoaded', function() {
 
-    // Disable links
-document.querySelectorAll('.nav-link').forEach(function(link) {
-    link.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent default link behavior
-    });
-});
+//     // Disable links
+// document.querySelectorAll('.nav-link').forEach(function(link) {
+//     link.addEventListener('click', function(event) {
+//         event.preventDefault(); // Prevent default link behavior
+//     });
+// });
 
 // Example: To disable a specific link by adding a class
-document.querySelector('.employment-details').classList.add('disabled');
+//document.querySelector('.employment-details').classList.add('disabled');
 
         //Contact Number Error Message
         document.getElementById('contactNumber_id').addEventListener('input', function() {
@@ -551,20 +551,20 @@ document.querySelector('.employment-details').classList.add('disabled');
         });
 
         //Back to Personal Information Form 
-        // employmentPersonal.addEventListener('click', function(event) {
-        //     event.preventDefault();
-
-        //     modalBody2.style.display = 'none';
-        //     personalInfoForm.style.display = 'block';
-            
-        // });
-
-        //  document.getElementById('returnPersonalForm').addEventListener('click', function(event) {
-        //     event.preventDefault();
+         employmentPersonal.addEventListener('click', function(event) {
+            event.preventDefault();
 
             modalBody2.style.display = 'none';
             personalInfoForm.style.display = 'block';
-        // });
+            
+         });
+
+          document.getElementById('returnPersonalForm').addEventListener('click', function(event) {
+           event.preventDefault();
+
+            modalBody2.style.display = 'none';
+            personalInfoForm.style.display = 'block';
+         });
 
         <!-- Benefits Form -->
         var benefitTab = document.querySelector('.benefit-details');
@@ -622,28 +622,28 @@ document.querySelector('.employment-details').classList.add('disabled');
 
         //Back to Employment Details Form 
 
-        // employmentTab.addEventListener('click', function(event) {
-        //     event.preventDefault();
+         employmentTab.addEventListener('click', function(event) {
+             event.preventDefault();
 
-        //     modalBody3.style.display = 'none';
-        //     modalBody2.style.display = 'block';
-        // });
+             modalBody3.style.display = 'none';
+             modalBody2.style.display = 'block';
+         });
 
-        //  document.getElementById('returnDetailsForm').addEventListener('click', function(event) {
-        //     event.preventDefault();
+          document.getElementById('returnDetailsForm').addEventListener('click', function(event) {
+             event.preventDefault();
 
-        //     modalBody3.style.display = 'none';
-        //     modalBody2.style.display = 'block';
-        // });
+             modalBody3.style.display = 'none';
+             modalBody2.style.display = 'block';
+         });
 
-        // //Benefits Tab to Personal Information
+        // Benefits Tab to Personal Information
 
-        // employmentPersonal.addEventListener('click', function(event) {
-        //     event.preventDefault();
+         employmentPersonal.addEventListener('click', function(event) {
+             event.preventDefault();
 
-        //     modalBody3.style.display = 'none';
-        //     modalBody.style.display = 'block';
-        // });
+             modalBody3.style.display = 'none';
+             modalBody.style.display = 'block';
+         });
 
         //Email Validation
 
@@ -1107,7 +1107,7 @@ $('#startDate').text(formattedStartdate);
         $('#' + personal).show();
 
         // Remove active class from all tab links
-        $('.nav-tabs .nav-link').removeClass('active');
+        $('.nav-tabs .nav-link0-edit').removeClass('active');
 
         // Add active class to the clicked tab link
         $('.nav-tabs a[href="#' + personal + '"]').addClass('active');
@@ -1154,13 +1154,13 @@ $('#startDate').text(formattedStartdate);
                 <!-- Tab links -->
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#personal">Personal Information</a>
+                        <a class="nav-link-edit active" aria-current="page" href="#personal">Personal Information</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#employment">Employment Details</a>
+                        <a class="nav-link-edit" href="#employment">Employment Details</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#benefit">Benefit Details</a>
+                        <a class="nav-link-edit" href="#benefit">Benefit Details</a>
                     </li>
                 </ul>
                 <button type="button" class="btn close" data-bs-dismiss="modal">Close</button>
@@ -1388,6 +1388,9 @@ $('#startDate').text(formattedStartdate);
             $('#edit_philhealthCon').val(response.philhealth_con);
             $('#edit_tax').val(response.tax_percentage);
 
+        console.log(response.monthly_salary);
+console.log(response.account_bonus);
+
             // Set the selected option in the select elements
             $('#edit_civilStatus').val(response.civilstatus);
             $('#edit_employeeType').val(response.employee_type);
@@ -1434,7 +1437,7 @@ $('#startDate').text(formattedStartdate);
         $('#' + personalEdit).show();
 
         // Remove active class from all tab links
-        $('.nav-tabs .nav-link').removeClass('active');
+        $('.nav-tabs .nav-link-edit').removeClass('active');
 
         // Add active class to the clicked tab link
         $('.nav-tabs a[href="#' + personalEdit + '"]').addClass('active');
@@ -1482,13 +1485,13 @@ $('#startDate').text(formattedStartdate);
                 <!-- Tab links -->
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#personalEdit">Personal Information</a>
+                        <a class="nav-link-edit active" aria-current="page" href="#personalEdit">Personal Information</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#employmentEdit">Employment Details</a>
+                        <a class="nav-link-edit" href="#employmentEdit">Employment Details</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#benefitEdit">Benefit Details</a>
+                        <a class="nav-link-edit" href="#benefitEdit">Benefit Details</a>
                     </li>
                 </ul>
                 <button type="button" class="btn close" data-bs-dismiss="modal">Close</button>
