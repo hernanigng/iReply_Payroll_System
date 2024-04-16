@@ -58,8 +58,9 @@ if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESS
                     </a>
                     <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="layout-static.html">Option 1</a>
-                            <a class="nav-link" href="layout-sidenav-light.html">Option 2</a>
+                            <a class="nav-link" href="../route/Process_Payroll.php">Process Payroll</a>
+                            <a class="nav-link" href="../route/Payroll_List.php">Payroll List</a>
+                            <a class="nav-link" href="../route/Payslip.php">Payslip</a>
                         </nav>
                     </div>
 
