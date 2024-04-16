@@ -173,6 +173,8 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                             </div>
                         </div>
 
+
+
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label for="client" class="form-label">Client</label>
@@ -298,7 +300,8 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                                     <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                         </div>
-
+                        
+ 
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label for="philhealthContrib" class="form-label">Philhealth Contribution</label>
@@ -330,6 +333,30 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
           
 <script>
+
+    //LIMIT INPUT TO NUMBER
+
+            document.getElementById('createSSS_id').addEventListener('input', function(event) {
+            let inputValue = event.target.value.replace(/[^\d]/g, ''); // Remove non-numeric characters
+            event.target.value = inputValue;
+        });
+
+        document.getElementById('createPagibig_id').addEventListener('input', function(event) {
+            let inputValue = event.target.value.replace(/[^\d]/g, ''); // Remove non-numeric characters
+            event.target.value = inputValue;
+        });
+
+        document.getElementById('createPhilhealth_id').addEventListener('input', function(event) {
+            let inputValue = event.target.value.replace(/[^\d]/g, ''); // Remove non-numeric characters
+            event.target.value = inputValue;
+        });
+
+           document.getElementById('createTin_id').addEventListener('input', function(event) {
+            let inputValue = event.target.value.replace(/[^\d]/g, ''); // Remove non-numeric characters
+            event.target.value = inputValue;
+        });
+
+
     //EMAIL VERIFICATION
 
         var workEmailInput = document.getElementById('createPersEmail_id');
@@ -363,35 +390,36 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
 
     //CURRENCY
-        document.getElementById('createMonthlySalary_id').addEventListener('input', function(event) {
-            let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+       document.getElementById('createMonthlySalary_id').addEventListener('input', function(event) {
+    let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
 
-            inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-            if (inputValue.includes('.')) {
-                let decimalPart = inputValue.split('.')[1];
-                if (!decimalPart || decimalPart.length < 2) {
-                    inputValue += '0';
-                }
-            }
+    if (inputValue.includes('.')) {
+        let decimalPart = inputValue.split('.')[1];
+        if (!decimalPart || decimalPart.length < 2) {
+            inputValue += '0';
+        }
+    }
 
-            event.target.value = 'PHP ' + inputValue;
-        });
+    event.target.value = 'PHP ' + inputValue;
+});
 
-        document.getElementById('createBonus_id').addEventListener('input', function(event) {
-            let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+document.getElementById('createBonus_id').addEventListener('input', function(event) {
+    let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
 
-            inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-            if (inputValue.includes('.')) {
-                let decimalPart = inputValue.split('.')[1];
-                if (!decimalPart || decimalPart.length < 2) {
-                    inputValue += '0';
-                }
-            }
+    if (inputValue.includes('.')) {
+        let decimalPart = inputValue.split('.')[1];
+        if (!decimalPart || decimalPart.length < 2) {
+            inputValue += '0';
+        }
+    }
 
-            event.target.value = 'PHP ' + inputValue;
-        });
+    event.target.value = 'PHP ' + inputValue;
+});
+
 
          document.getElementById('createSSSContrib_id').addEventListener('input', function(event) {
             let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
@@ -437,6 +465,10 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
             event.target.value = 'PHP ' + inputValue;
         });
+
+        //Limit input to number only
+
+        
 
         document.getElementById('taxPercentage').addEventListener('input', function(event) {
            let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
