@@ -44,10 +44,19 @@ $firstname, $middleinitial, $lastname, $username, $password, $userRole, $positio
 $result = $stmt->execute();
 
 if ($result) {
-    // Return success response
-    $response = array('success' => true, 'message' => 'Successully Updated');
+    // Return success response with updated user data
+    $response = array(
+        'success' => true,
+        'message' => 'Successfully Updated',
+        'firstname' => $firstname,
+        'middleinitial' => $middleinitial,
+        'lastname' => $lastname,
+        'username' => $username,
+        'password' => $password,
+        'user_role' => $userRole,
+        'position' => $position
+    );
     echo json_encode($response);
-
 } else {
     // Return error response with details if available
     $errorMessage = mysqli_error($conn);
