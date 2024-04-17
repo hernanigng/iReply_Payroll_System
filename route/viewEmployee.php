@@ -1040,13 +1040,13 @@ document.getElementById('createBonus_id').addEventListener('input', function(eve
         // Switch to the default tab (personal) when opening the modal
         openTab('personal');
         // Fetch employee details using AJAX
-        // Fetch employee details using AJAX
 $.ajax({
     url: 'functions/get_employeeId.php',
     type: 'POST',
     data: { id: id },
     dataType: 'json', // Specify JSON as the expected data type
     success: function(response) {
+        console.log();
         // Update the modal content with the fetched employee details
         // Assuming the response is an object containing the employee details
         $('#firstname').text(response.firstname);
@@ -1087,8 +1087,20 @@ var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() 
 // Display the formatted birthdate in the modal
 $('#startDate').text(formattedStartdate);
 
-        $('#monthly').text(response.monthly_salary);
-        $('#accBonus').text(response.account_bonus);
+function formatCurrency(number, currencySymbol) {
+     return currencySymbol + new Intl.NumberFormat('en-PH', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+     }).format(number);
+ }
+ var formattedMonthlySalary = formatCurrency(response.monthly_salary, '₱');
+ var formattedAccountBonus = formatCurrency(response.account_bonus, '₱');
+ var formattedSSS = formatCurrency(response.sss_con, '₱');
+ var formattedPagibig = formatCurrency(response.pagibig_con, '₱');
+ var formattedPhilhealth = formatCurrency(response.philhealth_con, '₱');
+
+        $('#monthly').text(formattedMonthlySalary);
+        $('#accBonus').text(formattedAccountBonus);
 
         // Fetch client name using client ID
         $.ajax({
@@ -1117,9 +1129,9 @@ $('#startDate').text(formattedStartdate);
         $('#pagibig').text(response.pagibig_num);
         $('#philhealth').text(response.philhealth_num);
         $('#tin').text(response.tin_num);
-        $('#sssCon').text(response.sss_con);
-        $('#pagibigCon').text(response.pagibig_con);
-        $('#philhealthCon').text(response.philhealth_con);
+        $('#sssCon').text(formattedSSS);
+        $('#pagibigCon').text(formattedPagibig);
+        $('#philhealthCon').text(formattedPhilhealth);
         $('#tax').text(response.tax_percentage);
     }
 });
@@ -1386,7 +1398,7 @@ $('#startDate').text(formattedStartdate);
     });
 }
 
-    function openEditModal(employeeId) {
+function openEditModal(employeeId) {
     // Show the modal
     $('#editEmployee').modal('show');
     // Switch to the default tab (personal) when opening the modal
@@ -1398,6 +1410,7 @@ $('#startDate').text(formattedStartdate);
         data: { id: employeeId },
         dataType: 'json',
         success: function(response) {
+            console.log(response);
             // Update the modal content with the fetched employee details
             $('#employeeId').val(response.employee_id);
             $('#edit_firstname').val(response.firstname);
@@ -1409,19 +1422,34 @@ $('#startDate').text(formattedStartdate);
             $('#edit_personalEmail').val(response.personal_email);
             $('#edit_workEmail').val(response.work_email);
             $('#edit_startDate').val(response.start_date);
-            $('#edit_monthly').val(response.monthly_salary);
-            $('#edit_accBonus').val(response.account_bonus);
+
+            function formatCurrency(number, currencySymbol = '₱') {
+                if (!isNaN(number)) {
+                    return currencySymbol + new Intl.NumberFormat('en-PH', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }).format(parseFloat(number));
+                } else {
+                    return '';
+                }
+            }
+
+            var formattedMonthlySalary = formatCurrency(response.monthly_salary);
+            var formattedAccountBonus = formatCurrency(response.account_bonus);
+            var formattedSSS = formatCurrency(response.sss_con);
+            var formattedPagibig = formatCurrency(response.pagibig_con);
+            var formattedPhilhealth = formatCurrency(response.philhealth_con);
+
+            $('#edit_monthly').val(formattedMonthlySalary);
+            $('#edit_accBonus').val(formattedAccountBonus);
             $('#edit_sss').val(response.sss_num);
             $('#edit_pagibig').val(response.pagibig_num);
             $('#edit_philhealth').val(response.philhealth_num);
             $('#edit_tin').val(response.tin_num);
-            $('#edit_sssCon').val(response.sss_con);
-            $('#edit_pagibigCon').val(response.pagibig_con);
-            $('#edit_philhealthCon').val(response.philhealth_con);
+            $('#edit_sssCon').val(formattedSSS);
+            $('#edit_pagibigCon').val(formattedPagibig);
+            $('#edit_philhealthCon').val(formattedPhilhealth);
             $('#edit_tax').val(response.tax_percentage);
-
-        console.log(response.monthly_salary);
-console.log(response.account_bonus);
 
             // Set the selected option in the select elements
             $('#edit_civilStatus').val(response.civilstatus);
@@ -1455,6 +1483,7 @@ console.log(response.account_bonus);
         }
     });
 }
+
 
     // Function to close the modal
     function closeModal() {
@@ -1585,11 +1614,11 @@ console.log(response.account_bonus);
 <div class="row">
     <div class="col">
         <label for="personalEmail" class="col-form-label">Personal Email</label>
-        <input type="" name="edit_personalEmail" class="form-control" id="edit_personalEmail">
+        <input type="email" name="edit_personalEmail" class="form-control" id="edit_personalEmail">
     </div>
     <div class="col">
         <label for="workEmail" class="col-form-label">Work Email</label>
-        <input type="" name="edit_workEmail" class="form-control" id="edit_workEmail">
+        <input type="email" name="edit_workEmail" class="form-control" id="edit_workEmail">
     </div>
     <div class="col">
         <label for="employeeType" class="col-form-label"> Employee Type </label>
@@ -1614,11 +1643,11 @@ console.log(response.account_bonus);
     </div>
     <div class="col">
         <label for="monthSalary" class="col-form-label">Monthly Salary</label>
-        <input type="number" name="edit_monthly" class="form-control" id="edit_monthly">
+        <input type="" name="edit_monthly" class="form-control" id="edit_monthly">
     </div>
     <div class="col">
         <label for="accountBonus" class="col-form-label">Account Bonus</label>
-        <input type="number" name="edit_accBonus" class="form-control" id="edit_accBonus">
+        <input type="" name="edit_accBonus" class="form-control" id="edit_accBonus">
     </div>
 </div>
 
@@ -1707,15 +1736,15 @@ console.log(response.account_bonus);
 <div class="row">
     <div class="col">
         <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution</label>
-        <input type="text" name="edit_sssCon" class="form-control" id="edit_sssCon">    
+        <input type="" name="edit_sssCon" class="form-control" id="edit_sssCon">    
     </div>
     <div class="col">
         <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution </label>
-        <input type="number" name="edit_pagibigCon" class="form-control" id="edit_pagibigCon">
+        <input type="txt" name="edit_pagibigCon" class="form-control" id="edit_pagibigCon">
     </div>
     <div class="col">
         <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution</label>
-        <input type="number" name="edit_philhealthCon" class="form-control" id="edit_philhealthCon">
+        <input type="" name="edit_philhealthCon" class="form-control" id="edit_philhealthCon">
     </div>
     <div class="col">
         <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
@@ -1835,6 +1864,7 @@ $(document).ready(function() {
             tax_percentage: tax
             // Add other fields as needed
         };
+
 
         // Perform AJAX request to update employee data
         $.ajax({
