@@ -1424,7 +1424,7 @@ function openEditModal(employeeId) {
             $('#edit_startDate').val(response.start_date);
 
             function formatCurrency(number, currencySymbol = '₱') {
-                if (!isNaN(number)) {
+                if (!isNaN(number) && number !== null && number !== '') {
                     return currencySymbol + new Intl.NumberFormat('en-PH', {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2
@@ -1485,6 +1485,7 @@ function openEditModal(employeeId) {
 }
 
 
+
     // Function to close the modal
     function closeModal() {
         $('#editEmployee').modal('hide');
@@ -1533,9 +1534,10 @@ function openEditModal(employeeId) {
         $('#nextEditButton').click(goToNextTab);
     });
 
-
-   
 </script>
+
+
+
 <!-- EDIT EMPLOYEE MODAL -->
 <div class="modal fade" id="editEmployee" tabindex="-1" aria-labelledby="editEmployeeLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog modal-lg">
@@ -1791,18 +1793,31 @@ function openEditModal(employeeId) {
 $(document).ready(function() {
     // Attach click event listener to the Update button
     $('#updateButton').click(function() {
-        // Retrieve the employee ID from the hidden input field
-        var employeeId = $('#employeeId').val();
+        // Check if all required fields are filled out
+        if (validateForm()) {
+            // Retrieve the employee ID from the hidden input field
+            var employeeId = $('#employeeId').val();
 
-        // Check if employee ID is empty or not
-        if (employeeId === '') {
-            console.error('Employee ID is missing.');
-            return; // Stop execution if employee ID is missing
+            // Call the updateEmployee function with the employee ID
+            updateEmployee(employeeId);
+        } else {
+            // Display an error message if validation fails
+            console.error('Please fill out all required fields.');
         }
-
-        // Call the updateEmployee function with the employee ID
-        updateEmployee(employeeId);
     });
+
+    // Define the validateForm function to check if all required fields are filled out
+    function validateForm() {
+        // Check if any required field is empty
+        var isValid = true;
+        $('.form-control[required]').each(function() {
+            if ($(this).val() === '') {
+                isValid = false;
+                return false; // Exit the loop early if any field is empty
+            }
+        });
+        return isValid;
+    }
 
     // Define the updateEmployee function here
     function updateEmployee(employeeId) {
@@ -1865,7 +1880,6 @@ $(document).ready(function() {
             // Add other fields as needed
         };
 
-
         // Perform AJAX request to update employee data
         $.ajax({
             url: 'functions/update_employee.php',
@@ -1873,22 +1887,23 @@ $(document).ready(function() {
             data: updatedData,
             dataType: 'json',
             success: function(response) {
-    // Handle success response
-    if (response.success) {
+                // Handle success response
+                if (response.success) {
                     // Display toast notification
                     var updateToast = new bootstrap.Toast($('#updateToast'));
                     updateToast.show();
-                    
+
                     // Optionally hide the modal
                     closeModal();
                 } else {
                     // If update failed, display error message
                     console.error(response.message);
                 }
-},
+            },
         });
     }
 });
+
 </script>
 
 <!-- User Update Toast Notification -->
