@@ -23,7 +23,7 @@ if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESS
                 <div class="profile">
                     <img src="../assets/img/profile.jpg" alt="Image" class="img-fluid">
                     <h3 class="name"><?php echo $firstname . ' ' . $lastname; ?></h3>
-                    <a href="../route/profile.php" class="option">Set Profile</a>
+                    <a href="../route/Set_Profile.php" class="option">Set Profile</a>
                 </div>
             </div>
 
