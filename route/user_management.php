@@ -13,7 +13,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
 
-      <link rel="stylesheet" href="../assets/css/user_management_style.css">
+      
+    <link rel="stylesheet" href="../assets/css/user_management_style.css?<?=time()?>" media="all">
 
       <style>
         #datatablesSimple th {
@@ -149,7 +150,7 @@
 </div>
 
  <!-- Toast Notification Delete -->
-        <div class="toast position-fixed top-50 start-50 translate-middle"  role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+        <div class="toast position-fixed top-50 start-50 translate-middle" id="toastDelete"  role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
             <div class="toast-header">
                 <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
                 <strong class="me-auto">Notification</strong>
@@ -163,6 +164,7 @@
 
 
 <script>
+    //DELETE FUNCTION
   $(document).on('click', '.del', function() {
         $('#confirmDeleteModal').modal('show');
         var userId = $(this).data('user_management_id'); // Retrieve employee_id using data() method
@@ -196,7 +198,7 @@
             url: 'functions/deleteUser.php',
             data: { id: userId },
             success: function(response) {
-              $('.toast').toast('show');
+              $('#toastDelete').toast('show');
 
                 // Reload the page after a delay to allow the user to see the toast notification
             setTimeout(function() {
@@ -233,16 +235,19 @@
                 <label for="firstName" class="form-label">First Name</label>
                 <input type="text" name="userFirstName" class="form-control" id="userFirstName_id">
                 <div class="error" style="color: red;"></div>
+                <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
             <div class="col-md-4">
                 <label for="middleName" class="form-label">Middle Initial</label>
                 <input type="text" name="userMiddleInitial" class="form-control" id="userMiddleInitial_id" maxlength="1">
                 <div class="error" style="color: red;"></div>
+                <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
             <div class="col-md-4">
                 <label for="lastName" class="form-label">Last Name</label>
                 <input type="text" name="userLastName" class="form-control" id="userLastName_id">
                 <div class="error" style="color: red;"></div>
+                <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
         </div>
         <div class="row mt-3">
@@ -250,6 +255,7 @@
                 <label for="username" class="form-label">Username</label>
                 <input type="text" name="createUsername" class="form-control" id="createUsername_id">
                 <div class="error" style="color: red;"></div>
+                <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
             <div class="col-md-4">
                 <label for="password" class="form-label">Password</label>
@@ -258,8 +264,10 @@
                     <button type="button" class="btn btn-outline-secondary" id="togglePasswordVisibility">
                         <i class="bi bi-eye"></i>
                     </button>
+                     <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                 </div>
-                <div class="error" style="color: red;"></div>
+                    <div id="passwordRequirements" style="color: red; display: none;">Password must have at least a letter, symbol, and number.</div>
+                    <div id="passwordLength" style="color: red; display: none;">Password must be at least 8 characters long.</div>
             </div>
             <div class="col-md-4">
                 <label for="userRole" class="form-label">User Role</label>
@@ -289,6 +297,7 @@
                     }
                 ?>
                 <div class="error" style="color: red;"></div>
+                <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
         </div>
         <div class="row mt-3">
@@ -320,6 +329,8 @@
                     }
                 ?>
                 <div class="error" style="color: red;"></div>
+                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
+
             </div>
         </div>
     </div>
@@ -357,31 +368,57 @@ $(document).ready(function() {
         }
     });
 
+        document.getElementById('createPassword_id').addEventListener('input', function(event) {
+            let password = event.target.value;
+            let hasLetter = /[a-zA-Z]/.test(password);
+            let hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            let hasNumber = /\d/.test(password);
+            let isLengthValid = password.length >= 8;
+
+            if (hasLetter && hasSymbol && hasNumber && isLengthValid) {
+                document.getElementById('passwordRequirements').style.display = 'none';
+                document.getElementById('passwordLength').style.display = 'none';
+            } else {
+                if (!hasLetter || !hasSymbol || !hasNumber) {
+                    document.getElementById('passwordRequirements').style.display = 'block';
+                } else {
+                    document.getElementById('passwordRequirements').style.display = 'none';
+                }
+
+                if (!isLengthValid) {
+                    document.getElementById('passwordLength').style.display = 'block';
+                } else {
+                    document.getElementById('passwordLength').style.display = 'none';
+                }
+            }
+        }); 
+
  
     document.getElementById('submitUser').addEventListener('click', function(event) {
         event.preventDefault();
           console.log("Button clicked"); 
 
         var inputFields = document.querySelectorAll('#insertUser input[type="text"], #insertUser input[type="date"], #insertUser select, #insertUser input[type="password"]');
+        console.log(inputFields);
 
         // Remove highlight from all input fields
-        inputFields.forEach(function(inputField) {
-            inputField.classList.remove('highlight');
+        inputFields.forEach(function(check) {
+            check.classList.remove('highlight');
         });
 
         // Check if any input field is blank
         var anyBlank = false;
-        inputFields.forEach(function(inputField) {
-            if (inputField.tagName.toLowerCase() === 'select') {
+        inputFields.forEach(function(check) {
+            if (check.tagName.toLowerCase() === 'select') {
                 // For select elements, check if the selected option is the default one
-                if (inputField.selectedIndex === 0) {
-                    inputField.classList.add('highlight');
+                if (check.selectedIndex === 0) {
+                    check.classList.add('highlight');
                     anyBlank = true;
                 }
             } else {
                 // For other input elements, check if the value is blank
-                if (inputField.value.trim() === "") {
-                    inputField.classList.add('highlight');
+                if (check.value.trim() === "") {
+                    check.classList.add('highlight');
                     anyBlank = true;
                 }
             }
@@ -389,7 +426,14 @@ $(document).ready(function() {
 
         // If any input field is blank, prevent further action
         if (anyBlank) {
+            document.querySelectorAll('.error-message').forEach(function(errorMessage) {
+                errorMessage.style.display = 'block';
+            });
             return;
+        } else {
+            document.querySelectorAll('.error-message').forEach(function(errorMessage) {
+                errorMessage.style.display = 'none';
+            });
         }
 
         var data = $('#insertUser').serialize();
@@ -399,15 +443,18 @@ $(document).ready(function() {
             console.log("Server Response:", response);
             //alert(response);
             $('#addUserModal').modal('hide');
-            $('.toast').toast('show');
+            $('#toastInsert').toast('show');
 
-               $('.toast').on('hidden.bs.toast', function () {
-            
-                 $('.modal-backdrop').remove();
-                          
-                $('body').css('overflow', 'auto');
-                        });
-                 //window.location.reload();
+              $('#toastInsert').on('hidden.bs.toast', function () {
+    $('.modal-backdrop').remove();
+    // Check if any modal is open before setting the body overflow to auto
+    if ($('.modal.show').length === 0) {
+        $('body').css('overflow', 'auto');
+
+        window.location.reload();
+    }
+});
+
             if (response.status === 'success') {
                 // Construct the new row for the table
                 var newRow = '<tr id="' + response.user_management_id + '">' +
@@ -437,15 +484,14 @@ $(document).ready(function() {
         });
 
     });
-
-
 });
-
+    
 </script>
 
 
+
 <!-- Toast Notification -->
-<div class="toast position-fixed top-50 start-50 translate-middle"  role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+<div class="toast position-fixed top-50 start-50 translate-middle" id="toastInsert" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
         <div class="toast-header">
             <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
             <strong class="me-auto">Notification</strong>
@@ -454,7 +500,7 @@ $(document).ready(function() {
         <div class="toast-body">
            New User Successfully Saved
         </div>
-    </div>
+</div>
 
 
 <!-- VIEW USER MODAL -->

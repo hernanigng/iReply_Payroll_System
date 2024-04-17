@@ -1,3 +1,24 @@
 .highlight {
     border: 1px solid red;
   }
+
+  
+.error-message {
+  color: red;
+  font-size: 12px;
+}
+
+
+#toastInsert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px; /* Adjust the width as needed */
+  max-width: 90%;
+  z-index: 1050; /* Adjust the z-index if needed */
+}
+
+body {
+  font-family: Calibri, Arial, sans-serif;
+}
