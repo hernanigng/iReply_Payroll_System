@@ -1367,7 +1367,9 @@ function formatCurrency(number, currencySymbol) {
     function openPasswordModal(employeeId) {
     $('#passwordModal').modal('show');
 
-    $('#submitPassword').off('click').on('click', function() {
+    $(document).ready(function() {
+    // Function to handle form submission
+    function submitPassword() {
         var enteredPassword = $('#password').val(); // Get the password entered by the user
         var username = "<?php echo $_SESSION['username']; ?>"; // Get the username stored in the session
         
@@ -1395,7 +1397,24 @@ function formatCurrency(number, currencySymbol) {
                 console.error(xhr.responseText);
             }
         });
-    });
+    }
+    
+    // Function to handle keypress event
+    function handleKeyPress(event) {
+        if (event.which === 13 || event.keyCode === 13) {
+            // If Enter key is pressed, submit the form
+            submitPassword();
+        }
+    }
+
+    // Attach event listener for keypress event on the password input field
+    $('#password').keypress(handleKeyPress);
+
+    // Attach click event listener to the submit button
+    $('#submitPassword').click(submitPassword);
+});
+
+
 }
 
 function openEditModal(employeeId) {
@@ -1781,28 +1800,59 @@ function openEditModal(employeeId) {
                 <div id="passwordError" class="text-danger"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="submitPassword">Submit</button>
+                <button type="submit" class="btn btn-primary" id="submitPassword">Submit</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Invalid Input.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     // UPDATE SCRIPT
 $(document).ready(function() {
     // Attach click event listener to the Update button
     $('#updateButton').click(function() {
-        // Check if all required fields are filled out
-        if (validateForm()) {
+        // Reset error messages and styles
+        $('.form-control').removeClass('border border-danger');
+        $('.error-message').text('');
+
+        // Check if all required fields are filled out and pass validation
+        if (validateForm() && validateEmail() && validateContactNumber()) {
             // Retrieve the employee ID from the hidden input field
             var employeeId = $('#employeeId').val();
 
             // Call the updateEmployee function with the employee ID
             updateEmployee(employeeId);
         } else {
-            // Display an error message if validation fails
-            console.error('Please fill out all required fields.');
+            // Display the error modal if validation fails
+            $('#errorModal').modal('show');
+
+            // Show red borders and error messages for invalid fields
+            if (!validateEmail()) {
+                $('#edit_personalEmail').addClass('border border-danger');
+                $('#emailError').text('Invalid email format.');
+            }
+            if (!validateContactNumber()) {
+                $('#edit_contactNum').addClass('border border-danger');
+                $('#contactNumberError').text('Contact number must be 11 digits.');
+            }
         }
     });
 
@@ -1817,6 +1867,35 @@ $(document).ready(function() {
             }
         });
         return isValid;
+    }
+
+    // Define the validateEmail function to check if the email address is valid
+    function validateEmail() {
+    var personalEmail = $('#edit_personalEmail').val();
+    var workEmail = $('#edit_workEmail').val();
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    var personalEmailValid = emailPattern.test(personalEmail);
+    var workEmailValid = emailPattern.test(workEmail);
+
+    if (!personalEmailValid) {
+        $('#edit_personalEmail').addClass('border border-danger');
+        $('#emailError').text('Invalid personal email format.');
+    }
+
+    if (!workEmailValid) {
+        $('#edit_workEmail').addClass('border border-danger');
+        $('#workEmailError').text('Invalid work email format.');
+    }
+
+    return personalEmailValid && workEmailValid;
+}
+ // Define the validateContactNumber function to check if the contact number is valid
+ function validateContactNumber() {
+        var contactNumber = $('#edit_contactNum').val();
+        // Check if the contact number is exactly 11 digits
+        var contactNumberPattern = /^\d{11}$/;
+        return contactNumberPattern.test(contactNumber);
     }
 
     // Define the updateEmployee function here
