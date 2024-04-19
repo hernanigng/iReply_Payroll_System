@@ -132,20 +132,21 @@
                     </div>
 
                     <div class="tab-pane fade" id="deductions" role="tabpanel" aria-labelledby="deductions-tab">
-                        <!-- Content for Earnings tab -->
+                        <!-- Content for Deductions tab -->
+                    <form id="deduction" method="post">
                         <div class="container mt-4 col-10">
                             <div class="row mb-3">
                                 <div class="col-md-4">
-                                    <label for="philHealth" class="form-label">PhilHealth Contributions</label>
-                                    <input type="text" name="philHealth" class="form-control" id="philHealth">
+                                    <label for="sss" class="form-label">SSS Contributions</label>
+                                    <input type="text" name="sss" class="form-control" id="sss">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="pagibig" class="form-label">Pagibig Contribution</label>
                                     <input type="text" name="pagibig" class="form-control" id="pagibig">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="sss" class="form-label">SSS Contribution</label>
-                                    <input type="text" name="sss" class="form-control" id="sss">
+                                    <label for="philhealth" class="form-label">PhilHealth Contribution</label>
+                                    <input type="text" name="philhealth" class="form-control" id="philhealth">
                                 </div>
                             </div>
 
@@ -154,9 +155,9 @@
                                 <label class="form-label">Withholding Tax</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-text">
-                                        <input class="form-check-input mt-0" type="checkbox" value="" id="withholdingTax">
+                                        <input class="form-check-input mt-0" type="checkbox" id="withholdingTax">
                                     </div>
-                                    <input type="text" class="form-control" aria-label="Text input with checkbox">
+                                    <input type="text" class="form-control" aria-label="Text input with checkbox" name="tax" id="tax">
                                 </div>
                             </div>
 
@@ -174,7 +175,7 @@
                                 <div class="col-md-9"></div> <!-- Placeholder column to align "Total Deductions" to the right -->
                                 <div class="col-md-3">
                                     <label for="totalDeductions" class="form-label">Total Deductions</label>
-                                    <input type="text" name="totalDeductions" class="form-control" id="totalDeductions">
+                                    <input type="text" name="totalDeductions" class="form-control" id="totalDeductions" readonly>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -185,14 +186,14 @@
                                     <button type="button" class="btn btn-secondary w-100" onclick="goToPreviousTab()">Back</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <button type="button" class="btn btn-primary w-100" onclick="goToNextTab1()">Next</button>
+                                    <button type="submit" class="btn btn-primary w-100">Next</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                         </div>
-               </div>
+                </form>
+            </div>
 
                     <div class="tab-pane fade" id="incentives" role="tabpanel" aria-labelledby="incentives-tab">
                     <div class="container mt-4 col-10">
@@ -286,6 +287,93 @@
 
         return totalDays;
     }
+
+    // Function to calculate withholding tax
+    //function calculateWithholdingTax() {
+        // Get the total earnings
+        //var totalEarnings = parseFloat(document.getElementById('totalEarnings').value) || 0;
+
+        // Define withholding tax variables
+        //var withholdingTax = 0;
+        //var excessEarning = 0;
+
+        // Check the total earnings against the specified thresholds
+        //if (totalEarnings <= 20833) {
+            //withholdingTax = 0;
+        //} else if (totalEarnings > 20833 && totalEarnings <= 33332) {
+           // excessEarning = totalEarnings - 20833;
+           // withholdingTax = excessEarning * 0.15;
+        //} else if (totalEarnings > 33333 && totalEarnings <= 66666) {
+           // excessEarning = totalEarnings - 33333;
+           // withholdingTax = (excessEarning * 0.20) + 1875;
+        //} else if (totalEarnings > 66667 && totalEarnings <= 166666) {
+            //excessEarning = totalEarnings - 66667;
+           // withholdingTax = (excessEarning * 0.25) + 8541.80;
+        //} else if (totalEarnings > 166667 && totalEarnings <= 666666) {
+           // excessEarning = totalEarnings - 166667;
+          //  withholdingTax = (excessEarning * 0.30) + 33541.80;
+        //} else {
+         //   excessEarning = totalEarnings - 666667;
+          //  withholdingTax = (excessEarning * 0.35) + 183541.80;
+        //}
+
+        // Update withholding tax field
+        //document.getElementById('tax').value = withholdingTax.toFixed(2); // Display up to 2 decimal places
+    //}
+
+    // Attach the calculateWithholdingTax function to input fields' change event
+    //$('#totalEarnings').change(calculateWithholdingTax);
+
+    // Call the calculateWithholdingTax function initially to calculate withholding tax based on initial total earnings value
+    //calculateWithholdingTax();
+
+    // DEDUCTION TAB SCRIPT
+    $(document).ready(function(){
+    $('#deduction').submit(function(e) {
+        e.preventDefault();
+
+        var url = "functions/insert_deduction.php";
+        var data = $(this).serialize();
+
+        $.post(url, data, function(response) {
+            console.log(response);
+
+            // Check if the insertion is successful
+            if (response.success) {
+                goToNextTab1(); // Call the function to switch to the next tab
+            }
+        }, 'json')
+        .fail(function(xhr, textStatus, errorThrown) {
+            console.log("Error: " + errorThrown);
+            // Handle error here if needed
+        });
+    });
+});
+
+ //TOTAL DEDUCTION
+    // Function to calculate total deduction
+    function calculateTotalDeduction() {
+        // Get values from input fields
+        var sssContribution = parseFloat(document.getElementById('sss').value) || 0;
+        var pagibigContribution = parseFloat(document.getElementById('pagibig').value) || 0;
+        var philHealthContribution = parseFloat(document.getElementById('philhealth').value) || 0;
+        var withholdingTax = parseFloat(document.getElementById('tax').value) || 0;
+        var absent = parseFloat(document.getElementById('absent').value) || 0;
+        var otherDeductions = parseFloat(document.getElementById('otherDeductions').value) || 0;
+
+        // Calculate total deduction
+        var totalDeduction = sssContribution + pagibigContribution + philHealthContribution + withholdingTax + absent + otherDeductions;
+
+        // Update total deduction field
+        document.getElementById('totalDeductions').value = totalDeduction.toFixed(2); // Display up to 2 decimal places
+    }
+
+    // Attach the calculateTotalDeduction function to input fields' onchange event
+    document.querySelectorAll('input').forEach(function(input) {
+        input.addEventListener('change', calculateTotalDeduction);
+    });
+
+
 </script>
 
 
