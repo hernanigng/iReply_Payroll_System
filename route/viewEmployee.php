@@ -48,13 +48,16 @@ $query = $conn->query("SELECT * FROM tbl_employee");
                 <h5 class="modal-title mb-5" id="exampleModalLabel">Create New Employee</h5>    
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link employee-personal" >Personal Information</a>
+                        <a class="nav-link employee-personal" style="color: gray;
+pointer-events: none;" >Personal Information</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link employment-details" >Employment Details</a>
+                        <a class="nav-link employment-details"style="color: gray;
+pointer-events: none;" >Employment Details</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link benefit-details" >Benefit Details</a>
+                        <a class="nav-link benefit-details" style="color: gray;
+pointer-events: none;">Benefit Details</a>
                     </li>
                 </ul>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cancel"></button>
@@ -892,7 +895,7 @@ document.getElementById('createBonus_id').addEventListener('input', function(eve
                         <div class="card mb-4 mt-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                List of Clients
+                                List of Employees
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
