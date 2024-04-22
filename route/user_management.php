@@ -61,7 +61,6 @@
                                         <th>Middle Initial</th>
                                         <th>Last Name</th>
                                         <th>Username</th>
-                                        <th>Password</th>
                                         <th>User Role</th>
                                         <th>Position</th>
                                         <th> </th>
@@ -93,7 +92,6 @@
                                             <td><?php echo $data['middleinitial']; ?></td>
                                             <td><?php echo $data['lastname']; ?></td>
                                             <td><?php echo $data['username']; ?></td>
-                                            <td><?php echo $data['password']; ?></td>
                                             <td><?php echo $data['user_role']; ?></td>
                                             <td><?php echo $data['Title']; ?></td>
                                             <td>

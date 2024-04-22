@@ -27,10 +27,6 @@
        <label for="username" class="col-form-label">Username</label>
          <span class="form-control" id="username"> </span>
     </div>
-    <div class="col">
-        <label for="password" class="col-form-label">Password</label>
-          <span class="form-control" id="password"> </span>
-    </div>
 </div>
 
 <div class="row">
