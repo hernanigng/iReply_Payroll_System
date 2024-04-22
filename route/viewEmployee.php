@@ -1655,10 +1655,12 @@ var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() 
     <div class="col">
         <label for="personalEmail" class="col-form-label">Personal Email</label>
         <input type="email" name="edit_personalEmail" class="form-control" id="edit_personalEmail">
+        <div id="personalEmailError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="workEmail" class="col-form-label">Work Email</label>
         <input type="email" name="edit_workEmail" class="form-control" id="edit_workEmail">
+         <div id="workEmailError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="employeeType" class="col-form-label"> Employee Type </label>
@@ -1758,18 +1760,22 @@ var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() 
     <div class="col">
         <label for="sss" class="col-form-label">SSS Number</label>
         <input type="text" name="edit_sss" class="form-control" id="edit_sss">
+        <div id="sssError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="pagibig" class="col-form-label">Pag-ibig Number</label>
         <input type="text" name="edit_pagibig" class="form-control" id="edit_pagibig">
+        <div id="pagibigError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="philhealth" class="col-form-label">Philhealth Number</label>
         <input type="text" name="edit_philhealth" class="form-control" id="edit_philhealth">
+        <div id="philhealthError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="tin" class="col-form-label">TIN Number</label>
         <input type="text" name="edit_tin" class="form-control" id="edit_tin">
+        <div id="tinError" class="text-danger"></div> <!-- Error message container -->
     </div>
 </div>
 
@@ -1836,13 +1842,13 @@ $(document).ready(function() {
         $('.error-message').text('');
 
         // Check if all required fields are filled out and pass validation
-        if (validateForm() && validateEmail() && validateContactNumber()) {
-            // Retrieve the employee ID from the hidden input field
-            var employeeId = $('#employeeId').val();
+        if (validateForm() && validateEmail() && validateContactNumber() && validateBenefits()) {
+        // Retrieve the employee ID from the hidden input field
+        var employeeId = $('#employeeId').val();
 
-            // Call the updateEmployee function with the employee ID
-            updateEmployee(employeeId);
-        }
+        // Call the updateEmployee function with the employee ID
+        updateEmployee(employeeId);
+    }
     });
 
     // Define the validateForm function to check if all required fields are filled out
@@ -1858,6 +1864,10 @@ $(document).ready(function() {
          var middleName = $('#edit_middlename').val();
          var lastName = $('#edit_lastname').val();
          var contactNum = $('#edit_contactNum').val();
+         var sssNum = $('#edit_sss').val();
+         var pagibigNum = $('#edit_pagibig').val();
+         var philhealthNum = $('#edit_philhealth').val();
+         var tinNum = $('#edit_tin').val();
 
         // Perform validation
         if (!lettersOnly.test(firstName)) {
@@ -1878,6 +1888,29 @@ $(document).ready(function() {
         if (!numbersOnly.test(contactNum)) {
             $('#edit_contactNum').addClass('border border-danger');
             $('#contactNumError').text('Please enter only numbers for Contact Number.');
+            isValid = false;
+        }
+        if (!numbersOnly.test(sssNum)) {
+            $('#edit_sss').addClass('border border-danger');
+            $('#sssError').text('Please enter only 10 numbers for SSS Number.');
+            isValid = false;
+        }
+
+        if (!numbersOnly.test(pagibigNum)) {
+            $('#edit_pagibig').addClass('border border-danger');
+            $('#pagibigError').text('Please enter only 12 numbers for SSS Number.');
+            isValid = false;
+        }
+
+        if (!numbersOnly.test(philhealthNum)) {
+            $('#edit_philhealth').addClass('border border-danger');
+            $('#philhealthError').text('Please enter only 12 numbers for SSS Number.');
+            isValid = false;
+        }
+
+        if (!numbersOnly.test(tinNum)) {
+            $('#edit_tin').addClass('border border-danger');
+            $('#tinError').text('Please enter only 12 numbers for SSS Number.');
             isValid = false;
         }
 
@@ -1912,7 +1945,45 @@ $(document).ready(function() {
         // Check if the contact number is exactly 11 digits
         var contactNumberPattern = /^\d{11}$/;
         return contactNumberPattern.test(contactNumber);
+
     }
+
+    function validateBenefits() {
+    var sssNum = $('#edit_sss').val();
+    var sssNumPattern = /^\d{10}$/;
+    var pagibigNum = $('#edit_pagibig').val();
+    var philhealthNum = $('#edit_philhealth').val();
+    var tinNum = $('#edit_tin').val();
+    var Patterns = /^\d{12}$/;
+
+    var sssNumValid = sssNumPattern.test(sssNum);
+    var pagibigNumValid = Patterns.test(pagibigNum);
+    var philhealthNumValid = Patterns.test(philhealthNum);
+    var tinNumValid = Patterns.test(tinNum);
+
+    if (!sssNumValid) {
+        $('#edit_sss').addClass('border border-danger');
+        $('#sssError').text('Enter 10 numbers only.');
+    }
+
+    if (!pagibigNumValid) {
+        $('#edit_pagibig').addClass('border border-danger');
+        $('#pagibigError').text('Enter 12 numbers only.');
+    }
+
+    if (!philhealthNumValid) {
+        $('#edit_philhealth').addClass('border border-danger');
+        $('#philhealthError').text('Enter 12 numbers only.');
+    }
+
+    if (!tinNumValid) {
+        $('#edit_tin').addClass('border border-danger');
+        $('#tinError').text('Enter 12 numbers only.');
+    }
+
+    return sssNumValid && pagibigNumValid && philhealthNumValid && tinNumValid;
+}
+
 
     // Define the updateEmployee function here
 function updateEmployee(employeeId) {
