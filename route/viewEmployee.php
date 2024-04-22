@@ -103,7 +103,7 @@ pointer-events: none;">Benefit Details</a>
                         </div>
                         <div class="col-md-6">
                             <label for="contactNum" class="form-label">Contact Number</label>
-                            <input type="text" name="createContactNum" class="form-control number-error" id="contactNumber_id" maxlength="11" placeholder="Enter Contact Number">
+                            <input type="text" name="createContactNum" class="form-control number-error" id="contactNumber_id" maxlength="11" placeholder="Enter Contact Number" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                             <i class="fas fa-times input-icon" style="display: none;"></i>
                             <p id="NumError" class="error-message" style="display: none;">Contact number should be 11 digits.</p>
                             <p id="contactError" class="error-message" style="display: none;">Please fill out this required field.</p>
@@ -163,7 +163,7 @@ pointer-events: none;">Benefit Details</a>
                                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                             <div class="col-md-4">
-                                <label for="monthSalary" class="form-label">Monthly Salary</label>
+                                <label for="monthSalary" class="form-label">Daily Rate</label>
                                 <input type="text" name="createMonthlySalary" class="form-control" id="createMonthlySalary_id" placeholder="PHP 0.00">
                                 <div id="error" style="color: red;"></div>
                                    <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
@@ -313,7 +313,7 @@ pointer-events: none;">Benefit Details</a>
                             </div>
                             <div class="col-md-4">
                                 <label for="taxPercent" class="form-label">Tax Percentage</label>
-                                <input type="text" name="createTaxPercent" class="form-control" id="createTaxPercent_id" placeholder="Enter Tax Percentage">
+                                <input type="text" name="createTaxPercent" class="form-control" id="createTaxPercent_id" placeholder="Enter Tax Percentage" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                     <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                         </div>

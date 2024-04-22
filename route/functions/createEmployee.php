@@ -54,7 +54,7 @@ $query = $conn->query("SELECT MAX(CAST(SUBSTRING(employee_id, 2) AS UNSIGNED)) A
 
 
 $result = $conn->query("INSERT INTO tbl_employee (employee_id, firstname, middlename, lastname, address, birthdate, contact_num, civilstatus, personal_email, work_email, employee_type,
-start_date, monthly_salary, account_bonus, client, position, employment_status, sss_num, pagibig_num, philhealth_num, tin_num, sss_con, pagibig_con, philhealth_con, tax_percentage)
+start_date, daily_rate, account_bonus, client, position, employment_status, sss_num, pagibig_num, philhealth_num, tin_num, sss_con, pagibig_con, philhealth_con, tax_percentage)
 VALUES ('$nextEmployeeId','$firstName', '$midName', '$lastName', '$address', '$birthdate', '$contactNum', '$civilStat', '$persEmail', '$workEmail', '$employeeType', '$startDate',
 '$monthlySalary', '$accntBonus', '$client', '$position', '$employmentStatus', '$sss', '$pagibig', '$philhealth', '$tin', '$sssContrib', '$pagibigContrib', '$philhealthContrib', '$taxPercent')");
 
