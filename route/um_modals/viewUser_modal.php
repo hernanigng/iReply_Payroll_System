@@ -47,7 +47,6 @@
 
                 <div class="modal-footer">
                   <button class="btn btn-danger close" style="float: right; margin-top: 10px;" data-bs-dismiss="modal">Close</button>
-                  <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="addButton">Create</button>
                  </div>
             </div>
         </div>
