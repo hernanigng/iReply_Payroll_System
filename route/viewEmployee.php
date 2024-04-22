@@ -1439,11 +1439,21 @@ function openEditModal(employeeId) {
             $('#edit_middlename').val(response.middlename);
             $('#edit_lastname').val(response.lastname);
             $('#edit_address').val(response.address);
-            $('#edit_birthdate').val(response.birthdate);
+           
+var birthdateString = response.birthdate;
+var birthdate = new Date(birthdateString);
+var formattedBirthdate = (birthdate.getMonth() + 1) + '/' + birthdate.getDate() + '/' + birthdate.getFullYear();
+
+            $('#edit_birthdate').val(formattedBirthdate);
             $('#edit_contactNum').val(response.contact_num);
             $('#edit_personalEmail').val(response.personal_email);
             $('#edit_workEmail').val(response.work_email);
-            $('#edit_startDate').val(response.start_date);
+
+var startdateString = response.start_date;
+var startDate = new Date(startdateString);
+var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() + '/' + startDate.getFullYear();
+
+            $('#edit_startDate').val(formattedStartdate);
 
             function formatCurrency(number, currencySymbol = '₱') {
                 if (!isNaN(number) && number !== null && number !== '') {
@@ -1588,20 +1598,24 @@ function openEditModal(employeeId) {
                 <div id="personalEdit" class="tab">
                     <!-- Your personal information fields here -->
                     <!-- Placeholder for data -->
+    <form id="editFrm" method="post">
 <input type="hidden" name="employeeId" class="form-control" id="employeeId">
 
 <div class="row">
     <div class="col">
         <label for="firstName" class="col-form-label">First Name</label>
         <input type="" name="edit_firstname" class="form-control" id="edit_firstname">
+        <div id="firstNameError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="middleName" class="col-form-label">Middle Name</label>
         <input type="" name="edit_middlename" class="form-control" id="edit_middlename">
+        <div id="middleNameError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="lastName" class="col-form-label">Last Name</label>
         <input type="" name="edit_lastname" class="form-control" id="edit_lastname">
+        <div id="lastNameError" class="text-danger"></div> <!-- Error message container -->
     </div>
 </div>
 
@@ -1610,6 +1624,7 @@ function openEditModal(employeeId) {
     <div class="col">                    
          <label for="completeAddress" class="col-form-label">Complete Address</label>
          <input type="" name="edit_address" class="form-control" id="edit_address">
+         <div id="completeAddressError" class="text-danger"></div> <!-- Error message container -->
     </div>
 </div>
 
@@ -1621,6 +1636,7 @@ function openEditModal(employeeId) {
     <div class="col">
         <label for="contactNum" class="col-form-label">Contact Number </label>
         <input type="" name="edit_contactNum" class="form-control" id="edit_contactNum">
+        <div id="contactNumError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
          <label for="civilStatus" class="col-form-label">Civil Status</label>
@@ -1776,6 +1792,7 @@ function openEditModal(employeeId) {
     </div>
 </div>
     </div>
+    </form>
                 <!-- <div class="modal-footer">
                     <button class="btn btn-primary" style="float: right; margin-top: 10px;" id="nextEditButton">Next</button>
                 </div> -->
@@ -1809,184 +1826,7 @@ function openEditModal(employeeId) {
     </div>
 </div>
 
-<!-- Error Modal -->
-<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Invalid Input.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    // UPDATE SCRIPT
-$(document).ready(function() {
-    // Attach click event listener to the Update button
-    $('#updateButton').click(function() {
-        // Reset error messages and styles
-        $('.form-control').removeClass('border border-danger');
-        $('.error-message').text('');
-
-        // Check if all required fields are filled out and pass validation
-        if (validateForm() && validateEmail() && validateContactNumber()) {
-            // Retrieve the employee ID from the hidden input field
-            var employeeId = $('#employeeId').val();
-
-            // Call the updateEmployee function with the employee ID
-            updateEmployee(employeeId);
-        } else {
-            // Display the error modal if validation fails
-            $('#errorModal').modal('show');
-
-            // Show red borders and error messages for invalid fields
-            if (!validateEmail()) {
-                $('#edit_personalEmail').addClass('border border-danger');
-                $('#emailError').text('Invalid email format.');
-            }
-            if (!validateContactNumber()) {
-                $('#edit_contactNum').addClass('border border-danger');
-                $('#contactNumberError').text('Contact number must be 11 digits.');
-            }
-        }
-    });
-
-    // Define the validateForm function to check if all required fields are filled out
-    function validateForm() {
-        // Check if any required field is empty
-        var isValid = true;
-        $('.form-control[required]').each(function() {
-            if ($(this).val() === '') {
-                isValid = false;
-                return false; // Exit the loop early if any field is empty
-            }
-        });
-        return isValid;
-    }
-
-    // Define the validateEmail function to check if the email address is valid
-    function validateEmail() {
-    var personalEmail = $('#edit_personalEmail').val();
-    var workEmail = $('#edit_workEmail').val();
-    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    var personalEmailValid = emailPattern.test(personalEmail);
-    var workEmailValid = emailPattern.test(workEmail);
-
-    if (!personalEmailValid) {
-        $('#edit_personalEmail').addClass('border border-danger');
-        $('#emailError').text('Invalid personal email format.');
-    }
-
-    if (!workEmailValid) {
-        $('#edit_workEmail').addClass('border border-danger');
-        $('#workEmailError').text('Invalid work email format.');
-    }
-
-    return personalEmailValid && workEmailValid;
-}
- // Define the validateContactNumber function to check if the contact number is valid
- function validateContactNumber() {
-        var contactNumber = $('#edit_contactNum').val();
-        // Check if the contact number is exactly 11 digits
-        var contactNumberPattern = /^\d{11}$/;
-        return contactNumberPattern.test(contactNumber);
-    }
-
-    // Define the updateEmployee function here
-    function updateEmployee(employeeId) {
-        // Your existing updateEmployee function code goes here
-        // Retrieve the updated data from the form fields
-        var employeeId = $('#employeeId').val();
-        var firstname = $('#edit_firstname').val();
-        var middlename = $('#edit_middlename').val();
-        var lastname = $('#edit_lastname').val();
-        var address = $('#edit_address').val();
-        var birthdate = $('#edit_birthdate').val();
-        var contactNum = $('#edit_contactNum').val();
-        var civilStatus = $('#edit_civilStatus').val();
-        var personalEmail = $('#edit_personalEmail').val();
-        var workEmail = $('#edit_workEmail').val();
-        var employeeType = $('#edit_employeeType').val();
-        var startDate = $('#edit_startDate').val();
-        var monthly = $('#edit_monthly').val();
-        var accBonus = $('#edit_accBonus').val();
-        var client = $('#edit_client').val();
-        var position = $('#edit_position').val();
-        var employmentStatus = $('#edit_employmentStatus').val();
-        var sss = $('#edit_sss').val();
-        var pagibig = $('#edit_pagibig').val();
-        var philhealth = $('#edit_philhealth').val();
-        var tin = $('#edit_tin').val();
-        var sssCon = $('#edit_sssCon').val();
-        var pagibigCon = $('#edit_pagibigCon').val();
-        var philhealthCon = $('#edit_philhealthCon').val();
-        var tax = $('#edit_tax').val();
-        // Add other fields as needed
-
-        // Create a JSON object with the updated data
-        var updatedData = {
-            employee_id: employeeId,
-            firstname: firstname,
-            middlename: middlename,
-            lastname: lastname,
-            address: address,
-            birthdate: birthdate,
-            contact_num: contactNum,
-            civilstatus: civilStatus,
-            personal_email: personalEmail,
-            work_email: workEmail,
-            employee_type: employeeType,
-            start_date: startDate,
-            monthly_salary: monthly,
-            account_bonus: accBonus,
-            client: client,
-            position: position,
-            employment_status: employmentStatus,
-            sss_num: sss,
-            pagibig_num: pagibig,
-            philhealth_num: philhealth,
-            tin_num: tin,
-            sss_con: sssCon,
-            pagibig_con: pagibigCon,
-            philhealth_con: philhealthCon,
-            tax_percentage: tax
-            // Add other fields as needed
-        };
-
-        // Perform AJAX request to update employee data
-        $.ajax({
-            url: 'functions/update_employee.php',
-            type: 'POST',
-            data: updatedData,
-            dataType: 'json',
-            success: function(response) {
-                // Handle success response
-                if (response.success) {
-                    // Display toast notification
-                    var updateToast = new bootstrap.Toast($('#updateToast'));
-                    updateToast.show();
-
-                    // Optionally hide the modal
-                    closeModal();
-                } else {
-                    // If update failed, display error message
-                    console.error(response.message);
-                }
-            },
-        });
-    }
-});
-
-</script>
+<script src="updateEmployee.js"> </script>
 
 <!-- User Update Toast Notification -->
 <div class="toast position-fixed top-50 start-50 translate-middle" id="updateToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
