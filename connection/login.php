@@ -32,10 +32,10 @@ if ($data && $password === $data['password']) {
     $_SESSION['username'] = $data['username'];
     $_SESSION['password'] = $data['password'];
     $_SESSION['role'] = $data['user_role'];
-    
-    // Set first name and last name
+    $_SESSION['position'] = $data['position'];
     $_SESSION['firstname'] = $data['firstname'];
     $_SESSION['lastname'] = $data['lastname'];
+    $_SESSION['middleinitial'] = $data['middleinitial'];
 
 
     echo json_encode(

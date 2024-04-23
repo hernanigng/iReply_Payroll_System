@@ -61,6 +61,7 @@ if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESS
                             <a class="nav-link" href="../route/Process_Payroll.php">Process Payroll</a>
                             <a class="nav-link" href="../route/Payroll_List.php">Payroll List</a>
                             <a class="nav-link" href="../route/Payslip.php">Payslip</a>
+                            <a class="nav-link" href="../route/WithHoldingTax.php">Withholding Tax</a>
                         </nav>
                     </div>
 
@@ -75,6 +76,10 @@ if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESS
                             }
                         }
                     </script>
+                        <a class="nav-link" href="../route/TimeKeeping.php">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-clock"></i></div>
+                        Time Keeping
+                        </a>
 
                         <a class="nav-link" href="../route/user_management.php">
                         <div class="sb-nav-link-icon"><i class="fa-regular fa-user"></i></div>
