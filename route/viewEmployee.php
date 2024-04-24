@@ -19,6 +19,13 @@ ini_set('display_errors', 1);
 
     <link rel="stylesheet" href="../assets/css/employee_style.css?<?=time()?>" media="all">
 
+<style> 
+.error-tab {
+    color: red; /* Red text color */
+    border-bottom: 2px solid red; /* Red bottom border */
+}
+
+</style>
 <script>
   // JavaScript code to show alert when button is clicked
   $(document).ready(function(){
@@ -1090,20 +1097,8 @@ var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() 
 // Display the formatted birthdate in the modal
 $('#startDate').text(formattedStartdate);
 
-function formatCurrency(number, currencySymbol) {
-     return currencySymbol + new Intl.NumberFormat('en-PH', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-     }).format(number);
- }
- var formattedMonthlySalary = formatCurrency(response.monthly_salary, '₱');
- var formattedAccountBonus = formatCurrency(response.account_bonus, '₱');
- var formattedSSS = formatCurrency(response.sss_con, '₱');
- var formattedPagibig = formatCurrency(response.pagibig_con, '₱');
- var formattedPhilhealth = formatCurrency(response.philhealth_con, '₱');
-
-        $('#monthly').text(formattedMonthlySalary);
-        $('#accBonus').text(formattedAccountBonus);
+        $('#monthly').text(response.daily_rate);
+        $('#accBonus').text(response.account_bonus);
 
         // Fetch client name using client ID
         $.ajax({
@@ -1132,9 +1127,9 @@ function formatCurrency(number, currencySymbol) {
         $('#pagibig').text(response.pagibig_num);
         $('#philhealth').text(response.philhealth_num);
         $('#tin').text(response.tin_num);
-        $('#sssCon').text(formattedSSS);
-        $('#pagibigCon').text(formattedPagibig);
-        $('#philhealthCon').text(formattedPhilhealth);
+        $('#sssCon').text(response.sss_con);
+        $('#pagibigCon').text(response.pagibig_con);
+        $('#philhealthCon').text(response.philhealth_con);
         $('#tax').text(response.tax_percentage);
     }
 });
@@ -1285,7 +1280,7 @@ function formatCurrency(number, currencySymbol) {
         <span class="form-control" id="startDate"> </span>
     </div>
     <div class="col">
-        <label for="monthly" class="col-form-label">Monthly Salary:</label>
+        <label for="monthly" class="col-form-label">Daily Rate:</label>
         <span class="form-control" id="monthly"> </span>
     </div>
     <div class="col">
@@ -1417,7 +1412,6 @@ function formatCurrency(number, currencySymbol) {
     $('#submitPassword').click(submitPassword);
 });
 
-
 }
 
 function openEditModal(employeeId) {
@@ -1440,47 +1434,30 @@ function openEditModal(employeeId) {
             $('#edit_lastname').val(response.lastname);
             $('#edit_address').val(response.address);
            
-var birthdateString = response.birthdate;
-var birthdate = new Date(birthdateString);
-var formattedBirthdate = (birthdate.getMonth() + 1) + '/' + birthdate.getDate() + '/' + birthdate.getFullYear();
+// var edit_birthdateString = response.birthdate;
+// var edit_birthdate = new Date(edit_birthdateString);
+// var formatted_editBirthdate = (birthdate.getMonth() + 1) + '/' + birthdate.getDate() + '/' + birthdate.getFullYear();
 
-            $('#edit_birthdate').val(formattedBirthdate);
+            $('#edit_birthdate').val(response.birthdate);
             $('#edit_contactNum').val(response.contact_num);
             $('#edit_personalEmail').val(response.personal_email);
             $('#edit_workEmail').val(response.work_email);
 
-var startdateString = response.start_date;
-var startDate = new Date(startdateString);
-var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() + '/' + startDate.getFullYear();
+// var startdateString = response.start_date;
+// var startDate = new Date(startdateString);
+// var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() + '/' + startDate.getFullYear();
 
-            $('#edit_startDate').val(formattedStartdate);
+            $('#edit_startDate').val(response.start_date);
 
-            function formatCurrency(number, currencySymbol = '₱') {
-                if (!isNaN(number) && number !== null && number !== '') {
-                    return currencySymbol + new Intl.NumberFormat('en-PH', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    }).format(parseFloat(number));
-                } else {
-                    return '';
-                }
-            }
-
-            var formattedMonthlySalary = formatCurrency(response.monthly_salary);
-            var formattedAccountBonus = formatCurrency(response.account_bonus);
-            var formattedSSS = formatCurrency(response.sss_con);
-            var formattedPagibig = formatCurrency(response.pagibig_con);
-            var formattedPhilhealth = formatCurrency(response.philhealth_con);
-
-            $('#edit_monthly').val(formattedMonthlySalary);
-            $('#edit_accBonus').val(formattedAccountBonus);
+            $('#edit_monthly').val(response.daily_rate);
+            $('#edit_accBonus').val(response.account_bonus);
             $('#edit_sss').val(response.sss_num);
             $('#edit_pagibig').val(response.pagibig_num);
             $('#edit_philhealth').val(response.philhealth_num);
             $('#edit_tin').val(response.tin_num);
-            $('#edit_sssCon').val(formattedSSS);
-            $('#edit_pagibigCon').val(formattedPagibig);
-            $('#edit_philhealthCon').val(formattedPhilhealth);
+            $('#edit_sssCon').val(response.sss_con);
+            $('#edit_pagibigCon').val(response.pagibig_con);
+            $('#edit_philhealthCon').val(response.philhealth_con);
             $('#edit_tax').val(response.tax_percentage);
 
             // Set the selected option in the select elements
@@ -1570,6 +1547,7 @@ var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() 
 
 
 
+
 <!-- EDIT EMPLOYEE MODAL -->
 <div class="modal fade" id="editEmployee" tabindex="-1" aria-labelledby="editEmployeeLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog modal-lg">
@@ -1604,17 +1582,17 @@ var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() 
 <div class="row">
     <div class="col">
         <label for="firstName" class="col-form-label">First Name</label>
-        <input type="" name="edit_firstname" class="form-control" id="edit_firstname">
+        <input type="text" name="edit_firstname" class="form-control" id="edit_firstname">
         <div id="firstNameError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="middleName" class="col-form-label">Middle Name</label>
-        <input type="" name="edit_middlename" class="form-control" id="edit_middlename">
+        <input type="text" name="edit_middlename" class="form-control" id="edit_middlename">
         <div id="middleNameError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="lastName" class="col-form-label">Last Name</label>
-        <input type="" name="edit_lastname" class="form-control" id="edit_lastname">
+        <input type="text" name="edit_lastname" class="form-control" id="edit_lastname">
         <div id="lastNameError" class="text-danger"></div> <!-- Error message container -->
     </div>
 </div>
@@ -1623,7 +1601,7 @@ var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() 
 <div class="row">
     <div class="col">                    
          <label for="completeAddress" class="col-form-label">Complete Address</label>
-         <input type="" name="edit_address" class="form-control" id="edit_address">
+         <input type="text" name="edit_address" class="form-control" id="edit_address">
          <div id="completeAddressError" class="text-danger"></div> <!-- Error message container -->
     </div>
 </div>
@@ -1635,7 +1613,7 @@ var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() 
     </div>
     <div class="col">
         <label for="contactNum" class="col-form-label">Contact Number </label>
-        <input type="" name="edit_contactNum" class="form-control" id="edit_contactNum">
+        <input type="number" name="edit_contactNum" class="form-control" id="edit_contactNum">
         <div id="contactNumError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
@@ -1684,12 +1662,12 @@ var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() 
         <input type="date" name="edit_startDate" class="form-control createStartDate" id="edit_startDate">
     </div>
     <div class="col">
-        <label for="monthSalary" class="col-form-label">Monthly Salary</label>
-        <input type="" name="edit_monthly" class="form-control" id="edit_monthly">
+        <label for="monthSalary" class="col-form-label">Daily Rate</label>
+        <input type="text" name="edit_monthly" class="form-control" id="edit_monthly">
     </div>
     <div class="col">
         <label for="accountBonus" class="col-form-label">Account Bonus</label>
-        <input type="" name="edit_accBonus" class="form-control" id="edit_accBonus">
+        <input type="text" name="edit_accBonus" class="form-control" id="edit_accBonus">
     </div>
 </div>
 
@@ -1759,22 +1737,22 @@ var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() 
 <div class="row">
     <div class="col">
         <label for="sss" class="col-form-label">SSS Number</label>
-        <input type="text" name="edit_sss" class="form-control" id="edit_sss">
+        <input type="number" name="edit_sss" class="form-control" id="edit_sss">
         <div id="sssError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="pagibig" class="col-form-label">Pag-ibig Number</label>
-        <input type="text" name="edit_pagibig" class="form-control" id="edit_pagibig">
+        <input type="number" name="edit_pagibig" class="form-control" id="edit_pagibig">
         <div id="pagibigError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="philhealth" class="col-form-label">Philhealth Number</label>
-        <input type="text" name="edit_philhealth" class="form-control" id="edit_philhealth">
+        <input type="number" name="edit_philhealth" class="form-control" id="edit_philhealth">
         <div id="philhealthError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="tin" class="col-form-label">TIN Number</label>
-        <input type="text" name="edit_tin" class="form-control" id="edit_tin">
+        <input type="number" name="edit_tin" class="form-control" id="edit_tin">
         <div id="tinError" class="text-danger"></div> <!-- Error message container -->
     </div>
 </div>
@@ -1782,15 +1760,19 @@ var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() 
 <div class="row">
     <div class="col">
         <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution</label>
-        <input type="" name="edit_sssCon" class="form-control" id="edit_sssCon">    
+        <input type="text" name="edit_sssCon" class="form-control" id="edit_sssCon">
+        <div id="sssConError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution </label>
-        <input type="txt" name="edit_pagibigCon" class="form-control" id="edit_pagibigCon">
+        <input type="text" name="edit_pagibigCon" class="form-control" id="edit_pagibigCon">
+        <div id="pagibigConError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution</label>
-        <input type="" name="edit_philhealthCon" class="form-control" id="edit_philhealthCon">
+        <input type="text" name="edit_philhealthCon" class="form-control" id="edit_philhealthCon">
+        <div id="philhealthConError" class="text-danger"></div> <!-- Error message container -->
+
     </div>
     <div class="col">
         <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
@@ -1809,6 +1791,7 @@ var formattedStartdate = (startDate.getMonth() + 1) + '/' + startDate.getDate() 
         </div>
     </div>
 </div>
+
 
  <!-- PASSWORD MODAL -->
  <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
@@ -1842,7 +1825,7 @@ $(document).ready(function() {
         $('.error-message').text('');
 
         // Check if all required fields are filled out and pass validation
-        if (validateForm() && validateEmail() && validateContactNumber() && validateBenefits()) {
+        if ( validatePersonalInfo() && validateContactNumber() && validateEmail() && validateNumbers() && validateBenefits()) {
         // Retrieve the employee ID from the hidden input field
         var employeeId = $('#employeeId').val();
 
@@ -1851,72 +1834,54 @@ $(document).ready(function() {
     }
     });
 
-    // Define the validateForm function to check if all required fields are filled out
-    function validateForm() {
+    function validatePersonalInfo() {
+    var lettersOnly = /^[A-Za-z\s]+$/;
+    var isValid = true;
 
-        var lettersOnly = /^[A-Za-z\s]+$/;
-        var numbersOnly = /^[0-9]+$/;
+    // Get form inputs
+    var firstName = $('#edit_firstname').val();
+    var middleName = $('#edit_middlename').val();
+    var lastName = $('#edit_lastname').val();
 
-        var isValid = true;
-
-         // Get form inputs
-         var firstName = $('#edit_firstname').val();
-         var middleName = $('#edit_middlename').val();
-         var lastName = $('#edit_lastname').val();
-         var contactNum = $('#edit_contactNum').val();
-         var sssNum = $('#edit_sss').val();
-         var pagibigNum = $('#edit_pagibig').val();
-         var philhealthNum = $('#edit_philhealth').val();
-         var tinNum = $('#edit_tin').val();
-
-        // Perform validation
-        if (!lettersOnly.test(firstName)) {
-            $('#edit_firstname').addClass('border border-danger');
-            $('#firstNameError').text('Please enter only letters for First Name.');
-            isValid = false;
-        }
-        if (!lettersOnly.test(middleName)) {
-            $('#edit_middlename').addClass('border border-danger');
-            $('#middleNameError').text('Please enter only letters for Middle Name.');
-            isValid = false;
-        }
-        if (!lettersOnly.test(lastName)) {
-            $('#edit_lastname').addClass('border border-danger');
-            $('#lastNameError').text('Please enter only letters for Last Name.');
-            isValid = false;
-        }
-        if (!numbersOnly.test(contactNum)) {
-            $('#edit_contactNum').addClass('border border-danger');
-            $('#contactNumError').text('Please enter only numbers for Contact Number.');
-            isValid = false;
-        }
-        if (!numbersOnly.test(sssNum)) {
-            $('#edit_sss').addClass('border border-danger');
-            $('#sssError').text('Please enter only 10 numbers for SSS Number.');
-            isValid = false;
-        }
-
-        if (!numbersOnly.test(pagibigNum)) {
-            $('#edit_pagibig').addClass('border border-danger');
-            $('#pagibigError').text('Please enter only 12 numbers for SSS Number.');
-            isValid = false;
-        }
-
-        if (!numbersOnly.test(philhealthNum)) {
-            $('#edit_philhealth').addClass('border border-danger');
-            $('#philhealthError').text('Please enter only 12 numbers for SSS Number.');
-            isValid = false;
-        }
-
-        if (!numbersOnly.test(tinNum)) {
-            $('#edit_tin').addClass('border border-danger');
-            $('#tinError').text('Please enter only 12 numbers for SSS Number.');
-            isValid = false;
-        }
-
-        return isValid;
+    // Perform validation
+    if (!lettersOnly.test(firstName)) {
+        $('#edit_firstname').addClass('border border-danger');
+        $('#firstNameError').text('Please enter only letters for First Name.');
+        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
+    }
+    if (!lettersOnly.test(middleName)) {
+        $('#edit_middlename').addClass('border border-danger');
+        $('#middleNameError').text('Please enter only letters for Middle Name.');
+        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
+    }
+    if (!lettersOnly.test(lastName)) {
+        $('#edit_lastname').addClass('border border-danger');
+        $('#lastNameError').text('Please enter only letters for Last Name.');
+        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
     }
 
+    return isValid;
+}
+    // Define the validateContactNumber function to check if the contact number is valid
+    function validateContactNumber() {
+        var contactNumber = $('#edit_contactNum').val();
+        // Check if the contact number is exactly 11 digits
+        var contactNumberPattern = /^\d{11}$/;
+        var contactNumberValid = contactNumberPattern.test(contactNumber);
+
+        if (!contactNumberValid) {
+        $('#edit_contactNum').addClass('border border-danger');
+        $('#contactNumError').text('Enter 11 numbers only.');
+        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+    }   
+    
+        return contactNumberValid;
+
+    }
+    
     // Define the validateEmail function to check if the email address is valid
     function validateEmail() {
     var personalEmail = $('#edit_personalEmail').val();
@@ -1929,24 +1894,62 @@ $(document).ready(function() {
     if (!personalEmailValid) {
         $('#edit_personalEmail').addClass('border border-danger');
         $('#emailError').text('Invalid personal email format.');
+        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
     }
 
     if (!workEmailValid) {
         $('#edit_workEmail').addClass('border border-danger');
         $('#workEmailError').text('Invalid work email format.');
+        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
     }
 
     return personalEmailValid && workEmailValid;
     }
 
-    // Define the validateContactNumber function to check if the contact number is valid
-    function validateContactNumber() {
-        var contactNumber = $('#edit_contactNum').val();
-        // Check if the contact number is exactly 11 digits
-        var contactNumberPattern = /^\d{11}$/;
-        return contactNumberPattern.test(contactNumber);
+    // Define the validateForm function to check if all required fields are filled out
+    function validateNumbers() {
+    var numbersOnly = /^[0-9]+$/;
+    var isValid = true;
 
+    // Reset error messages and styles
+    $('.form-control').removeClass('border border-danger');
+    $('.error-message').text('');
+
+    var sssNum = $('#edit_sss').val();
+    var pagibigNum = $('#edit_pagibig').val();
+    var philhealthNum = $('#edit_philhealth').val();
+    var tinNum = $('#edit_tin').val();
+
+    if (!numbersOnly.test(sssNum)) {
+        $('#edit_sss').addClass('border border-danger');
+        $('#sssError').text('Please enter only 10 numbers for SSS Number.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
     }
+
+    if (!numbersOnly.test(pagibigNum)) {
+        $('#edit_pagibig').addClass('border border-danger');
+        $('#pagibigError').text('Please enter only 12 numbers for SSS Number.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
+    }
+
+    if (!numbersOnly.test(philhealthNum)) {
+        $('#edit_philhealth').addClass('border border-danger');
+        $('#philhealthError').text('Please enter only 12 numbers for SSS Number.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
+    }
+
+    if (!numbersOnly.test(tinNum)) {
+        $('#edit_tin').addClass('border border-danger');
+        $('#tinError').text('Please enter only 12 numbers for SSS Number.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
+    }
+
+    return isValid;
+}
 
     function validateBenefits() {
     var sssNum = $('#edit_sss').val();
@@ -1964,26 +1967,33 @@ $(document).ready(function() {
     if (!sssNumValid) {
         $('#edit_sss').addClass('border border-danger');
         $('#sssError').text('Enter 10 numbers only.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
     }
 
     if (!pagibigNumValid) {
         $('#edit_pagibig').addClass('border border-danger');
         $('#pagibigError').text('Enter 12 numbers only.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
     }
 
     if (!philhealthNumValid) {
         $('#edit_philhealth').addClass('border border-danger');
         $('#philhealthError').text('Enter 12 numbers only.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
     }
 
     if (!tinNumValid) {
         $('#edit_tin').addClass('border border-danger');
         $('#tinError').text('Enter 12 numbers only.');
-    }
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+    }  
 
     return sssNumValid && pagibigNumValid && philhealthNumValid && tinNumValid;
 }
-
+   // Remove error class from tab links when a tab is clicked
+$('.nav-link-edit').click(function() {
+    $('.nav-link-edit').removeClass('error-tab');
+});
 
     // Define the updateEmployee function here
 function updateEmployee(employeeId) {
@@ -2027,7 +2037,7 @@ function updateEmployee(employeeId) {
         work_email: workEmail,
         employee_type: employeeType,
         start_date: startDate,
-        monthly_salary: monthly,
+        daily_rate: monthly,
         account_bonus: accBonus,
         client: client,
         position: position,
@@ -2050,19 +2060,24 @@ function updateEmployee(employeeId) {
         data: updatedData,
         dataType: 'json',
         success: function(response) {
-            // Handle success response
-            if (response.success) {
-                // Display toast notification
-                var updateToast = new bootstrap.Toast($('#updateToast'));
-                updateToast.show();
+    // Handle success response
+    if (response.success) {
+        // Display toast notification
+        var updateToast = new bootstrap.Toast($('#updateToast'));
+        updateToast.show();
 
-                // Optionally hide the modal
-                closeModal();
-            } else {
-                // If update failed, display error message
-                console.error(response.message);
-            }
-        },
+        // Optionally hide the modal
+        closeModal();
+
+        // Reload the page after a short delay (e.g., 2 seconds)
+        setTimeout(function() {
+            location.reload(true); // Reload the page with clearing cache
+        }, 2000); // Adjust the delay time as needed
+    } else {
+        // If update failed, display error message
+        console.error(response.message);
+    }
+},
         error: function(xhr, status, error) {
             // Handle AJAX error
             console.error(xhr.responseText);
@@ -2073,7 +2088,6 @@ function updateEmployee(employeeId) {
 });
 
 </script>
-
 <!-- User Update Toast Notification -->
 <div class="toast position-fixed top-50 start-50 translate-middle" id="updateToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
             <div class="toast-header">
@@ -2086,5 +2100,7 @@ function updateEmployee(employeeId) {
             </div>
         </div>
         <div class="modal-footer"> </div>
+    
+    
 
 <?php include '../template/footer.php' ?>
