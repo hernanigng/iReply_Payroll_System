@@ -2100,5 +2100,7 @@ function updateEmployee(employeeId) {
             </div>
         </div>
         <div class="modal-footer"> </div>
+    
+    
 
 <?php include '../template/footer.php' ?>
