@@ -1,20 +1,21 @@
 <?php
-// Include necessary files and database connection
-include '../connection/session.php';
-include '../connection/database.php';
 
-// Check if year and month are set in the AJAX request
-if (isset($_GET['year']) && isset($_GET['month'])) {
-    // Get the selected year and month
+// Include necessary files and database connection
+include_once '../../connection/database.php';
+
+// Check if year, month, and employee_id are set in the AJAX request
+if (isset($_GET['year']) && isset($_GET['month']) && isset($_GET['employee_id'])) {
+    // Get the selected year, month, and employee ID
     $selectedYear = $_GET['year'];
     $selectedMonth = $_GET['month'];
+    $employeeId = $_GET['employee_id'];
 
-    // Modify the SQL query to fetch filtered data
-    $query = "SELECT * FROM tbl_employee WHERE YEAR(date_column) = ? AND MONTH(date_column) = ?";
+    // Modify the SQL query to fetch filtered data for the specific employee
+    $query = "SELECT * FROM tbl_timekeeping WHERE YEAR(date_from) = ? AND MONTH(date_to) = ? AND employee_id = ?";
     
     // Prepare and execute the query
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii", $selectedYear, $selectedMonth);
+    $stmt->bind_param("iii", $selectedYear, $selectedMonth, $employeeId);
     $stmt->execute();
 
     // Get the result
@@ -23,9 +24,9 @@ if (isset($_GET['year']) && isset($_GET['month'])) {
     // Fetch the filtered data and return as HTML
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>" . $row['date_column'] . "</td>";
-        echo "<td>" . $row['total_hours_worked'] . "</td>";
-        echo "<td>" . $row['total_days_worked'] . "</td>";
+        echo "<td>" . $row['date_from'] . $row['date_to'] . "</td>";
+        echo "<td>" . $row['Total_HrsWork'] . "</td>";
+        echo "<td>" . $row['Total_DysWork'] . "</td>";
         echo "<td><button class='btn btn-primary'><i class='bi bi-pencil'></i></button></td>";
         echo "</tr>";
     }
