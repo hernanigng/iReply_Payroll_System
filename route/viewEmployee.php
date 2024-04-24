@@ -19,6 +19,13 @@ ini_set('display_errors', 1);
 
     <link rel="stylesheet" href="../assets/css/employee_style.css?<?=time()?>" media="all">
 
+<style> 
+.error-tab {
+    color: red; /* Red text color */
+    border-bottom: 2px solid red; /* Red bottom border */
+}
+
+</style>
 <script>
   // JavaScript code to show alert when button is clicked
   $(document).ready(function(){
@@ -1818,7 +1825,7 @@ $(document).ready(function() {
         $('.error-message').text('');
 
         // Check if all required fields are filled out and pass validation
-        if ( validatePersonalInfo() && validateNumbers() && validateEmail() && validateContactNumber() && validateBenefits()) {
+        if ( validatePersonalInfo() && validateContactNumber() && validateEmail() && validateNumbers() && validateBenefits()) {
         // Retrieve the employee ID from the hidden input field
         var employeeId = $('#employeeId').val();
 
@@ -1828,89 +1835,53 @@ $(document).ready(function() {
     });
 
     function validatePersonalInfo() {
-        var lettersOnly = /^[A-Za-z\s]+$/;
-        var isValid = true;
+    var lettersOnly = /^[A-Za-z\s]+$/;
+    var isValid = true;
 
-         // Get form inputs
-         var firstName = $('#edit_firstname').val();
-         var middleName = $('#edit_middlename').val();
-         var lastName = $('#edit_lastname').val();
+    // Get form inputs
+    var firstName = $('#edit_firstname').val();
+    var middleName = $('#edit_middlename').val();
+    var lastName = $('#edit_lastname').val();
 
-         // Perform validation
-        if (!lettersOnly.test(firstName)) {
-            $('#edit_firstname').addClass('border border-danger');
-            $('#firstNameError').text('Please enter only letters for First Name.');
-            isValid = false;
-        }
-        if (!lettersOnly.test(middleName)) {
-            $('#edit_middlename').addClass('border border-danger');
-            $('#middleNameError').text('Please enter only letters for Middle Name.');
-            isValid = false;
-        }
-        if (!lettersOnly.test(lastName)) {
-            $('#edit_lastname').addClass('border border-danger');
-            $('#lastNameError').text('Please enter only letters for Last Name.');
-            isValid = false;
-        }
-
-        if (!isValid) {
-        console.log('Error detected, switching tab');
-        $('#editEmployee a[href="#personalEdit"]').tab('show'); // Change to the tab containing personal information fields
+    // Perform validation
+    if (!lettersOnly.test(firstName)) {
+        $('#edit_firstname').addClass('border border-danger');
+        $('#firstNameError').text('Please enter only letters for First Name.');
+        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
+    }
+    if (!lettersOnly.test(middleName)) {
+        $('#edit_middlename').addClass('border border-danger');
+        $('#middleNameError').text('Please enter only letters for Middle Name.');
+        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
+    }
+    if (!lettersOnly.test(lastName)) {
+        $('#edit_lastname').addClass('border border-danger');
+        $('#lastNameError').text('Please enter only letters for Last Name.');
+        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
     }
 
-        return isValid;
+    return isValid;
+}
+    // Define the validateContactNumber function to check if the contact number is valid
+    function validateContactNumber() {
+        var contactNumber = $('#edit_contactNum').val();
+        // Check if the contact number is exactly 11 digits
+        var contactNumberPattern = /^\d{11}$/;
+        var contactNumberValid = contactNumberPattern.test(contactNumber);
 
-    }
-
-    // Define the validateForm function to check if all required fields are filled out
-    function validateNumbers() {
-
-        var numbersOnly = /^[0-9]+$/;
-        var itsValid = true;
+        if (!contactNumberValid) {
+        $('#edit_contactNum').addClass('border border-danger');
+        $('#contactNumError').text('Enter 11 numbers only.');
+        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+    }   
     
-    // Reset error messages and styles
-    $('.form-control').removeClass('border border-danger');
-    $('.error-message').text('');
-
-         var sssNum = $('#edit_sss').val();
-         var pagibigNum = $('#edit_pagibig').val();
-         var philhealthNum = $('#edit_philhealth').val();
-         var tinNum = $('#edit_tin').val();
-
-        if (!numbersOnly.test(sssNum)) {
-            $('#edit_sss').addClass('border border-danger');
-            $('#sssError').text('Please enter only 10 numbers for SSS Number.');
-            itsValid = false;
-        }
-
-        if (!numbersOnly.test(pagibigNum)) {
-            $('#edit_pagibig').addClass('border border-danger');
-            $('#pagibigError').text('Please enter only 12 numbers for SSS Number.');
-            itsValid = false;
-        }
-
-        if (!numbersOnly.test(philhealthNum)) {
-            $('#edit_philhealth').addClass('border border-danger');
-            $('#philhealthError').text('Please enter only 12 numbers for SSS Number.');
-            itsValid = false;
-        }
-
-        if (!numbersOnly.test(tinNum)) {
-            $('#edit_tin').addClass('border border-danger');
-            $('#tinError').text('Please enter only 12 numbers for SSS Number.');
-            itsValid = false;
-        }
-
-        if (!itsValid) {
-        console.log('Error detected, switching tab');
-        $('#editEmployee a[href="#benefitEdit"]').tab('show'); // Change to the tab containing personal information fields
-    }
-
-        return itsValid;
-
+        return contactNumberValid;
 
     }
-
+    
     // Define the validateEmail function to check if the email address is valid
     function validateEmail() {
     var personalEmail = $('#edit_personalEmail').val();
@@ -1923,39 +1894,62 @@ $(document).ready(function() {
     if (!personalEmailValid) {
         $('#edit_personalEmail').addClass('border border-danger');
         $('#emailError').text('Invalid personal email format.');
+        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
     }
 
     if (!workEmailValid) {
         $('#edit_workEmail').addClass('border border-danger');
         $('#workEmailError').text('Invalid work email format.');
-    }
-
-    if (!personalEmailValid && workEmailValid) {
-        console.log('Error detected, switching tab');
-        $('#editEmployee a[href="#personalEdit"]').tab('show'); // Change to the tab containing personal information fields
+        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
     }
 
     return personalEmailValid && workEmailValid;
     }
 
-    // Define the validateContactNumber function to check if the contact number is valid
-    function validateContactNumber() {
-        var contactNumber = $('#edit_contactNum').val();
-        // Check if the contact number is exactly 11 digits
-        var contactNumberPattern = /^\d{11}$/;
-        var contactNumberValid = contactNumberPattern.test(contactNumber);
+    // Define the validateForm function to check if all required fields are filled out
+    function validateNumbers() {
+    var numbersOnly = /^[0-9]+$/;
+    var isValid = true;
 
-        if (!contactNumberValid) {
-        $('#edit_contactNum').addClass('border border-danger');
-        $('#contactNumError').text('Enter 11 numbers only.');
-    }   
-    if (!contactNumberValid) {
-        console.log('Error detected, switching tab');
-        $('#editEmployee a[href="#personalEdit"]').tab('show'); // Change to the tab containing personal information fields
-    }
-        return contactNumberValid;
+    // Reset error messages and styles
+    $('.form-control').removeClass('border border-danger');
+    $('.error-message').text('');
 
+    var sssNum = $('#edit_sss').val();
+    var pagibigNum = $('#edit_pagibig').val();
+    var philhealthNum = $('#edit_philhealth').val();
+    var tinNum = $('#edit_tin').val();
+
+    if (!numbersOnly.test(sssNum)) {
+        $('#edit_sss').addClass('border border-danger');
+        $('#sssError').text('Please enter only 10 numbers for SSS Number.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
     }
+
+    if (!numbersOnly.test(pagibigNum)) {
+        $('#edit_pagibig').addClass('border border-danger');
+        $('#pagibigError').text('Please enter only 12 numbers for SSS Number.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
+    }
+
+    if (!numbersOnly.test(philhealthNum)) {
+        $('#edit_philhealth').addClass('border border-danger');
+        $('#philhealthError').text('Please enter only 12 numbers for SSS Number.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
+    }
+
+    if (!numbersOnly.test(tinNum)) {
+        $('#edit_tin').addClass('border border-danger');
+        $('#tinError').text('Please enter only 12 numbers for SSS Number.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        isValid = false;
+    }
+
+    return isValid;
+}
 
     function validateBenefits() {
     var sssNum = $('#edit_sss').val();
@@ -1973,29 +1967,33 @@ $(document).ready(function() {
     if (!sssNumValid) {
         $('#edit_sss').addClass('border border-danger');
         $('#sssError').text('Enter 10 numbers only.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
     }
 
     if (!pagibigNumValid) {
         $('#edit_pagibig').addClass('border border-danger');
         $('#pagibigError').text('Enter 12 numbers only.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
     }
 
     if (!philhealthNumValid) {
         $('#edit_philhealth').addClass('border border-danger');
         $('#philhealthError').text('Enter 12 numbers only.');
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
     }
 
     if (!tinNumValid) {
         $('#edit_tin').addClass('border border-danger');
         $('#tinError').text('Enter 12 numbers only.');
-    }
-    if (!sssNumValid && pagibigNumValid && philhealthNumValid && tinNumValid) {
-        console.log('Error detected, switching tab');
-        $('#editEmployee a[href="#benefitEdit"]').tab('show'); // Change to the tab containing personal information fields
-    }    
+        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+    }  
 
     return sssNumValid && pagibigNumValid && philhealthNumValid && tinNumValid;
 }
+   // Remove error class from tab links when a tab is clicked
+$('.nav-link-edit').click(function() {
+    $('.nav-link-edit').removeClass('error-tab');
+});
 
     // Define the updateEmployee function here
 function updateEmployee(employeeId) {
