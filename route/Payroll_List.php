@@ -4,8 +4,6 @@
 
 <?php include '../template/sidebar.php' ?>
 
-
-
 <div id="layoutSidenav_content">
 
 <?php
@@ -20,50 +18,57 @@ $query_earnings = "SELECT * FROM tbl_earnings";
 $result_earnings = $conn->query($query_earnings);
 ?>
 
-                <main>
-                    <div class="container-fluid px-4">
-                        <h3 class="mt-4">Payroll List Page</h3>
+<main>
+    <div class="container-fluid px-4">
+        <h3 class="mt-4">Payroll List Page</h3>
 
-                        <div class="card mb-4 mt-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                List of Clients
-                            </div>
-                            <div class="card-body">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>Employee Name</th>
-                                            <th>Earnings</th>
-                                            <th>Deductions</th>
-                                            <th>Incentives</th>
-                                            <th> </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                       while ($employee = $result_employee->fetch_assoc()) {
-                                     echo "<tr>";
-                                     //echo "<td>" . $employee['employee_id'] . "</td>";
-                                     echo "<td>" . $employee['firstname'] . $employee['firstname'] . "</td>";
-                                       }
-                                       while ($earnings = $result_earnings->fetch_assoc()) {
-                                     echo "<td>" . $earnings['basic_pay'] . "</td>";
-                                     echo "<td>" . $earnings['basic_pay'] . "</td>";
-                                     echo "<td>" . $earnings['basic_pay'] . "</td>";
-                                     echo "<td>
-                                     <button class='btn btn-primary'> More Details </button>
-                                     </td>";
-                                     echo "</tr>";
-                                     
-                                       }
-                                    ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </main>
+        <div class="card mb-4 mt-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                List of Clients
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                        <tr>
+                            <th>Employee Name</th>
+                            <th>Earnings</th>
+                            <th>Deductions</th>
+                            <th>Incentives</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        while ($employee = $result_employee->fetch_assoc()) {
+                            // Fetch corresponding earnings for the current employee
+                            $earnings = $result_earnings->fetch_assoc();
+                            echo "<tr>";
+                            echo "<td>" . $employee['firstname'] . "</td>"; // Display employee name
+                            // Check if earnings data is available
+                            if ($earnings !== null) {
+                                // Display earnings, deductions, and incentives
+                                echo "<td>" . $earnings['basic_pay'] . "</td>"; // Adjust this according to your database structure
+                                echo "<td>" . $earnings['basic_pay'] . "</td>"; // Adjust this according to your database structure
+                                echo "<td>" . $earnings['basic_pay'] . "</td>"; // Adjust this according to your database structure
+                            } else {
+                                // If no earnings data available, display empty cells
+                                echo "<td></td>";
+                                echo "<td></td>";
+                                echo "<td></td>";
+                            }
+                            echo "<td><center><button class='btn btn-primary'>More Details</button></center></td>"; // Button for more details
+                            echo "</tr>";
+                            
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
             
 
 
