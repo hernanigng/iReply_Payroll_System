@@ -1619,7 +1619,6 @@ function openEditModal(employeeId) {
     <div class="col">
          <label for="civilStatus" class="col-form-label">Civil Status</label>
             <select class="form-select" name="edit_civilStatus" aria-label="Civil Status Select" id="edit_civilStatus">
-                <option selected>Select Civil Status</option>
                 <option value="Single">Single</option>
                 <option value="Married">Married</option>
                 <option value="Widowed">Widowed</option>
@@ -1643,7 +1642,6 @@ function openEditModal(employeeId) {
     <div class="col">
         <label for="employeeType" class="col-form-label"> Employee Type </label>
             <select class="form-select" name="edit_employeeType" aria-label="Employee Type Select" id="edit_employeeType">
-                <option selected>Select Employee Type</option>
                 <option value="Home">Work From Home</option>
                 <option value="Onsite">Work Onsite</option>
             </select>        
@@ -1676,7 +1674,6 @@ function openEditModal(employeeId) {
     <div class="col">
         <label for="client" class="col-form-label">Client</label>
         <select class="form-select" name="edit_client" aria-label="Client Select" id="edit_client">
-        <option selected disabled>Choose a client</option>
     <?php
         include "../connection/database.php";
             if ($conn->connect_error) {
@@ -1721,7 +1718,6 @@ function openEditModal(employeeId) {
 <div class="col">
     <label for="employmentStatus" class="col-form-label">Employment Status</label>
         <select class="form-select" name="edit_employmentStatus" aria-label="Employment Status Select" id="edit_employmentStatus">
-            <option selected>Select Employment Status</option>
             <option value="Part Time">Part-Time</option>
             <option value="Full Time">Full-Time</option>
         </select>    
