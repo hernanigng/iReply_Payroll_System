@@ -1,22 +1,8 @@
 <?php include '../connection/session.php' ?>
-
 <?php include '../template/header.php' ?>
-
 <?php include '../template/sidebar.php' ?>
 
 <div id="layoutSidenav_content">
-
-<?php
-include "../connection/database.php";
-
-// Fetch data from tbl_employee
-$query_employee = "SELECT * FROM tbl_employee";
-$result_employee = $conn->query($query_employee);
-
-// Fetch data from tbl_earnings
-$query_earnings = "SELECT * FROM tbl_earnings";
-$result_earnings = $conn->query($query_earnings);
-?>
 
 <main>
     <div class="container-fluid px-4">
@@ -28,6 +14,35 @@ $result_earnings = $conn->query($query_earnings);
                 List of Clients
             </div>
             <div class="card-body">
+                <div class="col-md-2">
+                    <label> Year </label>
+                    <select class="form-select" id="yearFilter">
+                        <!-- Populate options dynamically with PHP -->
+                        <?php
+                        // Assuming you want to populate years from 2020 to current year
+                        $currentYear = date('Y');
+                        for ($year = 2020; $year <= $currentYear; $year++) {
+                            echo '<option value="' . $year . '">' . $year . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label> Month </label>
+                    <select class="form-select" id="monthFilter">
+                        <!-- Populate options dynamically with PHP -->
+                        <?php
+                        $months = array(
+                            '01' => 'January', '02' => 'February', '03' => 'March', '04' => 'April',
+                            '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August',
+                            '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
+                        );
+                        foreach ($months as $monthNumber => $monthName) {
+                            echo '<option value="' . $monthNumber . '">' . $monthName . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
@@ -40,27 +55,100 @@ $result_earnings = $conn->query($query_earnings);
                     </thead>
                     <tbody>
                         <?php
-                        while ($employee = $result_employee->fetch_assoc()) {
-                            // Fetch corresponding earnings for the current employee
-                            $earnings = $result_earnings->fetch_assoc();
-                            echo "<tr>";
-                            echo "<td>" . $employee['firstname'] . "</td>"; // Display employee name
-                            // Check if earnings data is available
-                            if ($earnings !== null) {
-                                // Display earnings, deductions, and incentives
-                                echo "<td>" . $earnings['basic_pay'] . "</td>"; // Adjust this according to your database structure
-                                echo "<td>" . $earnings['basic_pay'] . "</td>"; // Adjust this according to your database structure
-                                echo "<td>" . $earnings['basic_pay'] . "</td>"; // Adjust this according to your database structure
-                            } else {
-                                // If no earnings data available, display empty cells
-                                echo "<td></td>";
-                                echo "<td></td>";
-                                echo "<td></td>";
-                            }
-                            echo "<td><center><button class='btn btn-primary'>More Details</button></center></td>"; // Button for more details
-                            echo "</tr>";
+                            include "../connection/database.php";
                             
+                            $query_tranx = "SELECT * FROM tbl_payroll_tranx";
+                            $result_tranx = $conn->query($query_tranx);
+
+                            if ($result_tranx->num_rows > 0) {
+                                while ($row = $result_tranx->fetch_assoc()) {
+                                    // Fetch corresponding employee, earnings, incentives, and deductions data
+                                    $employee_id = $row['employee_id'];
+                                    $earnings_id = $row['earnings_id'];
+                                    $incentives_id = $row['incentives_id'];
+                                    $deductions_id = $row['deductions_id'];
+
+                                    // Construct and execute the SQL query to fetch the employee name
+                                    $query_employee = "SELECT firstname, lastname FROM tbl_employee WHERE employee_id = '$employee_id'";
+                                    $result_employee = $conn->query($query_employee);
+
+                                    // Check if the query executed successfully
+                                    if ($result_employee === false) {
+                                        echo "Error: " . $conn->error;
+                                    } else {
+                                        // Check if any rows were returned
+                                        if ($result_employee->num_rows > 0) {
+                                            // Fetch the row and extract the employee name
+                                            $employee_row = $result_employee->fetch_assoc();
+                                            $employee_firstname = $employee_row['firstname'];
+                                            $employee_lastname = $employee_row['lastname'];
+                                            // Combine first name and last name to form the full name
+                                            $employee_name = $employee_firstname . ' ' . $employee_lastname;
+                                        } else {
+                                            echo "No employee found for ID: $employee_id";
+                                        }
+                                    }
+
+
+                                                    
+                    $query_earnings = "SELECT total_earnings FROM tbl_earnings WHERE earnings_id = '$earnings_id'";
+
+                    $result_earnings = $conn->query($query_earnings);
+
+                    if ($result_earnings === false) {
+                        echo "Error: " . $conn->error;
+                    } else {
+                        if ($result_earnings->num_rows > 0) {
+                            $earnings_row = $result_earnings->fetch_assoc();
+                            $total_earnings = $earnings_row['total_earnings'];
+                        } else {
+                            echo "No earnings data found for earnings ID: $earnings_id";
                         }
+                    }
+
+                    $query_deductions = "SELECT total_deductions FROM tbl_deductions WHERE deductions_id = '$deductions_id'";
+
+                    $result_deductions = $conn->query($query_deductions);
+
+                    if ($result_deductions === false) {
+                        echo "Error: " . $conn->error;
+                    } else {
+                        if ($result_deductions->num_rows > 0) {
+                            $deductions_row = $result_deductions->fetch_assoc();
+                            $total_deductions = $deductions_row['total_deductions'];
+                        } else {
+                            echo "No earnings data found for earnings ID: $deductions_id";
+                        }
+                    }
+
+                     $query_incentives = "SELECT total_incentives FROM tbl_incentives WHERE incentives_id = '$incentives_id'";
+
+                    $result_incentives = $conn->query($query_incentives);
+
+                    if ($result_incentives === false) {
+                        echo "Error: " . $conn->error;
+                    } else {
+                        if ($result_incentives->num_rows > 0) {
+                            $incentives_row = $result_incentives->fetch_assoc();
+                            $total_incentives = $incentives_row['total_incentives'];
+                        } else {
+                            echo "No earnings data found for earnings ID: $incentives_id";
+                        }
+                    }
+
+
+
+                                    echo "<tr>";
+                                    echo "<td>" . $employee_name. "</td>";
+                                    echo "<td>" . $total_earnings . "</td>";
+                                    echo "<td>" . $total_deductions . "</td>";
+                                    echo "<td>" . $total_incentives . "</td>";
+                                   echo "<td><button class='btn btn-primary'>More Details</button></td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='5'>No data available</td></tr>";
+                            }
                         ?>
                     </tbody>
                 </table>
@@ -69,21 +157,14 @@ $result_earnings = $conn->query($query_earnings);
     </div>
 </main>
 
-            
-
-
-
-
-
 <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; iReply Payroll System</div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
+    <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">Copyright &copy; iReply Payroll System</div>
         </div>
-
+    </div>
+</footer>
+</div>
+</div>
 
 <?php include '../template/footer.php' ?>

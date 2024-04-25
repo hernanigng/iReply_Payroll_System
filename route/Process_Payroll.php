@@ -281,10 +281,10 @@ $('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id,
             }
         }
 
-
         var formattedTotalEarnings = totalEarnings.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        $('#totalEarnings').val(formattedTotalEarnings);
-        $('#totalEarnings2_id').val(formattedTotalEarnings);
+         
+            $('#totalEarnings').val(formattedTotalEarnings.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
+            $('#totalEarnings2_id').val(formattedTotalEarnings.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
 
 
     } catch (error) {
@@ -648,9 +648,9 @@ function calculateTotalDeductions() {
 
     // Check if totalDeductions is a number before calling toFixed
     if (!isNaN(totalDeductions)) {
-        // Update the total deductions field
-        $('#totalDeductions_id').val(totalDeductions.toFixed(2));
-        $('#totalDeductions2_id').val(totalDeductions.toFixed(2));
+
+     $('#totalDeductions_id').val(totalDeductions.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
+     $('#totalDeductions2_id').val(totalDeductions.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
     } else {
         // Handle the case where totalDeductions is not a number
         console.error('Total deductions is not a number:', totalDeductions);
@@ -688,16 +688,21 @@ calculateTotalDeductions();
                             <div class="row mb-3">
                                 <div class="col-md-9"></div> <!-- Placeholder column to align "Total Deductions" to the right -->
                                 <div class="col-md-3">
-                                    <!-- <label for="totalEarnings" class="form-label">Total Earnings</label>
-                                     <input type="text" name="totalEarnings" class="form-control" id="totalEarnings2_id" placeholder="PHP 0.00" readonly>
-
-                                     <label for="totalDeductions" class="form-label">Total Deductions</label>
-                                     <input type="text" name="totalDeductions" class="form-control" id="totalDeductions2_id" placeholder="PHP 0.00" readonly> -->
 
                                      <label for="totalIncome" class="form-label">Total Incentives</label>
                                     <input type="text" name="totalIncome" class="form-control" id="totalIncome_id" placeholder="PHP 0.00" readonly>
-
+                
                                 </div>
+
+                                  <label for="totalEarnings" class="form-label">Total Earnings</label>
+                                     <input type="text" name="totalEarnings" class="form-control" id="totalEarnings2_id" placeholder="PHP 0.00" readonly>
+
+                                     <label for="totalDeductions" class="form-label">Total Deductions</label>
+                                     <input type="text" name="totalDeductions" class="form-control" id="totalDeductions2_id" placeholder="PHP 0.00" readonly> 
+
+                                      <label for="totalNetpay" class="form-label">Total Netpay</label>
+                                    <input type="text" name="totalNetpay" class="form-control" id="totalNetpay_id" placeholder="PHP 0.00" readonly>
+
                             </div>
                             <div class="row mb-3">
                         <div class="col-md-9"></div> <!-- Placeholder column to align buttons to the right -->
@@ -760,23 +765,30 @@ calculateTotalDeductions();
             });
 
 
-        function calculateTotalIncentives() {
-        
+        function calculateTotalNetPay() {
+            var totalEarnings = parseFloat($('#totalEarnings2_id').val().replace(/[^\d.]/g, '')) || 0;
+            var totalDeductions = parseFloat($('#totalDeductions2_id').val().replace(/[^\d.]/g, '')) || 0;
             var incentivesValue = parseFloat($('#incentives_id').val().replace(/[^\d.]/g, '')) || 0;
             var othersValue = parseFloat($('#others_id').val().replace(/[^\d.]/g, '')) || 0;
 
-            var totalIncentives = incentivesValue + othersValue;
+            
+            var totalIncentives =  othersValue + incentivesValue;
+          
+            var totalNetPay = totalEarnings - totalDeductions + othersValue + incentivesValue;
+            
             
             $('#totalIncome_id').val(totalIncentives.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
+            $('#totalNetpay_id').val(totalNetPay.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
         }
 
         // Event listener for input fields within the #incentivesTab form
         $('#incentivesTab input').on('input', function() {
-            calculateTotalIncentives();
+            calculateTotalNetPay();
         });
 
         // Initial calculation on page load
-        calculateTotalIncentives();
+        calculateTotalNetPay();
+
 
 
 
@@ -938,15 +950,15 @@ $(document).ready(function(){
             data: data,
             dataType: "json", // Specify the expected response type
             success: function(response) {
-                console.log("Response received:", response); // Log the entire response object
-                console.log("Success property:", response.success); // Log the value of the success property
+                //console.log("Response received:", response); // Log the entire response object
+                //console.log("Success property:", response.success); // Log the value of the success property
                 if (response.success) {
                     console.log("Showing the toast..."); // Check if this line is reached
                     $('#insertPayroll').toast('show');
 
-                    setTimeout(function() {
-                        window.location.reload();
-                    }, 3000);
+                setTimeout(function() {
+                window.location.href = 'Payroll_list.php';
+            }, 2000); 
                     console.log('Payroll success');
                 }
 
