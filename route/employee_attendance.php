@@ -3,7 +3,18 @@ include '../connection/session.php';
 include '../template/header.php';
 include '../template/sidebar.php';
 include '../connection/database.php';
+?>
 
+<!-- Custom Script -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
+
+<?php
 // Initialize the $data variable
 $data = array();
 
@@ -19,16 +30,6 @@ if (isset($_GET['employee_id'])) {
     $data = mysqli_fetch_array($result);
 }
 ?>
-
-
-<!-- Custom Script -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-
 
 <div id="layoutSidenav_content">
     <main>
@@ -84,7 +85,6 @@ $(document).ready(function() {
             employee_id: employeeId // Pass the employee ID
                         },
     success: function(response) {
-        console.log(response);
         // Update the table with filtered data
         $('#datatablesSimple tbody').html(response);
             }
@@ -117,6 +117,7 @@ $(document).ready(function() {
                     <table id="datatablesSimple">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Date</th>
                                 <th>Total Hours Worked</th>
                                 <th>Total Days Worked</th>
@@ -131,6 +132,7 @@ $(document).ready(function() {
                             while ($data1 = mysqli_fetch_array($result1)) {
                             ?>
                                 <tr>
+                                    <td> <?php echo $data1['employee_id']; ?></td>
                                     <td> <?php echo $data1['date_from'] . " " . $data1['date_to']; ?> </td>
                                     <td> <?php echo $data1['Total_HrsWork']; ?> </td>
                                     <td> <?php echo $data1['Total_DysWork']; ?> </td>
@@ -212,6 +214,19 @@ $(document).ready(function() {
         </div>
     </div>
 </form>
+  </div>
+
+  <!-- Timekeeping Insert Success Toast Notification -->
+<div class="toast position-fixed top-50 start-50 translate-middle" id="insertAttendanceToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+            <div class="toast-header">
+                <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+               Attendance Successfully Added.
+            </div>
+     </div>
 
 <script>
 $(document).ready(function() {
@@ -224,10 +239,6 @@ $(document).ready(function() {
         $('#employee_name').val(firstname + ' ' + lastname);
     });
 
-    //function closeModal() {
-       // $('#addAttendance').modal('hide');
-    //}
-
     // Function to handle form submission
     $('#insertAttendance').submit(function(event) {
         // Prevent default form submission
@@ -236,7 +247,6 @@ $(document).ready(function() {
         // Serialize form data
         var formData = $(this).serialize();
 
-        // AJAX request to submit form data
         $.ajax({
             url: 'functions/add_attendance.php',
             method: 'POST',
@@ -245,20 +255,15 @@ $(document).ready(function() {
             success: function(response) {
                 // Check the status of the response
                 if (response.status === 'success') {
+                    // Clear form fields
+                    $('#dateFrm').val('');
+                    $('#dateTo').val('');
+                    $('#totalHrs').val('');
+                    $('#totalDys').val('');
 
-                    var insertToast = new bootstrap.Toast($('#insertToast'));
-                   
-                    $('#addAttendance').modal('hide');
-                   // closeModal();
-
-                    // Display toast notification
-                   insertToast.show();
-
-                 // Close the modal after a delay (e.g., 3 seconds)
-                 //setTimeout(function() {
-                 // $('#addAttendance').modal('hide');
-                 //}, 1000);
-
+                    // Show the toast after a short delay
+                    var insertToast = new bootstrap.Toast($('#insertAttendanceToast')[0]); // Retrieve the DOM element
+                    insertToast.show(); // Explicitly show the toast
                 } else {
                     // Show error message
                     console.error(response.message);
@@ -270,23 +275,67 @@ $(document).ready(function() {
                 console.error(xhr.responseText);
             }
         });
-
     });
 });
 
 </script>
 
-<!-- Timekeeping Insert Success Toast Notification -->
-<div class="toast position-fixed top-50 start-50 translate-middle" id="insertToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
-            <div class="toast-header">
-                <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
-                <strong class="me-auto">Notification</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-               Timekeeping Successfully Added.
-            </div>
-        </div>
-        <div class="modal-footer"> </div>
-
 <?php include '../template/footer.php'; ?>
+
+<script>
+
+// $(document).ready(function() {
+//     $('#editAttendance').on('show.bs.modal', function (event) {
+//         var button = $(event.relatedTarget);
+//         var employeeId = button.data('id'); // Correctly fetch the employee ID
+//         var formData = { employee_id: employeeId }; // Create formData object to send via AJAX
+
+//         $.ajax({
+//             url: 'functions/get_timekeeping.php',
+//             method: 'POST',
+//             data: formData, // Send the employee ID via POST
+//             dataType: 'json',
+//             success: function(response) {
+//                 console.log(response);
+//                 // Set values for edit modal fields
+//                 $('#edit_employee_id').val(response.employee_id);
+//                 $('#edit_employee_name').val(response.firstname + ' ' + response.lastname); // Concatenate first name and last name
+//                 $('#edit_dateFrm').val(response.date_from);
+//                 $('#edit_dateTo').val(response.date_to);
+//                 $('#edit_totalHrs').val(response.Total_HrsWork);
+//                 $('#edit_totalDys').val(response.Total_DysWork);
+//             },
+//             error: function(xhr, status, error) {
+//                 console.error(xhr.responseText);
+//             }
+//         });
+
+//     });
+// });
+
+
+// Function to open the edit modal
+// function openEditModal(employeeId) {
+//     $('#editAttendance').modal('show');
+
+//     $.ajax({
+//         url: 'functions/get_timekeeping.php',
+//         type: 'POST',
+//         data: { id: employeeId },
+//         dataType: 'json',
+//         success: function(response) {
+//             console.log(response);
+//             // Set values for edit modal fields
+//             $('#edit_employee_id').val(response.employee_id);
+//             $('#edit_employee_name').val(response.firstname + ' ' + response.lastname); // Concatenate first name and last name
+//             $('#edit_dateFrm').val(response.date_from);
+//             $('#edit_dateTo').val(response.date_to);
+//             $('#edit_totalHrs').val(response.Total_HrsWork);
+//             $('#edit_totalDys').val(response.Total_DysWork);
+//         },
+//         error: function(xhr, status, error) {
+//             console.error(xhr.responseText);
+//         }
+//     });
+// }
+ </script> 
