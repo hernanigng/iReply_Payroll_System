@@ -54,12 +54,12 @@
                                             die("Connection failed: " . $conn->connect_error);
                                         }
 
-                                        $sql = "SELECT employee_ID, firstname, lastname FROM tbl_employee";
+                                        $sql = "SELECT employee_id, firstname, lastname FROM tbl_employee";
                                         $result = $conn->query($sql);
 
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
-                                                echo '<option value="' . $row["employee_ID"] . '">' . $row["firstname"] . ' ' . $row["lastname"] . '</option>';
+                                                echo '<option value="' . $row["employee_id"] . '">' . $row["firstname"] . ' ' . $row["lastname"] . '</option>';
                                           }
                                         }
 
@@ -292,6 +292,26 @@ $('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id,
     }
 }
 
+document.getElementById("employeeSelect").addEventListener("change", function() {
+    var employeeId = this.value;
+    if (employeeId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "functions/get_contribution.php?employeeId=" + employeeId, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("sss_id").value = response.sss;
+                    document.getElementById("pagibig_id").value = response.pagibig;
+                    document.getElementById("philhealth_id").value = response.philhealth;
+                } else {
+                    console.error("Error fetching contributions: " + xhr.status);
+                }
+            }
+        };
+        xhr.send();
+    }
+});
 
 
                             //CURRENCY
@@ -483,15 +503,15 @@ $('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id,
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label for="sss" class="form-label">SSS Contributions</label>
-                                    <input type="text" name="sss" class="form-control" id="sss_id" placeholder="PHP 0.00">
+                                    <input type="text" name="sss" class="form-control" id="sss_id"  readonly>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="pagibig" class="form-label">Pagibig Contribution</label>
-                                    <input type="text" name="pagibig" class="form-control" id="pagibig_id" placeholder="PHP 0.00">
+                                    <input type="text" name="pagibig" class="form-control" id="pagibig_id" readonly>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="philhealth" class="form-label">PhilHealth Contribution</label>
-                                    <input type="text" name="philhealth" class="form-control" id="philhealth_id" placeholder="PHP 0.00">
+                                    <input type="text" name="philhealth" class="form-control" id="philhealth_id" readonly>
                                 </div>
                             </div>
 
@@ -541,52 +561,7 @@ $('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id,
        $(document).ready(function() {
 
     //CURRENCY
-            document.getElementById('sss_id').addEventListener('input', function(event) {
-                let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
-
-                inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-                if (inputValue.includes('.')) {
-                    let decimalPart = inputValue.split('.')[1];
-                    if (!decimalPart || decimalPart.length < 2) {
-                        inputValue += '0';
-                    }
-                }
-                
-
-                event.target.value = 'PHP ' + inputValue;
-            });
-
-              document.getElementById('pagibig_id').addEventListener('input', function(event) {
-                let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
-
-                inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-                if (inputValue.includes('.')) {
-                    let decimalPart = inputValue.split('.')[1];
-                    if (!decimalPart || decimalPart.length < 2) {
-                        inputValue += '0';
-                    }
-                }
-
-                event.target.value = 'PHP ' + inputValue;
-            });
-
-              document.getElementById('philhealth_id').addEventListener('input', function(event) {
-                let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
-
-                inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-                if (inputValue.includes('.')) {
-                    let decimalPart = inputValue.split('.')[1];
-                    if (!decimalPart || decimalPart.length < 2) {
-                        inputValue += '0';
-                    }
-                }
-
-                event.target.value = 'PHP ' + inputValue;
-            });
-
+            
             
               document.getElementById('absent_id').addEventListener('input', function(event) {
                 let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
