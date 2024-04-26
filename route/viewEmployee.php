@@ -1184,6 +1184,36 @@ $('#startDate').text(formattedStartdate);
         $('#nextButton').click(goToNextTab);
     });
 
+    document.getElementById('monthly').addEventListener('input', function(event) {
+        let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+
+        inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+        if (inputValue.includes('.')) {
+            let decimalPart = inputValue.split('.')[1];
+            if (!decimalPart || decimalPart.length < 2) {
+                inputValue += '0';
+            }
+        }
+
+        event.target.nextElementSibling.textContent = 'PHP ' + inputValue;
+    });
+
+    document.getElementById('accBonus').addEventListener('input', function(event) {
+        let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+
+        inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+        if (inputValue.includes('.')) {
+            let decimalPart = inputValue.split('.')[1];
+            if (!decimalPart || decimalPart.length < 2) {
+                inputValue += '0';
+            }
+        }
+
+        event.target.nextElementSibling.textContent = 'PHP ' + inputValue;
+    });
+
 </script>
 
 <!-- VIEW EMPLOYEE MODAL -->
@@ -1543,6 +1573,73 @@ function openEditModal(employeeId) {
         $('#nextEditButton').click(goToNextTab);
     });
 
+    $(document).ready(function() {
+    // Event listener for edit_monthly
+    $('#edit_monthly').on('input', function(event) {
+        let inputValue = event.target.value.trim(); // Remove leading/trailing spaces
+        // Check if the value starts with "PHP" followed by a space and a number
+        if (/^PHP\s\d+(\.\d{0,2})?$/.test(inputValue)) {
+            // If valid, keep the input as it is
+        } else {
+            // If not valid, remove non-numeric characters and prepend "PHP" to the value
+            inputValue = 'PHP ' + inputValue.replace(/[^0-9,.]/g, '');
+            $(this).val(inputValue);
+        }
+    });
+
+    // Event listener for edit_accBonus
+    $('#edit_accBonus').on('input', function(event) {
+        let inputValue = event.target.value.trim(); // Remove leading/trailing spaces
+        // Check if the value starts with "PHP" followed by a space and a number
+        if (/^PHP\s\d+(\.\d{0,2})?$/.test(inputValue)) {
+            // If valid, keep the input as it is
+        } else {
+            // If not valid, remove non-numeric characters and prepend "PHP" to the value
+            inputValue = 'PHP ' + inputValue.replace(/[^0-9,.]/g, '');
+            $(this).val(inputValue);
+        }
+    });
+
+    // Event listener for edit_sssCon
+    $('#edit_sssCon').on('input', function(event) {
+        let inputValue = event.target.value.trim(); // Remove leading/trailing spaces
+        // Check if the value starts with "PHP" followed by a space and a number
+        if (/^PHP\s\d+(\.\d{0,2})?$/.test(inputValue)) {
+            // If valid, keep the input as it is
+        } else {
+            // If not valid, remove non-numeric characters and prepend "PHP" to the value
+            inputValue = 'PHP ' + inputValue.replace(/[^0-9,.]/g, '');
+            $(this).val(inputValue);
+        }
+    });
+    // Event listener for edit_pagibigCon
+    $('#edit_pagibigCon').on('input', function(event) {
+        let inputValue = event.target.value.trim(); // Remove leading/trailing spaces
+        // Check if the value starts with "PHP" followed by a space and a number
+        if (/^PHP\s\d+(\.\d{0,2})?$/.test(inputValue)) {
+            // If valid, keep the input as it is
+        } else {
+            // If not valid, remove non-numeric characters and prepend "PHP" to the value
+            inputValue = 'PHP ' + inputValue.replace(/[^0-9,.]/g, '');
+            $(this).val(inputValue);
+        }
+    });
+    // Event listener for edit_philhealthCon
+    $('#edit_philhealthCon').on('input', function(event) {
+        let inputValue = event.target.value.trim(); // Remove leading/trailing spaces
+        // Check if the value starts with "PHP" followed by a space and a number
+        if (/^PHP\s\d+(\.\d{0,2})?$/.test(inputValue)) {
+            // If valid, keep the input as it is
+        } else {
+            // If not valid, remove non-numeric characters and prepend "PHP" to the value
+            inputValue = 'PHP ' + inputValue.replace(/[^0-9,.]/g, '');
+            $(this).val(inputValue);
+        }
+    });
+});
+
+
+
 </script>
 
 
@@ -1625,8 +1722,6 @@ function openEditModal(employeeId) {
             </select>
     </div>
 </div>
-      
-
 
 <div class="row">
     <div class="col">
@@ -1661,13 +1756,18 @@ function openEditModal(employeeId) {
     </div>
     <div class="col">
         <label for="monthSalary" class="col-form-label">Daily Rate</label>
-        <input type="text" name="edit_monthly" class="form-control" id="edit_monthly">
+        <div class="input-group">
+            <input type="text" name="edit_monthly" class="form-control" id="edit_monthly" placeholder="0.00" >
+        </div>
     </div>
     <div class="col">
         <label for="accountBonus" class="col-form-label">Account Bonus</label>
-        <input type="text" name="edit_accBonus" class="form-control" id="edit_accBonus">
+        <div class="input-group">
+            <input type="text" name="edit_accBonus" class="form-control" id="edit_accBonus" placeholder="0.00" >
+        </div>
     </div>
 </div>
+
 
 
 <div class="row">
@@ -1756,17 +1856,17 @@ function openEditModal(employeeId) {
 <div class="row">
     <div class="col">
         <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution</label>
-        <input type="text" name="edit_sssCon" class="form-control" id="edit_sssCon">
+        <input type="text" name="edit_sssCon" class="form-control" id="edit_sssCon" placeholder="0.00">
         <div id="sssConError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution </label>
-        <input type="text" name="edit_pagibigCon" class="form-control" id="edit_pagibigCon">
+        <input type="text" name="edit_pagibigCon" class="form-control" id="edit_pagibigCon" placeholder="0.00">
         <div id="pagibigConError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
         <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution</label>
-        <input type="text" name="edit_philhealthCon" class="form-control" id="edit_philhealthCon">
+        <input type="text" name="edit_philhealthCon" class="form-control" id="edit_philhealthCon" placeholder="0.00">
         <div id="philhealthConError" class="text-danger"></div> <!-- Error message container -->
 
     </div>
