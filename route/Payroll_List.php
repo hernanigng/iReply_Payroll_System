@@ -135,9 +135,6 @@
                             echo "No earnings data found for earnings ID: $incentives_id";
                         }
                     }
-
-
-
                                     echo "<tr>";
                                     echo "<td>" . $employee_name. "</td>";
                                     echo "<td>" . $total_earnings . "</td>";
@@ -156,6 +153,42 @@
         </div>
     </div>
 </main>
+
+<!-- Modal -->
+<div class="modal" id="detailsModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Details</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- Modal Body -->
+      <div class="modal-body" id="modalBody">
+        <!-- Content will be displayed here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+ $(document).ready(function() {
+// Add event listener to all 'More Details' buttons
+var buttons = document.querySelectorAll('.btn-primary');
+buttons.forEach(function(button) {
+  button.addEventListener('click', function() {
+    // Get relevant data from the row
+    var employeeName = this.parentNode.parentNode.childNodes[0].textContent;
+    // Set the modal body content
+    document.getElementById("modalBody").innerHTML = "Employee Name: " + employeeName; // Add more details as needed
+    // Show the modal
+    $('#detailsModal').modal('show');
+  });
+});
+});
+
+</script>
 
 <footer class="py-4 bg-light mt-auto">
     <div class="container-fluid px-4">
