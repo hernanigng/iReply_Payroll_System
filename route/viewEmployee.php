@@ -961,7 +961,8 @@ document.getElementById('createBonus_id').addEventListener('input', function(eve
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete?
+                Are you sure you want to delete this employee? 
+                All transactions related to this employee will be deleted.
             </div>
             <div class="modal-footer">   
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -1020,6 +1021,7 @@ document.getElementById('createBonus_id').addEventListener('input', function(eve
             url: 'functions/deleteEmployee.php',
             data: { id: employeeId },
             success: function(response) {
+                //alert(response);
                  $('body').append($('#deleteToast'));
         
                 $('#deleteToast').toast('show');
