@@ -1,3 +1,4 @@
+
 <?php
 include '../connection/session.php';
 include '../template/header.php';
@@ -69,40 +70,46 @@ if (isset($_GET['employee_id'])) {
         </div>
 
 <script>
-$(document).ready(function() {
-    function applyFilter() {
+   $(document).ready(function() {
+    // Function to apply filter
+    function applyFilter(employeeId) {
         var year = $('#yearFilter').val();
         var month = $('#monthFilter').val();
-        var employeeId = "<?php echo $employeeId; ?>"; // Retrieve the employee ID from PHP
+        var employeeId = "<?php echo $employeeId; ?>";
 
-// AJAX request to fetch filtered data
-    $.ajax({
-        url: 'functions/filter_data.php', // Update with your PHP file to handle AJAX request
-        method: 'GET',
-        data: {
-            year: year,
-            month: month,
-            employee_id: employeeId // Pass the employee ID
-                        },
-    success: function(response) {
-        // Update the table with filtered data
-        $('#datatablesSimple tbody').html(response);
+        // AJAX request to fetch filtered data
+        $.ajax({
+            url: 'functions/filter_data.php',
+            method: 'GET',
+            data: {
+                year: year,
+                month: month,
+                employee_id: employeeId
+            },
+            success: function(response) {
+                // Update the table with filtered data
+                $('#datatablesSimple tbody').html(response);
             }
         });
     }
 
+    // Function to retrieve employee ID and apply filter
+    function getEmployeeIdAndFilter() {
+        var employeeId = "<?php echo $data['employee_id'] ?>";
+        applyFilter(employeeId);
+    }
+
     // Apply filter when the year or month select elements change
-        $('#yearFilter, #monthFilter').change(function() {
-            applyFilter();
-        });
+    $('#yearFilter, #monthFilter').change(function() {
+        // Get the employee ID and apply filter
+        getEmployeeIdAndFilter();
+    });
 
-        $('#employeeId').change(function() {
-          applyFilter();
-      });
+    // Initial loading: get employee ID and apply filter
+    getEmployeeIdAndFilter();
+});
 
-    // Trigger initial filter application
-    applyFilter();
-            });
+
 </script>
 
 <div>
@@ -111,7 +118,7 @@ $(document).ready(function() {
         <div class="container-fluid px-4">
             <div class="card mb-4 mt-4">
                 <div class="card-header">
-                    <b> <?php echo $data['firstname'] . " " . $data['lastname']; ?> </b>
+                    <b> <?php echo $data['employee_id'] . " " . $data['firstname'] . " " . $data['lastname']; ?> </b>
                 </div>
                 <div class="card-body">
                     <table id="datatablesSimple">
@@ -131,9 +138,9 @@ $(document).ready(function() {
 
                             while ($data1 = mysqli_fetch_array($result1)) {
                             ?>
-                                <tr>
+                                <tr id="employeeId">
                                     <td> <?php echo $data1['employee_id']; ?></td>
-                                    <td> <?php echo $data1['date_from'] . " " . $data1['date_to']; ?> </td>
+                                    <td> <?php echo $data1['date_from'] . " " . "to" . " " . $data1['date_to']; ?> </td>
                                     <td> <?php echo $data1['Total_HrsWork']; ?> </td>
                                     <td> <?php echo $data1['Total_DysWork']; ?> </td>
                                     <td>
