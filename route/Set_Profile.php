@@ -26,6 +26,57 @@ if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESS
 
 <?php include '../template/sidebar.php' ?>
 
+<script>
+    // Function to delete a user via AJAX
+    function deleteUser(id) {
+        if (confirm('Are you sure you want to delete this user?')) {
+            $.ajax({
+                type: "POST",
+                url: "functions/delete_user.php",
+                data: { id: id },
+                success: function(data){
+                    location.reload();
+                }
+            });
+        }
+    }
+
+    // Function to submit the form via AJAX
+    function updateUser() {
+        var firstname = $('#firstname').val().trim();
+        var middleinitial = $('#middleinitial').val().trim();
+        var lastname = $('#lastname').val().trim();
+        var username = $('#username').val().trim();
+        var password = $('#password').val().trim();
+
+        // Custom validation
+        if (firstname === "") {
+            $('#firstname').addClass("is-invalid");
+            return false; // Return false to indicate validation failure
+        }
+        // You can add similar validation for other fields if needed
+
+        // Perform AJAX request if validation passes
+        var id = <?php echo $_SESSION['user_management_id']; ?>; // Assuming this is the user ID
+        $.ajax({
+            type: "POST",
+            url: "update_user.php",
+            data: { id: id, firstname: firstname, middleinitial: middleinitial, lastname: lastname, username: username, password: password },
+            success: function(data){
+                alert("User updated successfully!");
+                location.reload();
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        // Event listener for form submission
+        $('#updateUserForm').submit(function(event) {
+            event.preventDefault(); // Prevent default form submission
+            updateUser(); // Call updateUser function
+        });
+    });
+</script>
 
 
 <div id="layoutSidenav_content">
@@ -77,16 +128,6 @@ if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESS
         }
     });
 </script>
-
-
-
-
-
-
-
- 
-
-
 
           <div class="row">
             <div class="col-md-4 mb-2 mt-2">
@@ -181,8 +222,6 @@ if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESS
             </div>
           </div>
         </div>
-
-
 
 
 
