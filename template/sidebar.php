@@ -1,16 +1,55 @@
 <?php
-// Check if both first name, last name, and user role are set in the session
-if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']) && isset($_SESSION['role'])) {
-    $firstname = $_SESSION['firstname'];
-    $lastname = $_SESSION['lastname'];
-    $userRole = $_SESSION['role'];
+session_start();
+include "../connection/database.php";
+
+// Check if user is logged in
+if(isset($_SESSION['user_id'])) {
+    $userId = $_SESSION['user_id'];
+
+    // Fetch user's first name and last name from the database based on user_id
+    $query = "SELECT firstname, lastname FROM tbl_user_management WHERE user_management_id = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "i", $userId);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $userData = mysqli_fetch_assoc($result);
+
+    // Check if user data is retrieved successfully
+    if($userData) {
+        $firstname = $userData['firstname'];
+        $lastname = $userData['lastname'];
+    } else {
+        // If user data is not found, handle it accordingly
+        $firstname = '';
+        $lastname = '';
+    }
+
+    // Fetch user's role from the database or session based on user_id
+    $query_role = "SELECT user_role FROM tbl_user_management WHERE user_management_id = ?";
+    $stmt_role = mysqli_prepare($conn, $query_role);
+    mysqli_stmt_bind_param($stmt_role, "i", $userId);
+    mysqli_stmt_execute($stmt_role);
+    $result_role = mysqli_stmt_get_result($stmt_role);
+    $userData_role = mysqli_fetch_assoc($result_role);
+
+    // Check if user role is retrieved successfully
+    if($userData_role) {
+        $userRole = $userData_role['user_role'];
+    } else {
+        // If user role is not found, handle it accordingly
+        $userRole = ''; // or any default role you want to assign
+    }
 } else {
-    // If any of the session variables are not set, set them to empty strings or default values
+    // If user is not logged in, handle it accordingly
     $firstname = '';
     $lastname = '';
-    $userRole = ''; // You can set a default value here if needed
+    $userRole = '';
 }
+
+// Close database connection
+mysqli_close($conn);
 ?>
+
 
 
 <div id="layoutSidenav">
