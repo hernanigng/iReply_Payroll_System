@@ -1,6 +1,17 @@
 <?php include '../connection/session.php' ?>
 <?php include '../template/header.php' ?>
-<?php include '../template/sidebar.php' ?>
+<?php include '../template/sidebar.php';
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1); ?>
+
+
+<!-- Custom Script -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 <div id="layoutSidenav_content">
 
@@ -67,6 +78,7 @@
                                     $earnings_id = $row['earnings_id'];
                                     $incentives_id = $row['incentives_id'];
                                     $deductions_id = $row['deductions_id'];
+                                    $netPay_id = $row['netPay_id'];
 
                                     // Construct and execute the SQL query to fetch the employee name
                                     $query_employee = "SELECT firstname, lastname FROM tbl_employee WHERE employee_id = '$employee_id'";
@@ -140,8 +152,8 @@
                                     echo "<td>" . $total_earnings . "</td>";
                                     echo "<td>" . $total_deductions . "</td>";
                                     echo "<td>" . $total_incentives . "</td>";
-                                   echo "<td><center><button class='btn btn-primary'>More Details</button></center></td>";
-                                    echo "</tr>";
+                                    echo "<td><center><button class='btn btn-primary' data-netPay_id='$netPay_id'>More Details</button></center></td>";
+                                    echo "</tr>";                                
                                 }
                             } else {
                                 echo "<tr><td colspan='5'>No data available</td></tr>";
@@ -171,29 +183,7 @@
 
 
 
-<script>
-    function goToNextTab() {
-        document.getElementById('deductions-tab').click();
-    }
-    function goToNextTab1() {
-        document.getElementById('incentives-tab').click();
-    }
 
-    function goToPreviousTab() {
-        document.getElementById('earnings-tab').click();
-    }
-    function goToPreviousTab1() {
-        document.getElementById('deductions-tab').click();
-    }
-
-    document.querySelectorAll('.nav-link').forEach(item => {
-        item.addEventListener('click', event => {
-            const activeTab = document.querySelector('.nav-link.active');
-            activeTab.classList.remove('active');
-            event.target.classList.add('active');
-        });
-    });
-</script>
 
       </div>
     </div>
@@ -210,237 +200,28 @@ $(document).ready(function() {
     var buttons = document.querySelectorAll('.btn-primary');
     buttons.forEach(function(button) {
         button.addEventListener('click', function() {
-            // Get relevant data from the row
+          
             var employeeName = this.parentNode.parentNode.childNodes[0].textContent;
+            var netPayId = $(this).data('netpay_id');
+            console.log(netPayId);
 
-            // Append the modal body content
-            document.getElementById("modalBody").innerHTML = `
-                <!-- Modal Body Content -->
-                <div class="container mt-2 col-12">
-             <div class="row justify-content-center">
-            <div class="col-12">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="earnings-tab" data-bs-toggle="tab" href="#earnings" role="tab" aria-controls="earnings" aria-selected="true">Earnings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="deductions-tab" data-bs-toggle="tab" href="#deductions" role="tab" aria-controls="deductions" aria-selected="false">Deductions</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="incentives-tab" data-bs-toggle="tab" href="#incentives" role="tab" aria-controls="incentives" aria-selected="false">Incentives</a>
-                    </li>
-                </ul>
-
-                <div class="tab-content" id="myTabContent">
-
-                    <div class="tab-pane fade show active" id="earnings" role="tabpanel" aria-labelledby="earnings-tab">
-                        <!-- Content for Earnings tab -->
-                        <div class="container mt-4 col-10"> <!-- Container for the form -->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="employeeName" class="form-label">Employee Name</label>
-                        <input type="text" name="employeeName" class="form-control" id="employeeName">
-                    </div>
-
-            <div class="col-md-3">
-              <label for="startDate" class="form-label">Start Date</label>
-              <input type="text" id="startDate" name="startDate" class="form-control">
-            </div>
-            <div class="col-md-3">
-              <label for="endDate" class="form-label">End Date</label>
-              <input type="text" id="endDate" name="endDate" class="form-control">
-            </div>
-                </div>
-
-
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="daysWorked" class="form-label">No. of Days Worked</label>
-                            <input type="text" name="daysWorked" class="form-control" id="daysWorked">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="basicPay" class="form-label">Basic Pay</label>
-                            <input type="text" name="basicPay" class="form-control" id="basicPay">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="regularHoliday" class="form-label">Regular Holiday</label>
-                            <input type="text" name="regularHoliday" class="form-control" id="regularHoliday">
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="specialHoliday" class="form-label">Special Holiday</label>
-                            <input type="text" name="specialHoliday" class="form-control" id="specialHoliday">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="overtime" class="form-label">Overtime</label>
-                            <input type="text" name="overtime" class="form-control" id="overtime">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="nightDifferential" class="form-label">Night Differential</label>
-                            <input type="text" name="nightDifferential" class="form-control" id="nightDifferential">
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="regularHolidayNightDiff" class="form-label">Regular Holiday Night Diff</label>
-                            <input type="text" name="regularHolidayNightDiff" class="form-control" id="regularHolidayNightDiff">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="specialHolidayNightDiff" class="form-label">Special Holiday Night Diff</label>
-                            <input type="text" name="specialHolidayNightDiff" class="form-control" id="specialHolidayNightDiff">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="regHolidayOvertime" class="form-label">Reg. Holiday Overtime</label>
-                            <input type="text" name="regHolidayOvertime" class="form-control" id="regHolidayOvertime">
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="splHolidayOvertime" class="form-label">Spl. Holiday Overtime</label>
-                            <input type="text" name="splHolidayOvertime" class="form-control" id="splHolidayOvertime">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="monthlyBonus" class="form-label">Monthly Bonus</label>
-                            <input type="text" name="monthlyBonus" class="form-control" id="monthlyBonus">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="drd" class="form-label">DRD</label>
-                            <input type="text" name="drd" class="form-control" id="drd">
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="payAdjustments" class="form-label">Pay Adjustments</label>
-                            <input type="text" name="payAdjustments" class="form-control" id="payAdjustments">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="totalEarnings" class="form-label">Total Earnings</label>
-                            <input type="text" name="totalEarnings" class="form-control" id="totalEarnings">
-                        </div>
-                    </div>
+            $.ajax({
+                type: 'POST',
+                url: 'functions/fetch_payroll_details.php',
+                data: { netPay_id: netPayId },
+                success: function(response) {
+                    // Populate modal with the fetched data
+                    $('#modalBody').html(response);
                     
-                        <!-- Next button -->
-                        <div class="row mb-3">
-                            <div class="col-md-9"></div> <!-- Placeholder column to align button to the right -->
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-primary w-100" onclick="goToNextTab()">Next</button>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
+                    // Show the modal
+                    $('#detailsModal').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                }
+            });
+                
 
-                    <div class="tab-pane fade" id="deductions" role="tabpanel" aria-labelledby="deductions-tab">
-                        <!-- Content for Earnings tab -->
-                        <div class="container mt-4 col-10">
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <label for="philHealth" class="form-label">PhilHealth Contributions</label>
-                                    <input type="text" name="philHealth" class="form-control" id="philHealth">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="pagibig" class="form-label">Pagibig Contribution</label>
-                                    <input type="text" name="pagibig" class="form-control" id="pagibig">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="sss" class="form-label">SSS Contribution</label>
-                                    <input type="text" name="sss" class="form-control" id="sss">
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                            <div class="col-md-4">
-                                <label class="form-label">Withholding Tax</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-text">
-                                        <input class="form-check-input mt-0" type="checkbox" value="" id="withholdingTax">
-                                    </div>
-                                    <input type="text" class="form-control" aria-label="Text input with checkbox">
-                                </div>
-                            </div>
-
-                                <div class="col-md-4">
-                                    <label for="absent" class="form-label">Absent</label>
-                                    <input type="text" name="absent" class="form-control" id="absent">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="otherDeductions" class="form-label">CA/Other Deductions</label>
-                                    <input type="text" name="otherDeductions" class="form-control" id="otherDeductions">
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-9"></div> <!-- Placeholder column to align "Total Deductions" to the right -->
-                                <div class="col-md-3">
-                                    <label for="totalDeductions" class="form-label">Total Deductions</label>
-                                    <input type="text" name="totalDeductions" class="form-control" id="totalDeductions">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                        <div class="col-md-9"></div> <!-- Placeholder column to align buttons to the right -->
-                        <div class="col-md-3">
-                            <div class="row">
-                                <div class="col-md-6 mb-2">
-                                    <button type="button" class="btn btn-secondary w-100" onclick="goToPreviousTab()">Back</button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-primary w-100" onclick="goToNextTab1()">Next</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                        </div>
-               </div>
-
-                    <div class="tab-pane fade" id="incentives" role="tabpanel" aria-labelledby="incentives-tab">
-                    <div class="container mt-4 col-10">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="philHealth" class="form-label">Incentives</label>
-                                    <input type="text" name="philHealth" class="form-control" id="philHealth">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="pagibig" class="form-label">Others</label>
-                                    <input type="text" name="pagibig" class="form-control" id="pagibig">
-                                </div>
-                            </div>
-
-
-
-                            <div class="row mb-3">
-                                <div class="col-md-9"></div> <!-- Placeholder column to align "Total Deductions" to the right -->
-                                <div class="col-md-3">
-                                    <label for="totalDeductions" class="form-label">Total Income</label>
-                                    <input type="text" name="totalDeductions" class="form-control" id="totalDeductions">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                        <div class="col-md-9"></div> <!-- Placeholder column to align buttons to the right -->
-                        <div class="col-md-3">
-                            <div class="row">
-                                <div class="col-md-6 mb-2">
-                                    <button type="button" class="btn btn-secondary w-100" onclick="goToPreviousTab1()">Back</button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-primary w-100">Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-    `;
 
 // Show the modal
 $('#detailsModal').modal('show');
