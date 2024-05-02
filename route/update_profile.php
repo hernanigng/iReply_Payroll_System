@@ -18,7 +18,7 @@ $user_id = $_POST['user_id'];
 $query = "UPDATE tbl_user_management SET firstname = '$firstname', middleinitial = '$middleinitial', lastname = '$lastname', username = '$username', password = '$password' WHERE user_management_id = '$user_id'";
 
 if (mysqli_query($conn, $query)) {
-  echo "Profile updated successfully!";
+  echo "Profile Updated Successfully!";
 } else {
   echo "Error updating profile: ". mysqli_error($conn);
 }

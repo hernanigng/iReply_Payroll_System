@@ -148,7 +148,7 @@ $(document).ready(function(){
                                     <tbody>
                     <?php
                     // Include database connection file
-                    include_once '../connection/database.php';
+                    include '../connection/database.php';
 
                     // Fetch clients from database
                     $result = mysqli_query($conn, "SELECT * FROM tbl_client ORDER BY client_ID DESC");

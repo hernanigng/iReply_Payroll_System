@@ -114,7 +114,7 @@
                                     <tbody>
                     <?php
                     // Include database connection file
-                    include_once '../connection/database.php';
+                    include '../connection/database.php';
 
                     // Fetch clients from database
                     $result = mysqli_query($conn, "SELECT * FROM tbl_position ORDER BY position_ID DESC");
