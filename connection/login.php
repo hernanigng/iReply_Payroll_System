@@ -38,6 +38,7 @@ if ($data && $password === $data['password']) {
     $_SESSION['middleinitial'] = $data['middleinitial'];
     $_SESSION['user_id'] = $data['user_management_id']; // Add this line
 
+
     echo json_encode(
         array(
             'status' => 'success',

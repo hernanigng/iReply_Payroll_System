@@ -14,14 +14,18 @@
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  margin-bottom: 30px;
-  padding-bottom: 30px;
+  max-width: 120px; /* Set the maximum width for the profile container */
 }
 
-.profile img {
-  width: 80px;
-  margin: 5px auto 10px auto;
-  border-radius: 50%; 
+.circle-container-sidebar {
+  width: 90px; /* Set the desired width */
+  height: 90px; /* Set the desired height */
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin: auto;
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 
 .profile .name {

@@ -46,7 +46,9 @@ if(isset($_SESSION['user_id'])) {
     $userRole = '';
 }
 
-// Close database connection
+
+$user_id = $_SESSION['user_id'] ?? null; // Retrieve user_id from 
+
 mysqli_close($conn);
 ?>
 
@@ -58,13 +60,31 @@ mysqli_close($conn);
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
 
 
-            <div class="sb-sidenav-header">
-                <div class="profile">
-                    <img src="../assets/img/profile.jpg" alt="Image" class="img-fluid">
-                    <h3 class="name"><?php echo $firstname . ' ' . $lastname; ?></h3>
-                    <a href="../route/Set_Profile.php" class="option">Set Profile</a>
-                </div>
+        <div class="sb-sidenav-header">
+            <div class="profile">
+                <?php
+
+                include '../connection/database.php';
+                // Display the current user image
+                $query_select_image = "SELECT user_image FROM tbl_user_management WHERE user_management_id = '$user_id'";
+                $result_select_image = mysqli_query($conn, $query_select_image);
+                $row_select_image = mysqli_fetch_assoc($result_select_image);
+                $user_image = $row_select_image['user_image'];
+
+                // Define the URL of the default image
+                $default_image_url = 'https://i.pinimg.com/564x/4e/c0/b7/4ec0b7eec43ef896c8214aa291cde1f1.jpg';
+
+                if (!empty($user_image)) {
+                    echo '<div class="circle-container-sidebar" style="background-image: url(' . $user_image . ');"></div>';
+                } else {
+                    // Display the default image if no user image is available
+                    echo '<div class="circle-container-sidebar" style="background-image: url(' . $default_image_url . ');"></div>';
+                }
+                ?>
+                <h3 class="name"><?php echo $firstname . ' ' . $lastname; ?></h3>
+                <a href="../route/Set_Profile.php" class="option">Set Profile</a>
             </div>
+        </div>
 
                     <div class="sb-sidenav-menu">
                     <div class="nav">

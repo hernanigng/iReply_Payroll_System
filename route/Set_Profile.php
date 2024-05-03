@@ -28,12 +28,90 @@ $user_data = mysqli_fetch_assoc($result);
 <?php include '../template/sidebar.php' ?>
 
 
+<style>
+.circle-container {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin: 0 auto 20px auto;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+  background-color: #0062cc;
+  border-color: #005cbf;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+.form-control.d-none {
+  display: none;
+}
+</style>
+
+
+
+
 <div id="layoutSidenav_content">
 
 <main>
     <div class="container-fluid px-4 col-lg-10">
-        <form id="edit-profile-form" action="update_profile.php" method="post" >
-            <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+<form id="edit-profile-form" action="update_profile.php" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+
+
+<div class="row mb-4">
+    <center>
+    <div class="col-lg-6">
+        <div class="circle-container" id="userImageContainer">
+            <?php
+            include '../connection/database.php';
+            // Display the current user image
+            $query_select_image = "SELECT user_image FROM tbl_user_management WHERE user_management_id = '$user_id'";
+            $result_select_image = mysqli_query($conn, $query_select_image);
+            $row_select_image = mysqli_fetch_assoc($result_select_image);
+            $user_image = $row_select_image['user_image'];
+
+            // Define the URL of the default image
+            $default_image_url = 'https://i.pinimg.com/564x/4e/c0/b7/4ec0b7eec43ef896c8214aa291cde1f1.jpg';
+
+            if (!empty($user_image)) {
+                echo '<div class="circle-container" style="background-image: url(' . $user_image . ');"></div>';
+            } else {
+                // Display the default image if no user image is available
+                echo '<div class="circle-container" style="background-image: url(' . $default_image_url . ');"></div>';
+            }
+            ?>
+        </div>
+        <label class="btn btn-primary mt-2" for="user_image">Upload Photo</label>
+        <input type="file" class="form-control d-none" id="user_image" name="user_image" onchange="previewImage(event)">
+    </div>
+    </center>
+</div>
+
 
             
             <div class="row mb-3">
@@ -56,10 +134,27 @@ $user_data = mysqli_fetch_assoc($result);
                     <input type="text" class="form-control" id="username" name="username" value="<?php echo $user_data['username'];?>">
                 </div>
                 <div class="col-lg-6">
-                    <label for="password" class="form-label">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password" value="<?php echo $user_data['password'];?>">
-                </div>
+                  <label for="password" class="form-label">Password:</label>
+                  <div class="input-group">
+                      <input type="password" class="form-control" id="password" name="password" value="<?php echo $user_data['password'];?>">
+                      <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                          <i class="fas fa-eye"></i>
+                      </button>
+                  </div>
+              </div>
+
+              <script>
+                  document.getElementById('togglePassword').addEventListener('click', function() {
+                      const passwordInput = document.getElementById('password');
+                      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                      passwordInput.setAttribute('type', type);
+                      this.querySelector('i').classList.toggle('fa-eye');
+                      this.querySelector('i').classList.toggle('fa-eye-slash');
+                  });
+              </script>
+
             </div>
+
             <button type="submit" class="btn btn-primary">Update Profile</button>
         </form>
     </div>
