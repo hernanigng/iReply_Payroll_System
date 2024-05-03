@@ -87,30 +87,28 @@ if (isset($_GET['employee_id'])) {
                 employee_id: employeeId
             },
             success: function(response) {
-                console.log(response);
-    // Parse the JSON response
-    var filteredData = JSON.parse(response);
+                // Parse the JSON response
+                var filteredData = JSON.parse(response);
 
-    // Clear the table body
-    $('#datatablesSimple tbody').empty();
+                // Clear the table body
+                $('#datatablesSimple tbody').empty();
 
-    // Iterate through the filtered data and append rows to the table
-    $.each(filteredData, function(index, row) {
-        var html = "<tr>";
-        html += "<td>" + row['timekeeping_ID'] + "</td>";
-        html += "<td>" + row['date_from'] + " " + row['date_to'] + "</td>";
-        html += "<td>" + row['Total_HrsWork'] + "</td>";
-        html += "<td>" + row['Total_DysWork'] + "</td>";
-        html += "<td> <button class='btn btn-primary edit' data-bs-toggle='modal' data-bs-target='#editAttendanceModal' data-timekeeping_id='" + row['timekeeping_ID'] + "'><i class='bi bi-pencil'></i></button> </td>";
-        html += "</tr>";
-        $('#datatablesSimple tbody').append(html);
-    });
-
-}, error: function(xhr, status, error) {
-        console.error("AJAX Error:", status, error);
-    }
-
-
+                // Iterate through the filtered data and append rows to the table
+                $.each(filteredData, function(index, row) {
+                    var html = "<tr>";
+                    html += "<td>" + row['timekeeping_ID'] + "</td>";
+                    html += "<td>" + row['date_from'] + " " + row['date_to'] + "</td>";
+                    html += "<td>" + row['Total_HrsWork'] + "</td>";
+                    html += "<td>" + row['Total_DysWork'] + "</td>";
+                    //html += "<td> <button type='button' class='btn btn-primary editAttendanceBtn'  data-timekeeping_id='" + row['timekeeping_ID'] + "'><i class='bi bi-pencil'></i></button> </td>";
+                    html += "<td> <button type='button' class='btn btn-primary' onclick='openEditModal(" + row['timekeeping_ID'] + ")' data-bs-toggle='modal' data-bs-target='#edit_modal'><i class='bi bi-pencil'></i></button></td>";
+                    html += "</tr>";
+                    $('#datatablesSimple tbody').append(html);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", status, error);
+            }
         });
     }
 
@@ -126,16 +124,14 @@ if (isset($_GET['employee_id'])) {
         getEmployeeIdAndFilter();
     });
 
-    // Initial loading: get employee ID and apply filter
-    getEmployeeIdAndFilter();
 });
-
 </script>
 
 
 <div>
-    <button type="button" class="btn btn-primary offset-10 mt-5" data-bs-toggle="modal" data-bs-target="#addAttendance" data-firstname="<?php echo $data['firstname']; ?>" data-lastname="<?php echo $data['lastname']; ?>">Add Attendance <i class="bi bi-plus"></i> </button>
+    <button type="button" class="btn btn-primary offset-10 mt-5 add" data-bs-toggle="modal" data-bs-target="#add_modal" data-firstname="<?php echo $data['firstname']; ?>" data-lastname="<?php echo $data['lastname']; ?>">Add Attendance <i class="bi bi-plus"></i> </button>
 </div>
+
 <div class="container-fluid px-4">
     <div class="card mb-4 mt-4">
         <div class="card-header">
@@ -166,8 +162,12 @@ if (isset($_GET['employee_id'])) {
                                     <td> <?php echo $data1['Total_HrsWork']; ?> </td>
                                     <td> <?php echo $data1['Total_DysWork']; ?> </td>
                                     <td>
-                                        <button class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#editAttendanceModal" data-timekeeping_id="<?php echo $data1['timekeeping_ID']; ?>">
-                                        <i class="bi bi-pencil"></i></button>
+                                    <!-- <button type="button" class="btn btn-primary editAttendanceBtn" data-timekeeping_id="<?php echo $data1['timekeeping_ID']; ?>">
+                                      <i class="bi bi-pencil"></i> 
+                                   </button> -->
+                                   <button type="button" class="btn btn-primary" onclick="openEditModal('<?php echo $data1['timekeeping_ID']; ?>')" data-bs-toggle="modal" data-bs-target="#edit_modal">
+                                      <i class="bi bi-pencil"></i>
+                                   </button>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -191,57 +191,85 @@ if (isset($_GET['employee_id'])) {
 
 <script>
 $(document).ready(function() {
-    $('#addAttendance').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var firstname = button.data('firstname'); // Extract firstname from data attribute
-        var lastname = button.data('lastname'); // Extract lastname from data attribute
-        
-        // Update input fields in the modal with firstname and lastname
-        $('#employee_name').val(firstname + ' ' + lastname);
-    });
 
-    // Function to handle form submission
-    $('#insertAttendance').submit(function(event) {
-        // Prevent default form submission
-        event.preventDefault();
+// Function to calculate total days based on total hours
+function calculateTotalDays() {
+    var totalHours = parseFloat($('#totalHrs').val());
+    var totalDays = totalHours / 8; // Assuming 8 hours per day
+    $('#totalDys').val(totalDays);
+}
 
-        // Serialize form data
-        var formData = $(this).serialize();
+// Handle form submission for adding attendance
+$('#insert_Attendance').submit(function(event) {
+    // Prevent default form submission
+    event.preventDefault();
 
-        $.ajax({
-            url: 'functions/add_attendance.php',
-            method: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function(response) {
-                // Check the status of the response
-                if (response.status === 'success') {
-                    // Clear form fields
-                    $('#dateFrm').val('');
-                    $('#dateTo').val('');
-                    $('#totalHrs').val('');
-                    $('#totalDys').val('');
+    // Serialize form data
+    var formData = $(this).serialize();
 
-                    // Show the toast after a short delay
-                    var insertToast = new bootstrap.Toast($('#insertAttendanceToast')[0]); // Retrieve the DOM element
-                    insertToast.show(); // Explicitly show the toast
-                } else {
-                    // Show error message
-                    console.error(response.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                // Show error message if AJAX request fails
-                alert('An error occurred while processing your request.');
-                console.error(xhr.responseText);
+    // AJAX request to add attendance
+    $.ajax({
+        url: 'functions/add_attendance.php',
+        method: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            // Check the status of the response
+            if (response.status === 'success') {
+                // Clear form fields
+                $('#dateFrm').val('');
+                $('#dateTo').val('');
+                $('#totalHrs').val('');
+                $('#totalDys').val('');
+
+                // Show the toast after a short delay
+                var insertToast = new bootstrap.Toast($('#insertAttendanceToast')[0]); // Retrieve the DOM element
+                insertToast.show(); // Explicitly show the toast
+            } else {
+                // Show error message
+                console.error(response.message);
             }
-        });
+        },
+        error: function(xhr, status, error) {
+            // Show error message if AJAX request fails
+            alert('An error occurred while processing your request.');
+            console.error(xhr.responseText);
+        }
     });
 });
+
+// Show add modal and populate fields
+$('#add_modal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var firstname = button.data('firstname'); // Extract firstname from data attribute
+    var lastname = button.data('lastname'); // Extract lastname from data attribute
+    
+    // Update input fields in the modal with firstname and lastname
+    $('#employee_name').val(firstname + ' ' + lastname);
+});
+
+// Calculate total days when total hours are changed
+$('#totalHrs').on('input', calculateTotalDays);
+
+});
+
 </script>
 
+
+  <!-- Timekeeping Insert Success Toast Notification -->
+  <div class="toast position-fixed top-50 start-50 translate-middle" id="insertAttendanceToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+            <div class="toast-header">
+                <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+               Attendance Successfully Added.
+            </div>
+     </div>
+
 <!-- ADD ATTENDANCE MODAL --> 
-<div class="modal fade" id="addAttendance" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="add_modal" tabindex="-1" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content">
   <div class="modal-header">
@@ -249,7 +277,7 @@ $(document).ready(function() {
  </div>
 
   <div class="modal-body">
-  <form id="insertAttendance" method="POST">
+  <form id="insert_Attendance" method="POST">
     <div class="container mt-4">
 
         <div class="row">
@@ -284,7 +312,7 @@ $(document).ready(function() {
 
             <div class="col-md-4">
                 <label for="totalDys" class="form-label">Total Days Worked:</label>
-                <input type="number" name="totalDys" class="form-control" id="totalDys">
+                <input type="number" name="totalDys" class="form-control" id="totalDys" readonly>
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
@@ -297,61 +325,13 @@ $(document).ready(function() {
     </div>
 </form>
   </div>
-
-
-
-  <!-- Timekeeping Insert Success Toast Notification -->
-<div class="toast position-fixed top-50 start-50 translate-middle" id="insertAttendanceToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
-            <div class="toast-header">
-                <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
-                <strong class="me-auto">Notification</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-               Attendance Successfully Added.
-            </div>
-     </div>
-
-
-<script>
-    $(document).ready(function() {
-    $('#datatablesSimple').on('click', '.edit', function() {
-        var attendanceNo = $(this).data('timekeeping_id');
-        console.log("Edit button clicked for TIME KEEPING ID: " + attendanceNo); // Debugging message
-        
-
-        $.ajax({
-            url: 'functions/get_timekeeping.php',
-            type: 'GET',
-            data: { id: attendanceNo},
-            dataType: 'json',
-            success: function(response) {
-                console.log("Timekeeping data fetched successfully: ", response); // Debugging message
-
-                // Populate the edit modal with the fetched data
-                $('#edit_employee_id').val(response.employee_id); 
-                $('#edit_employee_name').val(response.employee_name); 
-                $('#edit_dateFrm').val(response.date_from); 
-                $('#edit_dateTo').val(response.date_to); 
-                $('#edit_totalHrs').val(response.Total_HrsWork); 
-                $('#edit_totalDys').val(response.Total_DysWork); 
-
-                // Show the edit modal
-                $('#addAttendance').modal('show');
-            },
-            error: function(xhr, status, error) {
-                console.error("AJAX Error:", status, error);
-            }
-});
-
-        });
-    });
-
-</script>
+</div>
+</div>
+</div>
 
 
 <!-- EDIT ATTENDANCE MODAL --> 
-<div class="modal fade" id="editAttendanceModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="edit_modal" tabindex="-1" aria-labelledby="edit_modal" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content">
   <div class="modal-header">
@@ -363,9 +343,8 @@ $(document).ready(function() {
     <div class="container mt-4">
 
         <div class="row">
+           <input type="hidden" class="form-control" id="timekeeping_id">
             <div class="col">
-                <input type="text" name="edit_employee_id" class="form-control" id="edit_employee_id" value="<?php echo $data['employee_id']; ?>">
-                <input type="text" name="timekeeping_id" class="form-control" id="timekeeping_id">
                 <label for="edit_employee_name" class="form-label">Employee Name:</label>
                 <input type="text" name="edit_employee_name" class="form-control" id="edit_employee_name" readonly>
                 </div>
@@ -374,42 +353,118 @@ $(document).ready(function() {
         <div class="row">
             <div class="col-md-6">
                 <label for="edit_dateFrm" class="form-label">Date:</label>
-                <input type="date" name="edit_dateFrm" class="form-control" id="edit_dateFrm">
+                <input type="date" class="form-control" id="edit_dateFrm">
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
 
             <div class="col-md-6">
                 <label for="edit_dateTo" class="form-label"> </label>
-                <input type="date" name="edit_dateTo" class="form-control" id="edit_dateTo">
+                <input type="date" class="form-control" id="edit_dateTo">
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
 
             <div class="col-md-4">
                 <label for="edit_totalHrs" class="form-label">Total Hours Worked:</label>
-                <input type="number" name="edit_totalHrs" class="form-control" id="edit_totalHrs">
+                <input type="number" class="form-control" id="edit_totalHrs">
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
 
             <div class="col-md-4">
                 <label for="edit_totalDys" class="form-label">Total Days Worked:</label>
-                <input type="number" name="edit_totalDys" class="form-control" id="edit_totalDys">
+                <input type="number" class="form-control" id="edit_totalDys">
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
 
             <div class="modal-footer mt-3">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> Close </button>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary" id="updateAttendance">Update</button>
             </div>
         </div>
     </div>
 </form>
   </div>
+</div>
+</div>
+</div>
 
+<script>
+     function calculateTotalDaysEdit() {
+        var totalHours = parseFloat($('#edit_totalHrs').val());
+        var totalDays = totalHours / 8; // Assuming 8 hours per day
+        $('#edit_totalDys').val(totalDays);
+    }
 
+function openEditModal(timekeeping_ID) {
+    // Open the modal
+    $('#edit_modal').modal('show');
+
+    // AJAX call to fetch data
+    $.ajax({
+        url: 'functions/get_timekeeping.php',
+        type: 'POST',
+        data: { id: timekeeping_ID },
+        dataType: 'json',
+        success: function(response) {
+            console.log(response); // Debugging message
+
+            // Populate the edit modal directly
+            $('#timekeeping_id').val(response.timekeeping_ID);
+            $('#edit_employee_name').val(response.employee_name);
+            $('#edit_employee_id').val(response.employee_id);
+            $('#edit_dateFrm').val(response.date_from);
+            $('#edit_dateTo').val(response.date_to);
+            $('#edit_totalHrs').val(response.Total_HrsWork);
+            $('#edit_totalDys').val(response.Total_DysWork);
+            
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+        }
+    });
+}
+// Calculate total days when total hours are changed in edit modal
+$('#edit_totalHrs').on('input', calculateTotalDaysEdit);
+
+// Function to handle form submission for updating attendance
+$('#updateAttendance').submit(function(event) {
+    // Prevent default form submission
+    event.preventDefault();
+
+    // Serialize form data
+    var formData = $(this).serialize();
+
+    // AJAX request to update attendance
+    $.ajax({
+        url: 'functions/update_timekeeping.php',
+        method: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            // Check the status of the response
+            if (response.status === 'success') {
+                // Close the modal
+                $('#edit_modal').modal('hide');
+
+                // Show the toast after a short delay
+                var updateToast = new bootstrap.Toast($('#updateAttendanceToast')[0]); // Retrieve the DOM element
+                updateToast.show(); // Explicitly show the toast
+            } else {
+                // Show error message
+                console.error(response.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            // Show error message if AJAX request fails
+            alert('An error occurred while processing your request.');
+            console.error(xhr.responseText);
+        }
+    });
+});
+    </script>
 <?php include '../template/footer.php'; ?>
 
 

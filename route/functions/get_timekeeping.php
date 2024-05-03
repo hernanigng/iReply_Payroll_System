@@ -1,32 +1,41 @@
 <?php
-// Include necessary files and database connection
+// // Include necessary files and database connection
 include_once '../../connection/database.php';
 
-// Check if employee_id is set
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    //$attendanceNo = $_GET['timekeeping_ID'];
+if(isset($_POST["id"])) {
+    $id = $_POST["id"];
 
-    // Prepare and execute the query to fetch timekeeping data for the specified employee
-    $query = "SELECT * FROM tbl_timekeeping WHERE timekeeping_ID = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $id);
-    $stmt->execute();
-    
-    // Get the result
-    $result = $stmt->get_result();
+    if($conn) {
+        // Prepare SQL query
+        $query = "SELECT * FROM tbl_timekeeping WHERE timekeeping_ID ='$id'";
 
-    // Fetch the data as an associative array
-    $timekeepingData = array();
-    while ($row = $result->fetch_assoc()) {
-        $timekeepingData[] = $row;
+        // Execute query
+        $result = mysqli_query($conn, $query);
+
+        // Check if query was successful
+        if($result) {
+            // Fetch data
+            $data = mysqli_fetch_assoc($result);
+
+            // Check if data was fetched successfully
+            if($data) {
+                // Output fetched data as JSON
+                echo json_encode($data);
+            } else {
+                echo "No data found for the given employee ID.";
+            }
+        } else {
+            // Query failed, handle error
+            echo "Error executing query: " . mysqli_error($conn);
+        }
+
+        // Close connection
+        mysqli_close($conn);
+    } else {
+        echo "Failed to connect to database.";
     }
-
-    // Close statement and database connection
-    $stmt->close();
-    $conn->close();
-
-    // Return the data as JSON
-    echo json_encode($timekeepingData);
+} else {
+    echo "No 'id' parameter provided.";
 }
+
 ?>
