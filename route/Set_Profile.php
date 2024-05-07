@@ -1,5 +1,3 @@
-
-
 <?php
 session_start(); // Initialize the session
 
@@ -8,18 +6,36 @@ include_once '../connection/database.php';
 
 // Check connection
 if (!$conn) {
-  die("Connection failed: ". mysqli_connect_error());
+    die("Connection failed: " . mysqli_connect_error());
 }
 
 // Retrieve the current user's ID from the session
 $user_id = $_SESSION['user_id'];
 
-// Query to retrieve the current user's data
-$query = "SELECT * FROM tbl_user_management WHERE user_management_id = '$user_id'";
+// Query to retrieve the current user's data, including role_id
+$query = "SELECT *, user_role FROM tbl_user_management WHERE user_management_id = '$user_id'";
 $result = mysqli_query($conn, $query);
+if (!$result) {
+    die("Error in SQL query: " . mysqli_error($conn));
+}
+
+// Fetch the user data
 $user_data = mysqli_fetch_assoc($result);
 
-// display the current user's data in input fields
+// Define the user role
+$role_id = $user_data['user_role'];
+$query_role = "SELECT user_role FROM tbl_user_role WHERE user_role_id = $role_id";
+$result_role = mysqli_query($conn, $query_role);
+if (!$result_role) {
+    die("Error in SQL query: " . mysqli_error($conn));
+}
+
+if (mysqli_num_rows($result_role) > 0) {
+    $row_role = mysqli_fetch_assoc($result_role);
+    $userRole = $row_role['user_role'];
+} else {
+    $userRole = "Role not found";
+}
 ?>
 
 
@@ -35,7 +51,7 @@ $user_data = mysqli_fetch_assoc($result);
   border-radius: 50%;
   background-size: cover;
   background-position: center;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 10px auto;
 }
 
 .btn-primary {
@@ -75,72 +91,105 @@ $user_data = mysqli_fetch_assoc($result);
 
 
 
-<div id="layoutSidenav_content">
+<div id="layoutSidenav_content" style="top:40px">
 
 <main>
     <div class="container-fluid px-4 col-lg-10">
-<form id="edit-profile-form" action="update_profile.php" method="post" enctype="multipart/form-data">
+    <form id="edit-profile-form" action="update_profile.php" method="post" enctype="multipart/form-data">
     <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
 
 
-<div class="row mb-4">
+    <div class="row mb-4">
     <center>
-    <div class="col-lg-6">
-        <div class="circle-container" id="userImageContainer">
-            <?php
-            include '../connection/database.php';
-            // Display the current user image
-            $query_select_image = "SELECT user_image FROM tbl_user_management WHERE user_management_id = '$user_id'";
-            $result_select_image = mysqli_query($conn, $query_select_image);
-            $row_select_image = mysqli_fetch_assoc($result_select_image);
-            $user_image = $row_select_image['user_image'];
+        <div class="col-lg-6">
+            <div class="circle-container" id="userImageContainer">
+                <?php
+                include '../connection/database.php';
+                // Display the current user image
+                $query_select_image = "SELECT user_image FROM tbl_user_management WHERE user_management_id = '$user_id'";
+                $result_select_image = mysqli_query($conn, $query_select_image);
+                $row_select_image = mysqli_fetch_assoc($result_select_image);
+                $user_image = $row_select_image['user_image'];
 
-            // Define the URL of the default image
-            $default_image_url = 'https://i.pinimg.com/564x/4e/c0/b7/4ec0b7eec43ef896c8214aa291cde1f1.jpg';
+                // Define the URL of the default image
+                $default_image_url = 'https://i.pinimg.com/564x/4e/c0/b7/4ec0b7eec43ef896c8214aa291cde1f1.jpg';
 
-            if (!empty($user_image)) {
-                echo '<div class="circle-container" style="background-image: url(' . $user_image . ');"></div>';
-            } else {
-                // Display the default image if no user image is available
-                echo '<div class="circle-container" style="background-image: url(' . $default_image_url . ');"></div>';
-            }
-            ?>
+                if (!empty($user_image)) {
+                    echo '<div class="circle-image" style="background-image: url(' . $user_image . ');"></div>';
+                } else {
+                    // Display the default image if no user image is available
+                    echo '<div class="circle-image" style="background-image: url(' . $default_image_url . ');"></div>';
+                }
+                ?>
+            </div>
+            <label class="btn btn-primary mt-2 fw-bold" for="user_image">Upload Photo</label>
+            <input type="file" class="form-control d-none" id="user_image" name="user_image">
         </div>
-        <label class="btn btn-primary mt-2" for="user_image">Upload Photo</label>
-        <input type="file" class="form-control d-none" id="user_image" name="user_image" onchange="previewImage(event)">
-    </div>
     </center>
 </div>
+
+<script>
+    const uploadInput = document.getElementById('user_image');
+    const circleContainer = document.getElementById('userImageContainer');
+
+    <?php
+    // Display the user's image if available, otherwise display the default image
+    if (!empty($user_image)) {
+        echo 'circleContainer.style.backgroundImage = \'url("' . $user_image . '")\';';
+    } else {
+        echo 'circleContainer.style.backgroundImage = \'url("' . $default_image_url . '")\';';
+    }
+    ?>
+
+    uploadInput.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imageSrc = e.target.result;
+                circleContainer.style.backgroundImage = `url(${imageSrc})`;
+                circleContainer.style.backgroundSize = 'cover';
+                circleContainer.style.backgroundPosition = 'center';
+                circleContainer.style.backgroundRepeat = 'no-repeat';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+
+
 
 
             
             <div class="row mb-3">
                 <div class="col-lg-4">
-                    <label for="firstname" class="form-label">Firstname:</label>
+                    <label for="firstname" class="form-label fw-bold">Firstname:</label>
                     <input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $user_data['firstname'];?>">
                 </div>
                 <div class="col-lg-4">
-                    <label for="middleinitial" class="form-label">Middle Initial:</label>
+                    <label for="middleinitial" class="form-label fw-bold">Middle Initial:</label>
                     <input type="text" class="form-control" id="middleinitial" name="middleinitial" value="<?php echo $user_data['middleinitial'];?>">
                 </div>
                 <div class="col-lg-4">
-                    <label for="lastname" class="form-label">Lastname:</label>
+                    <label for="lastname" class="form-label fw-bold">Lastname:</label>
                     <input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $user_data['lastname'];?>">
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-lg-6">
-                    <label for="username" class="form-label">Username:</label>
+                    <label for="username" class="form-label fw-bold">Username:</label>
                     <input type="text" class="form-control" id="username" name="username" value="<?php echo $user_data['username'];?>">
                 </div>
                 <div class="col-lg-6">
-                  <label for="password" class="form-label">Password:</label>
+                  <label for="password" class="form-label fw-bold">Password:</label>
                   <div class="input-group">
                       <input type="password" class="form-control" id="password" name="password" value="<?php echo $user_data['password'];?>">
                       <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                           <i class="fas fa-eye"></i>
                       </button>
                   </div>
+              </div>
               </div>
 
               <script>
@@ -153,9 +202,64 @@ $user_data = mysqli_fetch_assoc($result);
                   });
               </script>
 
-            </div>
 
-            <button type="submit" class="btn btn-primary">Update Profile</button>
+          <div class="row">
+          <?php
+          // Include your database connection file
+          include_once '../connection/database.php';
+
+          // Fetch Title based on position_id from tbl_position table
+          $role_id = $_SESSION['user_role'];
+          $query = "SELECT user_role FROM tbl_user_role WHERE user_role_id = $role_id";
+          $result = mysqli_query($conn, $query);
+          ?>
+
+          <div class="col-lg-6 mb-4 mt-1">
+              <label for="user_role" class="form-label fw-bold">User Role</label>
+              <?php
+              if ($result && mysqli_num_rows($result) > 0) {
+                  $row = mysqli_fetch_assoc($result);
+                  $userRole = $row['user_role'];
+                  // Display the position value in an input field
+                  echo '<input type="text" class="form-control" id="user_role" placeholder="" name="user_role" value="' . $userRole . '" disabled>';
+              } else {
+                  // If no result found or query fails
+                  echo '<input type="text" class="form-control" id="user_role" placeholder="" name="user_role" value="Role not found" disabled>';
+              }
+              ?>
+          </div>
+
+          <?php
+          // Include your database connection file
+          include_once '../connection/database.php';
+
+          // Fetch Title based on position_id from tbl_position table
+          $position_id = $_SESSION['position'];
+          $query = "SELECT Title FROM tbl_position WHERE position_ID = $position_id";
+          $result = mysqli_query($conn, $query);
+          ?>
+          <div class="col-lg-6 mb-4 mt-1">
+              <label for="position" class="form-label fw-bold">Position</label>
+              <?php
+              if ($result && mysqli_num_rows($result) > 0) {
+                  $row = mysqli_fetch_assoc($result);
+                  $position_title = $row['Title'];
+                  // Display the position value in an input field
+                  echo '<input type="text" class="form-control" id="position" placeholder="" name="position" value="' . $position_title . '" disabled>';
+              } else {
+                  // If no result found or query fails
+                  echo '<input type="text" class="form-control" id="position" placeholder="" name="position" value="Position not found" disabled>';
+              }
+              ?>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end mt-2">
+    <button type="submit" class="btn btn-primary fw-bold">Save Changes</button>
+    <button style="margin-left:10px;" type="button" class="btn btn-secondary fw-bold" onclick="window.location.href='index.php';">Close</button>
+</div>
+
+
         </form>
     </div>
 </main>
@@ -192,20 +296,35 @@ $user_data = mysqli_fetch_assoc($result);
     $('.btn-close').click(function() {
       location.reload();
     });
+
+    // Reload page when Okay button is clicked
+    $('.btn-okay').click(function() {
+      location.reload();
+    });
   });
 </script>
 
 <!-- Toast HTML -->
+
 <div class="position-fixed top-50 start-50 translate-middle" style="z-index: 5">
   <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
-    <div class="toast-header" style="background-color:#FF9800;">
+    <div class="toast-header" style="background-color:#7EA1FF;">
       <img src="../assets/img/ireplyicon.png" class="rounded me-2" alt="..." style="width: 20px; height: 20px;">
       <strong class="me-auto" style="color:#070F2B">Set Profile Page</strong>
       <button type="button" class="btn-close" aria-label="Close"></button>
     </div>
-    <div class="toast-body"></div>
+    <div class="toast-body mt-3 mb-2" style="text-align: center; font-weight: bold;">
+  </div>
+  <div class="toast-icon d-flex justify-content-center">
+      <i class="fa-solid fa-circle-check" style="color: #74C0FC; font-size: 50px;"></i>
+    </div>
+    <div class="toast-footer d-flex justify-content-center mt-2">
+      <button style="margin-bottom: 25px; margin-top:10px;" type="button" class="btn btn-primary btn-okay fw-bold">okay</button>
+    </div>
   </div>
 </div>
+
+
 
 
 
