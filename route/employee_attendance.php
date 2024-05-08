@@ -6,7 +6,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
 
-
 <?php
 include '../connection/session.php';
 include '../template/header.php';
@@ -348,6 +347,8 @@ $('#totalHrs').on('input', calculateTotalDays);
                 <label for="edit_employee_name" class="form-label">Employee Name:</label>
                 <input type="text" name="edit_employee_name" class="form-control" id="edit_employee_name" readonly>
                 </div>
+                <input type="hidden" name="edit_employee_id" class="form-control" id="edit_employee_id" readonly>
+                
         </div>
 
         <div class="row">
@@ -389,7 +390,19 @@ $('#totalHrs').on('input', calculateTotalDays);
   </div>
 </div>
 </div>
+<!-- Timekeeping Update Success Toast Notification -->
+<div class="toast position-fixed top-50 start-50 translate-middle" id="updateAttendanceToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000" style="z-index: 10000;">
+          <div class="toast-header">
+                <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+               Attendance Successfully Updated.
+            </div>
+     </div>
 </div>
+
 
 <script>
      function calculateTotalDaysEdit() {
@@ -429,42 +442,75 @@ function openEditModal(timekeeping_ID) {
 // Calculate total days when total hours are changed in edit modal
 $('#edit_totalHrs').on('input', calculateTotalDaysEdit);
 
-// Function to handle form submission for updating attendance
-$('#updateAttendance').submit(function(event) {
-    // Prevent default form submission
-    event.preventDefault();
+$(document).ready(function() {
+    // Bind the updateAttendance function to the form submission event
+    $('#updateAttendance').submit(function(event) {
+        // Prevent default form submission
+        event.preventDefault();
 
-    // Serialize form data
-    var formData = $(this).serialize();
+        // Call the updateAttendance function with the timekeeping ID as an argument
+        updateAttendance($('#timekeeping_id').val());
+    });
+});
 
+function updateAttendance(timekeeping_ID) {
+    var timekeeping_ID = $('#timekeeping_id').val();
+    var employee_name = $('#edit_employee_name').val();
+    var employee_id = $('#edit_employee_id').val();
+    var date_from = $('#edit_dateFrm').val();
+    var date_to = $('#edit_dateTo').val();
+    var Total_HrsWork = $('#edit_totalHrs').val();
+    var Total_DysWork = $('#edit_totalDys').val();
+
+    var updatedData = {
+        timekeeping_ID: timekeeping_ID,
+        employee_name: employee_name,
+        employee_id: employee_id,
+        date_from: date_from,
+        date_to: date_to,
+        Total_HrsWork: Total_HrsWork,
+        Total_DysWork: Total_DysWork,
+    };
+    console.log("Data sent in AJAX request:", updatedData);
     // AJAX request to update attendance
     $.ajax({
         url: 'functions/update_timekeeping.php',
         method: 'POST',
-        data: formData,
+        data: updatedData,
         dataType: 'json',
         success: function(response) {
-            // Check the status of the response
-            if (response.status === 'success') {
-                // Close the modal
-                $('#edit_modal').modal('hide');
+    console.log("Update successful"); // Debugging message
+    // Check the status of the response
+    if (response.status === 'success') {
 
-                // Show the toast after a short delay
-                var updateToast = new bootstrap.Toast($('#updateAttendanceToast')[0]); // Retrieve the DOM element
-                updateToast.show(); // Explicitly show the toast
-            } else {
-                // Show error message
-                console.error(response.message);
-            }
-        },
+         // Clear form fields
+            $('#edit_dateFrm').val('');
+            $('#edit_dateTo').val('');
+            $('#edit_totalHrs').val('');
+            $('#edit_totalDys').val('');
+
+        //$('#edit_modal').modal('hide');
+
+     // Show the toast after a short delay
+      var updateAttendance = new bootstrap.Toast($('#updateAttendanceToast')[0]); // Retrieve the DOM element
+     updateAttendance.show(); // Explicitly show the toast
+
+    } else {
+        // Show error message
+        console.error(response.message);
+    }
+},
         error: function(xhr, status, error) {
             // Show error message if AJAX request fails
             alert('An error occurred while processing your request.');
             console.error(xhr.responseText);
         }
     });
-});
-    </script>
+}
+    
+</script>
+
+
 <?php include '../template/footer.php'; ?>
 
 
