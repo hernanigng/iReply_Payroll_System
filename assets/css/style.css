@@ -8,7 +8,6 @@
 .sb-sidenav-dark .sb-sidenav-header {
   background-color: #343a40;
   margin-top: -25%;
-  height: 30%;
 }
 .profile {
   margin-left: auto;
@@ -18,18 +17,18 @@
 }
 
 .circle-container-sidebar {
-  width: 90px; /* Set the desired width */
-  height: 90px; /* Set the desired height */
+  width: 70px; /* Set the desired width */
+  height: 70px; /* Set the desired height */
   border-radius: 50%;
   background-size: cover;
   background-position: center;
   margin: auto;
-  margin-top: 10%;
+  margin-top: 5%;
   margin-bottom: 10%;
 }
 
 .profile .name {
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 0; 
 }
 
