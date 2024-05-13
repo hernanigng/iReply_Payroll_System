@@ -164,7 +164,7 @@ if (isset($_GET['employee_id'])) {
                             while ($data1 = mysqli_fetch_array($result1)) {
                             ?>
                                 <tr>
-                                <td> <?php echo date('F j, Y', strtotime($data1['date_from'])) . " to " . date('F j, Y', strtotime($data1['date_to'])); ?> </td>
+                                <td> <?php echo date('F j, Y', strtotime($data1['date_from'])) . " - " . date('F j, Y', strtotime($data1['date_to'])); ?> </td>
                                 <td> <?php echo $data1['Total_HrsWork']; ?> </td>
                                     <td> <?php echo $data1['Total_DysWork']; ?> </td>
                                     <td>
@@ -182,7 +182,7 @@ if (isset($_GET['employee_id'])) {
             </table>
         </div>
     </div>
-    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"> Back </button>
+    <button type="button" class="btn btn-primary" id="backBtn">Back</button>
 </div>
 </main>
 <footer class="py-4 bg-light mt-auto">
@@ -196,6 +196,12 @@ if (isset($_GET['employee_id'])) {
 
 
 <script>
+    // Function to handle back button click
+    document.getElementById('backBtn').addEventListener('click', function() {
+        // Go back to the previous page
+        window.history.back();
+    });
+
 $(document).ready(function() {
 
 // Function to calculate total days based on total hours
