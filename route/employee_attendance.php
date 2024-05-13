@@ -79,6 +79,19 @@ if (isset($_GET['employee_id'])) {
 
 
 <script>
+    function formatDate(dateString) {
+    // Convert the PHP date string to JavaScript Date object
+    var date = new Date(dateString);
+
+    // Extract date components
+    var month = date.toLocaleString('en-US', { month: 'long' });
+    var day = date.getDate();
+    var year = date.getFullYear();
+
+    // Concatenate and return formatted date
+    return month + ' ' + day + ', ' + year;
+}
+
    $(document).ready(function() {
     // Function to apply filter
     function applyFilter(employeeId) {
@@ -105,7 +118,7 @@ if (isset($_GET['employee_id'])) {
                 // Iterate through the filtered data and append rows to the table
                 $.each(filteredData, function(index, row) {
                     var html = "<tr>";
-                    html += "<td>" + row['date_from'] + " " + row['date_to'] + "</td>";
+                    html += "<td>" + formatDate(row['date_from']) + " - " + formatDate(row['date_to']) + "</td>";
                     html += "<td>" + row['Total_HrsWork'] + "</td>";
                     html += "<td>" + row['Total_DysWork'] + "</td>";
                     //html += "<td> <button type='button' class='btn btn-primary editAttendanceBtn'  data-timekeeping_id='" + row['timekeeping_ID'] + "'><i class='bi bi-pencil'></i></button> </td>";
@@ -164,7 +177,7 @@ if (isset($_GET['employee_id'])) {
                             while ($data1 = mysqli_fetch_array($result1)) {
                             ?>
                                 <tr>
-                                <td> <?php echo date('F j, Y', strtotime($data1['date_from'])) . " to " . date('F j, Y', strtotime($data1['date_to'])); ?> </td>
+                                <td> <?php echo date('F j, Y', strtotime($data1['date_from'])) . " - " . date('F j, Y', strtotime($data1['date_to'])); ?> </td>
                                 <td> <?php echo $data1['Total_HrsWork']; ?> </td>
                                     <td> <?php echo $data1['Total_DysWork']; ?> </td>
                                     <td>
@@ -182,7 +195,7 @@ if (isset($_GET['employee_id'])) {
             </table>
         </div>
     </div>
-    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"> Back </button>
+    <button type="button" class="btn btn-primary" id="backBtn">Back</button>
 </div>
 </main>
 <footer class="py-4 bg-light mt-auto">
@@ -196,6 +209,12 @@ if (isset($_GET['employee_id'])) {
 
 
 <script>
+    // Function to handle back button click
+    document.getElementById('backBtn').addEventListener('click', function() {
+        // Go back to the previous page
+        window.history.back();
+    });
+
 $(document).ready(function() {
 
 // Function to calculate total days based on total hours
