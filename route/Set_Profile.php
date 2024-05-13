@@ -95,7 +95,7 @@ if (mysqli_num_rows($result_role) > 0) {
 
 <main>
     <div class="container-fluid px-4 col-lg-10">
-    <form id="edit-profile-form" action="update_profile.php" method="post" enctype="multipart/form-data">
+    <form id="edit-profile-form" action="update_profile.php" method="post" enctype="multipart/form-data" style="margin-top:5%">
     <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
 
 

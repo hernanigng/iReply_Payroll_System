@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include "../connection/database.php";
 
 // Check if user is logged in
