@@ -225,7 +225,7 @@
                          $('#employeeSelect').change(function() {
 
                                 var employeeId = $(this).val();
-                                console.log("Selected Employee ID:", employeeId);
+                                //console.log("Selected Employee ID:", employeeId);
                                 
                                 if (employeeId) {
                                     $.ajax({
@@ -286,32 +286,59 @@ $('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id,
             $('#totalEarnings').val(formattedTotalEarnings.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
             $('#totalEarnings2_id').val(formattedTotalEarnings.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
 
-
+            $('#totalEarnings').trigger('change');
     } catch (error) {
         console.error("Error calculating total earnings:", error.message);
     }
 }
+            
+    calculateTotalEarnings();
+     
+        $('#totalEarnings').on('change', function() {
+            var totalEarningsValue = $(this).val();
+            //console.log('Total Earnings Value:', totalEarningsValue);
 
-document.getElementById("employeeSelect").addEventListener("change", function() {
-    var employeeId = this.value;
-    if (employeeId) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "functions/get_contribution.php?employeeId=" + employeeId, true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    document.getElementById("sss_id").value = response.sss;
-                    document.getElementById("pagibig_id").value = response.pagibig;
-                    document.getElementById("philhealth_id").value = response.philhealth;
-                } else {
-                    console.error("Error fetching contributions: " + xhr.status);
+            $.ajax({
+                type: 'POST',
+                url: 'functions/calculate_withholding_tax.php',
+                data: { totalEarnings: totalEarningsValue },
+                success: function(response) {
+                    console.log('Withholding Tax:', response);
+
+                    $('#withholdingTax').val(parseFloat(response).toLocaleString('en-US', { style: 'currency', currency: 'PHP' }));
+
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
                 }
+            });
+        });
+
+
+
+
+        document.getElementById("employeeSelect").addEventListener("change", function() {
+            var employeeId = this.value;
+            if (employeeId) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "functions/get_contribution.php?employeeId=" + employeeId, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            var response = JSON.parse(xhr.responseText);
+                            document.getElementById("sss_id").value = response.sss;
+                            document.getElementById("pagibig_id").value = response.pagibig;
+                            document.getElementById("philhealth_id").value = response.philhealth;
+                        } else {
+                            console.error("Error fetching contributions: " + xhr.status);
+                        }
+                    }
+                };
+                xhr.send();
             }
-        };
-        xhr.send();
-    }
-});
+            });
+
+
 
 
                             //CURRENCY
@@ -324,7 +351,7 @@ document.getElementById("employeeSelect").addEventListener("change", function() 
                                         let decimalPart = inputValue.split('.')[1];
                                         if (!decimalPart || decimalPart.length < 2) {
                                             inputValue += '0';
-                                        }
+                                        }   
                                     }
 
                                     event.target.value = 'PHP ' + inputValue;
@@ -519,7 +546,7 @@ document.getElementById("employeeSelect").addEventListener("change", function() 
                             <div class="col-md-4">
                                 <label class="form-label">Withholding Tax</label>
                                 <div class="input-group mb-3">
-                                    <input type="text" id="withholdingTax" class="form-control" aria-label="Text input with checkbox" name="tax" id="tax">
+                                    <input type="text"  name="withholdingTax" id="withholdingTax" class="form-control" aria-label="Text input with checkbox" readonly>
                                 </div>
                             </div>
 
@@ -560,6 +587,7 @@ document.getElementById("employeeSelect").addEventListener("change", function() 
     <script>
        $(document).ready(function() {
 
+
     //CURRENCY
             
             
@@ -596,51 +624,57 @@ document.getElementById("employeeSelect").addEventListener("change", function() 
 
             //$('#sss_id, #pagibig_id, #philhealth_id, #absent_id, #otherDeductions_id').on('input', calculateTotalDeductions);
 
-// Function to calculate total deductions
-function calculateTotalDeductions() {
-        var sssValue = $('#sss_id').val();
-        var numericPart = sssValue.replace(/[^\d.]/g, '');
-        var sss = parseFloat(numericPart) || 0;
+        // Function to calculate total deductions
+        function calculateTotalDeductions() {
+                var sssValue = $('#sss_id').val();
+                var numericPart = sssValue.replace(/[^\d.]/g, '');
+                var sss = parseFloat(numericPart) || 0;
 
-        var pagibigValue = $('#pagibig_id').val();
-        var numericPart = pagibigValue.replace(/[^\d.]/g, '');
-        var pagibig = parseFloat(numericPart) || 0;
+                var pagibigValue = $('#pagibig_id').val();
+                var numericPart = pagibigValue.replace(/[^\d.]/g, '');
+                var pagibig = parseFloat(numericPart) || 0;
 
-        var philhealthValue = $('#philhealth_id').val();
-        var numericPart = philhealthValue.replace(/[^\d.]/g, '');
-        var philhealth = parseFloat(numericPart) || 0;
+                var philhealthValue = $('#philhealth_id').val();
+                var numericPart = philhealthValue.replace(/[^\d.]/g, '');
+                var philhealth = parseFloat(numericPart) || 0;
 
-        var absentValue = $('#absent_id').val();
-        var numericPart = absentValue.replace(/[^\d.]/g, '');
-        var absent = parseFloat(numericPart) || 0;
+                var withholdingTaxValue = $('#withholdingTax').val();
+                var numericPart = withholdingTaxValue.replace(/[^\d.]/g, '');
+                var withholdingTax = parseFloat(numericPart) || 0;
 
-        var otherDeductionsValue = $('#otherDeductions_id').val();
-        var numericPart = otherDeductionsValue.replace(/[^\d.]/g, '');
-        var otherDeductions = parseFloat(numericPart) || 0;
+                var absentValue = $('#absent_id').val();
+                var numericPart = absentValue.replace(/[^\d.]/g, '');
+                var absent = parseFloat(numericPart) || 0;
 
-    var totalDeductions = sss + pagibig + philhealth + absent + otherDeductions;
-    
-
-    // Check if totalDeductions is a number before calling toFixed
-    if (!isNaN(totalDeductions)) {
-
-     $('#totalDeductions_id').val(totalDeductions.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
-     $('#totalDeductions2_id').val(totalDeductions.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
-    } else {
-        // Handle the case where totalDeductions is not a number
-        console.error('Total deductions is not a number:', totalDeductions);
-    }
-}
-
-// Event listener for input fields within the #deduction form
-$('#deduction input').on('input', function() {
-    calculateTotalDeductions();
-});
-
-// Initial calculation on page load
-calculateTotalDeductions();
+                var otherDeductionsValue = $('#otherDeductions_id').val();
+                var numericPart = otherDeductionsValue.replace(/[^\d.]/g, '');
+                var otherDeductions = parseFloat(numericPart) || 0;
 
 
+                var totalDeductions = sss + pagibig + philhealth + withholdingTax + absent + otherDeductions;
+            
+
+                    // Check if totalDeductions is a number before calling toFixed
+                    if (!isNaN(totalDeductions)) {
+
+                    $('#totalDeductions_id').val(totalDeductions.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
+                    $('#totalDeductions2_id').val(totalDeductions.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
+                    } else {
+                        // Handle the case where totalDeductions is not a number
+                        console.error('Total deductions is not a number:', totalDeductions);
+                    }
+                }
+
+                // Event listener for input fields within the #deduction form
+                $('#deduction input').on('input', function() {
+                    calculateTotalDeductions();
+                });
+
+                // Initial calculation on page load
+                calculateTotalDeductions();
+
+      
+                
         });
     </script>
 
@@ -779,8 +813,35 @@ calculateTotalDeductions();
     function goToNextTab() {
         document.getElementById('deductions-tab').click();
     }
+
     function goToNextTab1() {
-        document.getElementById('incentives-tab').click();
+        var absentValue = $('#absent_id').val();
+        var otherDeductionsValue = $('#otherDeductions_id').val();
+
+            if (!absentValue) {
+                $('#absent_id').addClass('required-field');
+            } else {
+                $('#absent_id').removeClass('required-field');
+            }
+
+            if (!otherDeductionsValue) {
+                $('#otherDeductions_id').addClass('required-field');
+            } else {
+                $('#otherDeductions_id').removeClass('required-field');
+            }
+
+            if (!absentValue || !otherDeductionsValue) {
+                return;
+            }
+            $('#incentives-tab').tab('show');
+                    //document.getElementById('incentives-tab').click();
+            }
+
+
+
+    // Function to highlight the specified input fields
+    function highlightRequiredFields(fields) {
+        $(fields).addClass('required-field');
     }
 
     function goToPreviousTab() {
@@ -818,70 +879,7 @@ calculateTotalDeductions();
 
         return totalDays;
     }
-
-    // Function to calculate withholding tax
-    //function calculateWithholdingTax() {
-        // Get the total earnings
-        //var totalEarnings = parseFloat(document.getElementById('totalEarnings').value) || 0;
-
-        // Define withholding tax variables
-        //var withholdingTax = 0;
-        //var excessEarning = 0;
-
-        // Check the total earnings against the specified thresholds
-        //if (totalEarnings <= 20833) {
-            //withholdingTax = 0;
-        //} else if (totalEarnings > 20833 && totalEarnings <= 33332) {
-           // excessEarning = totalEarnings - 20833;
-           // withholdingTax = excessEarning * 0.15;
-        //} else if (totalEarnings > 33333 && totalEarnings <= 66666) {
-           // excessEarning = totalEarnings - 33333;
-           // withholdingTax = (excessEarning * 0.20) + 1875;
-        //} else if (totalEarnings > 66667 && totalEarnings <= 166666) {
-            //excessEarning = totalEarnings - 66667;
-           // withholdingTax = (excessEarning * 0.25) + 8541.80;
-        //} else if (totalEarnings > 166667 && totalEarnings <= 666666) {
-           // excessEarning = totalEarnings - 166667;
-          //  withholdingTax = (excessEarning * 0.30) + 33541.80;
-        //} else {
-         //   excessEarning = totalEarnings - 666667;
-          //  withholdingTax = (excessEarning * 0.35) + 183541.80;
-        //}
-
-        // Update withholding tax field
-        //document.getElementById('tax').value = withholdingTax.toFixed(2); // Display up to 2 decimal places
-    //}
-
-    // Attach the calculateWithholdingTax function to input fields' change event
-    //$('#totalEarnings').change(calculateWithholdingTax);
-
-    // Call the calculateWithholdingTax function initially to calculate withholding tax based on initial total earnings value
-    //calculateWithholdingTax();
-
-
- //TOTAL DEDUCTION
-    // Function to calculate total deduction
-    function calculateTotalDeduction() {
-        // Get values from input fields
-        var sssContribution = parseFloat(document.getElementById('sss').value) || 0;
-        var pagibigContribution = parseFloat(document.getElementById('pagibig').value) || 0;
-        var philHealthContribution = parseFloat(document.getElementById('philhealth').value) || 0;
-        var withholdingTax = parseFloat(document.getElementById('tax').value) || 0;
-        var absent = parseFloat(document.getElementById('absent').value) || 0;
-        var otherDeductions = parseFloat(document.getElementById('otherDeductions').value) || 0;
-
-        // Calculate total deduction
-        var totalDeduction = sssContribution + pagibigContribution + philHealthContribution + withholdingTax + absent + otherDeductions;
-
-        // Update total deduction field
-        document.getElementById('totalDeductions').value = totalDeduction.toFixed(2); // Display up to 2 decimal places
-    }
-
-    // Attach the calculateTotalDeduction function to input fields' onchange event
-    document.querySelectorAll('input').forEach(function(input) {
-        input.addEventListener('change', calculateTotalDeduction);
-    });
-
+ 
 
 </script>
 
@@ -927,6 +925,7 @@ $(document).ready(function(){
             success: function(response) {
                 //console.log("Response received:", response); // Log the entire response object
                 //console.log("Success property:", response.success); // Log the value of the success property
+
                 if (response.success) {
                     console.log("Showing the toast..."); // Check if this line is reached
                     $('#insertPayroll').toast('show');

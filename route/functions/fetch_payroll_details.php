@@ -230,10 +230,7 @@ if ($earningsId && $deductionsId && $incentivesId) {
                     $htmlContent .= "<div class='col-md-4'>";
                     $htmlContent .= "<label class='form-label'>Withholding Tax</label>";
                     $htmlContent .= "<div class='input-group mb-3'>";
-                    $htmlContent .= "<div class='input-group-text'>";
-                    $htmlContent .= "<input class='form-check-input mt-0' type='checkbox' value='' id='withholdingTax'  value='{$row_deductions['withholding_tax']}' readonly>";
-                    $htmlContent .= "</div>";
-                    $htmlContent .= "<input type='text' class='form-control' aria-label='Text input with checkbox'>";
+                    $htmlContent .= "<input type='text' id='withholdingTax' class='form-control' aria-label='Text input with checkbox' name='tax'value='{$row_deductions['withholding_tax']}' readonly>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "<div class='col-md-4'>";

@@ -44,7 +44,7 @@ $totalDeductions = isset($_POST['totalDeductions']) ? $_POST['totalDeductions'] 
 
 $result2 = $conn->query("INSERT INTO tbl_deductions (sss_con, pagibig_con, philhealth_con, withholding_tax, absent, other_deductions, total_deductions)
 VALUES ('$sss','$pagibig', '$philhealth', '$withholdingTax', '$absent', '$otherDeductions', '$totalDeductions')");
-
+ 
 if ($result2 === false) {
     $response = array("success" => false, "message" => "Failed to insert data into tbl_deductions: " . $conn->error);
     echo json_encode($response);
