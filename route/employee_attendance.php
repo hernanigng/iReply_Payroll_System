@@ -6,6 +6,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
 
+    <style>
+    .toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1500; /* Adjust the z-index value as needed */
+}
+
+    </style>
 <?php
 include '../connection/session.php';
 include '../template/header.php';
@@ -95,7 +105,6 @@ if (isset($_GET['employee_id'])) {
                 // Iterate through the filtered data and append rows to the table
                 $.each(filteredData, function(index, row) {
                     var html = "<tr>";
-                    html += "<td>" + row['timekeeping_ID'] + "</td>";
                     html += "<td>" + row['date_from'] + " " + row['date_to'] + "</td>";
                     html += "<td>" + row['Total_HrsWork'] + "</td>";
                     html += "<td>" + row['Total_DysWork'] + "</td>";
@@ -140,7 +149,6 @@ if (isset($_GET['employee_id'])) {
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>Attendance ID</th>
                         <th>Date</th>
                         <th>Total Hours Worked</th>
                         <th>Total Days Worked</th>
@@ -156,9 +164,8 @@ if (isset($_GET['employee_id'])) {
                             while ($data1 = mysqli_fetch_array($result1)) {
                             ?>
                                 <tr>
-                                    <td> <?php echo $data1['timekeeping_ID']; ?></td>
-                                    <td> <?php echo $data1['date_from'] . " " . "to" . " " . $data1['date_to']; ?> </td>
-                                    <td> <?php echo $data1['Total_HrsWork']; ?> </td>
+                                <td> <?php echo date('F j, Y', strtotime($data1['date_from'])) . " to " . date('F j, Y', strtotime($data1['date_to'])); ?> </td>
+                                <td> <?php echo $data1['Total_HrsWork']; ?> </td>
                                     <td> <?php echo $data1['Total_DysWork']; ?> </td>
                                     <td>
                                     <!-- <button type="button" class="btn btn-primary editAttendanceBtn" data-timekeeping_id="<?php echo $data1['timekeeping_ID']; ?>">
@@ -256,7 +263,7 @@ $('#totalHrs').on('input', calculateTotalDays);
 
 
   <!-- Timekeeping Insert Success Toast Notification -->
-  <div class="toast position-fixed top-50 start-50 translate-middle" id="insertAttendanceToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+  <div class="toast position-fixed top-10 start-10 translate-middle" id="insertAttendanceToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
             <div class="toast-header">
                 <img src="../assets/img/ireplyicon.png" class="" alt="..." width="30" height="30">
                 <strong class="me-auto">Notification</strong>
@@ -275,55 +282,46 @@ $('#totalHrs').on('input', calculateTotalDays);
     <h5 class="modal-title">Add Attendance</h5>
  </div>
 
-  <div class="modal-body">
-  <form id="insert_Attendance" method="POST">
-    <div class="container mt-4">
-
-        <div class="row">
-            <div class="col">
-                <input type="hidden" name="employee_id" class="form-control" id="employee_id" value="<?php echo $data['employee_id']; ?>">
-                <label for="employee_name" class="form-label">Employee Name:</label>
-                <input type="text" name="employee_name" class="form-control" id="employee_name" readonly>
+ <div class="modal-body">
+    <form id="insert_Attendance" method="POST">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col">
+                    <input type="hidden" name="employee_id" class="form-control" id="employee_id" value="<?php echo $data['employee_id']; ?>">
+                    <label for="employee_name" class="form-label">Employee Name:</label>
+                    <input type="text" name="employee_name" class="form-control" id="employee_name" readonly>
                 </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <label for="dateFrm" class="form-label">Date:</label>
-                <input type="date" name="dateFrm" class="form-control" id="dateFrm">
-                <div class="error" style="color: red;"></div>
-                <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
 
-            <div class="col-md-6">
-                <label for="dateFrm" class="form-label"> </label>
-                <input type="date" name="dateTo" class="form-control" id="dateTo">
-                <div class="error" style="color: red;"></div>
-                <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="dateFrm" class="form-label">Date From:</label>
+                    <input type="date" name="dateFrm" class="form-control" id="dateFrm">
+                </div>
+                <div class="col-md-6">
+                    <label for="dateTo" class="form-label">Date To:</label>
+                    <input type="date" name="dateTo" class="form-control" id="dateTo">
+                </div>
             </div>
 
-            <div class="col-md-4">
-                <label for="totalHrs" class="form-label">Total Hours Worked:</label>
-                <input type="number" name="totalHrs" class="form-control" id="totalHrs">
-                <div class="error" style="color: red;"></div>
-                <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
-            </div>
-
-            <div class="col-md-4">
-                <label for="totalDys" class="form-label">Total Days Worked:</label>
-                <input type="number" name="totalDys" class="form-control" id="totalDys" readonly>
-                <div class="error" style="color: red;"></div>
-                <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
-            </div>
-
-            <div class="modal-footer mt-3">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> Close </button>
-                <button type="submit" class="btn btn-primary">Save</button>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="totalHrs" class="form-label">Total Hours Worked:</label>
+                    <input type="number" name="totalHrs" class="form-control" id="totalHrs">
+                </div>
+                <div class="col-md-6">
+                    <label for="totalDys" class="form-label">Total Days Worked:</label>
+                    <input type="number" name="totalDys" class="form-control" id="totalDys" readonly>
+                </div>
             </div>
         </div>
-    </div>
-</form>
-  </div>
+
+        <div class="modal-footer mt-3">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
 </div>
 </div>
 </div>
@@ -347,44 +345,45 @@ $('#totalHrs').on('input', calculateTotalDays);
                 <label for="edit_employee_name" class="form-label">Employee Name:</label>
                 <input type="text" name="edit_employee_name" class="form-control" id="edit_employee_name" readonly>
                 </div>
-                <input type="hidden" name="edit_employee_id" class="form-control" id="edit_employee_id" readonly>
-                
+                <input type="hidden" name="edit_employee_id" class="form-control" id="edit_employee_id" readonly>         
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <label for="edit_dateFrm" class="form-label">Date:</label>
+                <label for="edit_dateFrm" class="form-label">Date From:</label>
                 <input type="date" class="form-control" id="edit_dateFrm">
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
 
             <div class="col-md-6">
-                <label for="edit_dateTo" class="form-label"> </label>
+                <label for="edit_dateTo" class="form-label"> Date To:</label>
                 <input type="date" class="form-control" id="edit_dateTo">
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
+        </div>
 
-            <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-6">
                 <label for="edit_totalHrs" class="form-label">Total Hours Worked:</label>
                 <input type="number" class="form-control" id="edit_totalHrs">
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label for="edit_totalDys" class="form-label">Total Days Worked:</label>
                 <input type="number" class="form-control" id="edit_totalDys">
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
+        </div>
 
             <div class="modal-footer mt-3">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> Close </button>
                 <button type="submit" class="btn btn-primary" id="updateAttendance">Update</button>
             </div>
-        </div>
     </div>
 </form>
   </div>
