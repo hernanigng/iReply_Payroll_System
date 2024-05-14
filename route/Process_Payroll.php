@@ -914,6 +914,27 @@ $(document).ready(function(){
     $('#incentivesTab').submit(function(e) {
         e.preventDefault(); // Prevent the default form submission
 
+       $('#incentives_id').removeClass('required-field');
+        $('#others_id').removeClass('required-field');
+
+        var incentives = $('#incentives_id').val().trim();
+        var others = $('#others_id').val().trim();
+
+        var valid = true;
+        if (incentives === "") {
+            $('#incentives_id').addClass('required-field');
+            valid = false;
+        }
+        if (others === "") {
+            $('#others_id').addClass('required-field');
+            valid = false;
+        }
+
+        if (!valid) {
+            return; // Prevent form submission if any field is empty
+        }
+
+
         var data = $('#earningsTab, #deduction, #incentivesTab').serialize();
         var url = "functions/insertProcessPayroll.php";
 

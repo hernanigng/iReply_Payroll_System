@@ -201,7 +201,7 @@ if ($earningsId && $deductionsId && $incentivesId) {
                 $htmlContent .= "<div class='row mb-3'>";
                 $htmlContent .= "<div class='col-md-9'></div>"; // Placeholder column to align button to the right
                 $htmlContent .= "<div class='col-md-3'>";
-                $htmlContent .= "<button type='button' class='btn btn-primary w-100' onclick='goToNextTab()'>Next</button>";
+          
                 $htmlContent .= "</div>";
                 $htmlContent .= "</div>";
                 $htmlContent .= "</div>"; // Closing tab-pane fade show active div
@@ -257,7 +257,6 @@ if ($earningsId && $deductionsId && $incentivesId) {
                     $htmlContent .= "<button type='button' class='btn btn-secondary w-100' onclick='goToPreviousTab()'>Back</button>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "<div class='col-md-6'>";
-                    $htmlContent .= "<button type='button' class='btn btn-primary w-100' onclick='goToNextTab1()'>Next</button>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "</div>";
@@ -307,7 +306,6 @@ if ($earningsId && $deductionsId && $incentivesId) {
                     $htmlContent .= "<button type='button' class='btn btn-secondary w-100' onclick='goToPreviousTab1()'>Back</button>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "<div class='col-md-6'>";
-                    $htmlContent .= "<button type='submit' class='btn btn-primary w-100'>Save</button>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "</div>";
