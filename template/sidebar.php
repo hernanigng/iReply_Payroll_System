@@ -60,7 +60,7 @@ mysqli_close($conn);
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
 
 
-        <div class="sb-sidenav-header">
+        <div class="sb-sidenav-header bg-gradient">
             <div class="profile">
                 <?php
 
@@ -136,8 +136,7 @@ mysqli_close($conn);
                         }
                     </script>
                         <a class="nav-link" href="../route/TimeKeeping.php">
-                        <div class="sb-nav-link-icon"><i class="fa-solid fa-clock"></i></div>
-                        Time Keeping
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-clock"></i></div>Time Keeping
                         </a>
 
                         <a class="nav-link" href="../route/user_management.php">
@@ -173,7 +172,7 @@ mysqli_close($conn);
                         </div>
                     </div>
 
-                    <div class="sb-sidenav-footer">
+                    <div class="sb-sidenav-footer bg-gradient">
                         <a href="../connection/logout.php" class="option">
                             Sign out
                         </a>

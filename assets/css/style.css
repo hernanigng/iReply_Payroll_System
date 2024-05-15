@@ -11039,7 +11039,7 @@ body {
 
 .nav .nav-link .sb-nav-link-icon,
 .sb-sidenav-menu .nav-link .sb-nav-link-icon {
-  margin-right: 0.5rem;
+  margin-right: 0.8rem;
 }
 
 .sb-topnav {
@@ -11050,6 +11050,7 @@ body {
 .sb-topnav .navbar-brand {
   width: 225px;
   margin: 0;
+  font-weight: 700;
 }
 .sb-topnav.navbar-dark #sidebarToggle {
   color: rgba(255, 255, 255, 0.5);
@@ -11084,6 +11085,7 @@ body {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   position: relative;
+  font-size: 0.9rem;
 }
 .sb-sidenav .sb-sidenav-menu .nav .nav-link .sb-nav-link-icon {
   font-size: 0.9rem;
