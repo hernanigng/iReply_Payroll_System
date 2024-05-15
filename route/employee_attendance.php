@@ -221,7 +221,7 @@ if (isset($_GET['employee_id'])) {
     });
 
     function redirectToPayroll(timekeepingId) {
-    window.location.href = 'Process_Payroll.php?timekeeping_ID=' + timekeepingId;
+    window.location.href = 'Process_Payroll_Timekeeping.php.php?timekeeping_ID=' + timekeepingId;
 }
 
 $(document).ready(function() {
