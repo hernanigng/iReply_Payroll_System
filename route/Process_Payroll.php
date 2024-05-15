@@ -36,6 +36,46 @@
                     </li>
                 </ul>
 
+
+                <?php
+    include "../connection/database.php";
+
+    $timekeepingId = isset($_GET['timekeeping_ID']) ? $_GET['timekeeping_ID'] : null;
+
+    if ($timekeepingId) {
+        // Fetch data based on timekeeping_ID
+        $sql = "SELECT date_from, date_to, Total_DysWork, tbl_employee.employee_id, firstname, lastname, daily_rate 
+                FROM tbl_timekeeping
+                JOIN tbl_employee ON tbl_timekeeping.employee_id = tbl_employee.employee_id
+                WHERE timekeeping_ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $timekeepingId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            // Fetch the first row (assuming there's only one result)
+            $data = $result->fetch_assoc();
+            
+            // Store fetched data in variables
+            $dateFrom = $data['date_from'];
+            $dateTo = $data['date_to'];
+            $employeeId = $data['employee_id'];
+            $employeeName = $data['firstname'] . ' ' . $data['lastname'];
+            $totalDaysWork = $data['Total_DysWork'];
+            $dailyRate = $data['daily_rate'];
+
+        } else {
+            echo "No data found for timekeeping_ID: " . $timekeepingId;
+        }
+        
+        $stmt->close();
+    } else {
+        echo "No timekeeping ID provided.";
+    }
+    $conn->close();
+?>
+
                 <div class="tab-content" id="myTabContent">
            
 
@@ -45,41 +85,37 @@
                         <form id="earningsTab" method="post">
                 <div class="row mb-3">
                     <div class="col-md-6">
-                    <label for="employeeName"  class="form-label">Employee Name</label>
-                                <select class="form-select" id="employeeSelect" name="selectEmployee" aria-label="Employee Select">
-                                    <option selected disabled>Select an Employee</option>
-                                    <?php
-                                        include "../connection/database.php";
-                                        if ($conn->connect_error) {
-                                            die("Connection failed: " . $conn->connect_error);
-                                        }
+                      <label for="employeeSelect" class="form-label">Employee Name</label>
+                        <select class="form-select" id="employeeSelect" name="selectEmployee" aria-label="Employee Select">
+                            <option selected disabled>Select an Employee</option>
+                            <?php
+                            include "../connection/database.php";
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
 
-                                        $sql = "SELECT employee_id, firstname, lastname FROM tbl_employee";
-                                        $result = $conn->query($sql);
+                            $sql = "SELECT employee_id, firstname, lastname FROM tbl_employee";
+                            $result = $conn->query($sql);
 
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo '<option value="' . $row["employee_id"] . '">' . $row["firstname"] . ' ' . $row["lastname"] . '</option>';
-                                          }
-                                        }
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $selected = ($row["employee_id"] == $employeeId) ? "selected" : "";
+                                    echo '<option value="' . $row["employee_id"] . '" ' . $selected . '>' . $row["firstname"] . ' ' . $row["lastname"] . '</option>';
+                                }
+                            }
 
-                                        $conn->close();
-                                    ?>
-                                </select>
-                                   <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
-                                <?php
-                                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                        $selectedClientId = $_POST['createClient'];
-                                    }
-                                ?>
-                    </div>
+                            $conn->close();
+                            ?>
+                        </select>
+                <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
+            </div>
                     <div class="col-md-6">
                         <label for="periodCovered" class="form-label">Period Covered</label>
                         <div class="input-group">
                             <span class="input-group-text">Start Date</span>
-                            <input type="text" id="startDate" name="startDate" class="form-control" style="width: 200px;">
-                            <span class="input-group-text">End Date</span>
-                            <input type="text" id="endDate" name="endDate" class="form-control" style="width: 200px;">
+                    <input type="text" id="startDate" name="startDate" class="form-control" style="width: 200px;" value="<?php echo isset($dateFrom) ? $dateFrom : ''; ?>">
+                    <span class="input-group-text">End Date</span>
+                    <input type="text" id="endDate" name="endDate" class="form-control" style="width: 200px;" value="<?php echo isset($dateTo) ? $dateTo : ''; ?>">
                         </div>
                     </div>
                 </div>
@@ -88,14 +124,14 @@
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="daysWorked" class="form-label">No. of Days Worked</label>
-                            <input type="text" name="daysWorked" class="form-control" id="daysWorked" disabled>
+                            <input type="text" name="daysWorked" class="form-control" id="daysWorked" value="<?php echo isset($totalDaysWork) ? $totalDaysWork : ''; ?>" disabled>
                         </div>
-
+ 
                  
 
                         <div class="col-md-4">
                             <label for="basicPay" class="form-label">Basic Pay</label>
-                            <input type="text" name="basicPay" class="form-control" id="basicPay"  style="width: 150px;" placeholder="PHP 0.00" readonly>
+                            <input type="text" name="basicPay" class="form-control" id="basicPay"  style="width: 150px;" placeholder="PHP 0.00"  value="<?php echo isset($dailyRate) ? $dailyRate : ''; ?>" readonly>
                         </div>
 
                         <div class="col-md-4">

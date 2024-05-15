@@ -270,7 +270,7 @@ if ($earningsId && $deductionsId && $incentivesId) {
                     $htmlContent .= "<div class='row mb-3'>";
                     $htmlContent .= "<div class='col-md-6'>";
                     $htmlContent .= "<label for='philHealth' class='form-label'>Incentives</label>";
-                    $htmlContent .= "<input type='text' name='philHealth' class='form-control' id='philHealth' alue='{$row_incentives['incentives']}' readonly>";
+                    $htmlContent .= "<input type='text' name='philHealth' class='form-control' id='philHealth' value='{$row_incentives['incentives']}' readonly>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "<div class='col-md-6'>";
                     $htmlContent .= "<label for='pagibig' class='form-label'>Others</label>";
