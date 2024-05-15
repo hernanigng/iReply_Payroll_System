@@ -37,48 +37,6 @@
                 </ul>
 
 
-                <?php
-    include "../connection/database.php";
-
-    $timekeepingId = isset($_GET['timekeeping_ID']) ? $_GET['timekeeping_ID'] : null;
-
-    if ($timekeepingId) {
-        // Fetch data based on timekeeping_ID
-        $sql = "SELECT date_from, date_to, Total_DysWork, tbl_employee.employee_id, firstname, lastname, daily_rate, sss_con, pagibig_con, philhealth_con 
-                FROM tbl_timekeeping
-                JOIN tbl_employee ON tbl_timekeeping.employee_id = tbl_employee.employee_id
-                WHERE timekeeping_ID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $timekeepingId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows > 0) {
-            // Fetch the first row (assuming there's only one result)
-            $data = $result->fetch_assoc();
-            
-            // Store fetched data in variables
-            $dateFrom = $data['date_from'];
-            $dateTo = $data['date_to'];
-            $employeeId = $data['employee_id'];
-            $employeeName = $data['firstname'] . ' ' . $data['lastname'];
-            $totalDaysWork = $data['Total_DysWork'];
-            $dailyRate = $data['daily_rate'];
-            $sss = $data['sss_con'];
-            $pagibig = $data['pagibig_con'];
-            $philhealth = $data['philhealth_con'];
-
-        } else {
-            echo "No data found for timekeeping_ID: " . $timekeepingId;
-        }
-        
-        $stmt->close();
-    } else {
-        echo "No timekeeping ID provided.";
-    }
-    $conn->close();
-?>
-
                 <div class="tab-content" id="myTabContent">
            
 

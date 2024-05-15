@@ -52,7 +52,7 @@ if (isset($_GET['employee_id'])) {
                         // Assuming you want to populate years from 2020 to current year
                         $currentYear = date('Y');
                         for ($year = 2020; $year <= $currentYear; $year++) {
-                            echo '<option value="' . $year . '">' . $year . '</option>';
+                            echo '<option value="' . $year . '"' . ($year == $currentYear ? ' selected' : '') . '>' . $year . '</option>';
                         }
                         ?>
                     </select>
@@ -67,8 +67,10 @@ if (isset($_GET['employee_id'])) {
                             '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August',
                             '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
                         );
+                       $currentMonth = date('m');
                         foreach ($months as $monthNumber => $monthName) {
-                            echo '<option value="' . $monthNumber . '">' . $monthName . '</option>';
+                            echo '<option value="' . $monthNumber . '"' . ($monthNumber == $currentMonth ? ' selected' : '') . '>' . $monthName . '</option>';
+
                         }
                         ?>
                     </select>
