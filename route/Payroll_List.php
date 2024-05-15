@@ -34,7 +34,7 @@ ini_set('display_errors', 1); ?>
                         <?php
                         $currentYear = date('Y');
                         for ($year = 2020; $year <= $currentYear; $year++) {
-                            echo '<option value="' . $year . '">' . $year . '</option>';
+                            echo '<option value="' . $year . '"' . ($year == $currentYear ? ' selected' : '') . '>' . $year . '</option>';
                         }
                         ?>
                     </select>
@@ -49,124 +49,80 @@ ini_set('display_errors', 1); ?>
                             '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August',
                             '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
                         );
+                        $currentMonth = date('m');
                         foreach ($months as $monthNumber => $monthName) {
-                            echo '<option value="' . $monthNumber . '">' . $monthName . '</option>';
+                            echo '<option value="' . $monthNumber . '"' . ($monthNumber == $currentMonth ? ' selected' : '') . '>' . $monthName . '</option>';
                         }
                         ?>
                     </select>
                 </div>
             </div>
-                <table id="datatablesSimple">
-                    <thead>
-                        <tr>
-                            <th>Employee Name</th>
-                            <th>Earnings</th>
-                            <th>Deductions</th>
-                            <th>Incentives</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            include "../connection/database.php";
-                            
-                            $query_tranx = "SELECT * FROM tbl_payroll_tranx";
-                            $result_tranx = $conn->query($query_tranx);
+            <table id="datatablesSimple" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Earnings</th>
+                        <th>Deductions</th>
+                        <th>Incentives</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    include "../connection/database.php";
 
-                            if ($result_tranx->num_rows > 0) {
-                                while ($row = $result_tranx->fetch_assoc()) {
-                                    // Fetch corresponding employee, earnings, incentives, and deductions data
-                                    $employee_id = $row['employee_id'];
-                                    $earnings_id = $row['earnings_id'];
-                                    $incentives_id = $row['incentives_id'];
-                                    $deductions_id = $row['deductions_id'];
-                                    $netPay_id = $row['netPay_id'];
+                    $query_tranx = "SELECT * FROM tbl_payroll_tranx";
+                    $result_tranx = $conn->query($query_tranx);
 
-                                    // Construct and execute the SQL query to fetch the employee name
-                                    $query_employee = "SELECT firstname, lastname FROM tbl_employee WHERE employee_id = '$employee_id'";
-                                    $result_employee = $conn->query($query_employee);
+                    if ($result_tranx->num_rows > 0) {
+                        while ($row = $result_tranx->fetch_assoc()) {
+                            // Fetch corresponding employee, earnings, incentives, and deductions data
+                            $employee_id = $row['employee_id'];
+                            $earnings_id = $row['earnings_id'];
+                            $incentives_id = $row['incentives_id'];
+                            $deductions_id = $row['deductions_id'];
+                            $netPay_id = $row['netPay_id'];
 
-                                    // Check if the query executed successfully
-                                    if ($result_employee === false) {
-                                        echo "Error: " . $conn->error;
-                                    } else {
-                                        // Check if any rows were returned
-                                        if ($result_employee->num_rows > 0) {
-                                            // Fetch the row and extract the employee name
-                                            $employee_row = $result_employee->fetch_assoc();
-                                            $employee_firstname = $employee_row['firstname'];
-                                            $employee_lastname = $employee_row['lastname'];
-                                            // Combine first name and last name to form the full name
-                                            $employee_name = $employee_firstname . ' ' . $employee_lastname;
-                                        } else {
-                                            echo "No employee found for ID: $employee_id";
-                                        }
-                                    }
+                            // Construct and execute the SQL query to fetch the employee name
+                            $query_employee = "SELECT firstname, lastname FROM tbl_employee WHERE employee_id = '$employee_id'";
+                            $result_employee = $conn->query($query_employee);
 
-
-                                                    
-                    $query_earnings = "SELECT total_earnings FROM tbl_earnings WHERE earnings_id = '$earnings_id'";
-
-                    $result_earnings = $conn->query($query_earnings);
-
-                    if ($result_earnings === false) {
-                        echo "Error: " . $conn->error;
-                    } else {
-                        if ($result_earnings->num_rows > 0) {
-                            $earnings_row = $result_earnings->fetch_assoc();
-                            $total_earnings = $earnings_row['total_earnings'];
-                        } else {
-                            echo "No earnings data found for earnings ID: $earnings_id";
-                        }
-                    }
-
-                    $query_deductions = "SELECT total_deductions FROM tbl_deductions WHERE deductions_id = '$deductions_id'";
-
-                    $result_deductions = $conn->query($query_deductions);
-
-                    if ($result_deductions === false) {
-                        echo "Error: " . $conn->error;
-                    } else {
-                        if ($result_deductions->num_rows > 0) {
-                            $deductions_row = $result_deductions->fetch_assoc();
-                            $total_deductions = $deductions_row['total_deductions'];
-                        } else {
-                            echo "No earnings data found for earnings ID: $deductions_id";
-                        }
-                    }
-
-                     $query_incentives = "SELECT total_incentives FROM tbl_incentives WHERE incentives_id = '$incentives_id'";
-
-                    $result_incentives = $conn->query($query_incentives);
-
-                    if ($result_incentives === false) {
-                        echo "Error: " . $conn->error;
-                    } else {
-                        if ($result_incentives->num_rows > 0) {
-                            $incentives_row = $result_incentives->fetch_assoc();
-                            $total_incentives = $incentives_row['total_incentives'];
-                        } else {
-                            echo "No earnings data found for earnings ID: $incentives_id";
-                        }
-                    }
-                                    echo "<tr>";
-                                    echo "<td>" . $employee_name. "</td>";
-                                    echo "<td>" . $total_earnings . "</td>";
-                                    echo "<td>" . $total_deductions . "</td>";
-                                    echo "<td>" . $total_incentives . "</td>";
-                                    echo "<td><center><button class='btn btn-primary' data-netPay_id='$netPay_id'>More Details</button></center></td>";
-                                    echo "</tr>";                                
-                                }
+                            if ($result_employee !== false && $result_employee->num_rows > 0) {
+                                $employee_row = $result_employee->fetch_assoc();
+                                $employee_name = $employee_row['firstname'] . ' ' . $employee_row['lastname'];
                             } else {
-                                echo "<tr><td colspan='5'>No data available</td></tr>";
+                                $employee_name = "Unknown Employee";
                             }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+
+                            $query_earnings = "SELECT total_earnings FROM tbl_earnings WHERE earnings_id = '$earnings_id'";
+                            $result_earnings = $conn->query($query_earnings);
+                            $total_earnings = ($result_earnings !== false && $result_earnings->num_rows > 0) ? $result_earnings->fetch_assoc()['total_earnings'] : 0;
+
+                            $query_deductions = "SELECT total_deductions FROM tbl_deductions WHERE deductions_id = '$deductions_id'";
+                            $result_deductions = $conn->query($query_deductions);
+                            $total_deductions = ($result_deductions !== false && $result_deductions->num_rows > 0) ? $result_deductions->fetch_assoc()['total_deductions'] : 0;
+
+                            $query_incentives = "SELECT total_incentives FROM tbl_incentives WHERE incentives_id = '$incentives_id'";
+                            $result_incentives = $conn->query($query_incentives);
+                            $total_incentives = ($result_incentives !== false && $result_incentives->num_rows > 0) ? $result_incentives->fetch_assoc()['total_incentives'] : 0;
+
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($employee_name) . "</td>";
+                            echo "<td>" . htmlspecialchars($total_earnings) . "</td>";
+                            echo "<td>" . htmlspecialchars($total_deductions) . "</td>";
+                            echo "<td>" . htmlspecialchars($total_incentives) . "</td>";
+                            echo "<td><center><button class='btn btn-primary more-details-btn' data-netpay-id='$netPay_id'>More Details</button></center></td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='5'>No data available</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
-</main>
+</div>
 
 <!-- Modal -->
 <div class="modal" id="detailsModal">
@@ -176,74 +132,61 @@ ini_set('display_errors', 1); ?>
       <div class="modal-header">
         <h4 class="modal-title">Details</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-         
       </div>
       <!-- Modal Body -->
       <div class="modal-body" id="modalBody">
-
-
-</main>
-
-
-
-
-
+        <!-- Details will be loaded here -->
       </div>
     </div>
   </div>
 </div>
 
-
+<!-- Include jQuery, Bootstrap JS, and other necessary scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    $(document).ready(function() {
-        function fetchFilteredData() {
-            var year = $('#yearFilter').val();
-            var month = $('#monthFilter').val();
+$(document).ready(function() {
+    function fetchFilteredData() {
+        var year = $('#yearFilter').val();
+        var month = $('#monthFilter').val();
 
-            $.ajax({
-                url: 'functions/fetch_payroll_data.php',
-                type: 'GET',
-                data: { year: year, month: month },
-                success: function(response) {
-                    $('#datatablesSimple tbody').html(response);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching data:', error);
-                }
-            });
-        }
-
-        $('#yearFilter, #monthFilter').change(fetchFilteredData);
-
-        // Initial load
-        fetchFilteredData();
-
-        // Event listener for 'More Details' buttons
-        $(document).on('click', '.btn-primary', function() {
-            var netPayId = $(this).data('netpay_id');
-            $.ajax({
-                type: 'POST',
-                url: 'functions/fetch_payroll_details.php',
-                data: { netPay_id: netPayId },
-                success: function(response) {
-                    $('#modalBody').html(response);
-                    $('#detailsModal').modal('show');
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error:", error);
-                }
-            });
+        $.ajax({
+            url: 'functions/fetch_payroll_data.php',
+            type: 'GET',
+            data: { year: year, month: month },
+            success: function(response) {
+                $('#datatablesSimple tbody').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data:', error);
+            }
         });
+    }
 
-        // Show the modal
+    $('#yearFilter, #monthFilter').change(fetchFilteredData);
 
+    // Initial load
+    fetchFilteredData();
+
+    // Event listener for 'More Details' buttons
+    $(document).on('click', '.more-details-btn', function() {
+        var netPayId = $(this).data('netpay-id');
+        $.ajax({
+            type: 'POST',
+            url: 'functions/fetch_payroll_details.php',
+            data: { netPay_id: netPayId },
+            success: function(response) {
+                $('#modalBody').html(response);
+                $('#detailsModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+            }
+        });
     });
-    </script>
+});
+</script>
+
 
 <footer class="py-4 bg-light mt-auto">
     <div class="container-fluid px-4">

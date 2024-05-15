@@ -44,7 +44,7 @@
 
     if ($timekeepingId) {
         // Fetch data based on timekeeping_ID
-        $sql = "SELECT date_from, date_to, Total_DysWork, tbl_employee.employee_id, firstname, lastname, daily_rate 
+        $sql = "SELECT date_from, date_to, Total_DysWork, tbl_employee.employee_id, firstname, lastname, daily_rate, sss_con, pagibig_con, philhealth_con 
                 FROM tbl_timekeeping
                 JOIN tbl_employee ON tbl_timekeeping.employee_id = tbl_employee.employee_id
                 WHERE timekeeping_ID = ?";
@@ -64,6 +64,9 @@
             $employeeName = $data['firstname'] . ' ' . $data['lastname'];
             $totalDaysWork = $data['Total_DysWork'];
             $dailyRate = $data['daily_rate'];
+            $sss = $data['sss_con'];
+            $pagibig = $data['pagibig_con'];
+            $philhealth = $data['philhealth_con'];
 
         } else {
             echo "No data found for timekeeping_ID: " . $timekeepingId;
@@ -566,15 +569,15 @@ $('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id,
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label for="sss" class="form-label">SSS Contributions</label>
-                                    <input type="text" name="sss" class="form-control" id="sss_id"  readonly>
+                                    <input type="text" name="sss" class="form-control" id="sss_id" value="<?php echo isset($sss) ? $sss : ''; ?>" readonly>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="pagibig" class="form-label">Pagibig Contribution</label>
-                                    <input type="text" name="pagibig" class="form-control" id="pagibig_id" readonly>
+                                    <input type="text" name="pagibig" class="form-control" id="pagibig_id" value="<?php echo isset($pagibig) ? $pagibig : ''; ?>" readonly>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="philhealth" class="form-label">PhilHealth Contribution</label>
-                                    <input type="text" name="philhealth" class="form-control" id="philhealth_id" readonly>
+                                    <input type="text" name="philhealth" class="form-control" id="philhealth_id" value="<?php echo isset($philhealth) ? $philhealth : ''; ?>" readonly>
                                 </div>
                             </div>
 
