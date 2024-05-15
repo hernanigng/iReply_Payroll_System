@@ -187,11 +187,11 @@ if (isset($_GET['employee_id'])) {
                                    <button type="button" class="btn btn-primary" onclick="openEditModal('<?php echo $data1['timekeeping_ID']; ?>')" data-bs-toggle="modal" data-bs-target="#edit_modal">
                                       <i class="bi bi-pencil"></i>
                                    </button>
-
+                                   
                                    <button type="button" class="btn btn-primary" onclick="redirectToPayroll('<?php echo $data1['timekeeping_ID']; ?>')">
                                         <i class="fa-solid fa-calculator"></i>
                                     </button>
-                                    
+
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -219,6 +219,10 @@ if (isset($_GET['employee_id'])) {
         // Go back to the previous page
         window.history.back();
     });
+
+    function redirectToPayroll(timekeepingId) {
+    window.location.href = 'Process_Payroll.php?timekeeping_ID=' + timekeepingId;
+}
 
 $(document).ready(function() {
 
