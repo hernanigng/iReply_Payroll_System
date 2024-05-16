@@ -10,7 +10,7 @@ $employee_id = $_POST['employee_id']; // Assuming this is correct, but it seems 
 $date_from = $_POST['dateFrm'];
 $date_to = $_POST['dateTo'];
 $total_hours = $_POST['totalHrs'];
-$total_days = $_POST['totalDys'];
+$total_days = floor($_POST['totalDys']); // Make sure to floor the value in case of any manipulation
 
 // Prepare and execute the SQL statement
 $query = "INSERT INTO tbl_timekeeping (timekeeping_ID, employee_name, employee_id, date_from, date_to, Total_HrsWork, Total_DysWork) 
@@ -24,7 +24,6 @@ if ($result) {
     // Construct the response array
     $response = array(
         'status' => 'success',
-        'message' => 'New record inserted successfully!',
         'timekeeping_id' => $timekeeping_id, // Send back the generated ID
         'employee_name' => $employee_name,
         'employee_id' => $employee_id,
