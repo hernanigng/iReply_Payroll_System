@@ -4,8 +4,23 @@
 
 <?php include '../template/sidebar.php' ?>
 
+<style>
+        #datatablesSimple th {
+            background-color: #BED7DC;
+            text-align: center;
+            width: 83.77684%;
+        }
+        #datatablesSimple .action{
+            width: 10px;
+        }
+        #datatablesSimple .eth{
+            width: 83.77684%;
+        }
+</style>
+
+
 <!-- Custom Script -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
@@ -16,15 +31,16 @@
 
                 <main>
                     <div class="container-fluid px-4">
+                    <h4 class="mt-4 mb-5">Time Keeping</h4>
                         
-                        <div class="card mb-4 mt-4">
+                        <div class="card col-md-10 offset-1 mb-4 mt-4">
 
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
                                             <th>Employee Name</th>
-                                            <th> </th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -39,8 +55,10 @@
                                         <tr>
                                             <td><?php echo $data['firstname'] . " " . $data['lastname']; ?></td>
                                             <td>
+                                            <center>
                                             <button class="btn btn-primary more-details-btn" data-id="<?php echo $data['employee_id']; ?>"> 
                                             <i class="bi bi-eye"></i> </button>
+                                            </center>
                                             </td>
                                         </tr>
                                         <?php } ?>
