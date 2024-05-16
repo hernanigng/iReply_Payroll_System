@@ -37,6 +37,7 @@
                 </ul>
 
 
+        
                 <div class="tab-content" id="myTabContent">
            
 
@@ -75,8 +76,10 @@
                         <div class="input-group">
                             <span class="input-group-text">Start Date</span>
                     <input type="text" id="startDate" name="startDate" class="form-control" style="width: 200px;" value="<?php echo isset($dateFrom) ? $dateFrom : ''; ?>">
+                  </div>
+                    <div class="input-group">
                     <span class="input-group-text">End Date</span>
-                    <input type="text" id="endDate" name="endDate" class="form-control" style="width: 200px;" value="<?php echo isset($dateTo) ? $dateTo : ''; ?>">
+                    <input type="text" id="endDate" name="endDate" class="form-control" style="width: 200px;" value="<?php echo isset($dateTo) ? $dateTo : ''; ?>" >
                         </div>
                     </div>
                 </div>
@@ -266,16 +269,24 @@ $('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id,
         // Calculate total earnings
         var totalEarnings = daysWorked * basicPay;
 
-        // List of input field IDs to include in the calculation
-        var inputFields = ['regularHoliday_id', 'specialHoliday_id', 'overtime_id', 'nightDifferential_id', 'regularHolidayNightDiff_id', 'specialHolidayNightDiff_id', 'regHolidayOvertime_id', 'splHolidayOvertime_id', 'monthlyBonus_id', 'drd_id', 'payAdjustments_id'];
+       var inputFields = [
+                'regularHoliday_id',
+                'specialHoliday_id',
+                'overtime_id',
+                'nightDifferential_id',
+                'regularHolidayNightDiff_id',
+                'specialHolidayNightDiff_id',
+                'regHolidayOvertime_id',
+                'splHolidayOvertime_id',
+                'monthlyBonus_id',
+                'drd_id',
+                'payAdjustments_id'
+            ];
 
         for (var i = 0; i < inputFields.length; i++) {
             var fieldValueString = $('#' + inputFields[i]).val(); // Retrieve the value as a string
-            var numericPart = fieldValueString.match(/\d+(\.\d+)?/); // Extract numeric part
-            if (numericPart !== null && numericPart.length > 0) {
-                var fieldValue = parseFloat(numericPart[0]) || 0; // Convert to number
+                var fieldValue = parseFloat(fieldValueString.replace(/[^\d.-]/g, '')) || 0; // Convert the string directly to a number
                 totalEarnings += fieldValue;
-            }
         }
 
         var formattedTotalEarnings = totalEarnings.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");

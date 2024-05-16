@@ -211,7 +211,8 @@ ini_set('display_errors', 1); ?>
                 type: 'GET',
                 data: { year: year, month: month },
                 success: function(response) {
-                    $('#datatablesSimple tbody').html(response);
+                    //$('#datatablesSimple tbody').html(response);
+                    $('#datatablesSimple').DataTable();
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching data:', error);

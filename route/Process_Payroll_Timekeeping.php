@@ -37,46 +37,47 @@
                 </ul>
 
 
-                <?php
-    include "../connection/database.php";
+    <?php
+        include "../connection/database.php";
 
-    $timekeepingId = isset($_GET['timekeeping_ID']) ? $_GET['timekeeping_ID'] : null;
+        $timekeepingId = isset($_GET['timekeeping_ID']) ? $_GET['timekeeping_ID'] : null;
 
-    if ($timekeepingId) {
-        // Fetch data based on timekeeping_ID
-        $sql = "SELECT date_from, date_to, Total_DysWork, tbl_employee.employee_id, firstname, lastname, daily_rate, sss_con, pagibig_con, philhealth_con 
-                FROM tbl_timekeeping
-                JOIN tbl_employee ON tbl_timekeeping.employee_id = tbl_employee.employee_id
-                WHERE timekeeping_ID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $timekeepingId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows > 0) {
-            // Fetch the first row (assuming there's only one result)
-            $data = $result->fetch_assoc();
+        if ($timekeepingId) {
+            // Fetch data based on timekeeping_ID
+            $sql = "SELECT date_from, date_to, Total_DysWork, tbl_employee.employee_id, firstname, lastname, daily_rate, sss_con, pagibig_con, philhealth_con 
+                    FROM tbl_timekeeping
+                    JOIN tbl_employee ON tbl_timekeeping.employee_id = tbl_employee.employee_id
+                    WHERE timekeeping_ID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $timekeepingId);
+            $stmt->execute();
+            $result = $stmt->get_result();
             
-            // Store fetched data in variables
-            $dateFrom = $data['date_from'];
-            $dateTo = $data['date_to'];
-            $employeeId = $data['employee_id'];
-            $employeeName = $data['firstname'] . ' ' . $data['lastname'];
-            $totalDaysWork = $data['Total_DysWork'];
-            $dailyRate = $data['daily_rate'];
-            $sss = $data['sss_con'];
-            $pagibig = $data['pagibig_con'];
-            $philhealth = $data['philhealth_con'];
+            if ($result->num_rows > 0) {
+                // Fetch the first row (assuming there's only one result)
+                $data = $result->fetch_assoc();
+                
+                // Store fetched data in variables
+                $dateFrom = $data['date_from'];
+                $dateTo = $data['date_to'];
+                $employeeId = $data['employee_id'];
+                $employeeName = $data['firstname'] . ' ' . $data['lastname'];
+                $totalDaysWork = $data['Total_DysWork'];
+                $dailyRate = $data['daily_rate'];
+                $sss = $data['sss_con'];
+                $pagibig = $data['pagibig_con'];
+                $philhealth = $data['philhealth_con'];
 
+            } else {
+                echo "No data found for timekeeping_ID: " . $timekeepingId;
+            }
+
+            
+            $stmt->close();
         } else {
-            echo "No data found for timekeeping_ID: " . $timekeepingId;
+            echo "No timekeeping ID provided.";
         }
-        
-        $stmt->close();
-    } else {
-        echo "No timekeeping ID provided.";
-    }
-    $conn->close();
+        $conn->close();
 ?>
 
                 <div class="tab-content" id="myTabContent">
@@ -110,6 +111,7 @@
                             $conn->close();
                             ?>
                         </select>
+                           <input type="hidden" name="selectEmployee" value="<?php echo $employeeId; ?>">
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
                     <div class="col-md-6">
@@ -117,8 +119,12 @@
                         <div class="input-group">
                             <span class="input-group-text">Start Date</span>
                     <input type="text" id="startDate" name="startDate" class="form-control" style="width: 200px;" value="<?php echo isset($dateFrom) ? $dateFrom : ''; ?>" disabled>
+                    <input type="hidden" name="startDate" value="<?php echo $dateFrom; ?>">
+                    </div>
+                    <div class="input-group">
                     <span class="input-group-text">End Date</span>
                     <input type="text" id="endDate" name="endDate" class="form-control" style="width: 200px;" value="<?php echo isset($dateTo) ? $dateTo : ''; ?>" disabled>
+                    <input type="hidden" name="endDate" value="<?php echo $dateTo; ?>">
                         </div>
                     </div>
                 </div>
@@ -308,16 +314,24 @@ $('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id,
         // Calculate total earnings
         var totalEarnings = daysWorked * basicPay;
 
-        // List of input field IDs to include in the calculation
-        var inputFields = ['regularHoliday_id', 'specialHoliday_id', 'overtime_id', 'nightDifferential_id', 'regularHolidayNightDiff_id', 'specialHolidayNightDiff_id', 'regHolidayOvertime_id', 'splHolidayOvertime_id', 'monthlyBonus_id', 'drd_id', 'payAdjustments_id'];
+        var inputFields = [
+                'regularHoliday_id',
+                'specialHoliday_id',
+                'overtime_id',
+                'nightDifferential_id',
+                'regularHolidayNightDiff_id',
+                'specialHolidayNightDiff_id',
+                'regHolidayOvertime_id',
+                'splHolidayOvertime_id',
+                'monthlyBonus_id',
+                'drd_id',
+                'payAdjustments_id'
+            ];
 
         for (var i = 0; i < inputFields.length; i++) {
             var fieldValueString = $('#' + inputFields[i]).val(); // Retrieve the value as a string
-            var numericPart = fieldValueString.match(/\d+(\.\d+)?/); // Extract numeric part
-            if (numericPart !== null && numericPart.length > 0) {
-                var fieldValue = parseFloat(numericPart[0]) || 0; // Convert to number
+                var fieldValue = parseFloat(fieldValueString.replace(/[^\d.-]/g, '')) || 0; // Convert the string directly to a number
                 totalEarnings += fieldValue;
-            }
         }
 
         var formattedTotalEarnings = totalEarnings.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -992,8 +1006,8 @@ $(document).ready(function(){
             data: data,
             dataType: "json", // Specify the expected response type
             success: function(response) {
-                //console.log("Response received:", response); // Log the entire response object
-                //console.log("Success property:", response.success); // Log the value of the success property
+                console.log("Response received:", response); // Log the entire response object
+                console.log("Success property:", response.success); // Log the value of the success property
 
                 if (response.success) {
                     console.log("Showing the toast..."); // Check if this line is reached
