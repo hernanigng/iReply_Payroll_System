@@ -49,8 +49,8 @@
                             // Iterate through the filtered data and append rows to the table
                             $.each(filteredData, function(index, row) {
                                 var html = "<tr>";
-                                html += "<td>" + row['employee_name'] + "</td>";
-                                html += "<td>" + formatDate(row['periodcov_from']) + " - " + formatDate(row['periodcov_to']) + "</td>";
+                                html += "<td>" + row['firstname'] + row['lastname'] + "</td>";
+                                html += "<td>" + formatDate(row['periodcov_to']) + "</td>";
                                 html += "<td><button type='button' class='btn btn-primary view' data-id='" + row['netPay_id'] + "' data-empId='" + row['employee_id'] + "'><i class='bi bi-eye'></i></button></td>";
                                 html += "</tr>";
                                 $('#datatablesSimple tbody').append(html);
@@ -132,14 +132,21 @@
                     <tbody>
                         <?php 
                         include "../connection/database.php";
-                        $query = "SELECT * FROM tbl_payroll_tranx";
+                        $query = "SELECT
+                                    e.firstname, 
+                                    e.lastname,
+                                    p.*
+                                  FROM tbl_payroll_tranx p
+                                  JOIN 
+                                     tbl_employee e ON p.employee_id = e.employee_id
+                                  ";
                         $result = $conn->query($query);
                         
                         while ($data = mysqli_fetch_array($result)) {
                         ?>
                         <tr>
-                            <td><?php echo $data['employee_id']; ?></td>
-                            <td><?php echo $data['periodcov_from'] . " " . $data['periodcov_to']; ?></td>
+                            <td><?php echo $data['firstname']. " ". $data['lastname']; ?></td>
+                            <td><?php echo date('F j, Y', strtotime($data['periodcov_to'])); ?></td>
                             <td>
                                 <button class="btn btn-primary view" data-id="<?php echo $data['netPay_id']; ?>" data-empid="<?php echo $data['employee_id']; ?>"> 
                                     <i class="bi bi-eye"></i> 
