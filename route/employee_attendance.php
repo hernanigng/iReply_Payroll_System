@@ -67,7 +67,7 @@ if (isset($_GET['employee_id'])) {
                             '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August',
                             '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
                         );
-                       $currentMonth = date('m');
+                        $currentMonth = date('m');
                         foreach ($months as $monthNumber => $monthName) {
                             echo '<option value="' . $monthNumber . '"' . ($monthNumber == $currentMonth ? ' selected' : '') . '>' . $monthName . '</option>';
 
@@ -123,8 +123,11 @@ if (isset($_GET['employee_id'])) {
                     html += "<td>" + formatDate(row['date_from']) + " - " + formatDate(row['date_to']) + "</td>";
                     html += "<td>" + row['Total_HrsWork'] + "</td>";
                     html += "<td>" + row['Total_DysWork'] + "</td>";
-                    //html += "<td> <button type='button' class='btn btn-primary editAttendanceBtn'  data-timekeeping_id='" + row['timekeeping_ID'] + "'><i class='bi bi-pencil'></i></button> </td>";
-                    html += "<td> <button type='button' class='btn btn-primary' onclick='openEditModal(" + row['timekeeping_ID'] + ")' data-bs-toggle='modal' data-bs-target='#edit_modal'><i class='bi bi-pencil'></i></button></td>";
+                    html += "<td>";
+                    html += "<button type='button' class='btn btn-primary' onclick='openEditModal(" + row['timekeeping_ID'] + ")' data-bs-toggle='modal' data-bs-target='#edit_modal'><i class='bi bi-pencil'></i></button>";
+                    html += "<button type='button' class='btn btn-primary ms-2' onclick='redirectToPayroll(" + row['timekeeping_ID'] + ")'><i class='fa-solid fa-calculator'></i></button>";
+                    html += "</td>";
+
                     html += "</tr>";
                     $('#datatablesSimple tbody').append(html);
                 });
@@ -261,6 +264,12 @@ $('#insert_Attendance').submit(function(event) {
                 // Show the toast after a short delay
                 var insertToast = new bootstrap.Toast($('#insertAttendanceToast')[0]); // Retrieve the DOM element
                 insertToast.show(); // Explicitly show the toast
+
+                 $('#add_modal').modal('hide');
+                
+                 setTimeout(function() {
+                    window.location.reload();
+                    }, 3000);
             } else {
                 // Show error message
                 console.error(response.message);
@@ -508,27 +517,33 @@ function updateAttendance(timekeeping_ID) {
         data: updatedData,
         dataType: 'json',
         success: function(response) {
-    console.log("Update successful"); // Debugging message
-    // Check the status of the response
-    if (response.status === 'success') {
+    
+            if (response.status === 'success') {
 
-         // Clear form fields
-            $('#edit_dateFrm').val('');
-            $('#edit_dateTo').val('');
-            $('#edit_totalHrs').val('');
-            $('#edit_totalDys').val('');
+                // Clear form fields
+                    $('#edit_dateFrm').val('');
+                    $('#edit_dateTo').val('');
+                    $('#edit_totalHrs').val('');
+                    $('#edit_totalDys').val('');
 
-        //$('#edit_modal').modal('hide');
 
-     // Show the toast after a short delay
-      var updateAttendance = new bootstrap.Toast($('#updateAttendanceToast')[0]); // Retrieve the DOM element
-     updateAttendance.show(); // Explicitly show the toast
+            } else {
+                // Show error message
+                console.error(response.message);
+            }
 
-    } else {
-        // Show error message
-        console.error(response.message);
-    }
-},
+
+                 $('#edit_modal').modal('hide');
+
+                
+                 setTimeout(function() {
+                    window.location.reload();
+                    }, 1000);
+
+                // Manually remove the modal-backdrop
+                $('.modal-backdrop').remove();
+
+        },
         error: function(xhr, status, error) {
             // Show error message if AJAX request fails
             alert('An error occurred while processing your request.');
