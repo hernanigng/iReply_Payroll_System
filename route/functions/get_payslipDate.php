@@ -12,9 +12,15 @@ if (isset($_GET['year']) && isset($_GET['month'])) {
     $selectedMonth = $_GET['month'];
 
     // Modify the SQL query to fetch filtered data
-    $query = "SELECT * FROM tbl_payroll_tranx 
-              WHERE YEAR(periodcov_from) = ? 
-              AND MONTH(periodcov_from) = ?";
+    $query = "SELECT 
+        e.firstname, 
+        e.lastname,
+        p.*
+        FROM tbl_payroll_tranx p
+        JOIN 
+            tbl_employee e ON p.employee_id = e.employee_id
+        WHERE YEAR(periodcov_from) = ? 
+        AND MONTH(periodcov_from) = ?";
 
     // Prepare and execute the query
     $stmt = $conn->prepare($query);
