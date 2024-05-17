@@ -121,7 +121,6 @@ pointer-events: none;">Benefit Details</a>
                         <div class="col-md-6">
                             <label for="civilStatus" class="form-label">Civil Status</label>
                             <select class="form-select" name="createCivilStatus" aria-label="Civil Status Select">
-                                <option selected>Select Civil Status</option>
                                 <option value="Single">Single</option>
                                 <option value="Married">Married</option>
                                 <option value="Widowed">Widowed</option>
@@ -146,7 +145,6 @@ pointer-events: none;">Benefit Details</a>
                         <div class="col-md-6">
                             <label for="employeeType" class="form-label">Employee Type</label>
                             <select class="form-select" name="createEmployeeType" aria-label="Employee Type Select">
-                                <option selected>Select Employee Type</option>
                                 <option value="Onsite">Work From Home</option>
                                 <option value="Home">Work Onsite</option>
                             </select>
