@@ -1924,46 +1924,47 @@ $(document).ready(function() {
         $('.error-message').text('');
 
         // Check if all required fields are filled out and pass validation
-        if ( validatePersonalInfo() && validateContactNumber() && validateEmail() && validateNumbers() && validateBenefits()) {
-        // Retrieve the employee ID from the hidden input field
-        var employeeId = $('#employeeId').val();
+        if (validatePersonalInfo() && validateContactNumber() && validateEmail() && validateNumbers() && validateBenefits()) {
+            // Retrieve the employee ID from the hidden input field
+            var employeeId = $('#employeeId').val();
 
-        // Call the updateEmployee function with the employee ID
-        updateEmployee(employeeId);
-    }
+            // Call the updateEmployee function with the employee ID
+            updateEmployee(employeeId);
+        }
     });
 
     function validatePersonalInfo() {
-    var lettersOnly = /^[A-Za-z\s]+$/;
-    var isValid = true;
+        var lettersOnly = /^[A-Za-z\s]+$/;
+        var isValid = true;
 
-    // Get form inputs
-    var firstName = $('#edit_firstname').val();
-    var middleName = $('#edit_middlename').val();
-    var lastName = $('#edit_lastname').val();
+        // Get form inputs
+        var firstName = $('#edit_firstname').val();
+        var middleName = $('#edit_middlename').val();
+        var lastName = $('#edit_lastname').val();
 
-    // Perform validation
-    if (!lettersOnly.test(firstName)) {
-        $('#edit_firstname').addClass('border border-danger');
-        $('#firstNameError').text('Please enter only letters for First Name.');
-        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
-        isValid = false;
-    }
-    if (!lettersOnly.test(middleName)) {
-        $('#edit_middlename').addClass('border border-danger');
-        $('#middleNameError').text('Please enter only letters for Middle Name.');
-        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
-        isValid = false;
-    }
-    if (!lettersOnly.test(lastName)) {
-        $('#edit_lastname').addClass('border border-danger');
-        $('#lastNameError').text('Please enter only letters for Last Name.');
-        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
-        isValid = false;
+        // Perform validation
+        if (!lettersOnly.test(firstName)) {
+            $('#edit_firstname').addClass('border border-danger');
+            $('#firstNameError').text('Please enter only letters for First Name.');
+            $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+            isValid = false;
+        }
+        if (!lettersOnly.test(middleName)) {
+            $('#edit_middlename').addClass('border border-danger');
+            $('#middleNameError').text('Please enter only letters for Middle Name.');
+            $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+            isValid = false;
+        }
+        if (!lettersOnly.test(lastName)) {
+            $('#edit_lastname').addClass('border border-danger');
+            $('#lastNameError').text('Please enter only letters for Last Name.');
+            $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+            isValid = false;
+        }
+
+        return isValid;
     }
 
-    return isValid;
-}
     // Define the validateContactNumber function to check if the contact number is valid
     function validateContactNumber() {
         var contactNumber = $('#edit_contactNum').val();
@@ -1972,221 +1973,221 @@ $(document).ready(function() {
         var contactNumberValid = contactNumberPattern.test(contactNumber);
 
         if (!contactNumberValid) {
-        $('#edit_contactNum').addClass('border border-danger');
-        $('#contactNumError').text('Enter 11 numbers only.');
-        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
-    }   
-    
-        return contactNumberValid;
+            $('#edit_contactNum').addClass('border border-danger');
+            $('#contactNumError').text('Enter 11 numbers only.');
+            $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        }
 
+        return contactNumberValid;
     }
-    
+
     // Define the validateEmail function to check if the email address is valid
     function validateEmail() {
-    var personalEmail = $('#edit_personalEmail').val();
-    var workEmail = $('#edit_workEmail').val();
-    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var personalEmail = $('#edit_personalEmail').val();
+        var workEmail = $('#edit_workEmail').val();
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    var personalEmailValid = emailPattern.test(personalEmail);
-    var workEmailValid = emailPattern.test(workEmail);
+        var personalEmailValid = emailPattern.test(personalEmail);
+        var workEmailValid = emailPattern.test(workEmail);
 
-    if (!personalEmailValid) {
-        $('#edit_personalEmail').addClass('border border-danger');
-        $('#emailError').text('Invalid personal email format.');
-        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
-    }
+        if (!personalEmailValid) {
+            $('#edit_personalEmail').addClass('border border-danger');
+            $('#emailError').text('Invalid personal email format.');
+            $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        }
 
-    if (!workEmailValid) {
-        $('#edit_workEmail').addClass('border border-danger');
-        $('#workEmailError').text('Invalid work email format.');
-        $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
-    }
+        if (!workEmailValid) {
+            $('#edit_workEmail').addClass('border border-danger');
+            $('#workEmailError').text('Invalid work email format.');
+            $('.nav-link-edit[href="#personalEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        }
 
-    return personalEmailValid && workEmailValid;
+        return personalEmailValid && workEmailValid;
     }
 
     // Define the validateForm function to check if all required fields are filled out
     function validateNumbers() {
-    var numbersOnly = /^[0-9]+$/;
-    var isValid = true;
+        var numbersOnly = /^[0-9]+$/;
+        var isValid = true;
 
-    // Reset error messages and styles
-    $('.form-control').removeClass('border border-danger');
-    $('.error-message').text('');
+        // Reset error messages and styles
+        $('.form-control').removeClass('border border-danger');
+        $('.error-message').text('');
 
-    var sssNum = $('#edit_sss').val();
-    var pagibigNum = $('#edit_pagibig').val();
-    var philhealthNum = $('#edit_philhealth').val();
-    var tinNum = $('#edit_tin').val();
+        var sssNum = $('#edit_sss').val();
+        var pagibigNum = $('#edit_pagibig').val();
+        var philhealthNum = $('#edit_philhealth').val();
+        var tinNum = $('#edit_tin').val();
 
-    if (!numbersOnly.test(sssNum)) {
-        $('#edit_sss').addClass('border border-danger');
-        $('#sssError').text('Please enter only 10 numbers for SSS Number.');
-        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
-        isValid = false;
+        if (!numbersOnly.test(sssNum)) {
+            $('#edit_sss').addClass('border border-danger');
+            $('#sssError').text('Please enter only 10 numbers for SSS Number.');
+            $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+            isValid = false;
+        }
+
+        if (!numbersOnly.test(pagibigNum)) {
+            $('#edit_pagibig').addClass('border border-danger');
+            $('#pagibigError').text('Please enter only 12 numbers for Pag-IBIG Number.');
+            $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+            isValid = false;
+        }
+
+        if (!numbersOnly.test(philhealthNum)) {
+            $('#edit_philhealth').addClass('border border-danger');
+            $('#philhealthError').text('Please enter only 12 numbers for PhilHealth Number.');
+            $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+            isValid = false;
+        }
+
+        if (!numbersOnly.test(tinNum) || tinNum.length < 9 || tinNum.length > 12) {
+            $('#edit_tin').addClass('border border-danger');
+            $('#tinError').text('Please enter 9 to 12 numbers for TIN Number.');
+            $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+            isValid = false;
+        }
+
+        return isValid;
     }
-
-    if (!numbersOnly.test(pagibigNum)) {
-        $('#edit_pagibig').addClass('border border-danger');
-        $('#pagibigError').text('Please enter only 12 numbers for SSS Number.');
-        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
-        isValid = false;
-    }
-
-    if (!numbersOnly.test(philhealthNum)) {
-        $('#edit_philhealth').addClass('border border-danger');
-        $('#philhealthError').text('Please enter only 12 numbers for SSS Number.');
-        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
-        isValid = false;
-    }
-
-    if (!numbersOnly.test(tinNum)) {
-        $('#edit_tin').addClass('border border-danger');
-        $('#tinError').text('Please enter only 12 numbers for SSS Number.');
-        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
-        isValid = false;
-    }
-
-    return isValid;
-}
 
     function validateBenefits() {
-    var sssNum = $('#edit_sss').val();
-    var sssNumPattern = /^\d{10}$/;
-    var pagibigNum = $('#edit_pagibig').val();
-    var philhealthNum = $('#edit_philhealth').val();
-    var tinNum = $('#edit_tin').val();
-    var Patterns = /^\d{12}$/;
+        var sssNum = $('#edit_sss').val();
+        var sssNumPattern = /^\d{10}$/;
+        var pagibigNum = $('#edit_pagibig').val();
+        var philhealthNum = $('#edit_philhealth').val();
+        var tinNum = $('#edit_tin').val();
+        var pagibigAndPhilhealthPattern = /^\d{12}$/;
+        var tinPattern = /^\d{9,12}$/;
 
-    var sssNumValid = sssNumPattern.test(sssNum);
-    var pagibigNumValid = Patterns.test(pagibigNum);
-    var philhealthNumValid = Patterns.test(philhealthNum);
-    var tinNumValid = Patterns.test(tinNum);
+        var sssNumValid = sssNumPattern.test(sssNum);
+        var pagibigNumValid = pagibigAndPhilhealthPattern.test(pagibigNum);
+        var philhealthNumValid = pagibigAndPhilhealthPattern.test(philhealthNum);
+        var tinNumValid = tinPattern.test(tinNum);
 
-    if (!sssNumValid) {
-        $('#edit_sss').addClass('border border-danger');
-        $('#sssError').text('Enter 10 numbers only.');
-        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        if (!sssNumValid) {
+            $('#edit_sss').addClass('border border-danger');
+            $('#sssError').text('Enter 10 numbers only.');
+            $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        }
+
+        if (!pagibigNumValid) {
+            $('#edit_pagibig').addClass('border border-danger');
+            $('#pagibigError').text('Enter 12 numbers only.');
+            $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        }
+
+        if (!philhealthNumValid) {
+            $('#edit_philhealth').addClass('border border-danger');
+            $('#philhealthError').text('Enter 12 numbers only.');
+            $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        }
+
+        if (!tinNumValid) {
+            $('#edit_tin').addClass('border border-danger');
+            $('#tinError').text('Enter 9 to 12 numbers only.');
+            $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
+        }
+
+        return sssNumValid && pagibigNumValid && philhealthNumValid && tinNumValid;
     }
 
-    if (!pagibigNumValid) {
-        $('#edit_pagibig').addClass('border border-danger');
-        $('#pagibigError').text('Enter 12 numbers only.');
-        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
-    }
-
-    if (!philhealthNumValid) {
-        $('#edit_philhealth').addClass('border border-danger');
-        $('#philhealthError').text('Enter 12 numbers only.');
-        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
-    }
-
-    if (!tinNumValid) {
-        $('#edit_tin').addClass('border border-danger');
-        $('#tinError').text('Enter 12 numbers only.');
-        $('.nav-link-edit[href="#benefitEdit"]').addClass('error-tab'); // Add class to highlight tab link
-    }  
-
-    return sssNumValid && pagibigNumValid && philhealthNumValid && tinNumValid;
-}
-   // Remove error class from tab links when a tab is clicked
-$('.nav-link-edit').click(function() {
-    $('.nav-link-edit').removeClass('error-tab');
-});
+    // Remove error class from tab links when a tab is clicked
+    $('.nav-link-edit').click(function() {
+        $('.nav-link-edit').removeClass('error-tab');
+    });
 
     // Define the updateEmployee function here
-function updateEmployee(employeeId) {
-    // Retrieve the updated data from the form fields
-    var firstname = $('#edit_firstname').val();
-    var middlename = $('#edit_middlename').val();
-    var lastname = $('#edit_lastname').val();
-    var address = $('#edit_address').val();
-    var birthdate = $('#edit_birthdate').val();
-    var contactNum = $('#edit_contactNum').val();
-    var civilStatus = $('#edit_civilStatus').val();
-    var personalEmail = $('#edit_personalEmail').val();
-    var workEmail = $('#edit_workEmail').val();
-    var employeeType = $('#edit_employeeType').val();
-    var startDate = $('#edit_startDate').val();
-    var monthly = $('#edit_monthly').val();
-    var accBonus = $('#edit_accBonus').val();
-    var client = $('#edit_client').val();
-    var position = $('#edit_position').val();
-    var employmentStatus = $('#edit_employmentStatus').val();
-    var sss = $('#edit_sss').val();
-    var pagibig = $('#edit_pagibig').val();
-    var philhealth = $('#edit_philhealth').val();
-    var tin = $('#edit_tin').val();
-    var sssCon = $('#edit_sssCon').val();
-    var pagibigCon = $('#edit_pagibigCon').val();
-    var philhealthCon = $('#edit_philhealthCon').val();
-    var tax = $('#edit_tax').val();
+    function updateEmployee(employeeId) {
+        // Retrieve the updated data from the form fields
+        var firstname = $('#edit_firstname').val();
+        var middlename = $('#edit_middlename').val();
+        var lastname = $('#edit_lastname').val();
+        var address = $('#edit_address').val();
+        var birthdate = $('#edit_birthdate').val();
+        var contactNum = $('#edit_contactNum').val();
+        var civilStatus = $('#edit_civilStatus').val();
+        var personalEmail = $('#edit_personalEmail').val();
+        var workEmail = $('#edit_workEmail').val();
+        var employeeType = $('#edit_employeeType').val();
+        var startDate = $('#edit_startDate').val();
+        var monthly = $('#edit_monthly').val();
+        var accBonus = $('#edit_accBonus').val();
+        var client = $('#edit_client').val();
+        var position = $('#edit_position').val();
+        var employmentStatus = $('#edit_employmentStatus').val();
+        var sss = $('#edit_sss').val();
+        var pagibig = $('#edit_pagibig').val();
+        var philhealth = $('#edit_philhealth').val();
+        var tin = $('#edit_tin').val();
+        var sssCon = $('#edit_sssCon').val();
+        var pagibigCon = $('#edit_pagibigCon').val();
+        var philhealthCon = $('#edit_philhealthCon').val();
+        var tax = $('#edit_tax').val();
 
-    // Create a JSON object with the updated data
-    var updatedData = {
-        employee_id: employeeId,
-        firstname: firstname,
-        middlename: middlename,
-        lastname: lastname,
-        address: address,
-        birthdate: birthdate,
-        contact_num: contactNum,
-        civilstatus: civilStatus,
-        personal_email: personalEmail,
-        work_email: workEmail,
-        employee_type: employeeType,
-        start_date: startDate,
-        daily_rate: monthly,
-        account_bonus: accBonus,
-        client: client,
-        position: position,
-        employment_status: employmentStatus,
-        sss_num: sss,
-        pagibig_num: pagibig,
-        philhealth_num: philhealth,
-        tin_num: tin,
-        sss_con: sssCon,
-        pagibig_con: pagibigCon,
-        philhealth_con: philhealthCon,
-        tax_percentage: tax
-        // Add other fields as needed
-    };
+        // Create a JSON object with the updated data
+        var updatedData = {
+            employee_id: employeeId,
+            firstname: firstname,
+            middlename: middlename,
+            lastname: lastname,
+            address: address,
+            birthdate: birthdate,
+            contact_num: contactNum,
+            civilstatus: civilStatus,
+            personal_email: personalEmail,
+            work_email: workEmail,
+            employee_type: employeeType,
+            start_date: startDate,
+            daily_rate: monthly,
+            account_bonus: accBonus,
+            client: client,
+            position: position,
+            employment_status: employmentStatus,
+            sss_num: sss,
+            pagibig_num: pagibig,
+            philhealth_num: philhealth,
+            tin_num: tin,
+            sss_con: sssCon,
+            pagibig_con: pagibigCon,
+            philhealth_con: philhealthCon,
+            tax_percentage: tax
+            // Add other fields as needed
+        };
 
-    // Perform AJAX request to update employee data
-    $.ajax({
-        url: 'functions/update_employee.php',
-        type: 'POST',
-        data: updatedData,
-        dataType: 'json',
-        success: function(response) {
-    // Handle success response
-    if (response.success) {
-        // Display toast notification
-        var updateToast = new bootstrap.Toast($('#updateToast'));
-        updateToast.show();
+        // Perform AJAX request to update employee data
+        $.ajax({
+            url: 'functions/update_employee.php',
+            type: 'POST',
+            data: updatedData,
+            dataType: 'json',
+            success: function(response) {
+                // Handle success response
+                if (response.success) {
+                    // Display toast notification
+                    var updateToast = new bootstrap.Toast($('#updateToast'));
+                    updateToast.show();
 
-        // Optionally hide the modal
-        closeModal();
+                    // Optionally hide the modal
+                    closeModal();
 
-        // Reload the page after a short delay (e.g., 2 seconds)
-        setTimeout(function() {
-            location.reload(true); // Reload the page with clearing cache
-        }, 2000); // Adjust the delay time as needed
-    } else {
-        // If update failed, display error message
-        console.error(response.message);
+                    // Reload the page after a short delay (e.g., 2 seconds)
+                    setTimeout(function() {
+                        location.reload(true); // Reload the page with clearing cache
+                    }, 2000); // Adjust the delay time as needed
+                } else {
+                    // If update failed, display error message
+                    console.error(response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                // Handle AJAX error
+                console.error(xhr.responseText);
+            }
+        });
     }
-},
-        error: function(xhr, status, error) {
-            // Handle AJAX error
-            console.error(xhr.responseText);
-        }
-    });
-}
-
 });
-
 </script>
+
 <!-- User Update Toast Notification -->
 <div class="toast position-fixed top-50 start-50 translate-middle" id="updateToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
             <div class="toast-header">
