@@ -225,18 +225,14 @@ if (isset($_GET['employee_id'])) {
         window.history.back();
     });
 
-    function redirectToPayroll(timekeepingId) {
-    window.location.href = 'Process_Payroll_Timekeeping.php?timekeeping_ID=' + timekeepingId;
-}
-
 $(document).ready(function() {
 
 // Function to calculate total days based on total hours
 function calculateTotalDays() {
-    var totalHours = parseFloat($('#totalHrs').val());
-    var totalDays = totalHours / 8; // Assuming 8 hours per day
-    $('#totalDys').val(totalDays);
-}
+        var totalHours = parseFloat($('#totalHrs').val());
+        var totalDays = Math.floor(totalHours / 8); // Assuming 8 hours per day
+        $('#totalDys').val(totalDays);
+    }
 
 // Handle form submission for adding attendance
 $('#insert_Attendance').submit(function(event) {
@@ -264,12 +260,6 @@ $('#insert_Attendance').submit(function(event) {
                 // Show the toast after a short delay
                 var insertToast = new bootstrap.Toast($('#insertAttendanceToast')[0]); // Retrieve the DOM element
                 insertToast.show(); // Explicitly show the toast
-
-                 $('#add_modal').modal('hide');
-                
-                 setTimeout(function() {
-                    window.location.reload();
-                    }, 3000);
             } else {
                 // Show error message
                 console.error(response.message);
