@@ -1911,6 +1911,7 @@ function openEditModal(employeeId) {
     </div>
 </div>
 
+
 <script>
 // UPDATE SCRIPT
 $(document).ready(function() {
