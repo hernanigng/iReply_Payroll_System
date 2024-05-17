@@ -219,6 +219,10 @@ if (isset($_GET['employee_id'])) {
 
 
 <script>
+    function redirectToPayroll(timekeepingId) {
+    window.location.href = 'Process_Payroll_Timekeeping.php?timekeeping_ID=' + timekeepingId;
+}
+
     // Function to handle back button click
     document.getElementById('backBtn').addEventListener('click', function() {
         // Go back to the previous page
