@@ -66,6 +66,9 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
     .bordered-table .card-body div label {
         margin: 0;
     }
+    .payslip_head p{
+    margin:1px;
+    }
 </style>
 
 <div id="layoutSidenav_content">
@@ -80,17 +83,18 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
         </div>
     </div>
             <div class="card mb-4 mt-4">
-                <div class="card-header">
+                <div class="card-header payslip_head">
                     <div class="text-center">
-                        <h5>iReply Back Office Inc.</h5>
-                        <h5>Negros First Cyber Center, Lacson-Hernaez Street,</h5>
-                        <h5>Bacolod City, Negros Occidental, Philippines, 6100</h5>
+                        <p class="fw-bold">iReply Back Office Inc.</p>
+                        <p class="fw-bold">Negros First Cyber Center, Lacson-Hernaez Street,</p>
+                        <p class="fw-bold">Bacolod City, Negros Occidental, Philippines, 6100</p>
                     </div>
                     <br>
                     <div class="text-center">
-                        <h5>Employee Pay Slip</h5>
+                        <p class="fw-bold">Employee Pay Slip</p>
                     </div>
                 </div>
+
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -128,7 +132,7 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
             <div class="row">
                 <div class="col-md-6">
                     <div class="card mb-4 mt-4 bordered-table">
-                        <div class="card-header" style="background: skyblue;">Earnings</div>
+                        <div class="card-header fw-bold" style="background: skyblue;">Earnings</div>
                         <div class="card-body">
                             <div>
                                 <label>Basic Pay:</label>
@@ -188,7 +192,7 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
                 </div>
                 <div class="col-md-6">
                     <div class="card mb-4 mt-4 bordered-table">
-                        <div class="card-header" style="background: skyblue;">Deductions</div>
+                        <div class="card-header fw-bold" style="background: skyblue;">Deductions</div>
                         <div class="card-body">
                             <div>
                                 <label>PhilHealth Contribution:</label>
@@ -226,7 +230,7 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
 
             <div class="col-md-6">
                 <div class="card mb-4 mt-4 bordered-table">
-                    <div class="card-header" style="background: skyblue;">Bonuses/Incentives/Others</div>
+                    <div class="card-header fw-bold" style="background: skyblue;">Bonuses/Incentives/Others</div>
                     <div class="card-body">
                         <div>
                             <label>Incentives:</label>
@@ -246,7 +250,7 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
             </div>
             <div class="card mb-4 mt-4">
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-10 fw-bold">
             <label>Take Home Pay:</label>
         </div>
         <div class="col-md-2" style="background: yellow;">

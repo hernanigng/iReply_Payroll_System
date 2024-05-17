@@ -2,6 +2,8 @@
 <?php include '../template/header.php' ?>
 <?php include '../template/sidebar.php';
 
+
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1); ?>
 
@@ -172,15 +174,20 @@ ini_set('display_errors', 1); ?>
 
 <!-- Modal -->
 <div class="modal" id="detailsModal">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog" style="max-width: 80%;">
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Details</h4>
-         
       </div>
       <!-- Modal Body -->
       <div class="modal-body" id="modalBody">
+        <!-- Your modal content goes here -->
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 </main>

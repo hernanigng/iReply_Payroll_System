@@ -2,6 +2,7 @@
 <?php include '../template/header.php' ?>
 <?php include '../template/sidebar.php' ?>
 
+
 <!-- Custom Script -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -148,9 +149,11 @@
                             <td><?php echo $data['firstname']. " ". $data['lastname']; ?></td>
                             <td><?php echo date('F j, Y', strtotime($data['periodcov_to'])); ?></td>
                             <td>
+                                <center>
                                 <button class="btn btn-primary view" data-id="<?php echo $data['netPay_id']; ?>" data-empid="<?php echo $data['employee_id']; ?>"> 
                                     <i class="bi bi-eye"></i> 
                                 </button>
+                                </center>
                             </td>
                         </tr>
                         <?php }?>

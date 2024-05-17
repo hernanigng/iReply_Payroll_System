@@ -83,6 +83,37 @@
   color: #cfcfcf; 
 }
 
+#datatablesSimple th {
+  background-color: #BED7DC;
+  text-align: center;
+}
+
+#datatablesSimple tr:nth-child(odd) td {
+  background-color: #FFFFFF; /* White for odd rows */
+}
+
+#datatablesSimple tr:nth-child(even) td {
+  background-color: #F0F0F0; /* Light gray for even rows */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*!
 * Start Bootstrap - SB Admin v7.0.7 (https://startbootstrap.com/template/sb-admin)
