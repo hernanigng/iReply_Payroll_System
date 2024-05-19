@@ -44,7 +44,7 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
                 <main>
                     <div class="container-fluid px-4">
-                        <h3 class="mt-4">Employee</h3>
+                        <h5 class="mt-4">Employee Masterlist</h5>
   
                         <button type="button" class="btn btn-primary offset-10" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Employee</button>
 

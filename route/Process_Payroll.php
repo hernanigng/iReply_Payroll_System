@@ -18,7 +18,7 @@
 
 <main>
     <div class="container-fluid px-4">
-        <h3 class="mt-4">Payroll Page</h3>
+        <h5 class="mt-4">Process Payroll Page</h5>
     </div>
 
     <div class="container mt-5">

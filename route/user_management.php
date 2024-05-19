@@ -41,10 +41,10 @@
 
                     ?>
                     <div class="container-fluid px-4">
-                        <h3 class="mt-4">Users</h3>
+                        <h5 class="mt-4">User Management</h5>
 
                         <div>                                   
-                            <button type="button" class="btn btn-primary offset-10 mt-5" data-bs-toggle="modal" data-bs-target="#addUserModal">Add New <i class="bi bi-plus"></i> </button>
+                            <button type="button" class="btn btn-primary offset-10" data-bs-toggle="modal" data-bs-target="#addUserModal">Add New User</i> </button>
                         </div>
 
                         <div class="card mb-4 mt-4">
@@ -63,7 +63,7 @@
                                         <th>Username</th>
                                         <th>User Role</th>
                                         <th>Position</th>
-                                        <th> </th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>

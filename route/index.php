@@ -9,34 +9,8 @@
                 <main>
                     <div class="container-fluid px-4">
                         <div class="row">
-                        <h4 class="mt-4 mb-5">Dashboard</h4>
-                            <div class="card text-center" style="max-width: 200px;font-size: 79%;">
-                                <div class="card-body">
-                                <p class="card-text" id="datetime"></p>
-                                </div>
-                            </div>
-
-                            <script>
-                                function updateDateTime() {
-                                const now = new Date();
-                                const options = { 
-                                    month: 'long', 
-                                    day: 'numeric', 
-                                    year: 'numeric', 
-                                    hour: 'numeric', 
-                                    minute: 'numeric', 
-                                    hour12: true 
-                                };
-                                let dateTimeString = now.toLocaleString('en-US', options);
-                                dateTimeString = dateTimeString.replace(',',','); // Replace the comma after the date with a hyphen
-                                dateTimeString = dateTimeString.replace(' at ', ' - '); // Replace " at " with a hyphen
-                                document.getElementById('datetime').textContent = dateTimeString;
-                                }
-
-                                setInterval(updateDateTime, 1000); // Update every second
-                                updateDateTime(); // Initial call to set the time immediately
-                            </script>
-                      </div>
+                            <h4 class="mt-4 mb-5">Dashboard</h4>
+                        </div>
 
 
                         

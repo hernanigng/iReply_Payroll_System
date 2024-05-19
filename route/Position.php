@@ -91,7 +91,7 @@
 
                 <main>
                     <div class="container-fluid px-4">
-                        <h3 class="mt-4">Position</h3>
+                        <h5 class="mt-4">Position</h5>
   
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button class="btn btn-primary" type="button" onclick="showModal()">Add New</button>

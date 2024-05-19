@@ -31,7 +31,7 @@
 
                 <main>
                     <div class="container-fluid px-4">
-                    <h4 class="mt-4 mb-5">Time Keeping</h4>
+                    <h5 class="mt-4 mb-5">Time Keeping</h5>
                         
                         <div class="card col-md-10 offset-1 mb-4 mt-4">
 
