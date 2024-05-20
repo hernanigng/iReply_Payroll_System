@@ -8,7 +8,7 @@ include "../../connection/database.php";
 if(isset($_POST['netPay_id'])) {
     $netPayId = $_POST['netPay_id'];
     
-    $query = "SELECT earnings_id, deductions_id, incentives_id, total_netPay FROM tbl_payroll_tranx WHERE netPay_id = ?";
+    $query = "SELECT earnings_id, deductions_id, incentives_id, total_netPay, periodcov_from, periodcov_to FROM tbl_payroll_tranx WHERE netPay_id = ?";
 
     // Prepare the statement
     $statement = $conn->prepare($query);
@@ -26,7 +26,7 @@ if(isset($_POST['netPay_id'])) {
             echo $errorMessage;
         } else {
             // Bind the result variables separately for each column
-            $statement->bind_result($earningsId, $deductionsId, $incentivesId, $totalNetPay);
+            $statement->bind_result($earningsId, $deductionsId, $incentivesId, $totalNetPay, $startDate, $endDate);
                 
             $statement->fetch();
 
@@ -129,6 +129,19 @@ if ($earningsId && $deductionsId && $incentivesId) {
                 $htmlContent .= "<label for='basicPay' class='form-label'>Basic Pay</label>";
                 $htmlContent .= "<input type='text' name='basicPay' class='form-control' id='basicPay' value='{$row_earnings['basic_pay']}' readonly>";
                 $htmlContent .= "</div>";
+
+                $htmlContent .= "<div class='col-md-6'>";
+                $htmlContent .= "<label for='periodCovered' class='form-label'>Period Covered</label>";
+                $htmlContent .= "<div class='input-group'>";
+                $htmlContent .= "<span class='input-group-text'>Start Date</span>";
+                $htmlContent .= "<input type='text' id='startDate' name='startDate' class='form-control' style='width: 200px;' value='{$startDate}' readonly>";
+                $htmlContent .= "</div>";
+                $htmlContent .= "<div class='input-group'>";
+                $htmlContent .= "<span class='input-group-text'>End Date</span>";
+                $htmlContent .= "<input type='text' id='endDate' name='endDate' class='form-control' style='width: 200px;' value='{$endDate}' readonly>";
+                $htmlContent .= "</div>";
+                $htmlContent .= "</div>"; 
+
                 $htmlContent .= "<div class='row mb-3'>";
                 $htmlContent .= "<div class='col-md-4'>";
                 $htmlContent .= "<label for='regularHoliday' class='form-label'>Regular Holiday</label>";

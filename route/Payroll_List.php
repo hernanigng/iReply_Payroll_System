@@ -2,8 +2,6 @@
 <?php include '../template/header.php' ?>
 <?php include '../template/sidebar.php';
 
-
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1); ?>
 
@@ -20,7 +18,7 @@ ini_set('display_errors', 1); ?>
 
 <main>
     <div class="container-fluid px-4">
-        <h5 class="mt-4">Payroll List Page</h5>
+        <h3 class="mt-4">Payroll List Page</h3>
 
         <div class="card mb-4 mt-4">
             <div class="card-header">
@@ -174,20 +172,15 @@ ini_set('display_errors', 1); ?>
 
 <!-- Modal -->
 <div class="modal" id="detailsModal">
-  <div class="modal-dialog" style="max-width: 80%;">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Details</h4>
+         
       </div>
       <!-- Modal Body -->
       <div class="modal-body" id="modalBody">
-        <!-- Your modal content goes here -->
-      </div>
-    </div>
-  </div>
-</div>
-
 
 
 </main>
@@ -218,8 +211,9 @@ ini_set('display_errors', 1); ?>
                 type: 'GET',
                 data: { year: year, month: month },
                 success: function(response) {
-                    //$('#datatablesSimple tbody').html(response);
-                    $('#datatablesSimple').DataTable();
+                    $('#datatablesSimple tbody').html(response);
+                    $('#datatablesSimple').DataTable().destroy(); // Destroy existing DataTable instance
+                    $('#datatablesSimple').DataTable(); // Reinitialize DataTable
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching data:', error);

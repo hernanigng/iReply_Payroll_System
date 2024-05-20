@@ -3,13 +3,18 @@ include "../../connection/database.php";
 
 $year = $_GET['year'];
 $month = $_GET['month'];
-
-$query_tranx = "SELECT * FROM tbl_payroll_tranx WHERE YEAR(periodcov_from) = '$year' AND MONTH(periodcov_from) = '$month'";
+$query_tranx = "
+    SELECT * FROM tbl_payroll_tranx 
+    WHERE 
+        (YEAR(periodcov_from) = '$year' AND MONTH(periodcov_from) = '$month') 
+        OR 
+        (YEAR(periodcov_to) = '$year' AND MONTH(periodcov_to) = '$month')
+";
 $result_tranx = $conn->query($query_tranx);
+
 
 if ($result_tranx->num_rows > 0) {
     while ($row = $result_tranx->fetch_assoc()) {
-        // Fetch corresponding employee, earnings, incentives, and deductions data
         $employee_id = $row['employee_id'];
         $earnings_id = $row['earnings_id'];
         $incentives_id = $row['incentives_id'];
@@ -53,7 +58,3 @@ if ($result_tranx->num_rows > 0) {
     echo "<tr><td colspan='5'>No data available</td></tr>";
 }
 ?>
-
-
-
-
