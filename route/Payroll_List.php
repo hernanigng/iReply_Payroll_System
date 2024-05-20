@@ -172,15 +172,20 @@ ini_set('display_errors', 1); ?>
 
 <!-- Modal -->
 <div class="modal" id="detailsModal">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog" style="width: 70%; max-width: none;">
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Details</h4>
-         
       </div>
       <!-- Modal Body -->
       <div class="modal-body" id="modalBody">
+        <!-- Modal body content here -->
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 </main>

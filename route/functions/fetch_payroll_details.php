@@ -101,7 +101,7 @@ if ($earningsId && $deductionsId && $incentivesId) {
 
                     $htmlContent = "<!-- Modal Body Content -->";
                     
-                $htmlContent .= "<div class='container mt-2 col-12'>";
+                $htmlContent .= "<div class='container mt-2 col-12 '>";
                 $htmlContent .= "<div class='row justify-content-center'>";
                 $htmlContent .= "<div class='col-12'>";
                 $htmlContent .= "<ul class='nav nav-tabs' id='myTab' role='tablist'>";
@@ -133,12 +133,11 @@ if ($earningsId && $deductionsId && $incentivesId) {
                 $htmlContent .= "<div class='col-md-6'>";
                 $htmlContent .= "<label for='periodCovered' class='form-label'>Period Covered</label>";
                 $htmlContent .= "<div class='input-group'>";
-                $htmlContent .= "<span class='input-group-text'>Start Date</span>";
-                $htmlContent .= "<input type='text' id='startDate' name='startDate' class='form-control' style='width: 200px;' value='{$startDate}' readonly>";
+                $htmlContent .= "<span style='width: 100px;' class='input-group-text'>Start Date</span><input type='text' id='startDate' name='startDate' class='form-control' style='width: 160px;' value='{$startDate}' readonly>";
                 $htmlContent .= "</div>";
                 $htmlContent .= "<div class='input-group'>";
-                $htmlContent .= "<span class='input-group-text'>End Date</span>";
-                $htmlContent .= "<input type='text' id='endDate' name='endDate' class='form-control' style='width: 200px;' value='{$endDate}' readonly>";
+                $htmlContent .= "<span style='width: 100px;' class='input-group-text'>End Date</span><input type='text' id='endDate' name='endDate' class='form-control' style='width: 160px;' value='{$endDate}' readonly>";
+
                 $htmlContent .= "</div>";
                 $htmlContent .= "</div>"; 
 
