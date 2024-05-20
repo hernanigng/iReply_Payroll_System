@@ -262,7 +262,7 @@ $(document).ready(function() {
 // Function to calculate total days based on total hours
 function calculateTotalDays() {
     var totalHours = parseFloat($('#totalHrs').val());
-    var totalDays = totalHours / 8; // Assuming 8 hours per day
+    var totalDays = Math.floor(totalHours / 8); // Assuming 8 hours per day
     $('#totalDys').val(totalDays);
 }
 
@@ -473,7 +473,7 @@ $('#totalHrs').on('input', calculateTotalDays);
 <script>
      function calculateTotalDaysEdit() {
         var totalHours = parseFloat($('#edit_totalHrs').val());
-        var totalDays = totalHours / 8; // Assuming 8 hours per day
+        var totalDays = Math.floor(totalHours / 8);
         $('#edit_totalDys').val(totalDays);
     }
 
@@ -545,33 +545,27 @@ function updateAttendance(timekeeping_ID) {
         data: updatedData,
         dataType: 'json',
         success: function(response) {
-    
-            if (response.status === 'success') {
+    console.log("Update successful"); // Debugging message
+    // Check the status of the response
+    if (response.status === 'success') {
 
-                // Clear form fields
-                    $('#edit_dateFrm').val('');
-                    $('#edit_dateTo').val('');
-                    $('#edit_totalHrs').val('');
-                    $('#edit_totalDys').val('');
+         // Clear form fields
+            $('#edit_dateFrm').val('');
+            $('#edit_dateTo').val('');
+            $('#edit_totalHrs').val('');
+            $('#edit_totalDys').val('');
 
+        //$('#edit_modal').modal('hide');
 
-            } else {
-                // Show error message
-                console.error(response.message);
-            }
+     // Show the toast after a short delay
+      var updateAttendance = new bootstrap.Toast($('#updateAttendanceToast')[0]); // Retrieve the DOM element
+     updateAttendance.show(); // Explicitly show the toast
 
-
-                 $('#edit_modal').modal('hide');
-
-                
-                 setTimeout(function() {
-                    window.location.reload();
-                    }, 1000);
-
-                // Manually remove the modal-backdrop
-                $('.modal-backdrop').remove();
-
-        },
+    } else {
+        // Show error message
+        console.error(response.message);
+    }
+},
         error: function(xhr, status, error) {
             // Show error message if AJAX request fails
             alert('An error occurred while processing your request.');
