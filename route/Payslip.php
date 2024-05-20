@@ -17,11 +17,10 @@
    <script>
     // Define formatDate function to format date string
     function formatDate(dateString) {
-        var date = new Date(dateString);
-        var options = { year: 'numeric', month: 'short', day: 'numeric' };
-        return date.toLocaleDateString('en-US', options);
-    }
-
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long' }; // Formatting options to display year and month
+    return date.toLocaleDateString('en-US', options);
+}
     $(document).ready(function() {
         // Function to apply filter
         function applyFilter() {
@@ -50,7 +49,7 @@
                             // Iterate through the filtered data and append rows to the table
                             $.each(filteredData, function(index, row) {
                                 var html = "<tr>";
-                                html += "<td>" + row['firstname'] + row['lastname'] + "</td>";
+                                html += "<td>" + row['firstname'] + " " + row['lastname'] + "</td>";
                                 html += "<td>" + formatDate(row['periodcov_to']) + "</td>";
                                 html += "<td><button type='button' class='btn btn-primary view' data-id='" + row['netPay_id'] + "' data-empId='" + row['employee_id'] + "'><i class='bi bi-eye'></i></button></td>";
                                 html += "</tr>";
@@ -147,7 +146,7 @@
                         ?>
                         <tr>
                             <td><?php echo $data['firstname']. " ". $data['lastname']; ?></td>
-                            <td><?php echo date('F j, Y', strtotime($data['periodcov_to'])); ?></td>
+                            <td><?php echo date('F, Y', strtotime($data['periodcov_to'])); ?></td>
                             <td>
                                 <center>
                                 <button class="btn btn-primary view" data-id="<?php echo $data['netPay_id']; ?>" data-empid="<?php echo $data['employee_id']; ?>"> 
