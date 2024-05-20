@@ -25,7 +25,7 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
         p.*,
         earn.*, -- Selecting all columns from tbl_earnings
         ded.*,   -- Selecting all columns from tbl_deductions
-        inc.*   -- Selecting all columns from tbl_deductions
+        inc.*   -- Selecting all columns from tbl_incentives
     FROM 
         tbl_payroll_tranx p
     JOIN 
@@ -66,35 +66,63 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
     .bordered-table .card-body div label {
         margin: 0;
     }
-    .payslip_head p{
-    margin:1px;
+
+    @media print {
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #layoutSidenav_content {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            font-size: 12px;
+        }
+        .text-end {
+            display: none;
+        }
+        .row {
+            display: flex;
+        }
+        .col-md-6 {
+            width: 50%;
+        }
+        .col-md-12 {
+            width: 100%;
+        }
+        .container-fluid {
+            padding: 0 !important;
+        }
     }
+    
 </style>
 
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-    <div class="row">
-        <div class="col-md-9">
-            <h3 class="mt-4">Pay Slip</h3>
-        </div>
-        <div class="col-md-3 text-end">
-            <h2 class="mt-4"> <i class="bi bi-printer" id="printButton" style="cursor: pointer;"></i> </h2>
-        </div>
-    </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <h3 class="mt-4">Pay Slip</h3>
+                </div>
+                <div class="col-md-3 text-end">
+                    <h2 class="mt-4"><i class="bi bi-printer" id="printButton" style="cursor: pointer;"></i></h2>
+                </div>
+            </div>
             <div class="card mb-4 mt-4">
-                <div class="card-header payslip_head">
+                <div class="card-header">
                     <div class="text-center">
-                        <p class="fw-bold">iReply Back Office Inc.</p>
-                        <p class="fw-bold">Negros First Cyber Center, Lacson-Hernaez Street,</p>
-                        <p class="fw-bold">Bacolod City, Negros Occidental, Philippines, 6100</p>
+                        <h6>iReply Back Office Inc.</h6>
+                        <h6>Negros First Cyber Center, Lacson-Hernaez Street,</h6>
+                        <h6>Bacolod City, Negros Occidental, Philippines, 6100</h6>
                     </div>
                     <br>
                     <div class="text-center">
-                        <p class="fw-bold">Employee Pay Slip</p>
+                        <h6>Employee Pay Slip</h6>
                     </div>
                 </div>
-
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -128,11 +156,10 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="card mb-4 mt-4 bordered-table">
-                        <div class="card-header fw-bold" style="background: skyblue;">Earnings</div>
+                        <div class="card-header" style="background: skyblue;">Earnings</div>
                         <div class="card-body">
                             <div>
                                 <label>Basic Pay:</label>
@@ -192,7 +219,7 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
                 </div>
                 <div class="col-md-6">
                     <div class="card mb-4 mt-4 bordered-table">
-                        <div class="card-header fw-bold" style="background: skyblue;">Deductions</div>
+                        <div class="card-header" style="background: skyblue;">Deductions</div>
                         <div class="card-body">
                             <div>
                                 <label>PhilHealth Contribution:</label>
@@ -226,41 +253,39 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card mb-4 mt-4 bordered-table">
-                    <div class="card-header fw-bold" style="background: skyblue;">Bonuses/Incentives/Others</div>
-                    <div class="card-body">
-                        <div>
-                            <label>Incentives:</label>
-                            <span><?php echo htmlspecialchars($data['incentives']); ?></span>
-                        </div>
-                        <div>
-                            <label>Others:</label>
-                            <span><?php echo htmlspecialchars($data['others']); ?></span>
-                        </div>
-                        <br>
-                        <div style="background: yellow;">
-                            <label>Total:</label>
-                            <span><?php echo htmlspecialchars($data['total_incentives']); ?></span>
+                <div class="col-md-6">
+                    <div class="card mb-4 mt-4 bordered-table">
+                        <div class="card-header" style="background: skyblue;">Bonuses/Incentives/Others</div>
+                        <div class="card-body">
+                            <div>
+                                <label>Incentives:</label>
+                                <span><?php echo htmlspecialchars($data['incentives']); ?></span>
+                            </div>
+                            <div>
+                                <label>Others:</label>
+                                <span><?php echo htmlspecialchars($data['others']); ?></span>
+                            </div>
+                            <br>
+                            <div style="background: yellow;">
+                                <label>Total:</label>
+                                <span><?php echo htmlspecialchars($data['total_incentives']); ?></span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card mb-4 mt-4">
-    <div class="row">
-        <div class="col-md-10 fw-bold">
-            <label>Take Home Pay:</label>
-        </div>
-        <div class="col-md-2" style="background: yellow;">
-            <span><?php echo $data['total_netPay']; ?></span>
-        </div>
-    </div>
-</div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <label>Take Home Pay:</label>
+                    </div>
+                    <div class="col-md-2" style="background: yellow;">
+                        <span><?php echo $data['total_netPay']; ?></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
-
     <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
@@ -272,7 +297,7 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
 
 <script>
 $(document).ready(function() {
-    var id = $('#employeeId').text().trim();  // Ensure PHP variable is properly echoed and trimmed
+    var id = $('#employeeId').text().trim();
 
     $.ajax({
         url: 'functions/get_employeeId.php',
@@ -280,57 +305,33 @@ $(document).ready(function() {
         data: { id: id },
         dataType: 'json',
         success: function(response) {
-            console.log(response); // Log response for debugging
-            
             if (!response.error) {
-            
-                // AJAX call to get the client details
                 $.ajax({
                     url: 'functions/get_client.php',
                     type: 'POST',
                     data: { client_id: response.client },
                     dataType: 'json',
                     success: function(clientResponse) {
-                        console.log(clientResponse);
                         $('#client_name').text(clientResponse.client_name);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching client details:', error);
                     }
                 });
-                
-                // AJAX call to get the position details
                 $.ajax({
                     url: 'functions/get_position.php',
                     type: 'POST',
                     data: { position_id: response.position },
                     dataType: 'json',
                     success: function(positionResponse) {
-                        console.log(positionResponse);
                         $('#position_name').text(positionResponse.position_name);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching position details:', error);
                     }
                 });
-            } else {
-                console.error('Error:', response.error);
             }
-        },
-        error: function(xhr, status, error) {
-            console.error('Error fetching employee details:', error);
         }
     });
-});
 
-
-    $(document).ready(function() {
-        // Print function when the printer icon is clicked
-        $('#printButton').click(function() {
-            window.print();
-        });
+    $('#printButton').click(function() {
+        window.print();
     });
-
+});
 </script>
 
 <?php include '../template/footer.php'; ?>
