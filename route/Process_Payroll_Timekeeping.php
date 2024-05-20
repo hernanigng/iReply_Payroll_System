@@ -1001,7 +1001,7 @@ $(document).ready(function(){
 
 
         var data = $('#earningsTab, #deduction, #incentivesTab').serialize();
-        var url = "functions/insertProcessPayroll.php";
+        var url = "functions/insertProcessPayroll_Timekeeping.php";
 
         $.ajax({
             type: "POST",
@@ -1017,7 +1017,7 @@ $(document).ready(function(){
                     $('#insertPayroll').toast('show');
 
                 setTimeout(function() {
-                window.location.href = 'Payroll_list.php';
+                window.location.href = 'Payslip.php';
             }, 2000); 
                     console.log('Payroll success');
                 }

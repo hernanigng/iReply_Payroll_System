@@ -965,7 +965,7 @@ $(document).ready(function(){
                     $('#insertPayroll').toast('show');
 
                 setTimeout(function() {
-                window.location.href = 'Payroll_list.php';
+                window.location.href = 'Payslip.php';
             }, 2000); 
                     console.log('Payroll success');
                 }
