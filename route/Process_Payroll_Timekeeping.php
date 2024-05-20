@@ -67,6 +67,8 @@
                 $sss = $data['sss_con'];
                 $pagibig = $data['pagibig_con'];
                 $philhealth = $data['philhealth_con'];
+              
+                //echo "Timekeeping ID: " . $timekeepingId;
 
             } else {
                 echo "No data found for timekeeping_ID: " . $timekeepingId;
@@ -112,6 +114,7 @@
                             ?>
                         </select>
                            <input type="hidden" name="selectEmployee" value="<?php echo $employeeId; ?>">
+                             <input type="hidden" name="timekeeping" value="<?php echo $timekeepingId; ?>">
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
                     <div class="col-md-6">

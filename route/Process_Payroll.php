@@ -18,7 +18,7 @@
 
 <main>
     <div class="container-fluid px-4">
-        <h5 class="mt-4">Process Payroll Page</h5>
+        <h3 class="mt-4">Payroll Page</h3>
     </div>
 
     <div class="container mt-5">
@@ -88,7 +88,9 @@
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="daysWorked" class="form-label">No. of Days Worked</label>
-                            <input type="text" name="daysWorked" class="form-control" id="daysWorked" value="<?php echo isset($totalDaysWork) ? $totalDaysWork : ''; ?>" disabled>
+                            <input type="text" name="days" class="form-control" id="daysWorked" disabled>
+                            <input type="hidden" name="daysWorked" id="daysWorkedHidden">
+                          
                         </div>
  
                  
@@ -208,13 +210,16 @@
                                     var weekdaysCount = countWeekdays(startDate, endDate);
                                     //console.log("Weekdays count:", weekdaysCount);
                                     $("#daysWorked").val(weekdaysCount);
+                                    $("#daysWorkedHidden").val(weekdaysCount); 
 
                                       calculateTotalEarnings();
                                 } else {
                                     $("#daysWorked").val("");
+                                    $("#daysWorkedHidden").val(""); 
                                 }
                             } else {
                                 $("#daysWorked").val("");
+                                $("#daysWorkedHidden").val("");
                             }
                         }
 
@@ -952,8 +957,8 @@ $(document).ready(function(){
             data: data,
             dataType: "json", // Specify the expected response type
             success: function(response) {
-                //console.log("Response received:", response); // Log the entire response object
-                //console.log("Success property:", response.success); // Log the value of the success property
+                console.log("Response received:", response); // Log the entire response object
+                console.log("Success property:", response.success); // Log the value of the success property
 
                 if (response.success) {
                     console.log("Showing the toast..."); // Check if this line is reached
@@ -977,7 +982,6 @@ $(document).ready(function(){
 
 </script>
 
-         
          
 
 <footer class="py-4 bg-light mt-auto">

@@ -219,24 +219,52 @@ if (isset($_GET['employee_id'])) {
 
 
 <script>
-    function redirectToPayroll(timekeepingId) {
-    window.location.href = 'Process_Payroll_Timekeeping.php?timekeeping_ID=' + timekeepingId;
-}
-
     // Function to handle back button click
     document.getElementById('backBtn').addEventListener('click', function() {
         // Go back to the previous page
         window.history.back();
     });
 
+//     function redirectToPayroll(timekeepingId) {
+//     window.location.href = 'Process_Payroll_Timekeeping.php?timekeeping_ID=' + timekeepingId;
+// }
+
+function redirectToPayroll(timekeepingId) {
+    // AJAX request to check if earnings_id exists
+    $.ajax({
+        url: 'functions/check_earnings_id.php', // Update the URL with the appropriate path
+        method: 'POST',
+        data: {
+            timekeeping_ID: timekeepingId
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.exists) {
+                // Earnings_id exists, display a message or perform any other action
+                alert('The payroll has already been processed. Direct to the Payslip Tab to view the Payroll.');
+                 html += "<td><button type='button' class='btn btn-primary view' data-id='" + row['netPay_id'] + "' data-empId='" + row['employee_id'] + "'><i class='bi bi-eye'></i></button></td>";
+            } else {
+                // Earnings_id does not exist, redirect to the desired location
+                window.location.href = 'Process_Payroll_Timekeeping.php?timekeeping_ID=' + timekeepingId;
+            }
+        },
+        error: function(xhr, status, error) {
+            // Show error message if AJAX request fails
+            console.error('An error occurred while processing your request.');
+            console.error(xhr.responseText);
+        }
+    });
+}
+
+
 $(document).ready(function() {
 
 // Function to calculate total days based on total hours
 function calculateTotalDays() {
-        var totalHours = parseFloat($('#totalHrs').val());
-        var totalDays = Math.floor(totalHours / 8); // Assuming 8 hours per day
-        $('#totalDys').val(totalDays);
-    }
+    var totalHours = parseFloat($('#totalHrs').val());
+    var totalDays = totalHours / 8; // Assuming 8 hours per day
+    $('#totalDys').val(totalDays);
+}
 
 // Handle form submission for adding attendance
 $('#insert_Attendance').submit(function(event) {
@@ -264,6 +292,12 @@ $('#insert_Attendance').submit(function(event) {
                 // Show the toast after a short delay
                 var insertToast = new bootstrap.Toast($('#insertAttendanceToast')[0]); // Retrieve the DOM element
                 insertToast.show(); // Explicitly show the toast
+
+                 $('#add_modal').modal('hide');
+                
+                 setTimeout(function() {
+                    window.location.reload();
+                    }, 3000);
             } else {
                 // Show error message
                 console.error(response.message);
@@ -439,7 +473,7 @@ $('#totalHrs').on('input', calculateTotalDays);
 <script>
      function calculateTotalDaysEdit() {
         var totalHours = parseFloat($('#edit_totalHrs').val());
-        var totalDays = Math.floor(totalHours / 8); // Assuming 8 hours per day
+        var totalDays = totalHours / 8; // Assuming 8 hours per day
         $('#edit_totalDys').val(totalDays);
     }
 
@@ -511,27 +545,33 @@ function updateAttendance(timekeeping_ID) {
         data: updatedData,
         dataType: 'json',
         success: function(response) {
-    console.log("Update successful"); // Debugging message
-    // Check the status of the response
-    if (response.status === 'success') {
+    
+            if (response.status === 'success') {
 
-         // Clear form fields
-            $('#edit_dateFrm').val('');
-            $('#edit_dateTo').val('');
-            $('#edit_totalHrs').val('');
-            $('#edit_totalDys').val('');
+                // Clear form fields
+                    $('#edit_dateFrm').val('');
+                    $('#edit_dateTo').val('');
+                    $('#edit_totalHrs').val('');
+                    $('#edit_totalDys').val('');
 
-        //$('#edit_modal').modal('hide');
 
-     // Show the toast after a short delay
-      var updateAttendance = new bootstrap.Toast($('#updateAttendanceToast')[0]); // Retrieve the DOM element
-     updateAttendance.show(); // Explicitly show the toast
+            } else {
+                // Show error message
+                console.error(response.message);
+            }
 
-    } else {
-        // Show error message
-        console.error(response.message);
-    }
-},
+
+                 $('#edit_modal').modal('hide');
+
+                
+                 setTimeout(function() {
+                    window.location.reload();
+                    }, 1000);
+
+                // Manually remove the modal-backdrop
+                $('.modal-backdrop').remove();
+
+        },
         error: function(xhr, status, error) {
             // Show error message if AJAX request fails
             alert('An error occurred while processing your request.');
