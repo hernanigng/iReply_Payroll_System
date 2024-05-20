@@ -46,7 +46,7 @@
                         </span>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="#">View Details</a>
+                        <a class="small text-white stretched-link" href="user_management.php">View Details</a>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                         </span>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="#">View Details</a>
+                        <a class="small text-white stretched-link" href="viewEmployee.php">View Details</a>
                     </div>
                 </div>
             </div>
@@ -120,7 +120,7 @@
                         </span>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="#">View Details</a>
+                        <a class="small text-white stretched-link" href="Clients.php">View Details</a>
                     </div>
                 </div>
             </div>
@@ -155,7 +155,7 @@
                         </span>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="#">View Details</a>
+                        <a class="small text-white stretched-link" href="Position.php">View Details</a>
                     </div>
                 </div>
             </div>
