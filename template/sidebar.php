@@ -125,7 +125,7 @@ mysqli_close($conn);
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts1" onclick="toggleCollapse('collapseLayouts1')">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
                         Administration
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        <div class="sb-sidenav-collapse-arrow"><i class="fa-solid fa-circle-chevron-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
@@ -138,7 +138,7 @@ mysqli_close($conn);
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2" onclick="toggleCollapse('collapseLayouts2')">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-calculator"></i></div>
                         Employee Payroll
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        <div class="sb-sidenav-collapse-arrow"><i class="fa-solid fa-circle-chevron-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
@@ -150,8 +150,7 @@ mysqli_close($conn);
 
 
                         <a class="nav-link" href="user_management.php">
-                        <div class="sb-nav-link-icon"><i class="fa-solid fa-id-card"></i></div>
-                        User Management
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-id-card"></i></div>User Management
                         </a>
                         <a class="nav-link" href="test.php">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></div>
