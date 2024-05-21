@@ -41,42 +41,7 @@ if (isset($_GET['employee_id'])) {
 <div id="layoutSidenav_content">
     <main>
         <!-- Year and Month Dropdown Filter -->
-        <div class="container mt-4">
-            <div class="row">
-            <input type="hidden" id="employeeId" value="<?php echo $data['employee_id'] ?>"> </input>
-                <div class="col-md-2">
-                    <label> Year </label>
-                    <select class="form-select" id="yearFilter">
-                        <!-- Populate options dynamically with PHP -->
-                        <?php
-                        // Assuming you want to populate years from 2020 to current year
-                        $currentYear = date('Y');
-                        for ($year = 2020; $year <= $currentYear; $year++) {
-                            echo '<option value="' . $year . '"' . ($year == $currentYear ? ' selected' : '') . '>' . $year . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label> Month </label>
-                    <select class="form-select" id="monthFilter">
-                        <!-- Populate options dynamically with PHP -->
-                        <?php
-                        $months = array(
-                            '01' => 'January', '02' => 'February', '03' => 'March', '04' => 'April',
-                            '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August',
-                            '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
-                        );
-                        $currentMonth = date('m');
-                        foreach ($months as $monthNumber => $monthName) {
-                            echo '<option value="' . $monthNumber . '"' . ($monthNumber == $currentMonth ? ' selected' : '') . '>' . $monthName . '</option>';
-
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
-        </div>
+ 
 
 
 
@@ -153,15 +118,50 @@ if (isset($_GET['employee_id'])) {
 });
 </script>
 
-
-<div>
-    <button type="button" class="btn btn-primary offset-10 mt-5 add" data-bs-toggle="modal" data-bs-target="#add_modal" data-firstname="<?php echo $data['firstname']; ?>" data-lastname="<?php echo $data['lastname']; ?>">Add Attendance <i class="bi bi-plus"></i> </button>
+<div class="container-fluid px-4 mt-4">
+    <div class="row align-items-center">
+        <input type="hidden" id="employeeId" value="<?php echo $data['employee_id']; ?>"> </input>
+        <div class="col-md-2">
+            <label> Year </label>
+            <select class="form-select" id="yearFilter">
+                <!-- Populate options dynamically with PHP -->
+                <?php
+                $currentYear = date('Y');
+                for ($year = 2020; $year <= $currentYear; $year++) {
+                    echo '<option value="' . $year . '"' . ($year == $currentYear ? ' selected' : '') . '>' . $year . '</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label> Month </label>
+            <select class="form-select" id="monthFilter">
+                <!-- Populate options dynamically with PHP -->
+                <?php
+                $months = array(
+                    '01' => 'January', '02' => 'February', '03' => 'March', '04' => 'April',
+                    '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August',
+                    '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
+                );
+                $currentMonth = date('m');
+                foreach ($months as $monthNumber => $monthName) {
+                    echo '<option value="' . $monthNumber . '"' . ($monthNumber == $currentMonth ? ' selected' : '') . '>' . $monthName . '</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="col-md-8 text-end">
+            <button type="button" class="btn btn-primary add" data-bs-toggle="modal" data-bs-target="#add_modal" data-firstname="<?php echo $data['firstname']; ?>" data-lastname="<?php echo $data['lastname']; ?>"><i class="fa-solid fa-square-plus me-2"></i>Add Attendance</button>
+        </div>
+    </div>
 </div>
+
 
 <div class="container-fluid px-4">
     <div class="card mb-4 mt-4">
         <div class="card-header">
-            <b> <?php echo $data['firstname'] . " " . $data['lastname']; ?> </b>
+            <span><i class="fa-solid fa-user"></i></span>
+            <b class="ms-2"> <?php echo $data['firstname'] . " " . $data['lastname']; ?> </b>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
@@ -205,7 +205,11 @@ if (isset($_GET['employee_id'])) {
             </table>
         </div>
     </div>
-    <button type="button" class="btn btn-primary" id="backBtn">Back</button>
+    <div class="container">
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-primary" id="backBtn">Back</button>
+    </div>
+    </div>
 </div>
 </main>
 <footer class="py-4 bg-light mt-auto">
