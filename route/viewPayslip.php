@@ -111,16 +111,16 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
                     <h2 class="mt-4"><i class="bi bi-printer" id="printButton" style="cursor: pointer;"></i></h2>
                 </div>
             </div>
-            <div class="card mb-4 mt-4">
+            <div class="card mb-4 mt-1">
                 <div class="card-header">
                     <div class="text-center">
-                        <h6>iReply Back Office Inc.</h6>
-                        <h6>Negros First Cyber Center, Lacson-Hernaez Street,</h6>
-                        <h6>Bacolod City, Negros Occidental, Philippines, 6100</h6>
+                        <h6 class="mt-3 mb-2" style="font-weight:800; color:#0d397a; font-size:larger;">iReply Back Office Inc.</h6>
+                        <h6 style="font-size:80%">Negros First Cyber Center, Lacson-Hernaez Street,</h6>
+                        <h6 style="font-size:80%">Bacolod City, Negros Occidental, Philippines, 6100</h6>
                     </div>
                     <br>
                     <div class="text-center">
-                        <h6>Employee Pay Slip</h6>
+                        <h6 class="fw-bold mb-3">Employee Pay Slip</h6>
                     </div>
                 </div>
                 <div class="card-body">
@@ -251,9 +251,10 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
                                 <span><?php echo htmlspecialchars($data['total_deductions']); ?></span>
                             </div>
                         </div>
+                        
                     </div>
-                </div>
-                <div class="col-md-6">
+                    
+                    <div class="col-md-12">
                     <div class="card mb-4 mt-4 bordered-table">
                         <div class="card-header" style="background: skyblue;">Bonuses/Incentives/Others</div>
                         <div class="card-body">
@@ -273,17 +274,28 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
                         </div>
                     </div>
                 </div>
+                </div>
+
             </div>
-            <div class="card mb-4 mt-4">
-                <div class="row">
-                    <div class="col-md-10">
-                        <label>Take Home Pay:</label>
-                    </div>
-                    <div class="col-md-2" style="background: yellow;">
-                        <span><?php echo $data['total_netPay']; ?></span>
+            
+    <div class="container">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <label class="fw-bold">Take Home Pay:</label>
+                        </div>
+                        <div class="col-md-2" style="background: yellow;">
+                            <span><?php echo $data['total_netPay']; ?></span>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+
         </div>
     </main>
     <footer class="py-4 bg-light mt-auto">

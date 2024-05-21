@@ -150,7 +150,8 @@ mysqli_close($conn);
 
 
                         <a class="nav-link" href="user_management.php">
-                        <div class="sb-nav-link-icon"><i class="fa-solid fa-id-card"></i></div>User Management
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-id-card"></i></div>
+                        User Management
                         </a>
                         <a class="nav-link" href="test.php">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></div>
