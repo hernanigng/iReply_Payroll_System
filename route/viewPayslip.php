@@ -105,7 +105,7 @@ if (isset($_GET['netPay_id']) && isset($_GET['employee_id'])) {
         <div class="container-fluid px-4">
             <div class="row">
                 <div class="col-md-9">
-                    <h3 class="mt-4">Pay Slip</h3>
+                    <h5 class="mt-4 mb-5 hc fw-bold"><i class="fa-solid fa-file-invoice-dollar me-2"></i>Payslip</h5>
                 </div>
                 <div class="col-md-3 text-end">
                     <h2 class="mt-4"><i class="bi bi-printer" id="printButton" style="cursor: pointer;"></i></h2>

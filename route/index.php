@@ -9,7 +9,7 @@
                 <main>
                     <div class="container-fluid px-4">
                         <div class="row">
-                            <h4 class="mt-4 mb-5">Dashboard</h4>
+                            <h5 class="mt-4 mb-5 hc fw-bold"><i class="fa-solid fa-gauge me-1"></i>Dashboard</h5>
                         </div>
 
 

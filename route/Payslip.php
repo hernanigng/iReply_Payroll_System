@@ -87,6 +87,9 @@
 </script>
 
 <div class="container-fluid px-4">
+
+    <h5 class="mt-4 mb-5 hc fw-bold"><i class="fa-solid fa-file-invoice-dollar me-2"></i>Payslip Page</h5>
+
         <div class="container mt-4">
             <div class="row">
                 <div class="col-md-2">

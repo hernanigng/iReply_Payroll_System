@@ -120,10 +120,10 @@ $(document).ready(function(){
 
                 <main>
                     <div class="container-fluid px-4">
-                        <h5 class="mt-4">Clients</h5>
+                    <h5 class="mt-4 mb-1 hc fw-bold"><i class="fa-solid fa-user-tie me-2"></i>Clients</h5>
   
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-primary" type="button" onclick="showModal()">Add New</button>
+                        <button class="btn btn-primary" type="button" onclick="showModal()"><span><i class="fa-solid fa-square-plus me-2"></i></span>Add New</button>
                         </div>
 
                         <div class="card mb-4 mt-4">

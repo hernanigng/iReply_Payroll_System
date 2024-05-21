@@ -18,7 +18,7 @@ ini_set('display_errors', 1); ?>
 
 <main>
     <div class="container-fluid px-4">
-        <h3 class="mt-4">Payroll List Page</h3>
+    <h5 class="mt-4 mb-5 hc fw-bold"><i class="fa-solid fa-list-ul me-2"></i>Payroll List</h5>
 
         <div class="card mb-4 mt-4">
             <div class="card-header">

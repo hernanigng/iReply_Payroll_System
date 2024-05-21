@@ -52,7 +52,32 @@ $user_id = $_SESSION['user_id'] ?? null; // Retrieve user_id from
 mysqli_close($conn);
 ?>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.sb-sidenav-menu .nav-link');
 
+        navLinks.forEach(link => {
+            const linkPath = link.getAttribute('href');
+            if (linkPath && currentPath.endsWith(linkPath)) {
+                link.classList.add('active');
+
+                const parentCollapse = link.closest('.collapse');
+                if (parentCollapse) {
+                    parentCollapse.classList.add('show');
+                }
+            }
+
+            // Hide "User Management" link if user role is "Accountant"
+            const userRole = '<?php echo $userRole; ?>';
+            if (userRole === '2' && linkPath === 'user_management.php') {
+                link.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+              
 
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
@@ -90,7 +115,7 @@ mysqli_close($conn);
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Home</div>
                         <a class="nav-link" href="index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-house"></i></div>
                             Dashboard
                         </a>
 
@@ -104,9 +129,9 @@ mysqli_close($conn);
                     </a>
                     <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="../route/viewEmployee.php">Employee Masterlist</a>
-                            <a class="nav-link" href="../route/Clients.php">Client</a>
-                            <a class="nav-link" href="../route/Position.php">Position</a>
+                            <a class="nav-link" href="viewEmployee.php">Employee Masterlist</a>
+                            <a class="nav-link" href="Clients.php">Client</a>
+                            <a class="nav-link" href="Position.php">Position</a>
                         </nav>
                     </div>
 
@@ -117,57 +142,23 @@ mysqli_close($conn);
                     </a>
                     <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="../route/Process_Payroll.php">Process Payroll</a>
-                            <a class="nav-link" href="../route/Payroll_List.php">Payroll List</a>
-                            <a class="nav-link" href="../route/Payslip.php">Payslip</a>
+                            <a class="nav-link" href="TimeKeeping.php">Time Keeping</a>
+                            <a class="nav-link" href="Payroll_List.php">Payroll List</a>
+                            <a class="nav-link" href="Payslip.php">Payslip</a>
                         </nav>
                     </div>
 
-                    <script>
-                        function toggleCollapse(id) {
-                            const collapseElement = document.getElementById(id);
-                            const isCollapsed = collapseElement.classList.contains('show');
-                            if (isCollapsed) {
-                                collapseElement.classList.remove('show');
-                            } else {
-                                collapseElement.classList.add('hide');
-                            }
-                        }
-                    </script>
-                        <a class="nav-link" href="../route/TimeKeeping.php">
-                        <div class="sb-nav-link-icon"><i class="fa-solid fa-clock"></i></div>Time Keeping
-                        </a>
 
-                        <a class="nav-link" href="../route/user_management.php">
-                        <div class="sb-nav-link-icon"><i class="fa-regular fa-user"></i></div>
+                        <a class="nav-link" href="user_management.php">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-id-card"></i></div>
                         User Management
                         </a>
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="test.php">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></div>
                         Activity Logs
                         </a>
 
 
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Authentication
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.html">Login</a>
-                                            <a class="nav-link" href="register.html">Register</a>
-                                            <a class="nav-link" href="password.html">Forgot Password</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        Error
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-
-                                </nav>
-                            </div>
                         </div>
                     </div>
 
@@ -182,8 +173,18 @@ mysqli_close($conn);
                         <?php endif; ?>
                     </div>
 
-
-                    
+                    <script>
+                        function toggleCollapse(id) {
+                            const collapseElement = document.getElementById(id);
+                            const isCollapsed = collapseElement.classList.contains('show');
+                            if (isCollapsed) {
+                                collapseElement.classList.remove('show');
+                            } else {
+                                collapseElement.classList.add('hide');
+                            }
+                        }
+                    </script>
+      
                 </nav>
             </div>
             

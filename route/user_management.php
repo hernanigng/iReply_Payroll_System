@@ -7,7 +7,7 @@
 
 <!-- Custom Script -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
@@ -41,7 +41,7 @@
 
                     ?>
                     <div class="container-fluid px-4">
-                        <h5 class="mt-4">User Management</h5>
+                    <h5 class="mt-4 mb-3 hc fw-bold"><i class="fa-solid fa-user-shield me-2"></i>User Management</h5>
 
                         <div>                                   
                             <button type="button" class="btn btn-primary offset-10" data-bs-toggle="modal" data-bs-target="#addUserModal">Add New User</i> </button>

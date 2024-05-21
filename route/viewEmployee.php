@@ -44,9 +44,9 @@ $query = $conn->query("SELECT * FROM tbl_employee");
 
                 <main>
                     <div class="container-fluid px-4">
-                        <h5 class="mt-4">Employee Masterlist</h5>
+                    <h5 class="mt-4 mb-3 hc fw-bold"><i class="fa-solid fa-users me-2"></i>Employee Masterlist</h5>
   
-                        <button type="button" class="btn btn-primary offset-10" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Employee</button>
+                        <button type="button" class="btn btn-primary offset-10" data-bs-toggle="modal" data-bs-target="#exampleModal"><span><i class="fa-solid fa-square-plus me-2"></i></span>Add Employee</button>
 
                                   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog modal-lg">
