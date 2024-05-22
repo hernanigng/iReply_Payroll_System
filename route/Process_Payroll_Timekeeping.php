@@ -139,8 +139,6 @@
                             <input type="text" name="daysWorked" class="form-control" id="daysWorked" value="<?php echo isset($totalDaysWork) ? $totalDaysWork : ''; ?>" disabled>
                         </div>
  
-                 
-
                         <div class="col-md-4">
                             <label for="basicPay" class="form-label">Basic Pay</label>
                             <input type="text" name="basicPay" class="form-control" id="basicPay"  style="width: 150px;" placeholder="PHP 0.00"  value="<?php echo isset($dailyRate) ? $dailyRate : ''; ?>" readonly>
