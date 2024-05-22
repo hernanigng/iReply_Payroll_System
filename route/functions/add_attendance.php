@@ -52,7 +52,7 @@ if ($result) {
         'overtime' => $overtime,
         'night_differential' => $nightDifferential,
         'regular_holiday_night_diff' => $regularHolidayNightDiff,
-        'specialHolidayNightDiff_id' => $specialHolidayNightDiff,
+        'special_holiday_night_diff' => $specialHolidayNightDiff,
         'regular_holiday_overtime' => $regHolidayOvertime,
         'special_holiday_overtime' => $splHolidayOvertime,
         'drd' => $drd
