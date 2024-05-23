@@ -399,43 +399,43 @@ $('#totalHrs').on('input', calculateTotalDays);
             <div class="row">
                 <div class="col-md-4">
                     <label for="regularHoliday" class="form-label">Regular Holiday</label>
-                    <input type="number" name="regularHoliday" class="form-control" id="regularHoliday_id">
+                    <input type="number" name="regularHoliday" class="form-control" id="regularHoliday">
                 </div>
                 <div class="col-md-4">
                     <label for="specialHoliday" class="form-label">Special Holiday</label>
-                    <input type="text" name="specialHoliday" class="form-control" id="specialHoliday_id">
+                    <input type="text" name="specialHoliday" class="form-control" id="specialHoliday">
                 </div>
                 <div class="col-md-4">
                     <label for="overtime" class="form-label">Overtime</label>
-                    <input type="number" name="overtime" class="form-control" id="overtime_id">
+                    <input type="number" name="overtime" class="form-control" id="overtime">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <label for="nightDifferential" class="form-label">Night Differential</label>
-                    <input type="number" name="nightDifferential" class="form-control" id="nightDifferential_id">
+                    <input type="number" name="nightDifferential" class="form-control" id="nightDifferential">
                 </div>
                 <div class="col-md-4">
                     <label for="regularHolidayNightDiff" class="form-label">Regular Holiday Night Diff</label>
-                    <input type="number" name="regularHolidayNightDiff" class="form-control" id="regularHolidayNightDiff_id">
+                    <input type="number" name="regularHolidayNightDiff" class="form-control" id="regularHolidayNightDiff">
                 </div>
                 <div class="col-md-4">
                     <label for="specialHolidayNightDiff" class="form-label">Special Holiday Night Diff</label>
-                    <input type="number" name="specialHolidayNightDiff" class="form-control" id="specialHolidayNightDiff_id">
+                    <input type="number" name="specialHolidayNightDiff" class="form-control" id="specialHolidayNightDiff">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <label for="regHolidayOvertime" class="form-label">Reg. Holiday Overtime</label>
-                    <input type="number" name="regHolidayOvertime" class="form-control" id="regHolidayOvertime_id">
+                    <input type="number" name="regHolidayOvertime" class="form-control" id="regHolidayOvertime">
                 </div>
                 <div class="col-md-4">
                     <label for="splHolidayOvertime" class="form-label">Spl. Holiday Overtime</label>
-                    <input type="number" name="splHolidayOvertime" class="form-control" id="splHolidayOvertime_id">
+                    <input type="number" name="splHolidayOvertime" class="form-control" id="splHolidayOvertime">
                 </div>
                 <div class="col-md-4">
                     <label for="drd" class="form-label">DRD</label>
-                    <input type="number" name="drd" class="form-control" id="drd_id">
+                    <input type="number" name="drd" class="form-control" id="drd">
                 </div>
             </div>
         </div>
