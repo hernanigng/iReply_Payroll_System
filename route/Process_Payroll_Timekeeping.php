@@ -86,8 +86,8 @@
                 $drd = (float)$data['drd'];
 
                  // Perform calculations (example calculations, adjust as necessary)
-                 $calculatedRegularHoliday = $dailyRate * 2;
-                 $calculatedSpecialHoliday = $dailyRate * 1.3;
+                 $calculatedRegularHoliday = $dailyRate * 2 * $regularHoliday;
+                 $calculatedSpecialHoliday = $dailyRate * 1.3 * $specialHoliday;
                  $hourlyRate = $dailyRate / 8;
                  $calculatedOvertime = $hourlyRate * 1.25 * $overtime;
                  $calculatedNightDifferential = $hourlyRate * 0.1 * $nightDifferential; // Assuming 10% rate for night differential

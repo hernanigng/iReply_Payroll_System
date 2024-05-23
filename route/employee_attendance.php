@@ -475,59 +475,6 @@ $('#totalHrs').on('input', calculateTotalDays);
 </div>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const dateFrm = document.getElementById('dateFrm');
-        const dateTo = document.getElementById('dateTo');
-        const form = document.querySelector('form'); // Make sure your form has a selector
-
-        function formatDate(date) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(date).toLocaleDateString('en-US', options);
-        }
-
-        function updateDateInput(input) {
-            input.addEventListener('change', function() {
-                if (input.value) {
-                    const formattedDate = formatDate(input.value);
-                    input.type = 'text';
-                    input.value = formattedDate;
-                }
-            });
-
-            input.addEventListener('focus', function() {
-                input.type = 'date';
-            });
-
-            input.addEventListener('blur', function() {
-                if (input.value) {
-                    const formattedDate = formatDate(input.value);
-                    input.type = 'text';
-                    input.value = formattedDate;
-                }
-            });
-        }
-
-        function revertDateInput(input) {
-            if (input.value) {
-                const date = new Date(input.value);
-                const yyyyMMdd = date.toISOString().split('T')[0];
-                input.type = 'date';
-                input.value = yyyyMMdd;
-            }
-        }
-
-        updateDateInput(dateFrm);
-        updateDateInput(dateTo);
-
-        form.addEventListener('submit', function(event) {
-            // Revert input type to 'date' for proper submission
-            revertDateInput(dateFrm);
-            revertDateInput(dateTo);
-        });
-    });
-</script>
-
 <!-- EDIT ATTENDANCE MODAL --> 
 <div class="modal fade" id="edit_modal" tabindex="-1" aria-labelledby="edit_modal" aria-hidden="true">
 <div class="modal-dialog modal-lg">
