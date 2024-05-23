@@ -270,6 +270,24 @@ function calculateTotalDays() {
     $('#totalDys').val(totalDays);
 }
 
+// Function to check for duplicate attendance
+function checkForDuplicate(formData, callback) {
+    $.ajax({
+        url: 'functions/check_duplicate.php', // Endpoint to check for duplicates
+        method: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            callback(response);
+        },
+        error: function(xhr, status, error) {
+            alert('An error occurred while checking for duplicates.');
+            console.error(xhr.responseText);
+            callback({status: 'error'});
+        }
+    });
+}
+
 // Handle form submission for adding attendance
 $('#insert_Attendance').submit(function(event) {
     // Prevent default form submission
@@ -278,49 +296,58 @@ $('#insert_Attendance').submit(function(event) {
     // Serialize form data
     var formData = $(this).serialize();
 
-    // AJAX request to add attendance
-    $.ajax({
-        url: 'functions/add_attendance.php',
-        method: 'POST',
-        data: formData,
-        dataType: 'json',
-        success: function(response) {
-            // Check the status of the response
-            if (response.status === 'success') {
-                // Clear form fields
-                $('#dateFrm').val('');
-                $('#dateTo').val('');
-                $('#totalHrs').val('');
-                $('#totalDys').val('');
+    // Check for duplicates before submitting
+    checkForDuplicate(formData, function(response) {
+        if (response.status === 'duplicate') {
+            alert('Duplicate attendance record found. Please check your input.');
+        } else if (response.status === 'success') {
+            // AJAX request to add attendance
+            $.ajax({
+                url: 'functions/add_attendance.php',
+                method: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    // Check the status of the response
+                    if (response.status === 'success') {
+                        // Clear form fields
+                        $('#dateFrm').val('');
+                        $('#dateTo').val('');
+                        $('#totalHrs').val('');
+                        $('#totalDys').val('');
 
-                $('#regularHoliday_id').val('');
-                $('#specialHoliday_id').val('');
-                $('#overtime_id').val('');
-                $('#nightDifferential_id').val('');
-                $('#regularHolidayNightDiff_id').val('');
-                $('#specialHolidayNightDiff_id').val('');
-                $('#regHolidayOvertime_id').val('');
-                $('#splHolidayOvertime_id').val('');
-                $('#drd_id').val('');
+                        $('#regularHoliday_id').val('');
+                        $('#specialHoliday_id').val('');
+                        $('#overtime_id').val('');
+                        $('#nightDifferential_id').val('');
+                        $('#regularHolidayNightDiff_id').val('');
+                        $('#specialHolidayNightDiff_id').val('');
+                        $('#regHolidayOvertime_id').val('');
+                        $('#splHolidayOvertime_id').val('');
+                        $('#drd_id').val('');
 
-                // Show the toast after a short delay
-                var insertToast = new bootstrap.Toast($('#insertAttendanceToast')[0]); // Retrieve the DOM element
-                insertToast.show(); // Explicitly show the toast
+                        // Show the toast after a short delay
+                        var insertToast = new bootstrap.Toast($('#insertAttendanceToast')[0]); // Retrieve the DOM element
+                        insertToast.show(); // Explicitly show the toast
 
-                 $('#add_modal').modal('hide');
-                
-                 setTimeout(function() {
-                    window.location.reload();
-                    }, 3000);
-            } else {
-                // Show error message
-                console.error(response.message);
-            }
-        },
-        error: function(xhr, status, error) {
-            // Show error message if AJAX request fails
-            alert('An error occurred while processing your request.');
-            console.error(xhr.responseText);
+                        $('#add_modal').modal('hide');
+
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 3000);
+                    } else {
+                        // Show error message
+                        console.error(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Show error message if AJAX request fails
+                    alert('An error occurred while processing your request.');
+                    console.error(xhr.responseText);
+                }
+            });
+        } else {
+            alert('An error occurred. Please try again.');
         }
     });
 });
@@ -373,24 +400,21 @@ $('#totalHrs').on('input', calculateTotalDays);
                     <input type="text" name="employee_name" class="form-control" id="employee_name" readonly>
                 </div>
             </div>
-
+ <br>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <label for="dateFrm" class="form-label">Date From:</label>
                     <input type="date" name="dateFrm" class="form-control" id="dateFrm">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <label for="dateTo" class="form-label">Date To:</label>
                     <input type="date" name="dateTo" class="form-control" id="dateTo">
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <label for="totalHrs" class="form-label">Total Hours Worked:</label>
                     <input type="number" name="totalHrs" class="form-control" id="totalHrs">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <label for="totalDys" class="form-label">Total Days Worked:</label>
                     <input type="number" name="totalDys" class="form-control" id="totalDys" readonly>
                 </div>
@@ -451,6 +475,59 @@ $('#totalHrs').on('input', calculateTotalDays);
 </div>
 
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateFrm = document.getElementById('dateFrm');
+        const dateTo = document.getElementById('dateTo');
+        const form = document.querySelector('form'); // Make sure your form has a selector
+
+        function formatDate(date) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(date).toLocaleDateString('en-US', options);
+        }
+
+        function updateDateInput(input) {
+            input.addEventListener('change', function() {
+                if (input.value) {
+                    const formattedDate = formatDate(input.value);
+                    input.type = 'text';
+                    input.value = formattedDate;
+                }
+            });
+
+            input.addEventListener('focus', function() {
+                input.type = 'date';
+            });
+
+            input.addEventListener('blur', function() {
+                if (input.value) {
+                    const formattedDate = formatDate(input.value);
+                    input.type = 'text';
+                    input.value = formattedDate;
+                }
+            });
+        }
+
+        function revertDateInput(input) {
+            if (input.value) {
+                const date = new Date(input.value);
+                const yyyyMMdd = date.toISOString().split('T')[0];
+                input.type = 'date';
+                input.value = yyyyMMdd;
+            }
+        }
+
+        updateDateInput(dateFrm);
+        updateDateInput(dateTo);
+
+        form.addEventListener('submit', function(event) {
+            // Revert input type to 'date' for proper submission
+            revertDateInput(dateFrm);
+            revertDateInput(dateTo);
+        });
+    });
+</script>
+
 <!-- EDIT ATTENDANCE MODAL --> 
 <div class="modal fade" id="edit_modal" tabindex="-1" aria-labelledby="edit_modal" aria-hidden="true">
 <div class="modal-dialog modal-lg">
@@ -471,38 +548,78 @@ $('#totalHrs').on('input', calculateTotalDays);
                 </div>
                 <input type="hidden" name="edit_employee_id" class="form-control" id="edit_employee_id" readonly>         
         </div>
-
+<br>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label for="edit_dateFrm" class="form-label">Date From:</label>
                 <input type="date" class="form-control" id="edit_dateFrm">
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label for="edit_dateTo" class="form-label"> Date To:</label>
                 <input type="date" class="form-control" id="edit_dateTo">
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label for="edit_totalHrs" class="form-label">Total Hours Worked:</label>
                 <input type="number" class="form-control" id="edit_totalHrs">
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label for="edit_totalDys" class="form-label">Total Days Worked:</label>
                 <input type="number" class="form-control" id="edit_totalDys">
                 <div class="error" style="color: red;"></div>
                 <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
             </div>
         </div>
+ <br>
+        <div class="row">
+                <div class="col-md-4">
+                    <label for="regularHoliday" class="form-label">Regular Holiday</label>
+                    <input type="number" name="regularHoliday" class="form-control" id="edit_regularHoliday">
+                </div>
+                <div class="col-md-4">
+                    <label for="specialHoliday" class="form-label">Special Holiday</label>
+                    <input type="text" name="specialHoliday" class="form-control" id="edit_specialHoliday">
+                </div>
+                <div class="col-md-4">
+                    <label for="overtime" class="form-label">Overtime</label>
+                    <input type="number" name="overtime" class="form-control" id="edit_overtime">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="nightDifferential" class="form-label">Night Differential</label>
+                    <input type="number" name="nightDifferential" class="form-control" id="edit_nightDifferential">
+                </div>
+                <div class="col-md-4">
+                    <label for="regularHolidayNightDiff" class="form-label">Regular Holiday Night Diff</label>
+                    <input type="number" name="regularHolidayNightDiff" class="form-control" id="edit_regularHolidayNightDiff">
+                </div>
+                <div class="col-md-4">
+                    <label for="specialHolidayNightDiff" class="form-label">Special Holiday Night Diff</label>
+                    <input type="number" name="specialHolidayNightDiff" class="form-control" id="edit_specialHolidayNightDiff">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="regHolidayOvertime" class="form-label">Reg. Holiday Overtime</label>
+                    <input type="number" name="regHolidayOvertime" class="form-control" id="edit_regHolidayOvertime">
+                </div>
+                <div class="col-md-4">
+                    <label for="splHolidayOvertime" class="form-label">Spl. Holiday Overtime</label>
+                    <input type="number" name="splHolidayOvertime" class="form-control" id="edit_splHolidayOvertime">
+                </div>
+                <div class="col-md-4">
+                    <label for="drd" class="form-label">DRD</label>
+                    <input type="number" name="drd" class="form-control" id="edit_drd">
+                </div>
+            </div>
 
             <div class="modal-footer mt-3">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"> Close </button>
@@ -555,6 +672,17 @@ function openEditModal(timekeeping_ID) {
             $('#edit_dateTo').val(response.date_to);
             $('#edit_totalHrs').val(response.Total_HrsWork);
             $('#edit_totalDys').val(response.Total_DysWork);
+
+            $('#edit_regularHoliday').val(response.regular_holiday);
+            $('#edit_specialHoliday').val(response.special_holiday);
+            $('#edit_overtime').val(response.overtime);
+            $('#edit_nightDifferential').val(response.night_differential);
+            $('#edit_regularHolidayNightDiff').val(response.regular_holiday_night_diff);
+            $('#edit_specialHolidayNightDiff').val(response.special_holiday_night_diff);
+            $('#edit_regHolidayOvertime').val(response.regular_holiday_overtime);
+            $('#edit_splHolidayOvertime').val(response.special_holiday_overtime);
+            $('#edit_drd').val(response.drd);
+            
             
         },
         error: function(xhr, status, error) {
@@ -585,6 +713,16 @@ function updateAttendance(timekeeping_ID) {
     var Total_HrsWork = $('#edit_totalHrs').val();
     var Total_DysWork = $('#edit_totalDys').val();
 
+    var regularHoliday = $('#edit_regularHoliday').val();
+    var specialHoliday = $('#edit_specialHoliday').val();
+    var overtime = $('#edit_overtime').val();
+    var nightDifferential = $('#edit_nightDifferential').val();
+    var regularHolidayNightDiff = $('#edit_regularHolidayNightDiff').val();
+    var specialHolidayNightDiff = $('#edit_specialHolidayNightDiff').val();
+    var regularHolidayOvertime = $('#edit_regHolidayOvertime').val();
+    var specialHolidayOvertime = $('#edit_splHolidayOvertime').val();
+    var drd = $('#edit_drd').val();
+
     var updatedData = {
         timekeeping_ID: timekeeping_ID,
         employee_name: employee_name,
@@ -593,6 +731,16 @@ function updateAttendance(timekeeping_ID) {
         date_to: date_to,
         Total_HrsWork: Total_HrsWork,
         Total_DysWork: Total_DysWork,
+
+        regular_holiday: regularHoliday,
+        special_holiday: specialHoliday,
+        overtime: overtime,
+        night_differential: nightDifferential,
+        regular_holiday_night_diff: regularHolidayNightDiff,
+        special_holiday_night_diff: specialHolidayNightDiff,
+        regular_holiday_overtime: regularHolidayOvertime,
+        special_holiday_overtime: specialHolidayOvertime,
+        drd: drd
     };
     console.log("Data sent in AJAX request:", updatedData);
     // AJAX request to update attendance
@@ -611,12 +759,24 @@ function updateAttendance(timekeeping_ID) {
             $('#edit_dateTo').val('');
             $('#edit_totalHrs').val('');
             $('#edit_totalDys').val('');
+            $('#edit_regularHoliday').val(''); 
+            $('#edit_specialHoliday').val('');
+            $('#edit_overtime').val('');
+            $('#edit_nightDifferential').val('');
+            $('#edit_regularHolidayNightDiff').val('');
+            $('#edit_specialHolidayNightDiff').val('');
+            $('#edit_regHolidayOvertime').val('');
+            $('#edit_splHolidayOvertime').val('');
+            $('#edit_drd').val('');
 
-        //$('#edit_modal').modal('hide');
 
      // Show the toast after a short delay
       var updateAttendance = new bootstrap.Toast($('#updateAttendanceToast')[0]); // Retrieve the DOM element
      updateAttendance.show(); // Explicitly show the toast
+
+     setTimeout(function() {
+        location.reload(); // Refresh the page
+    }, 2000); // 2000 milliseconds = 2 seconds
 
     } else {
         // Show error message

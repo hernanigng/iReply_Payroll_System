@@ -74,6 +74,7 @@
                 $sss = $data['sss_con'];
                 $pagibig = $data['pagibig_con'];
                 $philhealth = $data['philhealth_con'];
+                
                 $regularHoliday = (float)$data['regular_holiday'];
                 $specialHoliday = (float)$data['special_holiday'];
                 $overtime = (float)$data['overtime'];
