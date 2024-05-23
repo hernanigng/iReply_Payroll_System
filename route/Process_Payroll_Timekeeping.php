@@ -86,16 +86,17 @@
                 $drd = (float)$data['drd'];
 
                  // Perform calculations (example calculations, adjust as necessary)
-                 $calculatedRegularHoliday = $dailyRate * 2 * $regularHoliday;
-                 $calculatedSpecialHoliday = $dailyRate * 1.3 * $specialHoliday;
-                 $hourlyRate = $dailyRate / 8;
+                 $realDailyRate = $dailyRate / $totalDaysWork;
+                 $calculatedRegularHoliday = $realDailyRate * 2 * $regularHoliday;
+                 $calculatedSpecialHoliday = $realDailyRate * 1.3 * $specialHoliday;
+                 $hourlyRate = $realDailyRate / 8;
                  $calculatedOvertime = $hourlyRate * 1.25 * $overtime;
                  $calculatedNightDifferential = $hourlyRate * 0.1 * $nightDifferential; // Assuming 10% rate for night differential
-                 $calculatedRegularHolidayNightDiff = ($dailyRate * 2) / 8 * 0.1 * $regularHolidayNightDiff;
-                 $calculatedSpecialHolidayNightDiff = ($dailyRate * 1.3) / 8 * 0.1 * $specialHolidayNightDiff;
-                 $calculatedRegularHolidayOvertime = ($dailyRate * 2) / 8 * 1.3 * $regularHolidayOvertime; // Assuming 2x rate for holiday overtime
-                 $calculatedSpecialHolidayOvertime = ($dailyRate * 1.3) / 8 * 1.3 * $specialHolidayOvertime;
-                 $calculatedDrd = $dailyRate * 1.3 * $drd;
+                 $calculatedRegularHolidayNightDiff = ($realDailyRate * 2) / 8 * 0.1 * $regularHolidayNightDiff;
+                 $calculatedSpecialHolidayNightDiff = ($realDailyRate * 1.3) / 8 * 0.1 * $specialHolidayNightDiff;
+                 $calculatedRegularHolidayOvertime = ($realDailyRate * 2) / 8 * 1.3 * $regularHolidayOvertime; // Assuming 2x rate for holiday overtime
+                 $calculatedSpecialHolidayOvertime = ($realDailyRate * 1.3) / 8 * 1.3 * $specialHolidayOvertime;
+                 $calculatedDrd = $realDailyRate * 1.3 * $drd;
                  
               
                 // Display or process the fetched data as needed
