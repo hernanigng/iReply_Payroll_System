@@ -37,23 +37,29 @@
                 </ul>
 
 
-    <?php
-        include "../connection/database.php";
+                <?php
+    include "../connection/database.php";
 
-        $timekeepingId = isset($_GET['timekeeping_ID']) ? $_GET['timekeeping_ID'] : null;
+    $timekeepingId = isset($_GET['timekeeping_ID']) ? $_GET['timekeeping_ID'] : null;
 
-        if ($timekeepingId) {
-            // Fetch data based on timekeeping_ID
-            $sql = "SELECT date_from, date_to, Total_DysWork, tbl_employee.employee_id, firstname, lastname, daily_rate, sss_con, pagibig_con, philhealth_con 
-                    FROM tbl_timekeeping
-                    JOIN tbl_employee ON tbl_timekeeping.employee_id = tbl_employee.employee_id
-                    WHERE timekeeping_ID = ?";
-            $stmt = $conn->prepare($sql);
+    if ($timekeepingId) {
+        // Fetch data based on timekeeping_ID
+        $sql = "SELECT date_from, date_to, Total_DysWork, tbl_employee.employee_id, firstname, lastname, account_bonus,
+                       daily_rate, sss_con, pagibig_con, philhealth_con, regular_holiday, special_holiday, overtime, 
+                       night_differential, regular_holiday_night_diff, special_holiday_night_diff, 
+                       regular_holiday_overtime, special_holiday_overtime, drd
+                FROM tbl_timekeeping
+                JOIN tbl_employee ON tbl_timekeeping.employee_id = tbl_employee.employee_id
+                WHERE timekeeping_ID = ?";
+
+        // Check if the query preparation is successful
+        if ($stmt = $conn->prepare($sql)) {
             $stmt->bind_param("i", $timekeepingId);
             $stmt->execute();
             $result = $stmt->get_result();
             
             if ($result->num_rows > 0) {
+        
                 // Fetch the first row (assuming there's only one result)
                 $data = $result->fetch_assoc();
                 
@@ -62,25 +68,53 @@
                 $dateTo = $data['date_to'];
                 $employeeId = $data['employee_id'];
                 $employeeName = $data['firstname'] . ' ' . $data['lastname'];
-                $totalDaysWork = $data['Total_DysWork'];
-                $dailyRate = $data['daily_rate'];
+                $totalDaysWork = (float)$data['Total_DysWork'];
+                $accBonus = $data['account_bonus'];
+                $dailyRate = (float)str_replace('PHP ', '', str_replace(',', '', $data['daily_rate']));
                 $sss = $data['sss_con'];
                 $pagibig = $data['pagibig_con'];
                 $philhealth = $data['philhealth_con'];
+                $regularHoliday = (float)$data['regular_holiday'];
+                $specialHoliday = (float)$data['special_holiday'];
+                $overtime = (float)$data['overtime'];
+                $nightDifferential = (float)$data['night_differential'];
+                $regularHolidayNightDiff = (float)$data['regular_holiday_night_diff'];
+                $specialHolidayNightDiff = (float)$data['special_holiday_night_diff'];
+                $regularHolidayOvertime = (float)$data['regular_holiday_overtime'];
+                $specialHolidayOvertime = (float)$data['special_holiday_overtime'];
+                $drd = (float)$data['drd'];
+
+                 // Perform calculations (example calculations, adjust as necessary)
+                 $calculatedRegularHoliday = $dailyRate * 2;
+                 $calculatedSpecialHoliday = $dailyRate * 1.3;
+                 $hourlyRate = $dailyRate / 8;
+                 $calculatedOvertime = $hourlyRate * 1.25 * $overtime;
+                 $calculatedNightDifferential = $hourlyRate * 0.1 * $nightDifferential; // Assuming 10% rate for night differential
+                 $calculatedRegularHolidayNightDiff = ($dailyRate * 2) / 8 * 0.1 * $regularHolidayNightDiff;
+                 $calculatedSpecialHolidayNightDiff = ($dailyRate * 1.3) / 8 * 0.1 * $specialHolidayNightDiff;
+                 $calculatedRegularHolidayOvertime = ($dailyRate * 2) / 8 * 1.3 * $regularHolidayOvertime; // Assuming 2x rate for holiday overtime
+                 $calculatedSpecialHolidayOvertime = ($dailyRate * 1.3) / 8 * 1.3 * $specialHolidayOvertime;
+                 $calculatedDrd = $dailyRate * 1.3 * $drd;
+                 
               
-                //echo "Timekeeping ID: " . $timekeepingId;
+                // Display or process the fetched data as needed
+                // echo "Timekeeping ID: " . $timekeepingId;
 
             } else {
                 echo "No data found for timekeeping_ID: " . $timekeepingId;
             }
 
-            
             $stmt->close();
         } else {
-            echo "No timekeeping ID provided.";
+            // Output SQL error if preparation failed
+            echo "Error preparing SQL statement: " . $conn->error;
         }
-        $conn->close();
+    } else {
+        echo "No timekeeping ID provided.";
+    }
+    $conn->close();
 ?>
+
 
                 <div class="tab-content" id="myTabContent">
            
@@ -141,57 +175,57 @@
  
                         <div class="col-md-4">
                             <label for="basicPay" class="form-label">Basic Pay</label>
-                            <input type="text" name="basicPay" class="form-control" id="basicPay"  style="width: 150px;" placeholder="PHP 0.00"  value="<?php echo isset($dailyRate) ? $dailyRate : ''; ?>" readonly>
+                            <input type="text" name="basicPay" class="form-control" id="basicPay"  style="width: 150px;" placeholder="PHP 0.00"  value="<?php echo isset($dailyRate) ? number_format($dailyRate, 2) : ''; ?>" readonly>
                         </div>
 
                         <div class="col-md-4">
                             <label for="regularHoliday" class="form-label">Regular Holiday</label>
-                            <input type="text" name="regularHoliday" class="form-control" id="regularHoliday_id" placeholder="PHP 0.00">
+                            <input type="text" name="regularHoliday" class="form-control" id="regularHoliday_id" placeholder="PHP 0.00"  value="<?php echo isset($calculatedRegularHoliday) ? number_format($calculatedRegularHoliday, 2) : ''; ?>" readonly>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="specialHoliday" class="form-label">Special Holiday</label>
-                            <input type="text" name="specialHoliday" class="form-control" id="specialHoliday_id" placeholder="PHP 0.00">
+                            <input type="text" name="specialHoliday" class="form-control" id="specialHoliday_id" placeholder="PHP 0.00"  value="<?php echo isset($calculatedSpecialHoliday) ? number_format($calculatedSpecialHoliday, 2) : ''; ?>" readonly>
                         </div>
                         <div class="col-md-4">
                             <label for="overtime" class="form-label">Overtime</label>
-                            <input type="text" name="overtime" class="form-control" id="overtime_id" placeholder="PHP 0.00">
+                            <input type="text" name="overtime" class="form-control" id="overtime_id" placeholder="PHP 0.00"  value="<?php echo isset($calculatedOvertime) ? number_format($calculatedOvertime, 2) : ''; ?>" readonly>
                         </div>
                         <div class="col-md-4">
                             <label for="nightDifferential" class="form-label">Night Differential</label>
-                            <input type="text" name="nightDifferential" class="form-control" id="nightDifferential_id" placeholder="PHP 0.00">
+                            <input type="text" name="nightDifferential" class="form-control" id="nightDifferential_id" placeholder="PHP 0.00" value="<?php echo isset($calculatedNightDifferential) ? number_format($calculatedNightDifferential, 2) : ''; ?>" readonly>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="regularHolidayNightDiff" class="form-label">Regular Holiday Night Diff</label>
-                            <input type="text" name="regularHolidayNightDiff" class="form-control" id="regularHolidayNightDiff_id" placeholder="PHP 0.00">
+                            <input type="text" name="regularHolidayNightDiff" class="form-control" id="regularHolidayNightDiff_id" placeholder="PHP 0.00" value="<?php echo isset($calculatedRegularHolidayNightDiff) ? number_format($calculatedRegularHolidayNightDiff, 2) : ''; ?>" readonly>
                         </div>
                         <div class="col-md-4">
                             <label for="specialHolidayNightDiff" class="form-label">Special Holiday Night Diff</label>
-                            <input type="text" name="specialHolidayNightDiff" class="form-control" id="specialHolidayNightDiff_id" placeholder="PHP 0.00">
+                            <input type="text" name="specialHolidayNightDiff" class="form-control" id="specialHolidayNightDiff_id" placeholder="PHP 0.00" value="<?php echo isset($calculatedSpecialHolidayNightDiff) ? number_format($calculatedSpecialHolidayNightDiff, 2) : ''; ?>" readonly>
                         </div>
                         <div class="col-md-4">
                             <label for="regHolidayOvertime" class="form-label">Reg. Holiday Overtime</label>
-                            <input type="text" name="regHolidayOvertime" class="form-control" id="regHolidayOvertime_id" placeholder="PHP 0.00">
+                            <input type="text" name="regHolidayOvertime" class="form-control" id="regHolidayOvertime_id" placeholder="PHP 0.00" value="<?php echo isset($calculatedRegularHolidayOvertime) ? number_format($calculatedRegularHolidayOvertime, 2) : ''; ?>" readonly>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="splHolidayOvertime" class="form-label">Spl. Holiday Overtime</label>
-                            <input type="text" name="splHolidayOvertime" class="form-control" id="splHolidayOvertime_id" placeholder="PHP 0.00">
+                            <input type="text" name="splHolidayOvertime" class="form-control" id="splHolidayOvertime_id" placeholder="PHP 0.00" value="<?php echo isset($calculatedSpecialHolidayOvertime) ? number_format($calculatedSpecialHolidayOvertime, 2) : ''; ?>" readonly>
                         </div>
                         <div class="col-md-4">
                             <label for="monthlyBonus" class="form-label">Monthly Bonus</label>
-                            <input type="text" name="monthlyBonus" class="form-control" id="monthlyBonus_id" placeholder="PHP 0.00">
+                            <input type="text" name="monthlyBonus" class="form-control" id="monthlyBonus_id" placeholder="PHP 0.00" value="<?php echo isset($accBonus) ? $accBonus : ''; ?>" readonly>
                         </div>
                         <div class="col-md-4">
                             <label for="drd" class="form-label">DRD</label>
-                            <input type="text" name="drd" class="form-control" id="drd_id" placeholder="PHP 0.00">
+                            <input type="text" name="drd" class="form-control" id="drd_id" placeholder="PHP 0.00" value="<?php echo isset($calculatedDrd) ? number_format($calculatedDrd, 2) : ''; ?>" readonly>
                         </div>
                     </div>
 
