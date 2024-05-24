@@ -687,6 +687,7 @@
 
 
                     });
+                    });
                     </script>
 
                         <!-- Next button -->
@@ -863,6 +864,7 @@
     </script>
 
 
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -872,7 +874,7 @@
     }
 
     function goToNextTab1() {
-       
+     
             $('#incentives-tab').tab('show');
                     //document.getElementById('incentives-tab').click();
             }
@@ -954,7 +956,6 @@ $(document).ready(function(){
     $('#incentivesTab').submit(function(e) {
         e.preventDefault(); // Prevent the default form submission
 
-    
 
         var data = $('#earningsTab, #deduction, #incentivesTab').serialize();
         var url = "functions/insertProcessPayroll_Timekeeping.php";
