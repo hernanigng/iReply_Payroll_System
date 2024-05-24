@@ -97,6 +97,18 @@
                  $calculatedRegularHolidayOvertime = ($realDailyRate * 2) / 8 * 1.3 * $regularHolidayOvertime; // Assuming 2x rate for holiday overtime
                  $calculatedSpecialHolidayOvertime = ($realDailyRate * 1.3) / 8 * 1.3 * $specialHolidayOvertime;
                  $calculatedDrd = $realDailyRate * 1.3 * $drd;
+
+                  //formulas
+                  $formulaRegularHoliday = '$calculatedRegularHoliday = $realDailyRate * 2 * $regularHoliday;';
+                  $formulaSpecialHoliday = '$calculatedSpecialHoliday = $realDailyRate * 1.3 * $specialHoliday;';
+                  $formulaOvertime = '$calculatedOvertime = $hourlyRate * 1.25 * $overtime;';
+                  $formulaNightDiff = '$calculatedNightDifferential = $hourlyRate * 0.1 * $nightDifferential;';
+                  $formulaRegHolidayNightDiff = '$calculatedRegularHolidayNightDiff = ($realDailyRate * 2) / 8 * 0.1 * $regularHolidayNightDiff;';
+                  $formulaSplHolidayNightDiff = '$calculatedSpecialHolidayNightDiff = ($realDailyRate * 1.3) / 8 * 0.1 * $specialHolidayNightDiff;';
+                  $formulaRegHolidayOvertime = ' $calculatedRegularHolidayOvertime = ($realDailyRate * 2) / 8 * 1.3 * $regularHolidayOvertime;';
+                  $formulaSplHolidayOvertime = '$calculatedSpecialHolidayOvertime = ($realDailyRate * 1.3) / 8 * 1.3 * $specialHolidayOvertime;';
+                  $formulaDrd = ' $calculatedDrd = $realDailyRate * 1.3 * $drd;';
+                  
                  
               
                 // Display or process the fetched data as needed
@@ -169,7 +181,7 @@
                 </div>
 
 
-                    <div class="row mb-3">
+                <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="daysWorked" class="form-label">No. of Days Worked</label>
                             <input type="text" name="daysWorked" class="form-control" id="daysWorked" value="<?php echo isset($totalDaysWork) ? $totalDaysWork : ''; ?>" disabled>
@@ -180,56 +192,111 @@
                             <input type="text" name="basicPay" class="form-control" id="basicPay"  style="width: 150px;" placeholder="PHP 0.00"  value="<?php echo isset($dailyRate) ? number_format($dailyRate, 2) : ''; ?>" readonly>
                         </div>
 
-                        <div class="col-md-4">
-                            <label for="regularHoliday" class="form-label">Regular Holiday</label>
-                            <input type="text" name="regularHoliday" class="form-control" id="regularHoliday_id" placeholder="PHP 0.00"  value="<?php echo isset($calculatedRegularHoliday) ? number_format($calculatedRegularHoliday, 2) : ''; ?>" readonly>
-                        </div>
+                        <!-- Add a Tooltip to show Formula Information -->
+                       <div class="col-md-4">
+                           <label for="regularHoliday" class="form-label">Regular Holiday</label>
+                         <div class="input-group">
+                            <input type="text" name="regularHoliday" class="form-control" id="regularHoliday_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedRegularHoliday) ? number_format($calculatedRegularHoliday, 2) : ''; ?>" readonly>
+                            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaRegularHoliday); ?>')">
+                            <i class="bi bi-info-circle"></i>
+                            </button>
+                         </div>
+                       </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="specialHoliday" class="form-label">Special Holiday</label>
-                            <input type="text" name="specialHoliday" class="form-control" id="specialHoliday_id" placeholder="PHP 0.00"  value="<?php echo isset($calculatedSpecialHoliday) ? number_format($calculatedSpecialHoliday, 2) : ''; ?>" readonly>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="overtime" class="form-label">Overtime</label>
-                            <input type="text" name="overtime" class="form-control" id="overtime_id" placeholder="PHP 0.00"  value="<?php echo isset($calculatedOvertime) ? number_format($calculatedOvertime, 2) : ''; ?>" readonly>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="nightDifferential" class="form-label">Night Differential</label>
-                            <input type="text" name="nightDifferential" class="form-control" id="nightDifferential_id" placeholder="PHP 0.00" value="<?php echo isset($calculatedNightDifferential) ? number_format($calculatedNightDifferential, 2) : ''; ?>" readonly>
-                        </div>
+
+                <div class="row mb-3">
+                       <div class="col-md-4">
+                           <label for="specialHoliday" class="form-label">Special Holiday</label>
+                         <div class="input-group">
+                           <input type="text" name="specialHoliday" class="form-control" id="specialHoliday_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedSpecialHoliday) ? number_format($calculatedSpecialHoliday, 2) : ''; ?>" readonly>
+                           <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaSpecialHoliday); ?>')">
+                           <i class="bi bi-info-circle"></i>
+                        </button>
+                      </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="regularHolidayNightDiff" class="form-label">Regular Holiday Night Diff</label>
-                            <input type="text" name="regularHolidayNightDiff" class="form-control" id="regularHolidayNightDiff_id" placeholder="PHP 0.00" value="<?php echo isset($calculatedRegularHolidayNightDiff) ? number_format($calculatedRegularHolidayNightDiff, 2) : ''; ?>" readonly>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="specialHolidayNightDiff" class="form-label">Special Holiday Night Diff</label>
-                            <input type="text" name="specialHolidayNightDiff" class="form-control" id="specialHolidayNightDiff_id" placeholder="PHP 0.00" value="<?php echo isset($calculatedSpecialHolidayNightDiff) ? number_format($calculatedSpecialHolidayNightDiff, 2) : ''; ?>" readonly>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="regHolidayOvertime" class="form-label">Reg. Holiday Overtime</label>
-                            <input type="text" name="regHolidayOvertime" class="form-control" id="regHolidayOvertime_id" placeholder="PHP 0.00" value="<?php echo isset($calculatedRegularHolidayOvertime) ? number_format($calculatedRegularHolidayOvertime, 2) : ''; ?>" readonly>
-                        </div>
+                    <div class="col-md-4">
+                        <label for="overtime" class="form-label">Overtime</label>
+                      <div class="input-group">
+                        <input type="text" name="overtime" class="form-control" id="overtime_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedOvertime) ? number_format($calculatedOvertime, 2) : ''; ?>" readonly>
+                        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaOvertime); ?>')">
+                        <i class="bi bi-info-circle"></i>
+                        </button>
+                      </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="splHolidayOvertime" class="form-label">Spl. Holiday Overtime</label>
-                            <input type="text" name="splHolidayOvertime" class="form-control" id="splHolidayOvertime_id" placeholder="PHP 0.00" value="<?php echo isset($calculatedSpecialHolidayOvertime) ? number_format($calculatedSpecialHolidayOvertime, 2) : ''; ?>" readonly>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="monthlyBonus" class="form-label">Monthly Bonus</label>
-                            <input type="text" name="monthlyBonus" class="form-control" id="monthlyBonus_id" placeholder="PHP 0.00" value="<?php echo isset($accBonus) ? $accBonus : ''; ?>" readonly>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="drd" class="form-label">DRD</label>
-                            <input type="text" name="drd" class="form-control" id="drd_id" placeholder="PHP 0.00" value="<?php echo isset($calculatedDrd) ? number_format($calculatedDrd, 2) : ''; ?>" readonly>
-                        </div>
-                    </div>
+<div class="col-md-4">
+    <label for="nightDifferential" class="form-label">Night Differential</label>
+    <div class="input-group">
+        <input type="text" name="nightDifferential" class="form-control" id="nightDifferential_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedNightDifferential) ? number_format($calculatedNightDifferential, 2) : ''; ?>" readonly>
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaNightDiff); ?>')">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </div>
+</div>
+</div> 
+
+<div class="row mb-3">
+
+<div class="col-md-4">
+<label for="regularHolidayNightDiff" class="form-label">Regular Holiday Night Differential</label>
+<div class="input-group">
+<input type="text" name="regularHolidayNightDiff" class="form-control" id="regularHolidayNightDiff_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedRegularHolidayNightDiff) ? number_format($calculatedRegularHolidayNightDiff, 2) : ''; ?>" readonly>
+<button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaRegHolidayNightDiff); ?>')">
+<i class="bi bi-info-circle"></i>
+</button>
+</div>
+</div>
+
+<div class="col-md-4">
+<label for="specialHolidayNightDiff" class="form-label">Special Holiday Night Differential</label>
+<div class="input-group">
+<input type="text" name="specialHolidayNightDiff" class="form-control" id="specialHolidayNightDiff_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedSpecialHolidayNightDiff) ? number_format($calculatedSpecialHolidayNightDiff, 2) : ''; ?>" readonly>
+<button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaSplHolidayNightDiff); ?>')">
+<i class="bi bi-info-circle"></i>
+</button>
+</div>
+</div>
+
+<div class="col-md-4">
+<label for="regHolidayOvertime" class="form-label">Regular Holiday Overtime</label>
+<div class="input-group">
+<input type="text" name="regHolidayOvertime" class="form-control" id="regHolidayOvertime_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedRegularHolidayOvertime) ? number_format($calculatedRegularHolidayOvertime, 2) : ''; ?>" readonly>
+<button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaRegHolidayOvertime); ?>')">
+<i class="bi bi-info-circle"></i>
+</button>
+</div>
+</div>
+</div>
+
+<div class="row mb-3">
+
+<div class="col-md-4">
+<label for="splHolidayOvertime" class="form-label">Special Holiday Overtime</label>
+<div class="input-group">
+<input type="text" name="splHolidayOvertime" class="form-control" id="splHolidayOvertime_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedSpecialHolidayOvertime) ? number_format($calculatedSpecialHolidayOvertime, 2) : ''; ?>" readonly>
+<button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaSplHolidayOvertime); ?>')">
+<i class="bi bi-info-circle"></i>
+</button>
+</div>
+</div>
+
+    <div class="col-md-4">
+        <label for="monthlyBonus" class="form-label">Monthly Bonus</label>
+        <input type="text" name="monthlyBonus" class="form-control" id="monthlyBonus_id" placeholder="PHP 0.00" value="<?php echo isset($accBonus) ? $accBonus : ''; ?>" readonly>
+    </div>
+
+    <div class="col-md-4">
+<label for="drd" class="form-label">DRD</label>
+<div class="input-group">
+<input type="text" name="drd" class="form-control" id="drd_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedDrd) ? number_format($calculatedDrd, 2) : ''; ?>" readonly>
+<button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaDrd); ?>')">
+<i class="bi bi-info-circle"></i>
+</button>
+</div>
+</div>
+</div>
 
                     <div class="row mb-3">
                         <div class="col-md-4">
@@ -242,6 +309,58 @@
                         </div>
                     </div>
 
+
+                    <!-- Edit Formula Modal -->
+<div class="modal fade" id="editFormulaModal" tabindex="-1" aria-labelledby="editFormulaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editFormulaModalLabel">Edit Formula</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editFormulaForm">
+                    <div class="mb-3">
+                        <textarea class="form-control" id="basicPayFormula" rows="4"><?php echo isset($calculatedRegularHoliday) ? $calculatedRegularHoliday : ''; ?></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveFormula()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+        function showFormula(formula) {
+            document.getElementById('basicPayFormula').value = formula;
+        }
+
+        function saveFormula() {
+            const formula = document.getElementById('basicPayFormula').value;
+
+            $.ajax({
+                type: 'POST',
+                url: 'functions/save_formula.php',
+                data: { basicPayFormula: formula },
+                success: function(response) {
+                    alert('Formula saved successfully!');
+                    // Optionally, you can refresh the page or close the modal
+                    $('#editFormulaModal').modal('hide');
+
+    setTimeout(function() {
+        location.reload(); // Refresh the page
+    }, 2000);
+
+                },
+                error: function() {
+                    alert('An error occurred while saving the formula.');
+                }
+            });
+        }
+    </script>
                    
 
             
