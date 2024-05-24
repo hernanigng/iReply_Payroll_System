@@ -872,7 +872,7 @@
     }
 
     function goToNextTab1() {
-     
+       
             $('#incentives-tab').tab('show');
                     //document.getElementById('incentives-tab').click();
             }
@@ -926,8 +926,6 @@
 
 
 
-
-
 <style>
     /* Override Bootstrap's default active background color */
     .nav-tabs .nav-link.active {
@@ -950,11 +948,13 @@
     </div>
 </div>
 
+
 <script>
 $(document).ready(function(){
     $('#incentivesTab').submit(function(e) {
         e.preventDefault(); // Prevent the default form submission
 
+    
 
         var data = $('#earningsTab, #deduction, #incentivesTab').serialize();
         var url = "functions/insertProcessPayroll_Timekeeping.php";
@@ -989,6 +989,7 @@ $(document).ready(function(){
 
 
 </script>
+
          
          
 
