@@ -86,29 +86,47 @@
                 $drd = (float)$data['drd'];
 
                  // Perform calculations (example calculations, adjust as necessary)
-                 $realDailyRate = $dailyRate / $totalDaysWork;
-                 $calculatedRegularHoliday = $realDailyRate * 2 * $regularHoliday;
-                 $calculatedSpecialHoliday = $realDailyRate * 1.3 * $specialHoliday;
-                 $hourlyRate = $realDailyRate / 8;
-                 $calculatedOvertime = $hourlyRate * 1.25 * $overtime;
-                 $calculatedNightDifferential = $hourlyRate * 0.1 * $nightDifferential; // Assuming 10% rate for night differential
-                 $calculatedRegularHolidayNightDiff = ($realDailyRate * 2) / 8 * 0.1 * $regularHolidayNightDiff;
-                 $calculatedSpecialHolidayNightDiff = ($realDailyRate * 1.3) / 8 * 0.1 * $specialHolidayNightDiff;
-                 $calculatedRegularHolidayOvertime = ($realDailyRate * 2) / 8 * 1.3 * $regularHolidayOvertime; // Assuming 2x rate for holiday overtime
-                 $calculatedSpecialHolidayOvertime = ($realDailyRate * 1.3) / 8 * 1.3 * $specialHolidayOvertime;
-                 $calculatedDrd = $realDailyRate * 1.3 * $drd;
+                 $calculatedRegularHoliday = $dailyRate * $regularHoliday;
 
-                  //formulas
-                  $formulaRegularHoliday = '$calculatedRegularHoliday = $realDailyRate * 2 * $regularHoliday;';
-                  $formulaSpecialHoliday = '$calculatedSpecialHoliday = $realDailyRate * 1.3 * $specialHoliday;';
-                  $formulaOvertime = '$calculatedOvertime = $hourlyRate * 1.25 * $overtime;';
-                  $formulaNightDiff = '$calculatedNightDifferential = $hourlyRate * 0.1 * $nightDifferential;';
-                  $formulaRegHolidayNightDiff = '$calculatedRegularHolidayNightDiff = ($realDailyRate * 2) / 8 * 0.1 * $regularHolidayNightDiff;';
-                  $formulaSplHolidayNightDiff = '$calculatedSpecialHolidayNightDiff = ($realDailyRate * 1.3) / 8 * 0.1 * $specialHolidayNightDiff;';
-                  $formulaRegHolidayOvertime = ' $calculatedRegularHolidayOvertime = ($realDailyRate * 2) / 8 * 1.3 * $regularHolidayOvertime;';
-                  $formulaSplHolidayOvertime = '$calculatedSpecialHolidayOvertime = ($realDailyRate * 1.3) / 8 * 1.3 * $specialHolidayOvertime;';
-                  $formulaDrd = ' $calculatedDrd = $realDailyRate * 1.3 * $drd;';
-                  
+                 $splHolidayValue = $dailyRate * 0.30;
+                 $calculatedSpecialHoliday = $splHolidayValue * $specialHoliday;
+                 
+                 $hourlyRate = $dailyRate / 8;
+                 $otFee = $hourlyRate * 0.25;
+                 $calculatedOvertime = $otFee * $overtime;
+
+                 $nightDiffFee = $hourlyRate * 0.1;
+                 $calculatedNightDifferential = $nightDiffFee * $nightDifferential; 
+                 
+                 $HourlyRegHolidayNightDiffFee = $calculatedRegularHoliday / 8;
+                 $RegHolidayNightDiffValue = $HourlyRegHolidayNightDiffFee * 0.1;
+                 $calculatedRegularHolidayNightDiff = $RegHolidayNightDiffValue * $regularHolidayNightDiff;
+
+                 $HourlySplHolidayNightDiffFee = $calculatedSpecialHoliday / 8;
+                 $SplHolidayNightDiffValue =  $HourlySplHolidayNightDiffFee * 0.1;
+                 $calculatedSpecialHolidayNightDiff = $SplHolidayNightDiffValue * $specialHolidayNightDiff;
+
+                 $HourlyRegHolidayFee = $calculatedRegularHoliday / 8;
+                 $RegHolidayOvertimeValue = $HourlyRegHolidayFee * 0.30;                  
+                 $calculatedRegularHolidayOvertime = $RegHolidayOvertimeValue * $regularHolidayOvertime; 
+                 
+                 $HourlySplHolidayFee = $calculatedSpecialHoliday / 8;
+                 $SplHolidayOvertimeValue = $HourlySplHolidayFee * 0.30;  
+                 $calculatedSpecialHolidayOvertime = $SplHolidayOvertimeValue * $specialHolidayOvertime;
+
+                 $DrdValue = $dailyRate * 1.30;
+                 $calculatedDrd = $DrdValue * $drd;
+
+                 //formulas
+                 $formulaRegularHoliday = "Daily Rate = " . $dailyRate . " x Number of Days Worked = " .  $regularHoliday;
+                 $formulaSpecialHoliday = "Special Holiday Value (Daily Rate " . $dailyRate . " x 0.30) = " . $splHolidayValue . " x Number of Days Worked = " . $specialHoliday;
+                 $formulaOvertime = "OT Fee = [Hourly Rate(Daily Rate " .  $dailyRate . " / 8 = " . $hourlyRate . ") x 0.25] x Number of Hours Worked = " . $overtime;
+                 $formulaNightDiff = "Night Diff Fee(Hourly Rate = " . $dailyRate . " / 8 x 0.1 =" . $nightDiffFee . ") x Number of Hours Worked = " . $nightDifferential;
+                 $formulaRegHolidayNightDiff = "Regular Night Diff Value = [Hourly Regular Holiday Night Diff Fee(Regular Holiday Fee " . $calculatedRegularHoliday . " / 8) x 0.1 = " . $RegHolidayNightDiffValue . "] x Number of Hours Worked = " . $regularHolidayNightDiff;
+                 $formulaSplHolidayNightDiff = "Special Holiday Night Diff Value = [Hourly Special Holiday Night Diff Fee(Special Holiday Fee" . $calculatedSpecialHoliday . "/ 8) x 0.30 = " . $SplHolidayNightDiffValue . "] x Number of Hours Worked = " . $specialHolidayNightDiff;
+                 $formulaRegHolidayOvertime = "Regular Holiday Overtime Value = [Hourly Regular Holiday Fee( Regular Holiday Fee " . $calculatedRegularHoliday . " / 8) x 0.1] x Number of Hours Worked = " . $regularHolidayOvertime;
+                 $formulaSplHolidayOvertime = "Special Holiday Overtime Value = [Hourly Special Holiday Fee( Special Holiday Fee " . $calculatedSpecialHoliday . " / 8) x 0.30] x Number of Hours Worked = " . $specialHolidayOvertime;
+                 $formulaDrd = " DRD Value(Daily Rate" . $dailyRate . " x 1.30) x Number of Days Worked = " . $drd;
                  
               
                 // Display or process the fetched data as needed
@@ -181,14 +199,14 @@
                 </div>
 
 
-                <div class="row mb-3">
+                    <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="daysWorked" class="form-label">No. of Days Worked</label>
                             <input type="text" name="daysWorked" class="form-control" id="daysWorked" value="<?php echo isset($totalDaysWork) ? $totalDaysWork : ''; ?>" disabled>
                         </div>
  
                         <div class="col-md-4">
-                            <label for="basicPay" class="form-label">Basic Pay</label>
+                            <label for="basicPay" class="form-label">Daily Rate</label>
                             <input type="text" name="basicPay" class="form-control" id="basicPay"  style="width: 150px;" placeholder="PHP 0.00"  value="<?php echo isset($dailyRate) ? number_format($dailyRate, 2) : ''; ?>" readonly>
                         </div>
 
@@ -204,11 +222,10 @@
                        </div>
                     </div>
 
-
-                <div class="row mb-3">
+                    <div class="row mb-3">
                        <div class="col-md-4">
                            <label for="specialHoliday" class="form-label">Special Holiday</label>
-                         <div class="input-group">
+                        <div class="input-group">
                            <input type="text" name="specialHoliday" class="form-control" id="specialHoliday_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedSpecialHoliday) ? number_format($calculatedSpecialHoliday, 2) : ''; ?>" readonly>
                            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaSpecialHoliday); ?>')">
                            <i class="bi bi-info-circle"></i>
@@ -216,15 +233,15 @@
                       </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <label for="overtime" class="form-label">Overtime</label>
-                      <div class="input-group">
-                        <input type="text" name="overtime" class="form-control" id="overtime_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedOvertime) ? number_format($calculatedOvertime, 2) : ''; ?>" readonly>
-                        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaOvertime); ?>')">
-                        <i class="bi bi-info-circle"></i>
-                        </button>
-                      </div>
-                    </div>
+<div class="col-md-4">
+    <label for="overtime" class="form-label">Overtime</label>
+    <div class="input-group">
+        <input type="text" name="overtime" class="form-control" id="overtime_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedOvertime) ? number_format($calculatedOvertime, 2) : ''; ?>" readonly>
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaOvertime); ?>')">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </div>
+</div>
 
 <div class="col-md-4">
     <label for="nightDifferential" class="form-label">Night Differential</label>
@@ -235,68 +252,68 @@
         </button>
     </div>
 </div>
-</div> 
-
-<div class="row mb-3">
-
-<div class="col-md-4">
-<label for="regularHolidayNightDiff" class="form-label">Regular Holiday Night Differential</label>
-<div class="input-group">
-<input type="text" name="regularHolidayNightDiff" class="form-control" id="regularHolidayNightDiff_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedRegularHolidayNightDiff) ? number_format($calculatedRegularHolidayNightDiff, 2) : ''; ?>" readonly>
-<button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaRegHolidayNightDiff); ?>')">
-<i class="bi bi-info-circle"></i>
-</button>
-</div>
 </div>
 
-<div class="col-md-4">
-<label for="specialHolidayNightDiff" class="form-label">Special Holiday Night Differential</label>
-<div class="input-group">
-<input type="text" name="specialHolidayNightDiff" class="form-control" id="specialHolidayNightDiff_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedSpecialHolidayNightDiff) ? number_format($calculatedSpecialHolidayNightDiff, 2) : ''; ?>" readonly>
-<button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaSplHolidayNightDiff); ?>')">
-<i class="bi bi-info-circle"></i>
-</button>
-</div>
-</div>
+                    <div class="row mb-3">
 
-<div class="col-md-4">
-<label for="regHolidayOvertime" class="form-label">Regular Holiday Overtime</label>
-<div class="input-group">
-<input type="text" name="regHolidayOvertime" class="form-control" id="regHolidayOvertime_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedRegularHolidayOvertime) ? number_format($calculatedRegularHolidayOvertime, 2) : ''; ?>" readonly>
-<button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaRegHolidayOvertime); ?>')">
-<i class="bi bi-info-circle"></i>
-</button>
-</div>
-</div>
-</div>
-
-<div class="row mb-3">
-
-<div class="col-md-4">
-<label for="splHolidayOvertime" class="form-label">Special Holiday Overtime</label>
-<div class="input-group">
-<input type="text" name="splHolidayOvertime" class="form-control" id="splHolidayOvertime_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedSpecialHolidayOvertime) ? number_format($calculatedSpecialHolidayOvertime, 2) : ''; ?>" readonly>
-<button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaSplHolidayOvertime); ?>')">
-<i class="bi bi-info-circle"></i>
-</button>
-</div>
-</div>
-
-    <div class="col-md-4">
-        <label for="monthlyBonus" class="form-label">Monthly Bonus</label>
-        <input type="text" name="monthlyBonus" class="form-control" id="monthlyBonus_id" placeholder="PHP 0.00" value="<?php echo isset($accBonus) ? $accBonus : ''; ?>" readonly>
+                    <div class="col-md-4">
+    <label for="regularHolidayNightDiff" class="form-label">Regular Holiday Night Differential</label>
+    <div class="input-group">
+        <input type="text" name="regularHolidayNightDiff" class="form-control" id="regularHolidayNightDiff_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedRegularHolidayNightDiff) ? number_format($calculatedRegularHolidayNightDiff, 2) : ''; ?>" readonly>
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaRegHolidayNightDiff); ?>')">
+            <i class="bi bi-info-circle"></i>
+        </button>
     </div>
+</div>
 
-    <div class="col-md-4">
-<label for="drd" class="form-label">DRD</label>
-<div class="input-group">
-<input type="text" name="drd" class="form-control" id="drd_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedDrd) ? number_format($calculatedDrd, 2) : ''; ?>" readonly>
-<button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaDrd); ?>')">
-<i class="bi bi-info-circle"></i>
-</button>
+<div class="col-md-4">
+    <label for="specialHolidayNightDiff" class="form-label">Special Holiday Night Differential</label>
+    <div class="input-group">
+        <input type="text" name="specialHolidayNightDiff" class="form-control" id="specialHolidayNightDiff_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedSpecialHolidayNightDiff) ? number_format($calculatedSpecialHolidayNightDiff, 2) : ''; ?>" readonly>
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaSplHolidayNightDiff); ?>')">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </div>
 </div>
+
+<div class="col-md-4">
+    <label for="regHolidayOvertime" class="form-label">Regular Holiday Overtime</label>
+    <div class="input-group">
+        <input type="text" name="regHolidayOvertime" class="form-control" id="regHolidayOvertime_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedRegularHolidayOvertime) ? number_format($calculatedRegularHolidayOvertime, 2) : ''; ?>" readonly>
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaRegHolidayOvertime); ?>')">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </div>
 </div>
+                    </div>
+
+                    <div class="row mb-3">
+
+                    <div class="col-md-4">
+    <label for="splHolidayOvertime" class="form-label">Special Holiday Overtime</label>
+    <div class="input-group">
+        <input type="text" name="splHolidayOvertime" class="form-control" id="splHolidayOvertime_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedSpecialHolidayOvertime) ? number_format($calculatedSpecialHolidayOvertime, 2) : ''; ?>" readonly>
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaSplHolidayOvertime); ?>')">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </div>
 </div>
+
+                        <div class="col-md-4">
+                            <label for="monthlyBonus" class="form-label">Monthly Bonus</label>
+                            <input type="text" name="monthlyBonus" class="form-control" id="monthlyBonus_id" placeholder="PHP 0.00" value="<?php echo isset($accBonus) ? $accBonus : ''; ?>" readonly>
+                        </div>
+
+                        <div class="col-md-4">
+    <label for="drd" class="form-label">DRD</label>
+    <div class="input-group">
+        <input type="text" name="drd" class="form-control" id="drd_id" style="width: 150px;" placeholder="PHP 0.00" value="<?php echo isset($calculatedDrd) ? number_format($calculatedDrd, 2) : ''; ?>" readonly>
+        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editFormulaModal" onclick="showFormula('<?php echo htmlspecialchars($formulaDrd); ?>')">
+            <i class="bi bi-info-circle"></i>
+        </button>
+    </div>
+</div>
+                    </div>
 
                     <div class="row mb-3">
                         <div class="col-md-4">
@@ -310,24 +327,33 @@
                     </div>
 
 
-                    <!-- Edit Formula Modal -->
+<script>
+    // Initialize tooltips
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltips = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltips.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+</script>
+
+<!-- View Formula Modal -->
 <div class="modal fade" id="editFormulaModal" tabindex="-1" aria-labelledby="editFormulaModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editFormulaModalLabel">Edit Formula</h5>
+                <h5 class="modal-title" id="editFormulaModalLabel">View Formula</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="editFormulaForm">
                     <div class="mb-3">
-                        <textarea class="form-control" id="basicPayFormula" rows="4"><?php echo isset($calculatedRegularHoliday) ? $calculatedRegularHoliday : ''; ?></textarea>
+                        <textarea class="form-control" id="basicPayFormula" readonly rows="4"><?php echo isset($calculatedRegularHoliday) ? $calculatedRegularHoliday : ''; ?></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveFormula()">Save</button>
             </div>
         </div>
     </div>
@@ -350,9 +376,9 @@
                     // Optionally, you can refresh the page or close the modal
                     $('#editFormulaModal').modal('hide');
 
-    setTimeout(function() {
-        location.reload(); // Refresh the page
-    }, 2000);
+                setTimeout(function() {
+                window.location.href = 'Process_Payroll_Timekeeping.php';
+                 }, 2000); 
 
                 },
                 error: function() {
@@ -361,12 +387,9 @@
             });
         }
     </script>
-                   
 
-            
 
-       <script>
-                    
+    <script>               
                     $(document).ready(function() {
                         // Function to parse date in YYYY-MM-DD format
                         function parseDate(dateString) {
@@ -449,67 +472,28 @@
                                 }
                             });
 
-   function calculateTotalDeductions() {
-        var sssValue = $('#sss_id').val();
-        var sss = parseFloat(sssValue.replace(/[^\d.]/g, '')) || 0;
 
-        var pagibigValue = $('#pagibig_id').val();
-        var pagibig = parseFloat(pagibigValue.replace(/[^\d.]/g, '')) || 0;
+                            //CALCULATION
+                            
+                       // Attach event listeners for input fields
+$('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id, #nightDifferential_id, #regularHolidayNightDiff_id, #specialHolidayNightDiff_id, #regHolidayOvertime_id, #splHolidayOvertime_id, #monthlyBonus_id, #drd_id, #payAdjustments_id').on('input', calculateTotalEarnings);
 
-        var philhealthValue = $('#philhealth_id').val();
-        var philhealth = parseFloat(philhealthValue.replace(/[^\d.]/g, '')) || 0;
 
-        var withholdingTaxValue = $('#withholdingTax').val();
-        var withholdingTax = parseFloat(withholdingTaxValue.replace(/[^\d.]/g, '')) || 0;
-
-        var absentValue = $('#absent_id').val();
-        var absent = parseFloat(absentValue.replace(/[^\d.]/g, '')) || 0;
-
-        var otherDeductionsValue = $('#otherDeductions_id').val();
-        var otherDeductions = parseFloat(otherDeductionsValue.replace(/[^\d.]/g, '')) || 0;
-
-        var totalDeductions = sss + pagibig + philhealth + withholdingTax + absent + otherDeductions;
-
-        if (!isNaN(totalDeductions)) {
-            $('#totalDeductions_id').val(totalDeductions.toFixed(2));
-            $('#totalDeductions2_id').val(totalDeductions.toFixed(2));
-            console.log($('#totalDeductions2_id').val());
-
-             $('#totalDeductions2_id').val(totalDeductions.toFixed(2)).promise().done(function() {
-                calculateTotalNetPay();
-            });
-
-        } else {
-            console.error('Total deductions is not a number:', totalDeductions);
-        }
-    }
-
-    function calculateWithholdingTax(totalEarningsValue) {
-        $.ajax({
-            type: 'POST',
-            url: 'functions/calculate_withholding_tax.php',
-            data: { totalEarnings: totalEarningsValue },
-            success: function(response) {
-                console.log('Withholding Tax:', response);
-                $('#withholdingTax').val(parseFloat(response));
-                calculateTotalDeductions(); // Call total deductions calculation after withholding tax is fetched
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-
+    // Function to calculate total earnings
     function calculateTotalEarnings() {
-        try {
-            var daysWorked = parseFloat($('#daysWorked').val()) || 0;
-            var basicPayString = $('#basicPay').val();
-            var numericPart = basicPayString.replace(/[^\d.]/g, '');
-            var basicPay = parseFloat(numericPart) || 0;
+    try {
+        //console.log("calculateTotalEarnings function called");
 
-            var totalEarnings = daysWorked * basicPay;
+        // Retrieve days worked and basic pay
+        var daysWorked = parseFloat($('#daysWorked').val()) || 0;
+        var basicPayString = $('#basicPay').val(); // Retrieve the value as a string
+        var numericPart = basicPayString.replace(/[^\d.]/g, '');
+        var basicPay = parseFloat(numericPart) || 0; // Convert the string directly to a number
 
-            var inputFields = [
+        // Calculate total earnings
+        var totalEarnings = daysWorked * basicPay;
+
+        var inputFields = [
                 'regularHoliday_id',
                 'specialHoliday_id',
                 'overtime_id',
@@ -523,94 +507,55 @@
                 'payAdjustments_id'
             ];
 
-            for (var i = 0; i < inputFields.length; i++) {
-                var fieldValueString = $('#' + inputFields[i]).val();
-                var fieldValue = parseFloat(fieldValueString.replace(/[^\d.-]/g, '')) || 0;
+        for (var i = 0; i < inputFields.length; i++) {
+            var fieldValueString = $('#' + inputFields[i]).val(); // Retrieve the value as a string
+                var fieldValue = parseFloat(fieldValueString.replace(/[^\d.-]/g, '')) || 0; // Convert the string directly to a number
                 totalEarnings += fieldValue;
-            }
+        }
 
-            var formattedTotalEarnings = totalEarnings.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-            $('#totalEarnings').val(formattedTotalEarnings);
-            $('#totalEarnings2_id').val(formattedTotalEarnings);
+        var formattedTotalEarnings = totalEarnings.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+         
+            $('#totalEarnings').val(formattedTotalEarnings.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
+            $('#totalEarnings2_id').val(formattedTotalEarnings.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
 
             $('#totalEarnings').trigger('change');
-        } catch (error) {
-            console.error("Error calculating total earnings:", error.message);
-        }
+    } catch (error) {
+        console.error("Error calculating total earnings:", error.message);
+    }
+}
+            
+    calculateTotalEarnings();
+     
+        function calculateWithholdingTax(totalEarningsValue) {
+        $.ajax({
+            type: 'POST',
+            url: 'functions/calculate_withholding_tax.php',
+            data: { totalEarnings: totalEarningsValue },
+            success: function(response) {
+                console.log('Withholding Tax:', response);
+                $('#withholdingTax').val(parseFloat(response).toLocaleString('en-US', { style: 'currency', currency: 'PHP' }));
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
     }
 
     function checkAndCalculate() {
-        var totalEarningsValue = $('#totalEarnings').val().replace(/,/g, '');
+        var totalEarningsValue = $('#totalEarnings').val();
         if (totalEarningsValue) {
             calculateWithholdingTax(totalEarningsValue);
         }
     }
 
-   
+    // Initial check and calculation on page load
+    checkAndCalculate();
 
-
-    function calculateTotalNetPay() {
-        var totalEarnings = parseFloat($('#totalEarnings2_id').val().replace(/[^\d.]/g, '')) || 0;
-      var totalDeductions = parseFloat($('#totalDeductions2_id').val()) || 0;
-        var incentivesValue = parseFloat($('#incentives_id').val().replace(/[^\d.]/g, '')) || 0;
-        var othersValue = parseFloat($('#others_id').val().replace(/[^\d.]/g, '')) || 0;
-
-        var totalIncentives = othersValue + incentivesValue;
-
-
-       var totalNetPay = totalEarnings - totalDeductions;
-    if (incentivesValue || othersValue) {
-        totalNetPay += totalIncentives;
-    }
-
-        $('#totalIncome_id').val(totalIncentives.toLocaleString('en-US', { style: 'currency', currency: 'PHP' }));
-        $('#totalNetpay_id').val(totalNetPay.toLocaleString('en-US', { style: 'currency', currency: 'PHP' }));
-    }
-
-
-    function goToNextTab() {
-        calculateTotalDeductions();
-    }
-
-    function goToNextTab1() {
-        calculateTotalNetPay();
-    }
-
-    $(document).ready(function() {
-        calculateTotalEarnings();
+    // Event listener for change event on #totalEarnings
+    $('#totalEarnings').on('change', function() {
         checkAndCalculate();
-
-        // Event listener for input fields within the #deduction form
-        $('#deduction input').on('input', function() {
-            calculateTotalDeductions();
-        });
-
-        // Event listener for input fields within the #incentivesTab form
-        $('#incentivesTab input').on('input', function() {
-            calculateTotalNetPay();
-        });
-
-        // Initial calculation on page load
-        calculateTotalNetPay();
     });
 
-    // Format input fields and trigger calculation on change
-    $('#absent_id, #otherDeductions_id').on('input', function(event) {
-        let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
-        inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ','); // Add commas for thousands
-
-        if (inputValue.includes('.')) {
-            let decimalPart = inputValue.split('.')[1];
-            if (!decimalPart || decimalPart.length < 2) {
-                inputValue += '0';
-            }
-        }
-
-        event.target.value = inputValue; // Set the formatted value without 'PHP'
-
-        calculateTotalDeductions(); // Recalculate total deductions
-    
 
 
         document.getElementById("employeeSelect").addEventListener("change", function() {
@@ -806,7 +751,6 @@
 
 
                     });
-                    });
                     </script>
 
                         <!-- Next button -->
@@ -881,7 +825,100 @@
                 </form>
             </div>
 
-   
+    <script>
+       $(document).ready(function() {
+
+
+    //CURRENCY
+            
+            
+              document.getElementById('absent_id').addEventListener('input', function(event) {
+                let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+
+                inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                if (inputValue.includes('.')) {
+                    let decimalPart = inputValue.split('.')[1];
+                    if (!decimalPart || decimalPart.length < 2) {
+                        inputValue += '0';
+                    }
+                }
+
+                event.target.value = 'PHP ' + inputValue;
+            });
+
+            
+              document.getElementById('otherDeductions_id').addEventListener('input', function(event) {
+                let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+
+                inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                if (inputValue.includes('.')) {
+                    let decimalPart = inputValue.split('.')[1];
+                    if (!decimalPart || decimalPart.length < 2) {
+                        inputValue += '0';
+                    }
+                }
+
+                event.target.value = 'PHP ' + inputValue;
+            });
+
+            //$('#sss_id, #pagibig_id, #philhealth_id, #absent_id, #otherDeductions_id').on('input', calculateTotalDeductions);
+
+        // Function to calculate total deductions
+        function calculateTotalDeductions() {
+                var sssValue = $('#sss_id').val();
+                var numericPart = sssValue.replace(/[^\d.]/g, '');
+                var sss = parseFloat(numericPart) || 0;
+
+                var pagibigValue = $('#pagibig_id').val();
+                var numericPart = pagibigValue.replace(/[^\d.]/g, '');
+                var pagibig = parseFloat(numericPart) || 0;
+
+                var philhealthValue = $('#philhealth_id').val();
+                var numericPart = philhealthValue.replace(/[^\d.]/g, '');
+                var philhealth = parseFloat(numericPart) || 0;
+
+                var withholdingTaxValue = $('#withholdingTax').val();
+                var numericPart = withholdingTaxValue.replace(/[^\d.]/g, '');
+                var withholdingTax = parseFloat(numericPart) || 0;
+
+                var absentValue = $('#absent_id').val();
+                var numericPart = absentValue.replace(/[^\d.]/g, '');
+                var absent = parseFloat(numericPart) || 0;
+
+                var otherDeductionsValue = $('#otherDeductions_id').val();
+                var numericPart = otherDeductionsValue.replace(/[^\d.]/g, '');
+                var otherDeductions = parseFloat(numericPart) || 0;
+
+
+                var totalDeductions = sss + pagibig + philhealth + withholdingTax + absent + otherDeductions;
+            
+
+                    // Check if totalDeductions is a number before calling toFixed
+                    if (!isNaN(totalDeductions)) {
+
+                    $('#totalDeductions_id').val(totalDeductions.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
+                    $('#totalDeductions2_id').val(totalDeductions.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
+                    } else {
+                        // Handle the case where totalDeductions is not a number
+                        console.error('Total deductions is not a number:', totalDeductions);
+                    }
+                }
+
+                // Event listener for input fields within the #deduction form
+                $('#deduction input').on('input', function() {
+                    calculateTotalDeductions();
+                });
+
+                // Initial calculation on page load
+                calculateTotalDeductions();
+
+      
+                
+        });
+    </script>
+
                     <div class="tab-pane fade" id="incentives" role="tabpanel" aria-labelledby="incentives-tab">
                     <form id="incentivesTab" method="POST">
                     <div class="container mt-4 col-10">
@@ -978,10 +1015,36 @@
             });
 
 
+        function calculateTotalNetPay() {
+            var totalEarnings = parseFloat($('#totalEarnings2_id').val().replace(/[^\d.]/g, '')) || 0;
+            var totalDeductions = parseFloat($('#totalDeductions2_id').val().replace(/[^\d.]/g, '')) || 0;
+            var incentivesValue = parseFloat($('#incentives_id').val().replace(/[^\d.]/g, '')) || 0;
+            var othersValue = parseFloat($('#others_id').val().replace(/[^\d.]/g, '')) || 0;
+
+            
+            var totalIncentives =  othersValue + incentivesValue;
+          
+            var totalNetPay = totalEarnings - totalDeductions + othersValue + incentivesValue;
+            
+            
+            $('#totalIncome_id').val(totalIncentives.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
+            $('#totalNetpay_id').val(totalNetPay.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
+        }
+
+        // Event listener for input fields within the #incentivesTab form
+        $('#incentivesTab input').on('input', function() {
+            calculateTotalNetPay();
+        });
+
+        // Initial calculation on page load
+        calculateTotalNetPay();
+
+
+
+
         });
 
     </script>
-
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -993,7 +1056,24 @@
     }
 
     function goToNextTab1() {
-     
+        var absentValue = $('#absent_id').val();
+        var otherDeductionsValue = $('#otherDeductions_id').val();
+
+            if (!absentValue) {
+                $('#absent_id').addClass('required-field');
+            } else {
+                $('#absent_id').removeClass('required-field');
+            }
+
+            if (!otherDeductionsValue) {
+                $('#otherDeductions_id').addClass('required-field');
+            } else {
+                $('#otherDeductions_id').removeClass('required-field');
+            }
+
+            if (!absentValue || !otherDeductionsValue) {
+                return;
+            }
             $('#incentives-tab').tab('show');
                     //document.getElementById('incentives-tab').click();
             }
@@ -1074,6 +1154,26 @@
 $(document).ready(function(){
     $('#incentivesTab').submit(function(e) {
         e.preventDefault(); // Prevent the default form submission
+
+       $('#incentives_id').removeClass('required-field');
+        $('#others_id').removeClass('required-field');
+
+        var incentives = $('#incentives_id').val().trim();
+        var others = $('#others_id').val().trim();
+
+        var valid = true;
+        if (incentives === "") {
+            $('#incentives_id').addClass('required-field');
+            valid = false;
+        }
+        if (others === "") {
+            $('#others_id').addClass('required-field');
+            valid = false;
+        }
+
+        if (!valid) {
+            return; // Prevent form submission if any field is empty
+        }
 
 
         var data = $('#earningsTab, #deduction, #incentivesTab').serialize();
