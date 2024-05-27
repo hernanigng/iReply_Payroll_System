@@ -474,27 +474,68 @@
                             });
 
 
-                            //CALCULATION
-                            
-                       // Attach event listeners for input fields
-$('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id, #nightDifferential_id, #regularHolidayNightDiff_id, #specialHolidayNightDiff_id, #regHolidayOvertime_id, #splHolidayOvertime_id, #monthlyBonus_id, #drd_id, #payAdjustments_id').on('input', calculateTotalEarnings);
+                      
+         function calculateTotalDeductions() {
+        var sssValue = $('#sss_id').val();
+        var sss = parseFloat(sssValue.replace(/[^\d.]/g, '')) || 0;
 
+        var pagibigValue = $('#pagibig_id').val();
+        var pagibig = parseFloat(pagibigValue.replace(/[^\d.]/g, '')) || 0;
 
-    // Function to calculate total earnings
+        var philhealthValue = $('#philhealth_id').val();
+        var philhealth = parseFloat(philhealthValue.replace(/[^\d.]/g, '')) || 0;
+
+        var withholdingTaxValue = $('#withholdingTax').val();
+        var withholdingTax = parseFloat(withholdingTaxValue.replace(/[^\d.]/g, '')) || 0;
+
+        var absentValue = $('#absent_id').val();
+        var absent = parseFloat(absentValue.replace(/[^\d.]/g, '')) || 0;
+
+        var otherDeductionsValue = $('#otherDeductions_id').val();
+        var otherDeductions = parseFloat(otherDeductionsValue.replace(/[^\d.]/g, '')) || 0;
+
+        var totalDeductions = sss + pagibig + philhealth + withholdingTax + absent + otherDeductions;
+
+        if (!isNaN(totalDeductions)) {
+            $('#totalDeductions_id').val(totalDeductions.toFixed(2));
+            $('#totalDeductions2_id').val(totalDeductions.toFixed(2));
+            console.log($('#totalDeductions2_id').val());
+
+             $('#totalDeductions2_id').val(totalDeductions.toFixed(2)).promise().done(function() {
+                calculateTotalNetPay();
+            });
+
+        } else {
+            console.error('Total deductions is not a number:', totalDeductions);
+        }
+    }
+
+    function calculateWithholdingTax(totalEarningsValue) {
+        $.ajax({
+            type: 'POST',
+            url: 'functions/calculate_withholding_tax.php',
+            data: { totalEarnings: totalEarningsValue },
+            success: function(response) {
+                console.log('Withholding Tax:', response);
+                $('#withholdingTax').val(parseFloat(response));
+                calculateTotalDeductions(); // Call total deductions calculation after withholding tax is fetched
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
     function calculateTotalEarnings() {
-    try {
-        //console.log("calculateTotalEarnings function called");
+        try {
+            var daysWorked = parseFloat($('#daysWorked').val()) || 0;
+            var basicPayString = $('#basicPay').val();
+            var numericPart = basicPayString.replace(/[^\d.]/g, '');
+            var basicPay = parseFloat(numericPart) || 0;
 
-        // Retrieve days worked and basic pay
-        var daysWorked = parseFloat($('#daysWorked').val()) || 0;
-        var basicPayString = $('#basicPay').val(); // Retrieve the value as a string
-        var numericPart = basicPayString.replace(/[^\d.]/g, '');
-        var basicPay = parseFloat(numericPart) || 0; // Convert the string directly to a number
+            var totalEarnings = daysWorked * basicPay;
 
-        // Calculate total earnings
-        var totalEarnings = daysWorked * basicPay;
-
-        var inputFields = [
+            var inputFields = [
                 'regularHoliday_id',
                 'specialHoliday_id',
                 'overtime_id',
@@ -508,56 +549,94 @@ $('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id,
                 'payAdjustments_id'
             ];
 
-        for (var i = 0; i < inputFields.length; i++) {
-            var fieldValueString = $('#' + inputFields[i]).val(); // Retrieve the value as a string
-                var fieldValue = parseFloat(fieldValueString.replace(/[^\d.-]/g, '')) || 0; // Convert the string directly to a number
+            for (var i = 0; i < inputFields.length; i++) {
+                var fieldValueString = $('#' + inputFields[i]).val();
+                var fieldValue = parseFloat(fieldValueString.replace(/[^\d.-]/g, '')) || 0;
                 totalEarnings += fieldValue;
-        }
+            }
 
-        var formattedTotalEarnings = totalEarnings.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-         
-            $('#totalEarnings').val(formattedTotalEarnings.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
-            $('#totalEarnings2_id').val(formattedTotalEarnings.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
+            var formattedTotalEarnings = totalEarnings.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+            $('#totalEarnings').val(formattedTotalEarnings);
+            $('#totalEarnings2_id').val(formattedTotalEarnings);
 
             $('#totalEarnings').trigger('change');
-    } catch (error) {
-        console.error("Error calculating total earnings:", error.message);
-    }
-}
-            
-    calculateTotalEarnings();
-     
-        function calculateWithholdingTax(totalEarningsValue) {
-        $.ajax({
-            type: 'POST',
-            url: 'functions/calculate_withholding_tax.php',
-            data: { totalEarnings: totalEarningsValue },
-            success: function(response) {
-                console.log('Withholding Tax:', response);
-                $('#withholdingTax').val(parseFloat(response).toLocaleString('en-US', { style: 'currency', currency: 'PHP' }));
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
+        } catch (error) {
+            console.error("Error calculating total earnings:", error.message);
+        }
     }
 
     function checkAndCalculate() {
-        var totalEarningsValue = $('#totalEarnings').val();
+        var totalEarningsValue = $('#totalEarnings').val().replace(/,/g, '');
         if (totalEarningsValue) {
             calculateWithholdingTax(totalEarningsValue);
         }
     }
 
-    // Initial check and calculation on page load
-    checkAndCalculate();
+   
 
-    // Event listener for change event on #totalEarnings
-    $('#totalEarnings').on('change', function() {
+
+    function calculateTotalNetPay() {
+        var totalEarnings = parseFloat($('#totalEarnings2_id').val().replace(/[^\d.]/g, '')) || 0;
+      var totalDeductions = parseFloat($('#totalDeductions2_id').val()) || 0;
+        var incentivesValue = parseFloat($('#incentives_id').val().replace(/[^\d.]/g, '')) || 0;
+        var othersValue = parseFloat($('#others_id').val().replace(/[^\d.]/g, '')) || 0;
+
+        var totalIncentives = othersValue + incentivesValue;
+
+
+       var totalNetPay = totalEarnings - totalDeductions;
+    if (incentivesValue || othersValue) {
+        totalNetPay += totalIncentives;
+    }
+
+        $('#totalIncome_id').val(totalIncentives.toLocaleString('en-US', { style: 'currency', currency: 'PHP' }));
+        $('#totalNetpay_id').val(totalNetPay.toLocaleString('en-US', { style: 'currency', currency: 'PHP' }));
+    }
+
+
+    function goToNextTab() {
+        calculateTotalDeductions();
+    }
+
+    function goToNextTab1() {
+        calculateTotalNetPay();
+    }
+
+    $(document).ready(function() {
+        calculateTotalEarnings();
         checkAndCalculate();
+
+        // Event listener for input fields within the #deduction form
+        $('#deduction input').on('input', function() {
+            calculateTotalDeductions();
+        });
+
+        // Event listener for input fields within the #incentivesTab form
+        $('#incentivesTab input').on('input', function() {
+            calculateTotalNetPay();
+        });
+
+        // Initial calculation on page load
+        calculateTotalNetPay();
     });
 
+    // Format input fields and trigger calculation on change
+    $('#absent_id, #otherDeductions_id').on('input', function(event) {
+        let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
+        inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ','); // Add commas for thousands
 
+        if (inputValue.includes('.')) {
+            let decimalPart = inputValue.split('.')[1];
+            if (!decimalPart || decimalPart.length < 2) {
+                inputValue += '0';
+            }
+        }
+
+        event.target.value = inputValue; // Set the formatted value without 'PHP'
+
+        calculateTotalDeductions(); // Recalculate total deductions
+    
 
         document.getElementById("employeeSelect").addEventListener("change", function() {
             var employeeId = this.value;
@@ -826,99 +905,7 @@ $('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id,
                 </form>
             </div>
 
-    <script>
-       $(document).ready(function() {
-
-
-    //CURRENCY
-            
-            
-              document.getElementById('absent_id').addEventListener('input', function(event) {
-                let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
-
-                inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-                if (inputValue.includes('.')) {
-                    let decimalPart = inputValue.split('.')[1];
-                    if (!decimalPart || decimalPart.length < 2) {
-                        inputValue += '0';
-                    }
-                }
-
-                event.target.value = 'PHP ' + inputValue;
-            });
-
-            
-              document.getElementById('otherDeductions_id').addEventListener('input', function(event) {
-                let inputValue = event.target.value.replace(/[^\d.]/g, ''); // Remove non-numeric characters except '.'
-
-                inputValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-                if (inputValue.includes('.')) {
-                    let decimalPart = inputValue.split('.')[1];
-                    if (!decimalPart || decimalPart.length < 2) {
-                        inputValue += '0';
-                    }
-                }
-
-                event.target.value = 'PHP ' + inputValue;
-            });
-
-            //$('#sss_id, #pagibig_id, #philhealth_id, #absent_id, #otherDeductions_id').on('input', calculateTotalDeductions);
-
-        // Function to calculate total deductions
-        function calculateTotalDeductions() {
-                var sssValue = $('#sss_id').val();
-                var numericPart = sssValue.replace(/[^\d.]/g, '');
-                var sss = parseFloat(numericPart) || 0;
-
-                var pagibigValue = $('#pagibig_id').val();
-                var numericPart = pagibigValue.replace(/[^\d.]/g, '');
-                var pagibig = parseFloat(numericPart) || 0;
-
-                var philhealthValue = $('#philhealth_id').val();
-                var numericPart = philhealthValue.replace(/[^\d.]/g, '');
-                var philhealth = parseFloat(numericPart) || 0;
-
-                var withholdingTaxValue = $('#withholdingTax').val();
-                var numericPart = withholdingTaxValue.replace(/[^\d.]/g, '');
-                var withholdingTax = parseFloat(numericPart) || 0;
-
-                var absentValue = $('#absent_id').val();
-                var numericPart = absentValue.replace(/[^\d.]/g, '');
-                var absent = parseFloat(numericPart) || 0;
-
-                var otherDeductionsValue = $('#otherDeductions_id').val();
-                var numericPart = otherDeductionsValue.replace(/[^\d.]/g, '');
-                var otherDeductions = parseFloat(numericPart) || 0;
-
-
-                var totalDeductions = sss + pagibig + philhealth + withholdingTax + absent + otherDeductions;
-            
-
-                    // Check if totalDeductions is a number before calling toFixed
-                    if (!isNaN(totalDeductions)) {
-
-                    $('#totalDeductions_id').val(totalDeductions.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
-                    $('#totalDeductions2_id').val(totalDeductions.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
-                    } else {
-                        // Handle the case where totalDeductions is not a number
-                        console.error('Total deductions is not a number:', totalDeductions);
-                    }
-                }
-
-                // Event listener for input fields within the #deduction form
-                $('#deduction input').on('input', function() {
-                    calculateTotalDeductions();
-                });
-
-                // Initial calculation on page load
-                calculateTotalDeductions();
-
-      
-                
-        });
-    </script>
+   
 
                     <div class="tab-pane fade" id="incentives" role="tabpanel" aria-labelledby="incentives-tab">
                     <form id="incentivesTab" method="POST">
@@ -1016,33 +1003,6 @@ $('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id,
             });
 
 
-        function calculateTotalNetPay() {
-            var totalEarnings = parseFloat($('#totalEarnings2_id').val().replace(/[^\d.]/g, '')) || 0;
-            var totalDeductions = parseFloat($('#totalDeductions2_id').val().replace(/[^\d.]/g, '')) || 0;
-            var incentivesValue = parseFloat($('#incentives_id').val().replace(/[^\d.]/g, '')) || 0;
-            var othersValue = parseFloat($('#others_id').val().replace(/[^\d.]/g, '')) || 0;
-
-            
-            var totalIncentives =  othersValue + incentivesValue;
-          
-            var totalNetPay = totalEarnings - totalDeductions + othersValue + incentivesValue;
-            
-            
-            $('#totalIncome_id').val(totalIncentives.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
-            $('#totalNetpay_id').val(totalNetPay.toLocaleString('en-US', {style: 'currency', currency: 'PHP'}));
-        }
-
-        // Event listener for input fields within the #incentivesTab form
-        $('#incentivesTab input').on('input', function() {
-            calculateTotalNetPay();
-        });
-
-        // Initial calculation on page load
-        calculateTotalNetPay();
-
-
-
-
         });
 
     </script>
@@ -1057,24 +1017,8 @@ $('#daysWorked, #basicPay, #regularHoliday_id, #specialHoliday_id, #overtime_id,
     }
 
     function goToNextTab1() {
-        var absentValue = $('#absent_id').val();
-        var otherDeductionsValue = $('#otherDeductions_id').val();
-
-            if (!absentValue) {
-                $('#absent_id').addClass('required-field');
-            } else {
-                $('#absent_id').removeClass('required-field');
-            }
-
-            if (!otherDeductionsValue) {
-                $('#otherDeductions_id').addClass('required-field');
-            } else {
-                $('#otherDeductions_id').removeClass('required-field');
-            }
-
-            if (!absentValue || !otherDeductionsValue) {
-                return;
-            }
+      
+        
             $('#incentives-tab').tab('show');
                     //document.getElementById('incentives-tab').click();
             }
@@ -1156,25 +1100,6 @@ $(document).ready(function(){
     $('#incentivesTab').submit(function(e) {
         e.preventDefault(); // Prevent the default form submission
 
-       $('#incentives_id').removeClass('required-field');
-        $('#others_id').removeClass('required-field');
-
-        var incentives = $('#incentives_id').val().trim();
-        var others = $('#others_id').val().trim();
-
-        var valid = true;
-        if (incentives === "") {
-            $('#incentives_id').addClass('required-field');
-            valid = false;
-        }
-        if (others === "") {
-            $('#others_id').addClass('required-field');
-            valid = false;
-        }
-
-        if (!valid) {
-            return; // Prevent form submission if any field is empty
-        }
 
 
         var data = $('#earningsTab, #deduction, #incentivesTab').serialize();
