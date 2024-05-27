@@ -14,6 +14,20 @@ $result_tranx = $conn->query($query_tranx);
 
 
 if ($result_tranx->num_rows > 0) {
+
+      echo "<thead>";
+    echo "<tr>";
+    echo "<th>Employee Name</th>";
+    echo "<th>Employee Status</th>";
+    echo "<th>Earnings</th>";
+    echo "<th>Deductions</th>";
+    echo "<th>Incentives</th>";
+    echo "<th>Actions</th>";
+    echo "</tr>";
+    echo "</thead>";
+    echo "<tbody>";
+
+        
     while ($row = $result_tranx->fetch_assoc()) {
         $employee_id = $row['employee_id'];
         $earnings_id = $row['earnings_id'];
@@ -22,12 +36,13 @@ if ($result_tranx->num_rows > 0) {
         $netPay_id = $row['netPay_id'];
 
         // Fetch employee name
-        $query_employee = "SELECT firstname, lastname FROM tbl_employee WHERE employee_id = '$employee_id'";
+        $query_employee = "SELECT firstname, lastname, employment_status FROM tbl_employee WHERE employee_id = '$employee_id'";
         $result_employee = $conn->query($query_employee);
         $employee_name = '';
         if ($result_employee && $result_employee->num_rows > 0) {
             $employee_row = $result_employee->fetch_assoc();
             $employee_name = $employee_row['firstname'] . ' ' . $employee_row['lastname'];
+            $employee_status = $employee_row['employment_status'];
         }
 
         // Fetch total earnings
@@ -48,6 +63,7 @@ if ($result_tranx->num_rows > 0) {
         // Output the table row
         echo "<tr>";
         echo "<td>$employee_name</td>";
+        echo "<td>$employee_status</td>";
         echo "<td>$total_earnings</td>";
         echo "<td>$total_deductions</td>";
         echo "<td>$total_incentives</td>";
