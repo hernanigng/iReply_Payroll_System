@@ -189,9 +189,9 @@ if (isset($_GET['employee_id'])) {
                                     <!-- <button type="button" class="btn btn-primary editAttendanceBtn" data-timekeeping_id="<?php echo $data1['timekeeping_ID']; ?>">
                                       <i class="bi bi-pencil"></i> 
                                    </button> -->
-                                   <button type="button" class="btn btn-primary" onclick="openEditModal('<?php echo $data1['timekeeping_ID']; ?>')" data-bs-toggle="modal" data-bs-target="#edit_modal">
-                                      <i class="bi bi-pencil"></i>
-                                   </button>
+                                  <button type="button" class="btn btn-primary" onclick="openEditModal('<?php echo $data1['timekeeping_ID']; ?>')">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
                                    
                                    <button type="button" class="btn btn-primary" onclick="redirectToPayroll('<?php echo $data1['timekeeping_ID']; ?>')">
                                         <i class="fa-solid fa-calculator"></i>
@@ -598,45 +598,63 @@ $('#totalHrs').on('input', calculateTotalDays);
         $('#edit_totalDys').val(totalDays);
     }
 
-function openEditModal(timekeeping_ID) {
-    // Open the modal
-    $('#edit_modal').modal('show');
 
-    // AJAX call to fetch data
+    function openEditModal(timekeepingId) {
+    // Send an AJAX request to check if the earnings_id exists
     $.ajax({
-        url: 'functions/get_timekeeping.php',
-        type: 'POST',
-        data: { id: timekeeping_ID },
+        url: 'functions/check_earnings_id.php',
+        method: 'POST',
+        data: { timekeeping_ID: timekeepingId },
         dataType: 'json',
         success: function(response) {
-            console.log(response); // Debugging message
+            // Check if the earnings_id exists
+            if (response.exists) {
+                // Earnings_id exists, display a message or perform any other action
+                alert('The payroll has already been processed. Cannot edit.');
+            } else {
+                // Earnings_id does not exist, open the edit modal
+                $('#edit_modal').modal('show');
 
-            // Populate the edit modal directly
-            $('#timekeeping_id').val(response.timekeeping_ID);
-            $('#edit_employee_name').val(response.employee_name);
-            $('#edit_employee_id').val(response.employee_id);
-            $('#edit_dateFrm').val(response.date_from);
-            $('#edit_dateTo').val(response.date_to);
-            $('#edit_totalHrs').val(response.Total_HrsWork);
-            $('#edit_totalDys').val(response.Total_DysWork);
+                // AJAX call to fetch data
+                $.ajax({
+                    url: 'functions/get_timekeeping.php',
+                    type: 'POST',
+                    data: { id: timekeepingId },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response); // Debugging message
 
-            $('#edit_regularHoliday').val(response.regular_holiday);
-            $('#edit_specialHoliday').val(response.special_holiday);
-            $('#edit_overtime').val(response.overtime);
-            $('#edit_nightDifferential').val(response.night_differential);
-            $('#edit_regularHolidayNightDiff').val(response.regular_holiday_night_diff);
-            $('#edit_specialHolidayNightDiff').val(response.special_holiday_night_diff);
-            $('#edit_regHolidayOvertime').val(response.regular_holiday_overtime);
-            $('#edit_splHolidayOvertime').val(response.special_holiday_overtime);
-            $('#edit_drd').val(response.drd);
-            
-            
+                        // Populate the edit modal directly
+                        $('#timekeeping_id').val(response.timekeeping_ID);
+                        $('#edit_employee_name').val(response.employee_name);
+                        $('#edit_employee_id').val(response.employee_id);
+                        $('#edit_dateFrm').val(response.date_from);
+                        $('#edit_dateTo').val(response.date_to);
+                        $('#edit_totalHrs').val(response.Total_HrsWork);
+                        $('#edit_totalDys').val(response.Total_DysWork);
+                        $('#edit_regularHoliday').val(response.regular_holiday);
+                        $('#edit_specialHoliday').val(response.special_holiday);
+                        $('#edit_overtime').val(response.overtime);
+                        $('#edit_nightDifferential').val(response.night_differential);
+                        $('#edit_regularHolidayNightDiff').val(response.regular_holiday_night_diff);
+                        $('#edit_specialHolidayNightDiff').val(response.special_holiday_night_diff);
+                        $('#edit_regHolidayOvertime').val(response.regular_holiday_overtime);
+                        $('#edit_splHolidayOvertime').val(response.special_holiday_overtime);
+                        $('#edit_drd').val(response.drd);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", status, error);
+                    }
+                });
+            }
         },
         error: function(xhr, status, error) {
-            console.error("AJAX Error:", status, error);
+            // If there's an error with the AJAX request
+            console.error("Error:", error);
         }
     });
 }
+
 // Calculate total days when total hours are changed in edit modal
 $('#edit_totalHrs').on('input', calculateTotalDaysEdit);
 
