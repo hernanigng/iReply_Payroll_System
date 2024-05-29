@@ -92,7 +92,7 @@
                  $calculatedSpecialHoliday = $splHolidayValue * $specialHoliday;
                  
                  $hourlyRate = $dailyRate / 8;
-                 $otFee = $hourlyRate * 0.25;
+                 $otFee = $hourlyRate * 1.25;
                  $calculatedOvertime = $otFee * $overtime;
 
                  $nightDiffFee = $hourlyRate * 0.1;
@@ -107,8 +107,9 @@
                  $SplHolidayNightDiffValue =  $HourlySplHolidayNightDiffFee * 0.1;
                  $calculatedSpecialHolidayNightDiff = $SplHolidayNightDiffValue * $specialHolidayNightDiff;
 
-                 $HourlyRegHolidayFee = $calculatedRegularHoliday / 8;
-                 $RegHolidayOvertimeValue = $HourlyRegHolidayFee * 0.30;                  
+                 $regHolidayFee = $dailyRate * 2;
+                 $HourlyRegHolidayFee = $regHolidayFee / 8;
+                 $RegHolidayOvertimeValue = $HourlyRegHolidayFee * 1.30;                  
                  $calculatedRegularHolidayOvertime = $RegHolidayOvertimeValue * $regularHolidayOvertime; 
                  
                  $HourlySplHolidayFee = $splHolidayFee / 8;
@@ -121,11 +122,11 @@
                  //formulas
                  $formulaRegularHoliday = "Daily Rate = " . $dailyRate . " x Number of Days Worked = " .  $regularHoliday;
                  $formulaSpecialHoliday = "Special Holiday Value (Daily Rate " . $dailyRate . " x 0.30) = " . $splHolidayValue . " x Number of Days Worked = " . $specialHoliday;
-                 $formulaOvertime = "OT Fee = [Hourly Rate(Daily Rate " .  $dailyRate . " / 8 = " . $hourlyRate . ") x 0.25] x Number of Hours Worked = " . $overtime;
+                 $formulaOvertime = "OT Fee = [Hourly Rate(Daily Rate " .  $dailyRate . " / 8 = " . $hourlyRate . ") x 1.25] x Number of Hours Worked = " . $overtime;
                  $formulaNightDiff = "Night Diff Fee(Hourly Rate = " . $dailyRate . " / 8 x 0.1 =" . $nightDiffFee . ") x Number of Hours Worked = " . $nightDifferential;
                  $formulaRegHolidayNightDiff = "Regular Night Diff Value = [Hourly Regular Holiday Night Diff Fee(Regular Holiday Fee " . $calculatedRegularHoliday . " / 8) x 0.1 = " . $RegHolidayNightDiffValue . "] x Number of Hours Worked = " . $regularHolidayNightDiff;
                  $formulaSplHolidayNightDiff = "Special Holiday Night Diff Value = [Hourly Special Holiday Night Diff Fee(Special Holiday Fee(Daily Rate " . $dailyRate . " x 1.30 = " . $splHolidayFee . ") / 8) x 0.1 = " . $SplHolidayNightDiffValue . "] x Number of Hours Worked = " . $specialHolidayNightDiff;
-                 $formulaRegHolidayOvertime = "Regular Holiday Overtime Value = [Hourly Regular Holiday Fee( Regular Holiday Fee " . $calculatedRegularHoliday . " / 8) x 0.1] x Number of Hours Worked = " . $regularHolidayOvertime;
+                 $formulaRegHolidayOvertime = "Regular Holiday Overtime Value = [Hourly Regular Holiday Fee( Regular Holiday Fee " . $regHolidayFee . " / 8) x 0.1] x Number of Hours Worked = " . $regularHolidayOvertime;
                  $formulaSplHolidayOvertime = "Special Holiday Overtime Value = [Hourly Special Holiday Fee( Special Holiday Fee(Daily Rate " . $dailyRate . " x 1.30 = " . $splHolidayFee . ") / 8) x 0.30 = " . $SplHolidayOvertimeValue . "] x Number of Hours Worked = " . $specialHolidayOvertime;
                  $formulaDrd = " DRD Value(Daily Rate" . $dailyRate . " x 1.30) x Number of Days Worked = " . $drd;
                  
