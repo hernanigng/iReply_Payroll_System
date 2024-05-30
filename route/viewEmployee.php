@@ -1078,6 +1078,7 @@ $.ajax({
     dataType: 'json', // Specify JSON as the expected data type
     success: function(response) {
         console.log();
+            
         // Update the modal content with the fetched employee details
         // Assuming the response is an object containing the employee details
         $('#firstname').text(response.firstname);
@@ -1151,7 +1152,13 @@ $('#startDate').text(formattedStartdate);
         $('#sssCon').text(response.sss_con);
         $('#pagibigCon').text(response.pagibig_con);
         $('#philhealthCon').text(response.philhealth_con);
+        $('#sssER').text(response.sss_con_er);
+        $('#pagibigER').text(response.pagibig_con_er);
+        $('#philhealthER').text(response.philhealth_con_er);
         $('#tax').text(response.tax_percentage);
+
+        var employeeId = response.employee_id;
+                calculateTotalER(response.sss_con_er, response.pagibig_con_er, response.philhealth_con_er, employeeId);
     }
 });
 
@@ -1234,6 +1241,36 @@ $('#startDate').text(formattedStartdate);
 
         event.target.nextElementSibling.textContent = 'PHP ' + inputValue;
     });
+
+    function calculateTotalER(sssER, pagibigER, philhealthER, employeeId) {
+    // Function to extract numeric value from a string with a prefix
+    function extractNumericValue(value) {
+        // Remove non-numeric characters (keeping '.' for decimals)
+        value = value.replace(/[^\d.]/g, '');
+        return parseFloat(value);
+    }
+
+    // Ensure that the contribution values are parsed as numbers
+    sssER = extractNumericValue(sssER);
+    pagibigER = extractNumericValue(pagibigER);
+    philhealthER = extractNumericValue(philhealthER);
+
+    // Check if any of the parsed values are NaN (Not a Number)
+    if (isNaN(sssER) || isNaN(pagibigER) || isNaN(philhealthER)) {
+        console.error("One or more contribution values are not valid numbers.");
+        return;
+    }
+
+    // Calculate the total employer contributions
+    var totalER = sssER + pagibigER + philhealthER;
+
+    // Display the total in the totalER span
+    document.getElementById('totalER').innerText = totalER.toFixed(2);
+
+    // Now you can use the employeeId variable as needed
+    console.log("Employee ID:", employeeId);
+}
+
 
 </script>
 
@@ -1397,6 +1434,27 @@ $('#startDate').text(formattedStartdate);
         <label for="tax" class="col-form-label">Tax Percentage:</label>
         <span class="form-control" id="tax"> </span>
     </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <label for="sssER" class="col-form-label">SSS Contribution ER:</label>
+        <span class="form-control" id="sssER">  </span>
+    </div>
+    <div class="col">
+        <label for="pagibigER" class="col-form-label">Pag-ibig Contribution ER:</label>
+        <span class="form-control" id="pagibigER"> </span>
+    </div>
+    <div class="col">
+        <label for="philhealthER" class="col-form-label">Philhealth Contribution ER:</label>
+        <span class="form-control" id="philhealthER">  </span>
+    </div>
+    <div class="col">
+        <label for="totalER" class="col-form-label">Total Contributions ER:</label>
+        <span class="form-control" id="totalER"> </span>
+    </div>
+    
+</div>
 </div>
 </div>
      </div>
