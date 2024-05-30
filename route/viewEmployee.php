@@ -319,6 +319,25 @@ pointer-events: none;">Benefit Details</a>
                                     <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                             <div class="col-md-4">
+                                <label for="SSS_ER" class="form-label">SSS Contribution ER </label>
+                                <input type="text" name="createSSS_ER" class="form-control" id="createSSS_ER_id" placeholder="Enter SSS Contribution ER" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                    <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="PagibigER" class="form-label"> Pagibig Contribution ER </label>
+                                <input type="text" name="createPagibigER" class="form-control number-error" id="createPagibigER_id" maxlength="12" placeholder="Enter  Pagibig Contribution ER">
+                                <i class="fas fa-times input-icon" style="display: none;"></i>
+                                    <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label for="PhilhealthER" class="form-label">Philhealth Contribution ER</label>
+                                <input type="text" name="createPhilhealthER" class="form-control" id="createPhilhealthER_id" placeholder="Enter Philhealth Contribution ER">
+                                    <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
+                            </div>
+                            <div class="col-md-4">
                                 <label for="taxPercent" class="form-label">Tax Percentage</label>
                                 <input type="text" name="createTaxPercent" class="form-control" id="createTaxPercent_id" placeholder="Enter Tax Percentage" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                     <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
