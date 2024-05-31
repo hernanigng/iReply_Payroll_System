@@ -34,6 +34,9 @@ $tin = $_POST['tin_num'];
 $sssCon = $_POST['sss_con'];
 $pagibigCon = $_POST['pagibig_con'];
 $philhealthCon = $_POST['philhealth_con'];
+$sssER = $_POST['sss_con_er'];
+$pagibigER = $_POST['pagibig_con_er'];
+$philhealthER = $_POST['philhealth_con_er'];
 $tax = $_POST['tax_percentage'];
 
 // Validate other fields as needed...
@@ -63,6 +66,9 @@ tin_num=?,
 sss_con=?, 
 pagibig_con=?, 
 philhealth_con=?, 
+sss_con_er=?, 
+pagibig_con_er=?, 
+philhealth_con_er=?,
 tax_percentage=? 
 WHERE employee_id=?";
 
@@ -77,7 +83,7 @@ if (!$stmt) {
 }
 
 // Bind parameters and execute
-$stmt->bind_param('sssssssssssssssssssssssss', 
+$stmt->bind_param('ssssssssssssssssssssssssssss', 
 $firstname, 
 $middlename,
 $lastname, 
@@ -101,6 +107,9 @@ $tin,
 $sssCon, 
 $pagibigCon, 
 $philhealthCon, 
+$sssER, 
+$pagibigER, 
+$philhealthER,
 $tax, 
 $employeeId);
 

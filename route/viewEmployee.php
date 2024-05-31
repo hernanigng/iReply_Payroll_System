@@ -1419,15 +1419,15 @@ $('#startDate').text(formattedStartdate);
 
 <div class="row">
     <div class="col">
-        <label for="sssCon" class="col-form-label">SSS Contribution:</label>
+        <label for="sssCon" class="col-form-label">SSS Contribution EE:</label>
         <span class="form-control" id="sssCon">  </span>
     </div>
     <div class="col">
-        <label for="pagibigCon" class="col-form-label">Pag-ibig Contribution:</label>
+        <label for="pagibigCon" class="col-form-label">Pag-ibig Contribution EE:</label>
         <span class="form-control" id="pagibigCon">  </span>
     </div>
     <div class="col">
-        <label for="philhealthCon" class="col-form-label">Philhealth Contribution:</label>
+        <label for="philhealthCon" class="col-form-label">Philhealth Contribution EE:</label>
         <span class="form-control" id="philhealthCon"> </span>
     </div>
     <div class="col">
@@ -1451,10 +1451,11 @@ $('#startDate').text(formattedStartdate);
     </div>
     <div class="col">
         <label for="totalER" class="col-form-label">Total Contributions ER:</label>
-        <span class="form-control" id="totalER"> </span>
-    </div>
-    
+        <span class="form-control" id="totalER">
+             </span>
+    </div>    
 </div>
+
 </div>
 </div>
      </div>
@@ -1567,6 +1568,10 @@ function openEditModal(employeeId) {
             $('#edit_sssCon').val(response.sss_con);
             $('#edit_pagibigCon').val(response.pagibig_con);
             $('#edit_philhealthCon').val(response.philhealth_con);
+            $('#edit_sss_con_er').val(response.sss_con_er);
+            $('#edit_pagibig_con_er').val(response.pagibig_con_er);
+            $('#edit_philhealth_con_er').val(response.philhealth_con_er);
+            $('#edit_total_con_er').val(response.philhealth_con_er);
             $('#edit_tax').val(response.tax_percentage);
 
             // Set the selected option in the select elements
@@ -1934,17 +1939,17 @@ function openEditModal(employeeId) {
 
 <div class="row">
     <div class="col">
-        <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution</label>
+        <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution EE</label>
         <input type="text" name="edit_sssCon" class="form-control" id="edit_sssCon" placeholder="0.00">
         <div id="sssConError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
-        <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution </label>
+        <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution EE</label>
         <input type="text" name="edit_pagibigCon" class="form-control" id="edit_pagibigCon" placeholder="0.00">
         <div id="pagibigConError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
-        <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution</label>
+        <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution EE</label>
         <input type="text" name="edit_philhealthCon" class="form-control" id="edit_philhealthCon" placeholder="0.00">
         <div id="philhealthConError" class="text-danger"></div> <!-- Error message container -->
 
@@ -1953,6 +1958,24 @@ function openEditModal(employeeId) {
         <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
         <input type="number" name="edit_tax" class="form-control" id="edit_tax">
     </div>
+</div>
+<div class="row">
+    <div class="col">
+        <label for="sssER" class="col-form-label">SSS Contribution ER:</label>
+        <input type="number" name="edit_sss_con_er" class="form-control" id="edit_sss_con_er">
+    </div>
+    <div class="col">
+        <label for="pagibigER" class="col-form-label">Pag-ibig Contribution ER:</label>
+        <input type="number" name="edit_pagibig_con_er" class="form-control" id="edit_pagibig_con_er">
+    </div>
+    <div class="col">
+        <label for="philhealthER" class="col-form-label">Philhealth Contribution ER:</label>
+        <input type="number" name="edit_philhealth_con_er" class="form-control" id="edit_philhealth_con_er">
+    </div>
+    <div class="col">
+        <label for="totalER" class="col-form-label">Total Contributions ER:</label>
+        <input type="number" name="edit_total_con_er" class="form-control" id="edit_total_con_er">
+    </div>    
 </div>
     </div>
     </form>
@@ -2199,6 +2222,9 @@ $(document).ready(function() {
         var sssCon = $('#edit_sssCon').val();
         var pagibigCon = $('#edit_pagibigCon').val();
         var philhealthCon = $('#edit_philhealthCon').val();
+        var sssER = $('#edit_sss_con_er').val();
+        var pagibigER = $('#edit_pagibig_con_er').val();
+        var philhealthER = $('#edit_philhealth_con_er').val();
         var tax = $('#edit_tax').val();
 
         // Create a JSON object with the updated data
@@ -2227,6 +2253,9 @@ $(document).ready(function() {
             sss_con: sssCon,
             pagibig_con: pagibigCon,
             philhealth_con: philhealthCon,
+            sss_con_er: sssER,
+            pagibig_con_er: pagibigER,
+            philhealth_con_er: philhealthER,
             tax_percentage: tax
             // Add other fields as needed
         };
