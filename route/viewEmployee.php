@@ -1276,7 +1276,7 @@ $('#startDate').text(formattedStartdate);
 
 <!-- VIEW EMPLOYEE MODAL -->
 <div class="modal fade" id="viewEmployee" tabindex="-1" aria-labelledby="viewEmployeeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog modal-lg">
+    <div class="modal-dialog modal-dialog" style="max-width: 70%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title mb-5" id="viewEmployeeLabel">Employee Information</h5>
@@ -1300,6 +1300,7 @@ $('#startDate').text(formattedStartdate);
             <div class="modal-body">
                 <!-- Personal Information tab -->
                 <div id="personal" class="tab">
+                <div class="container">
                     <!-- Your personal information fields here -->
                     <!-- Placeholder for data -->
 
@@ -1340,7 +1341,7 @@ $('#startDate').text(formattedStartdate);
     </div>
 </div>
 
-<div class="row">
+<div class="row mb-5">
     <div class="col">
         <label for="personalEmail" class="col-form-label">Personal Email:</label>
         <span class="form-control" id="personalEmail">  </span>
@@ -1354,11 +1355,13 @@ $('#startDate').text(formattedStartdate);
         <span class="form-control" id="employeeType"> </span>
     </div>
 </div>
+</div>
      </div>
 
 
                 <!-- Employment Details tab -->
                 <div id="employment" class="tab">
+                <div class="container">
                     <!-- Your employment details fields here -->
                     <!-- Placeholder for data -->
 
@@ -1377,7 +1380,7 @@ $('#startDate').text(formattedStartdate);
     </div>
 </div>
 
-<div class="row">
+<div class="row mb-5">
     <div class="col">
         <label for="client" class="col-form-label">Client:</label>
         <span class="form-control" id="client"> </span>
@@ -1391,10 +1394,12 @@ $('#startDate').text(formattedStartdate);
         <span class="form-control" id="employmentStatus"> </span>
     </div>
 </div>
+</div>
      </div>
 
                 <!-- Benefit Details tab -->
                 <div id="benefit" class="tab">
+                <div class="container">
                     <!-- Your benefit details fields here -->
                     <!-- Placeholder for data -->
 
@@ -1436,7 +1441,7 @@ $('#startDate').text(formattedStartdate);
     </div>
 </div>
 
-<div class="row">
+<div class="row mb-5">
     <div class="col">
         <label for="sssER" class="col-form-label">SSS Contribution ER:</label>
         <span class="form-control" id="sssER">  </span>
@@ -1455,7 +1460,7 @@ $('#startDate').text(formattedStartdate);
              </span>
     </div>    
 </div>
-
+</div>
 </div>
 </div>
      </div>
@@ -1731,7 +1736,7 @@ function openEditModal(employeeId) {
 
 <!-- EDIT EMPLOYEE MODAL -->
 <div class="modal fade" id="editEmployee" tabindex="-1" aria-labelledby="editEmployeeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog modal-lg">
+    <div class="modal-dialog modal-dialog" style="max-width: 70%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title mb-5" id="editEmployeeLabel">Employee Information</h5>
@@ -1755,8 +1760,11 @@ function openEditModal(employeeId) {
             <div class="modal-body">
                 <!-- Personal Information tab -->
                 <div id="personalEdit" class="tab">
+                <div class="container">
                     <!-- Your personal information fields here -->
                     <!-- Placeholder for data -->
+
+
     <form id="editFrm" method="post">
 <input type="hidden" name="employeeId" class="form-control" id="employeeId">
 
@@ -1826,10 +1834,12 @@ function openEditModal(employeeId) {
             </select>        
     </div>
 </div>
+</div>
     </div>
 
                 <!-- Employment Details tab -->
                 <div id="employmentEdit" class="tab">
+                <div class="container">
                     <!-- Your employment details fields here -->
                     <!-- Placeholder for data -->
 
@@ -1907,10 +1917,12 @@ function openEditModal(employeeId) {
         </select>    
     </div>
 </div>
+</div>
      </div>
 
                 <!-- Benefit Details tab -->
                 <div id="benefitEdit" class="tab">
+                <div class="container">
                     <!-- Your benefit details fields here -->
                     <!-- Placeholder for data -->
 
@@ -1939,23 +1951,23 @@ function openEditModal(employeeId) {
 
 <div class="row">
     <div class="col">
-        <label for="sssContrib" class="col-sm-3 col-form-label">SSS Contribution EE</label>
+        <label for="sssContrib" class=" col-form-label">SSS Contribution EE</label>
         <input type="text" name="edit_sssCon" class="form-control" id="edit_sssCon" placeholder="0.00">
         <div id="sssConError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
-        <label for="pagibigContrib" class="col-sm-3 col-form-label">Pagibig Contribution EE</label>
+        <label for="pagibigContrib" class="col-form-label">Pagibig Contribution EE</label>
         <input type="text" name="edit_pagibigCon" class="form-control" id="edit_pagibigCon" placeholder="0.00">
         <div id="pagibigConError" class="text-danger"></div> <!-- Error message container -->
     </div>
     <div class="col">
-        <label for="philhealthContrib" class="col-sm-3 col-form-label">Philhealth Contribution EE</label>
+        <label for="philhealthContrib" class="col-form-label">Philhealth Contribution EE</label>
         <input type="text" name="edit_philhealthCon" class="form-control" id="edit_philhealthCon" placeholder="0.00">
         <div id="philhealthConError" class="text-danger"></div> <!-- Error message container -->
 
     </div>
     <div class="col">
-        <label for="taxPercent" class="col-sm-3 col-form-label">Tax Percentage </label>
+        <label for="taxPercent" class="col-form-label">Tax Percentage </label>
         <input type="number" name="edit_tax" class="form-control" id="edit_tax">
     </div>
 </div>
@@ -1976,6 +1988,7 @@ function openEditModal(employeeId) {
         <label for="totalER" class="col-form-label">Total Contributions ER:</label>
         <input type="number" name="edit_total_con_er" class="form-control" id="edit_total_con_er">
     </div>    
+</div>
 </div>
     </div>
     </form>
