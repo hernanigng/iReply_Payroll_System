@@ -300,12 +300,12 @@ pointer-events: none;">Benefit Details</a>
                                     <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                             <div class="col-md-4">
-                                <label for="sssContrib" class="form-label">SSS Contribution</label>
+                                <label for="sssContrib" class="form-label">SSS Contribution EE</label>
                                 <input type="text" name="createSSSContrib" class="form-control" id="createSSSContrib_id" placeholder="Enter SSS Contribution">
                                     <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
                             <div class="col-md-4">
-                                <label for="pagibigContrib" class="form-label">Pagibig Contribution</label>
+                                <label for="pagibigContrib" class="form-label">Pagibig Contribution EE</label>
                                 <input type="text" name="createPagibigContrib" class="form-control" id="createPagibigContrib_id" placeholder="Enter Pagibig Contribution">
                                     <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
@@ -314,7 +314,7 @@ pointer-events: none;">Benefit Details</a>
  
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="philhealthContrib" class="form-label">Philhealth Contribution</label>
+                                <label for="philhealthContrib" class="form-label">Philhealth Contribution EE</label>
                                 <input type="text" name="createPhilhealthContrib" class="form-control" id="createPhilhealthContrib_id" placeholder="Enter Philhealth Contribution">
                                     <p id="" class="error-message" style="display: none;">Please fill out this required field.</p>
                             </div>
@@ -1974,16 +1974,16 @@ function openEditModal(employeeId) {
 <div class="row">
     <div class="col">
         <label for="sssER" class="col-form-label">SSS Contribution ER:</label>
-        <input type="number" name="edit_sss_con_er" class="form-control" id="edit_sss_con_er" readonly>
+        <input type="number" name="edit_sss_con_er" class="form-control" id="edit_sss_con_er" >
     </div>
     <div class="col">
         <label for="pagibigER" class="col-form-label">Pag-ibig Contribution ER:</label>
-        <input type="number" name="edit_pagibig_con_er" class="form-control" id="edit_pagibig_con_er" readonly>
+        <input type="number" name="edit_pagibig_con_er" class="form-control" id="edit_pagibig_con_er" >
     </div>
     <div class="col">
         <label for="philhealthER" class="col-form-label">Philhealth Contribution ER:</label>
-        <input type="number" name="edit_philhealth_con_er" class="form-control" id="edit_philhealth_con_er" readonly>
-    </div>
+        <input type="number" name="edit_philhealth_con_er" class="form-control" id="edit_philhealth_con_er" >
+    </div
     <div class="col">
         <label for="totalER" class="col-form-label">Total Contributions ER:</label>
         <input type="number" name="edit_total_con_er" class="form-control" id="edit_total_con_er" readonly>
