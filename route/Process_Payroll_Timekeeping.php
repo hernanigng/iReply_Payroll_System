@@ -573,7 +573,10 @@
             calculateWithholdingTax(totalEarningsValue);
         }
     }
-
+$('#payAdjustments_id').on('input', function() {
+    calculateTotalEarnings();
+});
+   
    
 
 
