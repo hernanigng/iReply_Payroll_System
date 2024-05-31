@@ -1576,7 +1576,7 @@ function openEditModal(employeeId) {
             $('#edit_sss_con_er').val(response.sss_con_er);
             $('#edit_pagibig_con_er').val(response.pagibig_con_er);
             $('#edit_philhealth_con_er').val(response.philhealth_con_er);
-            $('#edit_total_con_er').val(response.philhealth_con_er);
+            $('#edit_total_con_er').val(response.total_contribution_er);
             $('#edit_tax').val(response.tax_percentage);
 
             // Set the selected option in the select elements
@@ -1974,19 +1974,19 @@ function openEditModal(employeeId) {
 <div class="row">
     <div class="col">
         <label for="sssER" class="col-form-label">SSS Contribution ER:</label>
-        <input type="number" name="edit_sss_con_er" class="form-control" id="edit_sss_con_er">
+        <input type="number" name="edit_sss_con_er" class="form-control" id="edit_sss_con_er" readonly>
     </div>
     <div class="col">
         <label for="pagibigER" class="col-form-label">Pag-ibig Contribution ER:</label>
-        <input type="number" name="edit_pagibig_con_er" class="form-control" id="edit_pagibig_con_er">
+        <input type="number" name="edit_pagibig_con_er" class="form-control" id="edit_pagibig_con_er" readonly>
     </div>
     <div class="col">
         <label for="philhealthER" class="col-form-label">Philhealth Contribution ER:</label>
-        <input type="number" name="edit_philhealth_con_er" class="form-control" id="edit_philhealth_con_er">
+        <input type="number" name="edit_philhealth_con_er" class="form-control" id="edit_philhealth_con_er" readonly>
     </div>
     <div class="col">
         <label for="totalER" class="col-form-label">Total Contributions ER:</label>
-        <input type="number" name="edit_total_con_er" class="form-control" id="edit_total_con_er">
+        <input type="number" name="edit_total_con_er" class="form-control" id="edit_total_con_er" readonly>
     </div>    
 </div>
 </div>
@@ -2238,6 +2238,7 @@ $(document).ready(function() {
         var sssER = $('#edit_sss_con_er').val();
         var pagibigER = $('#edit_pagibig_con_er').val();
         var philhealthER = $('#edit_philhealth_con_er').val();
+        var totalConER = $('#edit_total_con_er').val();
         var tax = $('#edit_tax').val();
 
         // Create a JSON object with the updated data
@@ -2269,6 +2270,7 @@ $(document).ready(function() {
             sss_con_er: sssER,
             pagibig_con_er: pagibigER,
             philhealth_con_er: philhealthER,
+            total_contribution_er: totalConER,
             tax_percentage: tax
             // Add other fields as needed
         };
