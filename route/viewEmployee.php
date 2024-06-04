@@ -1155,6 +1155,7 @@ $('#startDate').text(formattedStartdate);
         $('#sssER').text(response.sss_con_er);
         $('#pagibigER').text(response.pagibig_con_er);
         $('#philhealthER').text(response.philhealth_con_er);
+        $('#totalER').text(response.total_contribution_er);
         $('#tax').text(response.tax_percentage);
 
         var employeeId = response.employee_id;
@@ -1241,35 +1242,6 @@ $('#startDate').text(formattedStartdate);
 
         event.target.nextElementSibling.textContent = 'PHP ' + inputValue;
     });
-
-    function calculateTotalER(sssER, pagibigER, philhealthER, employeeId) {
-    // Function to extract numeric value from a string with a prefix
-    function extractNumericValue(value) {
-        // Remove non-numeric characters (keeping '.' for decimals)
-        value = value.replace(/[^\d.]/g, '');
-        return parseFloat(value);
-    }
-
-    // Ensure that the contribution values are parsed as numbers
-    sssER = extractNumericValue(sssER);
-    pagibigER = extractNumericValue(pagibigER);
-    philhealthER = extractNumericValue(philhealthER);
-
-    // Check if any of the parsed values are NaN (Not a Number)
-    if (isNaN(sssER) || isNaN(pagibigER) || isNaN(philhealthER)) {
-        console.error("One or more contribution values are not valid numbers.");
-        return;
-    }
-
-    // Calculate the total employer contributions
-    var totalER = sssER + pagibigER + philhealthER;
-
-    // Display the total in the totalER span
-    document.getElementById('totalER').innerText = totalER.toFixed(2);
-
-    // Now you can use the employeeId variable as needed
-    console.log("Employee ID:", employeeId);
-}
 
 
 </script>
@@ -1971,24 +1943,37 @@ function openEditModal(employeeId) {
         <input type="number" name="edit_tax" class="form-control" id="edit_tax">
     </div>
 </div>
+
 <div class="row">
     <div class="col">
         <label for="sssER" class="col-form-label">SSS Contribution ER:</label>
-        <input type="number" name="edit_sss_con_er" class="form-control" id="edit_sss_con_er" >
+        <input type="number" name="edit_sss_con_er" class="form-control" id="edit_sss_con_er" oninput="calculateTotalER()">
     </div>
     <div class="col">
         <label for="pagibigER" class="col-form-label">Pag-ibig Contribution ER:</label>
-        <input type="number" name="edit_pagibig_con_er" class="form-control" id="edit_pagibig_con_er" >
+        <input type="number" name="edit_pagibig_con_er" class="form-control" id="edit_pagibig_con_er" oninput="calculateTotalER()">
     </div>
     <div class="col">
         <label for="philhealthER" class="col-form-label">Philhealth Contribution ER:</label>
-        <input type="number" name="edit_philhealth_con_er" class="form-control" id="edit_philhealth_con_er" >
-    </div
+        <input type="number" name="edit_philhealth_con_er" class="form-control" id="edit_philhealth_con_er" oninput="calculateTotalER()">
+    </div>
     <div class="col">
         <label for="totalER" class="col-form-label">Total Contributions ER:</label>
         <input type="number" name="edit_total_con_er" class="form-control" id="edit_total_con_er" readonly>
     </div>    
 </div>
+
+<script>
+    function calculateTotalER() {
+        var sssER = parseFloat(document.getElementById('edit_sss_con_er').value) || 0;
+        var pagibigER = parseFloat(document.getElementById('edit_pagibig_con_er').value) || 0;
+        var philhealthER = parseFloat(document.getElementById('edit_philhealth_con_er').value) || 0;
+
+        var totalER = sssER + pagibigER + philhealthER;
+
+        document.getElementById('edit_total_con_er').value = totalER.toFixed(2);
+    }
+</script>
 </div>
     </div>
     </form>

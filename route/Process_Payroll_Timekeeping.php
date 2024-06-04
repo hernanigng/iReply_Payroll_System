@@ -45,7 +45,8 @@
     if ($timekeepingId) {
         // Fetch data based on timekeeping_ID
         $sql = "SELECT date_from, date_to, Total_DysWork, tbl_employee.employee_id, firstname, lastname, account_bonus,
-                       daily_rate, sss_con, pagibig_con, philhealth_con, regular_holiday, special_holiday, overtime, 
+                       daily_rate, sss_con, sss_con_er, pagibig_con, pagibig_con_er, philhealth_con, philhealth_con_er,
+                       total_contribution_er, regular_holiday, special_holiday, overtime, 
                        night_differential, regular_holiday_night_diff, special_holiday_night_diff, 
                        regular_holiday_overtime, special_holiday_overtime, drd
                 FROM tbl_timekeeping
@@ -74,6 +75,10 @@
                 $sss = $data['sss_con'];
                 $pagibig = $data['pagibig_con'];
                 $philhealth = $data['philhealth_con'];
+                $sssER = $data['sss_con_er'];
+                $pagibigER = $data['pagibig_con_er'];
+                $philhealthER = $data['philhealth_con_er'];
+                $totalER = $data['total_contribution_er'];
                 
                 $regularHoliday = (float)$data['regular_holiday'];
                 $specialHoliday = (float)$data['special_holiday'];
@@ -855,16 +860,38 @@ $('#payAdjustments_id').on('input', function() {
                         <div class="container mt-4 col-10">
                             <div class="row mb-3">
                                 <div class="col-md-4">
-                                    <label for="sss" class="form-label">SSS Contributions</label>
+                                    <label for="sss" class="form-label">SSS Contribution EE</label>
                                     <input type="text" name="sss" class="form-control" id="sss_id" value="<?php echo isset($sss) ? $sss : ''; ?>" readonly>
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="pagibig" class="form-label">Pagibig Contribution</label>
+                                    <label for="pagibig" class="form-label">Pagibig Contribution EE</label>
                                     <input type="text" name="pagibig" class="form-control" id="pagibig_id" value="<?php echo isset($pagibig) ? $pagibig : ''; ?>" readonly>
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="philhealth" class="form-label">PhilHealth Contribution</label>
+                                    <label for="philhealth" class="form-label">PhilHealth Contribution EE</label>
                                     <input type="text" name="philhealth" class="form-control" id="philhealth_id" value="<?php echo isset($philhealth) ? $philhealth : ''; ?>" readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="sssER" class="form-label">SSS Contribution ER</label>
+                                    <input type="text" name="sssER" class="form-control" id="sssER_id" value="<?php echo isset($sssER) ? $sssER : ''; ?>" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="pagibigER" class="form-label">Pagibig Contribution ER</label>
+                                    <input type="text" name="pagibigER" class="form-control" id="pagibigER_id" value="<?php echo isset($pagibigER) ? $pagibigER : ''; ?>" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="philhealthER" class="form-label">PhilHealth Contribution ER</label>
+                                    <input type="text" name="philhealthER" class="form-control" id="philhealthER_id" value="<?php echo isset($philhealthER) ? $philhealthER : ''; ?>" readonly>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="totalER" class="form-label">Total Contribution ER</label>
+                                    <input type="text" name="totalER" class="form-control" id="totalER_id" value="<?php echo isset($totalER) ? $totalER : ''; ?>" readonly>
                                 </div>
                             </div>
 

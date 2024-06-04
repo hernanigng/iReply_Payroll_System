@@ -176,7 +176,7 @@ if (isset($_GET['employee_id'])) {
           
                 <tbody>
                 <?php
-                            $query1 = "SELECT * FROM tbl_timekeeping WHERE employee_id= '$employeeId' ";
+                            $query1 = "SELECT * FROM tbl_timekeeping WHERE employee_id= '$employeeId' ORDER BY date_to DESC";
                             $result1 = $conn->query($query1);
 
                             while ($data1 = mysqli_fetch_array($result1)) {
